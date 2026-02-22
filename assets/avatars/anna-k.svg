@@ -1,0 +1,7 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs><linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#6366f1"/><stop offset="100%" style="stop-color:#8b5cf6"/></linearGradient></defs>
+  <rect width="200" height="200" fill="url(#g1)"/>
+  <circle cx="100" cy="80" r="40" fill="#f8d7da"/>
+  <ellipse cx="100" cy="180" rx="70" ry="60" fill="#f8d7da"/>
+  <text x="100" y="180" font-family="Arial" font-size="24" fill="#6366f1" text-anchor="middle" font-weight="bold">АК</text>
+</svg>
