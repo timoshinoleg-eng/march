@@ -208,28 +208,30 @@
                     </div>
                     
                     <div class="hero-visual" data-aos="fade-left">
-                        <div class="demo-card">
-                            <div class="demo-header">
-                                <div class="demo-avatar">
-                                    <i data-lucide="bot" class="avatar-icon"></i>
+                        <div class="demo-chat-container">
+                            <div class="demo-chat-header">
+                                <div class="demo-chat-avatar">
+                                    <i data-lucide="bot" class="demo-avatar-icon"></i>
                                 </div>
-                                <div class="demo-info">
-                                    <span class="demo-name">ChatBot24 Assistant</span>
-                                    <span class="demo-status"><span class="status-dot"></span> Онлайн</span>
+                                <div class="demo-chat-info">
+                                    <div class="demo-chat-name">ChatBot24 Assistant</div>
+                                    <div class="demo-chat-status"><span class="status-dot"></span> Онлайн</div>
                                 </div>
                             </div>
-                            <div class="demo-messages">
-                                <div class="message bot">
-                                    <p>Привет! 👋 Я AI-ассистент ChatBot24.</p>
+                            
+                            <div class="demo-chat-messages" id="demoMessages">
+                                <!-- Сообщения добавляются через JS -->
+                            </div>
+                            
+                            <div class="demo-chat-input">
+                                <div class="demo-input-field">
+                                    <span class="typing-indicator" id="typingIndicator">
+                                        <span></span><span></span><span></span>
+                                    </span>
                                 </div>
-                                <div class="message bot">
-                                    <p>Какую сферу бизнеса хотите автоматизировать?</p>
-                                </div>
-                                <div class="demo-chips">
-                                    <span class="chip">B2B</span>
-                                    <span class="chip">E-commerce</span>
-                                    <span class="chip">Услуги</span>
-                                </div>
+                                <button class="demo-send-btn">
+                                    <i data-lucide="send" class="demo-send-icon"></i>
+                                </button>
                             </div>
                         </div>
                     </div>

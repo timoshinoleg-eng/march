@@ -624,6 +624,77 @@ document.querySelectorAll('[data-tilt]').forEach(card => {
     });
 });
 
+// ========================================
+// DEMO CHAT ANIMATION
+// ========================================
+const demoMessages = [
+  { type: 'user', text: 'Привет! У вас есть курсы английского для начинающих?' },
+  { type: 'bot', text: 'Добрый день! Да, конечно. У нас есть курсы для всех уровней.' },
+  { type: 'bot', text: 'Какой у вас текущий уровень английского?' },
+  { type: 'user', text: 'Начинающий, с нуля' },
+  { type: 'bot', text: 'Отлично! У нас есть программа "English Start" — 3 месяца, 2 раза в неделю.' },
+  { type: 'bot', text: 'Стоимость: 12 000 ₽/месяц. Первое занятие бесплатное!' },
+  { type: 'user', text: 'Хочу записаться на пробное' },
+  { type: 'bot', text: 'Замечательно! Оставьте ваш телефон — менеджер свяжется в течение 15 минут.' }
+];
+
+function initDemoChat() {
+  const container = document.getElementById('demoMessages');
+  const typingIndicator = document.getElementById('typingIndicator');
+  if (!container) return;
+
+  let messageIndex = 0;
+
+  function addMessage(message) {
+    const msgDiv = document.createElement('div');
+    msgDiv.className = `demo-message ${message.type}`;
+    msgDiv.textContent = message.text;
+    container.appendChild(msgDiv);
+    container.scrollTop = container.scrollHeight;
+  }
+
+  function showTyping() {
+    typingIndicator.classList.add('active');
+    container.scrollTop = container.scrollHeight;
+  }
+
+  function hideTyping() {
+    typingIndicator.classList.remove('active');
+  }
+
+  function playNextMessage() {
+    if (messageIndex >= demoMessages.length) {
+      messageIndex = 0;
+      setTimeout(() => {
+        container.innerHTML = '';
+        playNextMessage();
+      }, 3000);
+      return;
+    }
+
+    const message = demoMessages[messageIndex];
+    
+    if (message.type === 'bot') {
+      showTyping();
+      setTimeout(() => {
+        hideTyping();
+        addMessage(message);
+        messageIndex++;
+        setTimeout(playNextMessage, 1500);
+      }, 1200);
+    } else {
+      addMessage(message);
+      messageIndex++;
+      setTimeout(playNextMessage, 1000);
+    }
+  }
+
+  // Start animation
+  setTimeout(playNextMessage, 1000);
+}
+
 // Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', initTestimonialsCarousel);
-// Force update 2026-02-24 15:43:47
+document.addEventListener('DOMContentLoaded', () => {
+  initTestimonialsCarousel();
+  initDemoChat();
+});
