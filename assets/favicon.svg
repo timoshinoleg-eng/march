@@ -1,14 +1,45 @@
-﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
   <defs>
-    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#6366f1"/>
+    <!-- Глубокий градиент как в WebGradients #17 -->
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e3c46"/>
+      <stop offset="50%" style="stop-color:#2d1b4e"/>
+      <stop offset="100%" style="stop-color:#231e30"/>
+    </linearGradient>
+    <!-- Яркий акцентный градиент -->
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ec4899"/>
       <stop offset="100%" style="stop-color:#8b5cf6"/>
     </linearGradient>
+    <!-- Glow эффект -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
   </defs>
-  <rect width="100" height="100" rx="20" fill="url(#g)"/>
-  <circle cx="50" cy="40" r="18" fill="white"/>
-  <path d="M25 75 Q50 55 75 75" stroke="white" stroke-width="8" fill="none" stroke-linecap="round"/>
-  <circle cx="35" cy="38" r="3" fill="#6366f1"/>
-  <circle cx="65" cy="38" r="3" fill="#6366f1"/>
-  <path d="M42 48 Q50 54 58 48" stroke="#6366f1" stroke-width="3" fill="none" stroke-linecap="round"/>
+  
+  <!-- Фон с закруглением -->
+  <rect width="100" height="100" rx="22" fill="url(#bg)"/>
+  
+  <!-- Внешнее свечение -->
+  <rect x="2" y="2" width="96" height="96" rx="20" fill="none" stroke="url(#accent)" stroke-width="2" opacity="0.6" filter="url(#glow)"/>
+  
+  <!-- Иконка бота - минималистичная -->
+  <g transform="translate(50, 50)">
+    <!-- Голова бота -->
+    <rect x="-20" y="-22" width="40" height="32" rx="10" fill="url(#accent)"/>
+    <!-- Антенна -->
+    <line x1="0" y1="-22" x2="0" y2="-32" stroke="url(#accent)" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="0" cy="-34" r="3" fill="#ec4899" filter="url(#glow)"/>
+    <!-- Глаза -->
+    <circle cx="-10" cy="-12" r="4" fill="white"/>
+    <circle cx="10" cy="-12" r="4" fill="white"/>
+    <!-- Тело -->
+    <rect x="-15" y="12" width="30" height="20" rx="6" fill="white" opacity="0.9"/>
+    <!-- Индикатор статуса -->
+    <circle cx="12" cy="22" r="3" fill="#10b981" filter="url(#glow)"/>
+  </g>
 </svg>
