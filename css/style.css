@@ -1,8 +1,10 @@
 /* ChatBot24 Studio v3.1 - Updated with gradients and testimonials */
 :root {
-  --color-bg-primary: #0f0f1a;
-  --color-bg-secondary: #1a1a2e;
-  --color-bg-gradient: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%);
+  --color-bg-primary: #0a0a14;
+  --color-bg-secondary: #12121f;
+  /* WebGradients #17 Deep Blue - darkened (x0.3): #667eea -> #1e3c46, #764ba2 -> #231e30 */
+  --color-bg-gradient: linear-gradient(135deg, #1e3c46 0%, #231e30 100%);
+  --color-bg-glow: radial-gradient(ellipse at center, rgba(102, 126, 234, 0.15) 0%, transparent 70%);
   --color-accent-start: #6366f1;
   --color-accent-end: #8b5cf6;
   --color-accent-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
@@ -26,7 +28,7 @@
 html { scroll-behavior: smooth; font-size: 16px; }
 body { 
   font-family: var(--font-family); 
-  background: var(--color-bg-gradient);
+  background: var(--color-bg-glow), var(--color-bg-gradient);
   background-attachment: fixed;
   color: var(--color-text-primary); 
   line-height: 1.6; 
