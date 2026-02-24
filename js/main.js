@@ -60,6 +60,32 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ========================================
+    // TELEGRAM CONSENT NOTICE
+    // ========================================
+    const telegramConsent = document.getElementById('telegramConsent');
+    const telegramConsentBtn = document.getElementById('telegramConsentBtn');
+    const telegramWidget = document.getElementById('telegramWidget');
+
+    if (telegramConsent && !localStorage.getItem('telegramConsentAccepted')) {
+        setTimeout(() => telegramConsent.classList.add('active'), 2000);
+    }
+
+    if (telegramConsentBtn) {
+        telegramConsentBtn.addEventListener('click', () => {
+            localStorage.setItem('telegramConsentAccepted', 'true');
+            telegramConsent.classList.remove('active');
+        });
+    }
+
+    if (telegramWidget && telegramConsent) {
+        telegramWidget.addEventListener('mouseenter', () => {
+            if (!localStorage.getItem('telegramConsentAccepted')) {
+                telegramConsent.classList.add('active');
+            }
+        });
+    }
+
+    // ========================================
     // MOBILE MENU
     // ========================================
     const burger = document.getElementById('burger');

@@ -5,139 +5,214 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Политика конфиденциальности | ChatBot24 Studio</title>
     <meta name="description" content="Политика обработки персональных данных ChatBot24 Studio">
-    <meta name="robots" content="noindex, follow">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <link rel="stylesheet" href="/css/style.css">
     <style>
-        :root {
-            --color-bg-primary: #0a0a0f;
-            --color-bg-secondary: #111118;
-            --color-text-primary: #ffffff;
-            --color-text-secondary: #a1a1aa;
-            --color-text-muted: #71717a;
-            --color-accent: #3b82f6;
-            --color-border: rgba(255, 255, 255, 0.1);
+        .privacy-page {
+            padding: 120px 0 60px;
+            min-height: 100vh;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Inter', system-ui, sans-serif;
-            background: var(--color-bg-primary);
-            color: var(--color-text-primary);
+        .privacy-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .privacy-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #ec4899, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .privacy-date {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+            margin-bottom: 40px;
+        }
+        .privacy-section {
+            margin-bottom: 32px;
+        }
+        .privacy-section h2 {
+            font-size: 20px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(236, 72, 153, 0.3);
+        }
+        .privacy-section h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            margin: 20px 0 12px;
+        }
+        .privacy-section p, .privacy-section li {
+            font-size: 15px;
             line-height: 1.7;
+            color: rgba(255, 255, 255, 0.75);
+            margin-bottom: 12px;
         }
-        .container { max-width: 800px; margin: 0 auto; padding: 60px 24px; }
-        .header { text-align: center; margin-bottom: 48px; padding-bottom: 32px; border-bottom: 1px solid var(--color-border); }
-        .logo { display: inline-block; font-size: 24px; font-weight: 700; color: white; text-decoration: none; margin-bottom: 16px; }
-        h1 { font-size: 36px; margin-bottom: 8px; }
-        .last-updated { color: var(--color-text-muted); font-size: 14px; }
-        h2 { font-size: 24px; margin-top: 40px; margin-bottom: 16px; }
-        h3 { font-size: 18px; margin-top: 24px; margin-bottom: 12px; }
-        p { margin-bottom: 16px; color: var(--color-text-secondary); }
-        ul, ol { margin-bottom: 16px; padding-left: 24px; }
-        li { margin-bottom: 8px; color: var(--color-text-secondary); }
-        a { color: var(--color-accent); }
-        .back-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 48px; padding: 12px 24px; background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; color: white; text-decoration: none; }
-        .highlight-box { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px; padding: 24px; margin: 24px 0; }
-        .contact-info { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px; padding: 24px; margin-top: 32px; }
-        @media (max-width: 768px) {
-            .container { padding: 40px 16px; }
-            h1 { font-size: 28px; }
-            h2 { font-size: 20px; }
+        .privacy-section ul {
+            padding-left: 20px;
+            margin-bottom: 16px;
+        }
+        .privacy-section li {
+            margin-bottom: 8px;
+        }
+        .privacy-operator {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(236, 72, 153, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .privacy-operator p {
+            margin-bottom: 8px;
+        }
+        .privacy-operator strong {
+            color: #ec4899;
+        }
+        .privacy-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 40px;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .privacy-back:hover {
+            color: #ec4899;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header class="header">
-            <a href="/" class="logo">← ChatBot24 Studio</a>
-            <h1>Политика конфиденциальности</h1>
-            <p class="last-updated">Последнее обновление: 22 февраля 2025 г.</p>
-        </header>
-
-        <main>
-            <h2>1. Общие положения</h2>
-            <p>Настоящая Политика конфиденциальности персональных данных (далее — «Политика») действует в отношении всей информации, которую Индивидуальный предприниматель (далее — «Оператор») может получить о Пользователе во время использования сайта <a href="https://chatbot24.su">chatbot24.su</a> (далее — «Сайт»).</p>
-            <p>Использование Сайта означает безоговорочное согласие Пользователя с настоящей Политикой и указанными в ней условиями обработки его персональных данных.</p>
-
-            <h2>2. Персональные данные Пользователей</h2>
-            <p>Оператор может обрабатывать следующие персональные данные Пользователей:</p>
-            <ul>
-                <li>Фамилия, имя, отчество;</li>
-                <li>Контактный телефон;</li>
-                <li>Имя пользователя в Telegram;</li>
-                <li>Информация о типе бизнеса;</li>
-                <li>IP-адрес и данные о браузере;</li>
-                <li>UTM-метки и информация об источнике перехода.</li>
-            </ul>
-
-            <div class="highlight-box">
-                <p><strong>Важно:</strong> Оператор не собирает и не обрабатывает специальные категории персональных данных, касающиеся расовой, национальной принадлежности, политических взглядов, религиозных или философских убеждений, состояния здоровья, интимной жизни.</p>
+    <!-- HEADER -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="/" class="logo">
+                    <span class="logo-icon">🤖</span>
+                    <span class="logo-text">ChatBot24 Studio</span>
+                </a>
             </div>
+        </div>
+    </header>
 
-            <h2>3. Цели обработки персональных данных</h2>
-            <ol>
-                <li>Обработка входящих запросов и связи с Пользователем;</li>
-                <li>Предоставление консультаций по услугам Оператора;</li>
-                <li>Информирование о новых услугах (с согласия Пользователя);</li>
-                <li>Проведение аналитики и улучшение работы Сайта;</li>
-                <li>Выполнение требований законодательства РФ.</li>
-            </ol>
+    <!-- PRIVACY CONTENT -->
+    <main class="privacy-page">
+        <div class="container privacy-container">
+            <h1 class="privacy-title">Политика обработки персональных данных</h1>
+            <p class="privacy-date">Дата размещения: 24.02.2026 г.</p>
 
-            <h2>4. Правовые основания обработки</h2>
-            <ul>
-                <li>Согласие субъекта персональных данных (ст. 9 ФЗ-152);</li>
-                <li>Необходимость выполнения договора (ст. 6 ФЗ-152);</li>
-                <li>Законодательство РФ.</li>
-            </ul>
+            <section class="privacy-section">
+                <h2>1. Общие положения</h2>
+                <p>Настоящая Политика обработки персональных данных (далее — Политика) разработана в соответствии с Федеральным законом от 27.07.2006 №152-ФЗ «О персональных данных» и определяет порядок обработки персональных данных Индивидуальным предпринимателем.</p>
+            </section>
 
-            <h2>5. Порядок обработки персональных данных</h2>
-            <h3>5.1. Сроки обработки</h3>
-            <p>Персональные данные обрабатываются в течение срока, необходимого для достижения целей обработки, или до отзыва согласия.</p>
+            <section class="privacy-section">
+                <h2>2. Оператор персональных данных</h2>
+                <div class="privacy-operator">
+                    <p><strong>Индивидуальный предприниматель</strong></p>
+                    <p><strong>ТИМОШИН ОЛЕГ ВЛАДИМИРОВИЧ</strong></p>
+                    <p>ОГРНИП: <strong>326774600079341</strong></p>
+                    <p>Email: <strong>info@chatbot24.su</strong></p>
+                    <p>Телефон: <strong>+7 993 336 61 02</strong></p>
+                </div>
+                <p>Оператор осуществляет деятельность на территории Российской Федерации.</p>
+            </section>
 
-            <h3>5.2. Уничтожение персональных данных</h3>
-            <p>Персональные данные подлежат уничтожению или обезличиванию по достижении целей обработки или в случае отзыва согласия.</p>
+            <section class="privacy-section">
+                <h2>3. Персональные данные, которые обрабатываются</h2>
+                
+                <h3>3.1. Автоматически собираемые данные</h3>
+                <p>При посещении сайта https://www.chatbot24.su автоматически обрабатываются технические данные с использованием сервиса веб-аналитики Яндекс Метрика, включая:</p>
+                <ul>
+                    <li>IP-адрес;</li>
+                    <li>данные файлов cookie;</li>
+                    <li>сведения о браузере и устройстве;</li>
+                    <li>сведения о действиях пользователя на страницах сайта;</li>
+                    <li>время посещения;</li>
+                    <li>технические параметры сессии.</li>
+                </ul>
+                <p>Указанные данные носят статистический характер и используются исключительно для анализа посещаемости и улучшения работы сайта.</p>
 
-            <h3>5.3. Передача третьим лицам</h3>
-            <p>Оператор не передаёт персональные данные третьим лицам, за исключением случаев, предусмотренных законодательством РФ.</p>
+                <h3>3.2. Данные, предоставляемые добровольно</h3>
+                <p>При обращении через Telegram пользователь может добровольно предоставить:</p>
+                <ul>
+                    <li>номер телефона;</li>
+                    <li>адрес электронной почты;</li>
+                    <li>имя;</li>
+                    <li>никнейм в Telegram.</li>
+                </ul>
+                <p>Оператор не запрашивает специальные категории персональных данных и не требует избыточных сведений.</p>
+            </section>
 
-            <h2>6. Права субъекта персональных данных</h2>
-            <ol>
-                <li>Получать информацию о обработке его персональных данных;</li>
-                <li>Требовать уточнения, блокирования или уничтожения персональных данных;</li>
-                <li>Отозвать согласие на обработку персональных данных;</li>
-                <li>Обжаловать действия Оператора в уполномоченный орган.</li>
-            </ol>
+            <section class="privacy-section">
+                <h2>4. Цели обработки персональных данных</h2>
+                <p>Персональные данные обрабатываются исключительно в целях:</p>
+                <ul>
+                    <li>анализа и улучшения работы сайта;</li>
+                    <li>обратной связи по инициативе пользователя;</li>
+                    <li>обсуждения возможного сотрудничества.</li>
+                </ul>
+                <p>Оператор не осуществляет обработку персональных данных в целях массовых рассылок и рекламы без отдельного согласия.</p>
+            </section>
 
-            <h2>7. Меры защиты персональных данных</h2>
-            <p>Оператор принимает необходимые организационные и технические меры для защиты персональных данных:</p>
-            <ul>
-                <li>Использование защищённого соединения (HTTPS/SSL);</li>
-                <li>Регулярное обновление программного обеспечения;</li>
-                <li>Ограничение доступа к персональным данным;</li>
-                <li>Шифрование данных при передаче.</li>
-            </ul>
+            <section class="privacy-section">
+                <h2>5. Правовые основания обработки</h2>
+                <p>Обработка осуществляется на основании:</p>
+                <ul>
+                    <li>статьи 6 Федерального закона №152-ФЗ;</li>
+                    <li>добровольного предоставления данных субъектом;</li>
+                    <li>законного интереса Оператора в обеспечении функционирования сайта.</li>
+                </ul>
+            </section>
 
-            <h2>8. Использование файлов cookie</h2>
-            <p>Сайт использует файлы cookie для улучшения работы. Пользователь может отключить cookie в настройках браузера.</p>
+            <section class="privacy-section">
+                <h2>6. Передача персональных данных</h2>
+                <p>Оператор не передаёт персональные данные третьим лицам, за исключением случаев, предусмотренных законодательством Российской Федерации.</p>
+                <p>Обработка статистических данных осуществляется сервисом Яндекс Метрика в рамках его функционала.</p>
+            </section>
 
-            <h2>9. Изменение Политики конфиденциальности</h2>
-            <p>Оператор имеет право вносить изменения в настоящую Политику. Новая редакция вступает в силу с момента размещения на Сайте.</p>
+            <section class="privacy-section">
+                <h2>7. Хранение данных</h2>
+                <p>Оператор не формирует и не ведёт систематизированную базу персональных данных пользователей сайта.</p>
+                <p>Контактные сведения, направленные через Telegram, используются исключительно для ответа и не подлежат долговременному хранению.</p>
+                <p>Персональные данные обрабатываются не дольше, чем это требуется для достижения целей обработки.</p>
+            </section>
 
-            <h2>10. Контактная информация</h2>
-            <div class="contact-info">
-                <h3>Оператор персональных данных:</h3>
-                <p><strong>ИП:</strong> ChatBot24 Studio</p>
-                <p><strong>Email:</strong> <a href="mailto:info@ChatBot24.su">info@ChatBot24.su</a></p>
-                <p><strong>Telegram:</strong> <a href="https://t.me/zerocoder1" target="_blank">@zerocoder1</a></p>
-                <p><strong>Сайт:</strong> <a href="https://chatbot24.su">chatbot24.su</a></p>
-            </div>
-        </main>
+            <section class="privacy-section">
+                <h2>8. Права субъекта персональных данных</h2>
+                <p>Субъект персональных данных вправе:</p>
+                <ul>
+                    <li>получать сведения об обработке своих данных;</li>
+                    <li>требовать уточнения, блокирования или уничтожения данных;</li>
+                    <li>отозвать согласие на обработку.</li>
+                </ul>
+                <p>Запрос направляется на email: <strong>info@chatbot24.su</strong></p>
+            </section>
 
-        <footer style="margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--color-border);">
-            <a href="/" class="back-link">← Вернуться на главную</a>
-        </footer>
-    </div>
+            <section class="privacy-section">
+                <h2>9. Меры защиты</h2>
+                <p>Оператор принимает необходимые организационные и технические меры для защиты персональных данных от неправомерного доступа, изменения, раскрытия или уничтожения.</p>
+            </section>
+
+            <section class="privacy-section">
+                <h2>10. Заключительные положения</h2>
+                <p>Актуальная версия Политики размещена на сайте https://www.chatbot24.su в свободном доступе.</p>
+                <p>Оператор вправе вносить изменения в настоящую Политику без предварительного уведомления пользователей.</p>
+            </section>
+
+            <a href="/" class="privacy-back">← Вернуться на главную</a>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-copyright">© 2026 ChatBot24 Studio. Все права защищены.</p>
+        </div>
+    </footer>
 </body>
 </html>

@@ -127,11 +127,11 @@ body {
   background: rgba(15, 15, 26, 0.98);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-top: 1px solid var(--color-card-border);
-  padding: 16px 24px;
+  border-top: 1px solid rgba(236, 72, 153, 0.2);
+  padding: 20px 24px;
   z-index: 9999;
   transform: translateY(100%);
-  transition: transform 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .cookie-banner.active {
   transform: translateY(0);
@@ -144,29 +144,76 @@ body {
   justify-content: space-between;
   gap: 24px;
 }
+.cookie-icon {
+  font-size: 32px;
+  flex-shrink: 0;
+}
 .cookie-text {
   font-size: 14px;
-  color: var(--color-text-secondary);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
   margin: 0;
+  flex: 1;
 }
-.cookie-text a {
-  color: var(--color-accent-start);
+.cookie-text strong {
+  color: #ec4899;
+  font-weight: 600;
+}
+.cookie-link {
+  color: #ec4899;
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+.cookie-link:hover {
+  color: #f472b6;
+}
+.cookie-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
 }
 .cookie-btn {
-  padding: 10px 24px;
-  background: var(--color-accent-gradient);
-  color: white;
+  padding: 12px 24px;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   font-weight: 600;
+  font-size: 14px;
   cursor: pointer;
+  transition: all 0.3s ease;
   white-space: nowrap;
+}
+.cookie-btn-primary {
+  background: linear-gradient(135deg, #ec4899, #8b5cf6);
+  color: white;
+}
+.cookie-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(236, 72, 153, 0.3);
+}
+.cookie-btn-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  text-decoration: none;
+}
+.cookie-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
 }
 @media (max-width: 768px) {
   .cookie-content {
     flex-direction: column;
     text-align: center;
   }
+  .cookie-icon {
+    display: none;
+  }
+  .cookie-actions {
+    width: 100%;
+    justify-content: center;
+  }
+}
 }
 
 /* Header with blur */
@@ -879,6 +926,56 @@ body {
 }
 .telegram-widget:hover { transform: scale(1.1); box-shadow: 0 6px 30px rgba(0, 136, 204, 0.6); }
 .telegram-icon { width: 28px; height: 28px; }
+
+/* Telegram Consent Notice */
+.telegram-consent {
+  position: fixed;
+  bottom: 100px;
+  right: 30px;
+  max-width: 300px;
+  background: rgba(15, 15, 26, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(236, 72, 153, 0.2);
+  border-radius: 16px;
+  padding: 16px;
+  z-index: 999;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  transform: translateY(20px);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.telegram-consent.active {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+.telegram-consent-text {
+  font-size: 12px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0 0 12px 0;
+}
+.telegram-consent-text a {
+  color: #ec4899;
+  text-decoration: underline;
+}
+.telegram-consent-btn {
+  width: 100%;
+  padding: 10px;
+  background: linear-gradient(135deg, #ec4899, #8b5cf6);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.telegram-consent-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
+}
 
 /* Touch targets for accessibility (48x48px minimum) */
 .slider-dot,
