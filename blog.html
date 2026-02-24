@@ -8,29 +8,118 @@
     <link rel="canonical" href="https://www.chatbot24.su/blog.html">
     <link rel="alternate" hreflang="ru" href="https://www.chatbot24.su/blog.html">
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-    <link rel="icon" type="image/svg+xml" sizes="32x32" href="/assets/favicon-32x32.svg">
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.svg">
-    <link rel="manifest" href="/assets/site.webmanifest">
-    <meta name="theme-color" content="#0f0f1a">
-    <link rel="preconnect" href="https://mc.yandex.ru">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
     <style>
         .blog-header { padding: 120px 0 60px; text-align: center; }
         .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; padding-bottom: 100px; }
-        .blog-card { background: var(--color-card-bg); backdrop-filter: blur(10px); border: 1px solid var(--color-card-border); border-radius: 16px; overflow: hidden; transition: all 0.3s ease; }
-        .blog-card:hover { transform: translateY(-4px); border-color: var(--color-accent-start); }
-        .blog-image { height: 200px; background: linear-gradient(135deg, var(--color-accent-start), var(--color-accent-end)); display: flex; align-items: center; justify-content: center; font-size: 64px; }
+        .blog-card { background: rgba(255,255,255,0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; overflow: hidden; transition: all 0.3s ease; }
+        .blog-card:hover { transform: translateY(-4px); border-color: #ec4899; }
+        .blog-image { height: 200px; background: linear-gradient(135deg, #ec4899, #8b5cf6); display: flex; align-items: center; justify-content: center; font-size: 64px; }
+        .blog-image img { width: 100%; height: 100%; object-fit: cover; }
         .blog-content { padding: 24px; }
-        .blog-date { font-size: 13px; color: var(--color-text-muted); margin-bottom: 8px; }
-        .blog-title { font-size: 20px; font-weight: 600; margin-bottom: 12px; }
-        .blog-excerpt { font-size: 15px; color: var(--color-text-secondary); margin-bottom: 16px; }
-        .breadcrumb { display: flex; gap: 8px; align-items: center; font-size: 14px; color: var(--color-text-muted); margin-bottom: 24px; }
-        .breadcrumb a { color: var(--color-text-secondary); text-decoration: none; }
+        .blog-date { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 8px; }
+        .blog-title { font-size: 20px; font-weight: 600; margin-bottom: 12px; color: white; }
+        .blog-excerpt { font-size: 15px; color: rgba(255,255,255,0.7); margin-bottom: 16px; }
+        .blog-tag { display: inline-block; padding: 4px 12px; background: rgba(236,72,153,0.1); border-radius: 12px; font-size: 12px; color: #ec4899; margin-bottom: 12px; }
+        .breadcrumb { display: flex; gap: 8px; align-items: center; font-size: 14px; color: rgba(255,255,255,0.5); margin-bottom: 24px; }
+        .breadcrumb a { color: rgba(255,255,255,0.7); text-decoration: none; }
         .breadcrumb a:hover { color: white; }
         @media (max-width: 1024px) { .blog-grid { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 768px) { .blog-grid { grid-template-columns: 1fr; } }
     </style>
-    
-    
+</head>
+<body>
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="/" class="logo">
+                    <span class="logo-icon">🤖</span>
+                    <span class="logo-text">ChatBot24 Studio</span>
+                </a>
+                <nav class="nav" id="nav">
+                    <a href="/" class="nav-link">Главная</a>
+                    <a href="/blog.html" class="nav-link">Блог</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="blog-header">
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="/">Главная</a>
+                <span>/</span>
+                <span>Блог</span>
+            </nav>
+            <h1 class="section-title">Блог</h1>
+            <p class="section-intro">Полезные материалы о чат-ботах, автоматизации и клиентском сервисе</p>
+        </div>
+    </main>
+
+    <section class="section">
+        <div class="container">
+            <div class="blog-grid">
+                <!-- Article 1: Новая статья -->
+                <article class="blog-card">
+                    <a href="/blog/sekundy-reshayut-vse.html">
+                        <div class="blog-image">
+                            <img src="/blog/assets/sekundy-reshayut-vse-hero.png" alt="Секунды решают всё" loading="lazy">
+                        </div>
+                        <div class="blog-content">
+                            <span class="blog-tag">Бизнес-стратегия</span>
+                            <div class="blog-date">25 февраля 2026</div>
+                            <h3 class="blog-title">Секунды решают всё: почему скорость ответа важнее бренда</h3>
+                            <p class="blog-excerpt">Разбираем, как мгновенная реакция формирует доверие и почему автоматизация — это не про роботов, а про уважение к клиенту.</p>
+                        </div>
+                    </a>
+                </article>
+
+                <!-- Article 2 -->
+                <article class="blog-card">
+                    <a href="/blog/kak-chat-bot-uvelichivaet-konversiyu.html">
+                        <div class="blog-image">🎯</div>
+                        <div class="blog-content">
+                            <span class="blog-tag">Кейсы</span>
+                            <div class="blog-date">15 января 2025</div>
+                            <h3 class="blog-title">Как чат-бот увеличивает конверсию на 40%</h3>
+                            <p class="blog-excerpt">Реальный кейс внедрения Telegram-бота для онлайн-школы. Как автоматизация изменила процесс продаж.</p>
+                        </div>
+                    </a>
+                </article>
+
+                <!-- Article 3 -->
+                <article class="blog-card">
+                    <a href="/blog/5-oshibok-vnedreniya-chat-bota.html">
+                        <div class="blog-image">⚠️</div>
+                        <div class="blog-content">
+                            <span class="blog-tag">Практика</span>
+                            <div class="blog-date">10 января 2025</div>
+                            <h3 class="blog-title">5 ошибок внедрения чат-бота</h3>
+                            <p class="blog-excerpt">Чего не стоит делать при запуске бота и как избежать типичных ловушек.</p>
+                        </div>
+                    </a>
+                </article>
+
+                <!-- Article 4 -->
+                <article class="blog-card">
+                    <a href="/blog/telegram-vs-whatsapp.html">
+                        <div class="blog-image">💬</div>
+                        <div class="blog-content">
+                            <span class="blog-tag">Сравнение</span>
+                            <div class="blog-date">5 января 2025</div>
+                            <h3 class="blog-title">Telegram vs WhatsApp: что выбрать для бизнеса</h3>
+                            <p class="blog-excerpt">Сравнение возможностей, стоимости и ограничений двух популярных платформ.</p>
+                        </div>
+                    </a>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-copyright">© 2026 ChatBot24 Studio. Все права защищены.</p>
+        </div>
+    </footer>
+</body>
+</html>
