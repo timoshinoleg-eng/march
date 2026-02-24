@@ -545,107 +545,176 @@
             </div>
         </section>
 
-        <!-- TESTIMONIALS -->
+<!-- TESTIMONIALS -->
         <section class="section testimonials" id="testimonials">
             <div class="container">
                 <h2 class="section-title" data-aos="fade-up">Что говорят клиенты</h2>
                 <p class="section-intro" data-aos="fade-up">Реальные отзывы о внедрении чат-ботов</p>
                 
-                <div class="testimonials-slider" data-aos="fade-up">
-                    <button class="slider-btn slider-btn-prev" aria-label="Предыдущий отзыв">‹</button>
-                    <div class="testimonials-track">
-                        <div class="testimonial-card">
-                            <div class="testimonial-avatar">
-                                <img src="/assets/avatars/anna-k.svg" alt="Анна К." width="64" height="64" loading="lazy">
-                            </div>
-                            <div class="testimonial-author">
+                <div class="testimonials-grid" data-aos="fade-up">
+                    <!-- Отзыв 1: Анна К. -->
+                    <div class="testimonial-card">
+                        <div class="testimonial-header">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&h=120&fit=crop&crop=face" alt="Анна К." class="testimonial-photo" loading="lazy">
+                            <div class="testimonial-meta">
                                 <h4>Анна К.</h4>
-                                <span>Основатель онлайн-школы</span>
+                                <span class="testimonial-role">Основатель</span>
+                                <span class="testimonial-niche">Онлайн-школа</span>
                             </div>
-                            <div class="testimonial-rating">★★★★★</div>
-                            <p class="testimonial-text">Бот обрабатывает <strong>80%</strong> вопросов студентов. Кураторы теперь занимаются только сложными случаями.</p>
                         </div>
-                        
-                        <div class="testimonial-card">
-                            <div class="testimonial-avatar">
-                                <img src="/assets/avatars/mikhail-s.svg" alt="Михаил С." width="64" height="64" loading="lazy">
-                            </div>
-                            <div class="testimonial-author">
-                                <h4>Михаил С.</h4>
-                                <span>Директор клиники</span>
-                            </div>
-                            <div class="testimonial-rating">★★★★★</div>
-                            <p class="testimonial-text">Запись через бота выросла на <strong>40%</strong>. Пропущенных звонков практически не осталось.</p>
-                        </div>
-                        
-                        <div class="testimonial-card">
-                            <div class="testimonial-avatar">
-                                <img src="/assets/avatars/elena-v.svg" alt="Елена В." width="64" height="64" loading="lazy">
-                            </div>
-                            <div class="testimonial-author">
-                                <h4>Елена В.</h4>
-                                <span>Руководитель отдела продаж</span>
-                            </div>
-                            <div class="testimonial-rating">★★★★★</div>
-                            <p class="testimonial-text">Квалификация лидов автоматическая. Менеджеры получают только горячие заявки.</p>
-                        </div>
-                        
-                        <div class="testimonial-card">
-                            <div class="testimonial-avatar">
-                                <img src="/assets/avatars/dmitry-p.svg" alt="Дмитрий П." width="64" height="64" loading="lazy">
-                            </div>
-                            <div class="testimonial-author">
-                                <h4>Дмитрий П.</h4>
-                                <span>Владелец магазина</span>
-                            </div>
-                            <div class="testimonial-rating">★★★★★</div>
-                            <p class="testimonial-text">Интеграция с 1С работает идеально. Заказы попадают в систему мгновенно.</p>
-                        </div>
-                        
-                        <div class="testimonial-card">
-                            <div class="testimonial-avatar">
-                                <img src="/assets/avatars/olga-m.svg" alt="Ольга М." width="64" height="64" loading="lazy">
-                            </div>
-                            <div class="testimonial-author">
-                                <h4>Ольга М.</h4>
-                                <span>CEO консалтинговой фирмы</span>
-                            </div>
-                            <div class="testimonial-rating">★★★★★</div>
-                            <p class="testimonial-text">Бот собирает данные клиентов до созвона. Экономит <strong>30 минут</strong> на каждой встрече.</p>
-                        </div>
-                        
-                        <div class="testimonial-card">
-                            <div class="testimonial-avatar">
-                                <img src="/assets/avatars/igor-l.svg" alt="Игорь Л." width="64" height="64" loading="lazy">
-                            </div>
-                            <div class="testimonial-author">
-                                <h4>Игорь Л.</h4>
-                                <span>Организатор мероприятий</span>
-                            </div>
-                            <div class="testimonial-rating">★★★★★</div>
-                            <p class="testimonial-text">Автоматическая регистрация и рассылки. <strong>500+</strong> участников без ручной работы.</p>
-                        </div>
-                        
-                        <div class="testimonial-card">
-                            <div class="testimonial-avatar">
-                                <img src="/assets/avatars/natalia-r.svg" alt="Наталья Р." width="64" height="64" loading="lazy">
-                            </div>
-                            <div class="testimonial-author">
-                                <h4>Наталья Р.</h4>
-                                <span>Управляющий салоном</span>
-                            </div>
-                            <div class="testimonial-rating">★★★★★</div>
-                            <p class="testimonial-text">Напоминания о записи снизили ноу-шоу на <strong>60%</strong>. Клиенты довольны удобством.</p>
-                        </div>
+                        <div class="testimonial-rating">★★★★★</div>
+                        <blockquote class="testimonial-text">
+                            «Telegram-бот взял на себя <strong>80% вопросов</strong> студентов по курсам и домашним заданиям. Интеграция с Bitrix24 работает без сбоев — все заявки автоматически попадают в воронку.»
+                        </blockquote>
                     </div>
-                    <button class="slider-btn slider-btn-next" aria-label="Следующий отзыв">›</button>
-                    <div class="slider-dots"></div>
+                    
+                    <!-- Отзыв 2: Михаил С. -->
+                    <div class="testimonial-card">
+                        <div class="testimonial-header">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&h=120&fit=crop&crop=face" alt="Михаил С." class="testimonial-photo" loading="lazy">
+                            <div class="testimonial-meta">
+                                <h4>Михаил С.</h4>
+                                <span class="testimonial-role">Директор</span>
+                                <span class="testimonial-niche">Медицинская клиника</span>
+                            </div>
+                        </div>
+                        <div class="testimonial-rating">★★★★★</div>
+                        <blockquote class="testimonial-text">
+                            «Запись на приём через бота выросла на <strong>40%</strong> за первый месяц. Пропущенных звонков практически не осталось, администраторы разгружены.»
+                        </blockquote>
+                    </div>
+                    
+                    <!-- Отзыв 3: Елена В. -->
+                    <div class="testimonial-card">
+                        <div class="testimonial-header">
+                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=120&h=120&fit=crop&crop=face" alt="Елена В." class="testimonial-photo" loading="lazy">
+                            <div class="testimonial-meta">
+                                <h4>Елена В.</h4>
+                                <span class="testimonial-role">РОП</span>
+                                <span class="testimonial-niche">B2B-услуги</span>
+                            </div>
+                        </div>
+                        <div class="testimonial-rating">★★★★★</div>
+                        <blockquote class="testimonial-text">
+                            «Квалификация лидов теперь полностью автоматическая — бот задаёт 7 вопросов перед передачей менеджеру. Сотрудники получают только горячие заявки с бюджетом от 100 000 ₽.»
+                        </blockquote>
+                    </div>
+                    
+                    <!-- Отзыв 4: Дмитрий П. -->
+                    <div class="testimonial-card">
+                        <div class="testimonial-header">
+                            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&h=120&fit=crop&crop=face" alt="Дмитрий П." class="testimonial-photo" loading="lazy">
+                            <div class="testimonial-meta">
+                                <h4>Дмитрий П.</h4>
+                                <span class="testimonial-role">Владелец</span>
+                                <span class="testimonial-niche">Интернет-магазин</span>
+                            </div>
+                        </div>
+                        <div class="testimonial-rating">★★★★★</div>
+                        <blockquote class="testimonial-text">
+                            «Интеграция с Битрикс24 работает идеально — заказы из бота мгновенно создают сделки в CRM. Обработка заявки сократилась с 30 минут до 2 минут.»
+                        </blockquote>
+                    </div>
+                    
+                    <!-- Отзыв 5: Ольга М. -->
+                    <div class="testimonial-card">
+                        <div class="testimonial-header">
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&h=120&fit=crop&crop=face" alt="Ольга М." class="testimonial-photo" loading="lazy">
+                            <div class="testimonial-meta">
+                                <h4>Ольга М.</h4>
+                                <span class="testimonial-role">CEO</span>
+                                <span class="testimonial-niche">Консалтинг</span>
+                            </div>
+                        </div>
+                        <div class="testimonial-rating">★★★★★</div>
+                        <blockquote class="testimonial-text">
+                            «Бот собирает данные клиентов до созвона — бюджет, сроки, задачи. Экономим <strong>30 минут</strong> на каждой встрече, менеджеры приходят уже подготовленными.»
+                        </blockquote>
+                    </div>
+                    
+                    <!-- Отзыв 6: Игорь Л. -->
+                    <div class="testimonial-card">
+                        <div class="testimonial-header">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&h=120&fit=crop&crop=face" alt="Игорь Л." class="testimonial-photo" loading="lazy">
+                            <div class="testimonial-meta">
+                                <h4>Игорь Л.</h4>
+                                <span class="testimonial-role">Организатор</span>
+                                <span class="testimonial-niche">Мероприятия</span>
+                            </div>
+                        </div>
+                        <div class="testimonial-rating">★★★★★</div>
+                        <blockquote class="testimonial-text">
+                            «Автоматическая регистрация на вебинары и рассылки напоминаний. <strong>500+ участников</strong> без ручной работы, явка выросла на 35%.»
+                        </blockquote>
+                    </div>
+                    
+                    <!-- Отзыв 7: Наталья Р. -->
+                    <div class="testimonial-card">
+                        <div class="testimonial-header">
+                            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=120&h=120&fit=crop&crop=face" alt="Наталья Р." class="testimonial-photo" loading="lazy">
+                            <div class="testimonial-meta">
+                                <h4>Наталья Р.</h4>
+                                <span class="testimonial-role">Управляющий</span>
+                                <span class="testimonial-niche">Салон красоты</span>
+                            </div>
+                        </div>
+                        <div class="testimonial-rating">★★★★★</div>
+                        <blockquote class="testimonial-text">
+                            «Напоминания о записи снизили ноу-шоу на <strong>60%</strong>. Клиенты довольны удобством — записаться можно в любое время суток через Telegram.»
+                        </blockquote>
+                    </div>
+                    
+                    <!-- Отзыв 8: Андрей Т. -->
+                    <div class="testimonial-card">
+                        <div class="testimonial-header">
+                            <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=120&h=120&fit=crop&crop=face" alt="Андрей Т." class="testimonial-photo" loading="lazy">
+                            <div class="testimonial-meta">
+                                <h4>Андрей Т.</h4>
+                                <span class="testimonial-role">Коммерческий директор</span>
+                                <span class="testimonial-niche">Производство</span>
+                            </div>
+                        </div>
+                        <div class="testimonial-rating">★★★★★</div>
+                        <blockquote class="testimonial-text">
+                            «Внедрили бота для квалификации оптовых заявок. Отсекли <strong>70% нецелевых</strong> обращений, отдел продаж фокусируется на крупных клиентах.»
+                        </blockquote>
+                    </div>
+                    
+                    <!-- Отзыв 9: Светлана К. -->
+                    <div class="testimonial-card">
+                        <div class="testimonial-header">
+                            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=120&h=120&fit=crop&crop=face" alt="Светлана К." class="testimonial-photo" loading="lazy">
+                            <div class="testimonial-meta">
+                                <h4>Светлана К.</h4>
+                                <span class="testimonial-role">Маркетолог</span>
+                                <span class="testimonial-niche">Недвижимость</span>
+                            </div>
+                        </div>
+                        <div class="testimonial-rating">★★★★★</div>
+                        <blockquote class="testimonial-text">
+                            «Бот фильтрует заявки по бюджету и району интереса. Конверсия в просмотр объектов выросла с <strong>12% до 28%</strong> за 2 месяца.»
+                        </blockquote>
+                    </div>
+                    
+                    <!-- Отзыв 10: Виктор К. -->
+                    <div class="testimonial-card">
+                        <div class="testimonial-header">
+                            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=120&h=120&fit=crop&crop=face" alt="Виктор К." class="testimonial-photo" loading="lazy">
+                            <div class="testimonial-meta">
+                                <h4>Виктор К.</h4>
+                                <span class="testimonial-role">—</span>
+                                <span class="testimonial-niche">Рекламное агентство</span>
+                            </div>
+                        </div>
+                        <div class="testimonial-rating">★★★★★</div>
+                        <blockquote class="testimonial-text">
+                            «Бот квалифицирует входящие заявки с сайта. Стоимость лида снизилась на <strong>22%</strong>, качество выросло.»
+                        </blockquote>
+                    </div>
+                    
                 </div>
             </div>
-        </section>
-
-        <!-- PROCESS -->
-        <section class="section section-dark" id="process">
+        </section>        <section class="section section-dark" id="process">
             <div class="container">
                 <h2 class="section-title" data-aos="fade-up">Как мы разрабатываем чат-бота под ключ</h2>
                 <p class="section-intro" data-aos="fade-up">Это снимает страх «как это вообще происходит».</p>
