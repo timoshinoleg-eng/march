@@ -580,7 +580,17 @@ body {
   border-radius: 16px; 
   padding: 32px;
 }
-.problem-icon { font-size: 32px; margin-bottom: 16px; }
+.problem-icon { 
+  font-size: 32px; 
+  margin-bottom: 16px;
+  color: #ef4444;
+}
+
+.problem-lucide-icon {
+  width: 32px;
+  height: 32px;
+  stroke-width: 2;
+}
 .pain-icon { color: var(--color-pain); }
 .problem-card-title { font-size: 18px; font-weight: 600; margin-bottom: 12px; }
 .problem-card-text { font-size: 14px; color: var(--color-text-secondary); }
