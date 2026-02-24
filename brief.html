@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бриф на разработку чат-бота | ChatBot24 Studio</title>
+    <meta name="description" content="Заполните бриф на разработку чат-бота. Время заполнения: 5–7 минут.">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .brief-page {
+            padding: 100px 0 80px;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f0f2a 0%, #1a1a3e 50%, #2d1b4e 100%);
+        }
+        .brief-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .brief-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .brief-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(236, 72, 153, 0.1);
+            border: 1px solid rgba(236, 72, 153, 0.3);
+            border-radius: 20px;
+            font-size: 13px;
+            color: #ec4899;
+            margin-bottom: 20px;
+        }
+        .brief-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.8) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .brief-subtitle {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 600px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+        .brief-time {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 30px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        .brief-form {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 40px;
+        }
+        .brief-section {
+            margin-bottom: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .brief-section:last-of-type {
+            border-bottom: none;
+        }
+        .section-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #ec4899, #8b5cf6);
+            border-radius: 50%;
+            font-size: 14px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 16px;
+        }
+        .section-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 8px;
+        }
+        .section-desc {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 24px;
+        }
+        .form-group {
+            margin-bottom: 24px;
+        }
+        .form-label {
+            display: block;
+            font-size: 15px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 10px;
+        }
+        .form-label .required {
+            color: #ec4899;
+            margin-left: 4px;
+        }
+        .form-hint {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 10px;
+        }
+        .form-input,
+        .form-textarea,
+        .form-select {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            font-size: 15px;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: #ec4899;
+            background: rgba(255, 255, 255, 0.08);
+        }
+        .form-input::placeholder,
+        .form-textarea::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .checkbox-group {
+            display: grid;
+            gap: 12px;
+        }
+        .checkbox-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .checkbox-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(236, 72, 153, 0.3);
+        }
+        .checkbox-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+            accent-color: #ec4899;
+            cursor: pointer;
+        }
+        .checkbox-label {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.9);
+            cursor: pointer;
+        }
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 18px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .radio-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+        }
+        .radio-item input[type="radio"] {
+            accent-color: #ec4899;
+            cursor: pointer;
+        }
+        .radio-item label {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
+            cursor: pointer;
+        }
+        .radio-item:has(input:checked) {
+            background: rgba(236, 72, 153, 0.1);
+            border-color: #ec4899;
+        }
+        .range-container {
+            margin-top: 10px;
+        }
+        .range-input {
+            width: 100%;
+            height: 6px;
+            -webkit-appearance: none;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            outline: none;
+        }
+        .range-input::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, #ec4899, #8b5cf6);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
+        }
+        .range-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+        .range-value {
+            display: inline-block;
+            margin-left: 10px;
+            padding: 4px 12px;
+            background: linear-gradient(135deg, #ec4899, #8b5cf6);
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+        }
+        .submit-section {
+            text-align: center;
+            padding-top: 20px;
+        }
+        .submit-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 40px;
+            background: linear-gradient(135deg, #ec4899, #8b5cf6);
+            border: none;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(236, 72, 153, 0.4);
+        }
+        .next-steps {
+            margin-top: 40px;
+            padding: 30px;
+            background: rgba(236, 72, 153, 0.05);
+            border: 1px solid rgba(236, 72, 153, 0.2);
+            border-radius: 16px;
+        }
+        .next-steps h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .next-steps ul {
+            list-style: none;
+            padding: 0;
+        }
+        .next-steps li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        .next-steps li::before {
+            content: "✓";
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            background: rgba(236, 72, 153, 0.2);
+            border-radius: 50%;
+            font-size: 12px;
+            color: #ec4899;
+            flex-shrink: 0;
+        }
+        @media (max-width: 768px) {
+            .brief-form {
+                padding: 24px;
+            }
+            .brief-title {
+                font-size: 28px;
+            }
+            .radio-group {
+                flex-direction: column;
+            }
+            .radio-item {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="/" class="logo">
+                    <span class="logo-icon">🤖</span>
+                    <span class="logo-text">ChatBot24 Studio</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="brief-page">
+        <div class="container brief-container">
+            <div class="brief-header">
+                <div class="brief-badge">
+                    📋 Бриф на разработку
+                </div>
+                <h1 class="brief-title">Бриф на разработку чат-бота</h1>
+                <p class="brief-subtitle">
+                    Спасибо за интерес к разработке чат-бота. Этот короткий бриф поможет нам понять ваши задачи, оценить масштаб проекта и подготовиться к первой встрече с конкретными решениями.
+                </p>
+                <div class="brief-time">
+                    ⏱️ Время заполнения: 5–7 минут
+                </div>
+            </div>
+
+            <form class="brief-form" id="briefForm" action="/api/send-brief" method="POST">
+                <!-- Section 1: О бизнесе -->
+                <div class="brief-section">
+                    <div class="section-number">1</div>
+                    <h2 class="section-title">О вашем бизнесе</h2>
+                    <p class="section-desc">Зачем спрашиваем: чтобы понять специфику рынка, тип клиентов и возможные ограничения.</p>
+                    
+                    <div class="form-group">
+                        <label class="form-label">
+                            В какой нише вы работаете и чем именно занимается компания?
+                            <span class="required">*</span>
+                        </label>
+                        <textarea class="form-textarea" name="business_niche" placeholder="Например: онлайн-школа английского языка, обучаем взрослых индивидуально и в мини-группах" required></textarea>
+                    </div>
+                </div>
+
+                <!-- Section 2: Цель -->
+                <div class="brief-section">
+                    <div class="section-number">2</div>
+                    <h2 class="section-title">Основная цель внедрения чат-бота</h2>
+                    <p class="section-desc">Зачем спрашиваем: чтобы понять приоритет проекта и его влияние на прибыль.</p>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Что вы хотите улучшить или автоматизировать?</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="goals" value="leads">
+                                <span class="checkbox-label">Привлечение и обработка лидов</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="goals" value="sales">
+                                <span class="checkbox-label">Продажи</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="goals" value="booking">
+                                <span class="checkbox-label">Запись на услуги / бронирование</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="goals" value="support">
+                                <span class="checkbox-label">Поддержка клиентов</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="goals" value="onboarding">
+                                <span class="checkbox-label">Обучение / онбординг</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="goals" value="internal">
+                                <span class="checkbox-label">Внутренние процессы</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="goals" value="other">
+                                <span class="checkbox-label">Другое (укажите в комментарии)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            Насколько сейчас это критично для бизнеса?
+                            <span class="range-value" id="priorityValue">5</span>
+                        </label>
+                        <div class="range-container">
+                            <input type="range" class="range-input" name="priority" min="1" max="10" value="5" id="priorityRange">
+                            <div class="range-labels">
+                                <span>Не критично</span>
+                                <span>Очень критично</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 3: Текущая ситуация -->
+                <div class="brief-section">
+                    <div class="section-number">3</div>
+                    <h2 class="section-title">Текущая ситуация</h2>
+                    <p class="section-desc">Зачем спрашиваем: чтобы определить, что уже работает и что можно автоматизировать.</p>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Как сейчас устроен этот процесс?</label>
+                        <p class="form-hint">Например: менеджеры вручную отвечают в Telegram, заявки приходят через сайт, используете CRM и т.д.</p>
+                        <textarea class="form-textarea" name="current_process" placeholder="Опишите текущий процесс работы..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Section 4: Платформа -->
+                <div class="brief-section">
+                    <div class="section-number">4</div>
+                    <h2 class="section-title">Где должен работать бот?</h2>
+                    <p class="section-desc">Зачем спрашиваем: от платформы зависит архитектура и бюджет проекта.</p>
+                    
+                    <div class="checkbox-group">
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="platform" value="telegram">
+                            <span class="checkbox-label">Telegram</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="platform" value="whatsapp">
+                            <span class="checkbox-label">WhatsApp</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="platform" value="vk">
+                            <span class="checkbox-label">VK</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="platform" value="website">
+                            <span class="checkbox-label">Сайт (веб-чат)</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="platform" value="multichannel">
+                            <span class="checkbox-label">Несколько платформ</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="platform" value="consult">
+                            <span class="checkbox-label">Нужна консультация</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Section 5: Аудитория -->
+                <div class="brief-section">
+                    <div class="section-number">5</div>
+                    <h2 class="section-title">Кто основная аудитория бота?</h2>
+                    <p class="section-desc">Зачем спрашиваем: сценарии общения зависят от типа аудитории.</p>
+                    
+                    <div class="radio-group">
+                        <label class="radio-item">
+                            <input type="radio" name="audience" value="b2c">
+                            <label>B2C (физлица)</label>
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="audience" value="b2b">
+                            <label>B2B (бизнес)</label>
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="audience" value="employees">
+                            <label>Сотрудники компании</label>
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="audience" value="other">
+                            <label>Другое</label>
+                        </label>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 20px;">
+                        <label class="form-label">Опишите коротко портрет клиента:</label>
+                        <textarea class="form-textarea" name="audience_desc" placeholder="Например: женщины 25-45 лет, средний доход, интересуются здоровым образом жизни..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Section 6: Функции -->
+                <div class="brief-section">
+                    <div class="section-number">6</div>
+                    <h2 class="section-title">Какие функции должен выполнять бот?</h2>
+                    <p class="section-desc">Зачем спрашиваем: для оценки сложности логики и объема разработки.</p>
+                    
+                    <div class="checkbox-group">
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="features" value="faq">
+                            <span class="checkbox-label">Ответы на частые вопросы</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="features" value="qualify">
+                            <span class="checkbox-label">Квалификация лидов</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="features" value="recommend">
+                            <span class="checkbox-label">Подбор продукта/услуги</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="features" value="orders">
+                            <span class="checkbox-label">Прием заявок</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="features" value="calendar">
+                            <span class="checkbox-label">Запись и календарь</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="features" value="payments">
+                            <span class="checkbox-label">Прием платежей</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="features" value="manager">
+                            <span class="checkbox-label">Передача менеджеру</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="features" value="crm">
+                            <span class="checkbox-label">Интеграция с CRM</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="features" value="other">
+                            <span class="checkbox-label">Другое (укажите в комментарии)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Section 7: Примеры -->
+                <div class="brief-section">
+                    <div class="section-number">7</div>
+                    <h2 class="section-title">Есть ли примеры ботов, которые вам нравятся?</h2>
+                    <p class="section-desc">Зачем спрашиваем: чтобы быстрее понять ваши ожидания по функционалу и стилю.</p>
+                    
+                    <div class="form-group">
+                        <textarea class="form-textarea" name="examples" placeholder="Ссылки на ботов или описание функционала, который вам нравится..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Section 8: Интеграции -->
+                <div class="brief-section">
+                    <div class="section-number">8</div>
+                    <h2 class="section-title">Какие сервисы вы уже используете?</h2>
+                    <p class="section-desc">Зачем спрашиваем: интеграции напрямую влияют на стоимость и сроки.</p>
+                    
+                    <div class="checkbox-group">
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="services" value="crm">
+                            <span class="checkbox-label">CRM (указать какую в комментарии)</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="services" value="payments">
+                            <span class="checkbox-label">Платежные системы</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="services" value="telephony">
+                            <span class="checkbox-label">IP-телефония</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="services" value="email">
+                            <span class="checkbox-label">Email-рассылки</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="services" value="sheets">
+                            <span class="checkbox-label">Google Sheets</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="services" value="none">
+                            <span class="checkbox-label">Ничего из перечисленного</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="services" value="other">
+                            <span class="checkbox-label">Другое (укажите в комментарии)</span>
+                        </label>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 20px;">
+                        <label class="form-label">Нужна ли интеграция с существующими системами?</label>
+                        <div class="radio-group">
+                            <label class="radio-item">
+                                <input type="radio" name="integration" value="required">
+                                <label>Да, обязательно</label>
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="integration" value="desired">
+                                <label>Желательно</label>
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="integration" value="unknown">
+                                <label>Пока не знаю</label>
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="integration" value="no">
+                                <label>Нет</label>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Если да — с какими именно?</label>
+                        <textarea class="form-textarea" name="integration_details" placeholder="Например: Битрикс24, AmoCRM, ЮKassa..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Section 9: Бюджет и сроки -->
+                <div class="brief-section">
+                    <div class="section-number">9</div>
+                    <h2 class="section-title">Ожидаемый бюджет и сроки запуска</h2>
+                    <p class="section-desc">Зачем спрашиваем: чтобы предложить реалистичный формат решения и приоритизацию функций.</p>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Бюджет:</label>
+                        <div class="radio-group">
+                            <label class="radio-item">
+                                <input type="radio" name="budget" value="50k">
+                                <label>До 50 000 ₽</label>
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="budget" value="50-150k">
+                                <label>50 000 – 150 000 ₽</label>
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="budget" value="150-300k">
+                                <label>150 000 – 300 000 ₽</label>
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="budget" value="300k+">
+                                <label>300 000 ₽+</label>
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="budget" value="unknown">
+                                <label>Нужна оценка</label>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Желаемый срок запуска:</label>
+                        <div class="radio-group">
+                            <label class="radio-item">
+                                <input type="radio" name="timeline" value="2weeks">
+                                <label>В течение 2 недель</label>
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="timeline" value="1month">
+                                <label>1 месяц</label>
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="timeline" value="1-2months">
+                                <label>1–2 месяца</label>
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="timeline" value="flexible">
+                                <label>Гибкие сроки</label>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 10: Контакты -->
+                <div class="brief-section">
+                    <div class="section-number">10</div>
+                    <h2 class="section-title">Контактные данные</h2>
+                    
+                    <div class="form-group">
+                        <label class="form-label">
+                            Имя и компания
+                            <span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-input" name="name" placeholder="Иван Петров, ООО «Пример»" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            Телефон / Telegram
+                            <span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-input" name="phone" placeholder="+7 (999) 123-45-67 или @username" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" name="email" placeholder="example@company.ru">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Комментарий</label>
+                        <textarea class="form-textarea" name="comment" placeholder="Если проект «горит», укажите это здесь — расставим приоритеты 🚀"></textarea>
+                    </div>
+                </div>
+
+                <!-- Next Steps -->
+                <div class="next-steps">
+                    <h3>🎯 Что дальше?</h3>
+                    <ul>
+                        <li>Анализируем ответы и оцениваем объем работ</li>
+                        <li>Готовим предварительное коммерческое предложение</li>
+                        <li>Связываемся с вами для 30-минутной встречи, где покажем возможную архитектуру решения</li>
+                    </ul>
+                </div>
+
+                <!-- Submit -->
+                <div class="submit-section">
+                    <button type="submit" class="submit-btn">
+                        Отправить бриф
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-copyright">© 2026 ChatBot24 Studio. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Range slider value update
+        const priorityRange = document.getElementById('priorityRange');
+        const priorityValue = document.getElementById('priorityValue');
+        
+        if (priorityRange) {
+            priorityRange.addEventListener('input', function() {
+                priorityValue.textContent = this.value;
+            });
+        }
+    </script>
+</body>
+</html>

@@ -57,7 +57,8 @@
       "email": "info@ChatBot24.su",
       "areaServed": "RU",
       "sameAs": [
-        "https://t.me/ChatBot24su_bot"
+        "https://t.me/ChatBot24su_bot",
+        "https://www.chatbot24.su/brief.html"
       ]
     }
     </script>
@@ -128,7 +129,7 @@
                     <a href="#faq" class="nav-link">FAQ</a>
                     <a href="/blog.html" class="nav-link">Блог</a>
                 </nav>
-                <button class="btn btn-primary btn-magnetic header-cta" data-modal="form">Получить бесплатный план внедрения бота</button>
+                <a href="/brief.html" class="btn btn-primary btn-magnetic header-cta">Заполнить бриф</a>
                 <button class="burger" id="burger" aria-label="Меню" aria-expanded="false">
                     <span class="burger-line"></span>
                     <span class="burger-line"></span>
@@ -917,10 +918,12 @@
         <button class="telegram-consent-btn" id="telegramConsentBtn">Понятно</button>
     </div>
 
-    <!-- TELEGRAM WIDGET -->
-    <a href="https://t.me/ChatBot24su_bot" target="_blank" rel="noopener noreferrer" class="telegram-widget" id="telegramWidget" aria-label="Написать в Telegram">
-        <svg class="telegram-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18 1.897-.962 6.502-1.359 8.627-.168.9-.5 1.201-.82 1.23-.697.064-1.226-.461-1.901-.903-1.056-.692-1.653-1.123-2.678-1.799-1.185-.781-.417-1.21.258-1.911.177-.184 3.247-2.977 3.307-3.23.007-.032.015-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.139-5.062 3.345-.479.329-.913.489-1.302.481-.428-.009-1.252-.242-1.865-.442-.751-.244-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.831-2.529 6.998-3.015 3.333-1.386 4.025-1.627 4.477-1.635.099-.002.321.023.465.141.121.099.154.232.17.325.015.093.034.305.019.471z"/></svg>
-        <span class="telegram-tooltip">Написать в Telegram</span>
+    <!-- BRIEF FLOATING BUTTON -->
+    <a href="/brief.html" class="brief-widget" id="briefWidget" aria-label="Заполнить бриф">
+        <svg class="brief-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+        </svg>
+        <span class="brief-tooltip">Заполнить бриф</span>
     </a>
 
     <!-- MODAL FORM -->
