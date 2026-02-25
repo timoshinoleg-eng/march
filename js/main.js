@@ -4,17 +4,6 @@
  */
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize AOS
-    if (typeof AOS !== 'undefined') {
-        AOS.init({
-            duration: 800,
-            easing: 'ease-out-cubic',
-            once: true,
-            offset: 100,
-            disable: function() { return window.innerWidth < 768; }
-        });
-    }
-
     // UTM Parameters tracking
     function getUTMParams() {
         const urlParams = new URLSearchParams(window.location.search);

@@ -1025,7 +1025,20 @@
     <script src="https://unpkg.com/lucide@0.575.0/dist/umd/lucide.min.js" defer></script>
     <script src="/js/main.js" defer></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        // Wait for all deferred scripts to load
+        window.addEventListener('load', function() {
+            // Initialize AOS if available
+            if (typeof AOS !== 'undefined') {
+                AOS.init({
+                    duration: 800,
+                    easing: 'ease-out-cubic',
+                    once: true,
+                    offset: 100,
+                    disable: function() { return window.innerWidth < 768; }
+                });
+            }
+            
+            // Initialize Lucide icons if available
             if (typeof lucide !== 'undefined') {
                 lucide.createIcons();
             }
