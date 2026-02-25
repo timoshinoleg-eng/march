@@ -398,12 +398,63 @@ ${formData.integration_details ? 'Детали: ' + formData.integration_details
 ${formData.comment || 'Нет'}
                 `.trim();
 
-                // Send to Telegram
-                const botToken = 'YOUR_BOT_TOKEN';
-                const chatId = 'YOUR_CHAT_ID';
+                // Send to Telegram group
+                const botToken = '7703636299:AAEK6SlB3CtP2Qvw1iPq0U3YrNXdzU4F9vI';
+                const chatId = '3771638944';
                 
-                // Open Telegram with pre-filled message
-                const telegramUrl = `https://t.me/ChatBot24su_bot?start=brief_${encodeURIComponent(JSON.stringify(formData))}`;
+                // Build message for Telegram
+                const message = `
+<b>📝 Новый бриф на разработку чат-бота</b>
+
+<b>1. О бизнесе:</b>
+${formData.business_niche}
+
+<b>2. Цель:</b> ${formData.goals || 'Не указано'}
+<b>Приоритет:</b> ${formData.priority}/10
+
+<b>3. Текущий процесс:</b>
+${formData.current_process || 'Не указано'}
+
+<b>4. Платформа:</b> ${formData.platform || 'Не указано'}
+
+<b>5. Аудитория:</b> ${formData.audience || 'Не указано'}
+${formData.audience_desc ? 'Портрет: ' + formData.audience_desc : ''}
+
+<b>6. Функции:</b> ${formData.features || 'Не указано'}
+
+<b>7. Примеры:</b>
+${formData.examples || 'Не указано'}
+
+<b>8. Сервисы:</b> ${formData.services || 'Не указано'}
+<b>Интеграция:</b> ${formData.integration || 'Не указано'}
+${formData.integration_details ? 'Детали: ' + formData.integration_details : ''}
+
+<b>9. Бюджет:</b> ${formData.budget || 'Не указано'}
+<b>Сроки:</b> ${formData.timeline || 'Не указано'}
+
+<b>10. Контакты:</b>
+👤 ${formData.name}
+📞 ${formData.phone}
+📧 ${formData.email || 'Не указан'}
+
+<b>Комментарий:</b>
+${formData.comment || 'Нет'}
+                `.trim();
+
+                // Send to Telegram via API
+                fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: chatId,
+                        text: message,
+                        parse_mode: 'HTML'
+                    })
+                }).then(() => {
+                    console.log('Brief sent successfully');
+                }).catch(err => {
+                    console.error('Error sending brief:', err);
+                });
                 
                 // Show success message
                 briefForm.style.display = 'none';
@@ -411,11 +462,6 @@ ${formData.comment || 'Нет'}
                 
                 // Scroll to top
                 window.scrollTo({ top: 0, behavior: 'smooth' });
-                
-                // Open Telegram after delay
-                setTimeout(() => {
-                    window.open(telegramUrl, '_blank');
-                }, 1500);
             });
         }
     </script>
