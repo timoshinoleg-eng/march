@@ -34,6 +34,7 @@
     <!-- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'"> -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/hero-widget.css">
     
     <!-- Canonical URL -->
     <link rel="canonical" href="https://www.chatbot24.su/">
@@ -215,30 +216,25 @@
                     </div>
                     
                     <div class="hero-visual" data-aos="fade-left">
-                        <div class="demo-chat-container">
-                            <div class="demo-chat-header">
-                                <div class="demo-chat-avatar">
-                                    <i data-lucide="bot" class="demo-avatar-icon"></i>
+                        <!-- Hero Widget -->
+                        <div class="hero-widget-container" id="hero-widget-container">
+                            <div class="hero-widget">
+                                <div class="hero-widget-header">
+                                    <div class="hero-widget-avatar">
+                                        <span class="hero-widget-status"></span>
+                                    </div>
+                                    <div class="hero-widget-info">
+                                        <h4 class="hero-widget-name">ChatBot24 Assistant</h4>
+                                        <p class="hero-widget-role">🟢 Онлайн</p>
+                                    </div>
                                 </div>
-                                <div class="demo-chat-info">
-                                    <div class="demo-chat-name">ChatBot24 Assistant</div>
-                                    <div class="demo-chat-status"><span class="status-dot"></span> Онлайн</div>
+                                <div class="hero-widget-body" id="hero-widget-body">
+                                    <!-- Widget content loaded by JS -->
                                 </div>
                             </div>
-                            
-                            <div class="demo-chat-messages" id="demoMessages">
-                                <!-- Сообщения добавляются через JS -->
-                            </div>
-                            
-                            <div class="demo-chat-input">
-                                <div class="demo-input-field">
-                                    <span class="typing-indicator" id="typingIndicator">
-                                        <span></span><span></span><span></span>
-                                    </span>
-                                </div>
-                                <button class="demo-send-btn">
-                                    <i data-lucide="send" class="demo-send-icon"></i>
-                                </button>
+                            <div class="hero-widget-popup" id="hero-widget-popup">
+                                <p>Показать, как бот может обрабатывать заявки 24/7?</p>
+                                <button class="hero-widget-btn" id="hero-widget-popup-btn">Показать</button>
                             </div>
                         </div>
                     </div>
@@ -1057,6 +1053,7 @@
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
     <script src="https://unpkg.com/lucide@0.575.0/dist/umd/lucide.min.js" defer></script>
+    <script src="/js/hero-widget.js"></script>
     <script src="/js/main.js" defer></script>
     <script>
         // Wait for all deferred scripts to load
