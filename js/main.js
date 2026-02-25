@@ -502,12 +502,17 @@ document.addEventListener('DOMContentLoaded', function() {
 // ========================================
 function initTestimonialsCarousel() {
     const carousel = document.querySelector('.testimonials-carousel');
-    if (!carousel) return;
+    if (!carousel) {
+        console.log('Carousel not found');
+        return;
+    }
     
     const cards = carousel.querySelectorAll('.testimonial-card');
     const prevBtn = carousel.querySelector('.testimonials-prev');
     const nextBtn = carousel.querySelector('.testimonials-next');
     const dotsContainer = carousel.querySelector('.testimonials-dots');
+    
+    console.log('Carousel init:', cards.length, 'cards, prevBtn:', !!prevBtn, 'nextBtn:', !!nextBtn);
     
     if (!cards.length) return;
     
@@ -516,12 +521,14 @@ function initTestimonialsCarousel() {
     let autoPlayInterval;
     
     // Create dots
-    cards.forEach((_, i) => {
-        const dot = document.createElement('div');
-        dot.className = 'testimonials-dot' + (i === 0 ? ' active' : '');
-        dot.addEventListener('click', () => goToSlide(i));
-        dotsContainer.appendChild(dot);
-    });
+    if (dotsContainer) {
+        cards.forEach((_, i) => {
+            const dot = document.createElement('div');
+            dot.className = 'testimonials-dot' + (i === 0 ? ' active' : '');
+            dot.addEventListener('click', () => goToSlide(i));
+            dotsContainer.appendChild(dot);
+        });
+    }
     
     const dots = carousel.querySelectorAll('.testimonials-dot');
     
@@ -542,15 +549,18 @@ function initTestimonialsCarousel() {
     
     function goToSlide(index) {
         currentIndex = (index + totalCards) % totalCards;
+        console.log('Go to slide:', currentIndex);
         updateCarousel();
         resetAutoPlay();
     }
     
     function nextSlide() {
+        console.log('Next slide');
         goToSlide(currentIndex + 1);
     }
     
     function prevSlide() {
+        console.log('Prev slide');
         goToSlide(currentIndex - 1);
     }
     
@@ -563,8 +573,21 @@ function initTestimonialsCarousel() {
         startAutoPlay();
     }
     
-    if (prevBtn) prevBtn.addEventListener('click', () => { prevSlide(); resetAutoPlay(); });
-    if (nextBtn) nextBtn.addEventListener('click', () => { nextSlide(); resetAutoPlay(); });
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => { 
+            console.log('Prev clicked');
+            prevSlide(); 
+            resetAutoPlay(); 
+        });
+    }
+    
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => { 
+            console.log('Next clicked');
+            nextSlide(); 
+            resetAutoPlay(); 
+        });
+    }
     
     // Touch support
     let touchStartX = 0;
@@ -577,6 +600,18 @@ function initTestimonialsCarousel() {
         const diff = touchStartX - touchEndX;
         if (Math.abs(diff) > 50) {
             if (diff > 0) nextSlide();
+            else prevSlide();
+        }
+    }, { passive: true });
+    
+    // Pause on hover
+    carousel.addEventListener('mouseenter', () => clearInterval(autoPlayInterval));
+    carousel.addEventListener('mouseleave', startAutoPlay);
+    
+    updateCarousel();
+    startAutoPlay();
+    console.log('Carousel initialized');
+}
             else prevSlide();
         }
     }, { passive: true });
