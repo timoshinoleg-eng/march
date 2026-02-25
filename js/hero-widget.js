@@ -36,19 +36,19 @@
         B: {
             firstQuestion: 'Сколько заявок обрабатываете вручную?',
             options: [
-                { id: 'few', text: 'До 50 в месяц' },
-                { id: 'medium', text: '50–200 в месяц' },
-                { id: 'many', text: 'Более 200' },
-                { id: 'notrack', text: 'Не отслеживаю' }
+                { id: 'few', text: '📦 До 50 в месяц' },
+                { id: 'medium', text: '📦📦 50–200 в месяц' },
+                { id: 'many', text: '📦📦📦 Более 200' },
+                { id: 'notrack', text: '❓ Не отслеживаю' }
             ]
         },
         C: {
             firstQuestion: 'Хотите рассчитать экономию от бота?',
             options: [
-                { id: 'yes', text: 'Да, покажите расчёт' },
-                { id: 'maybe', text: 'Сначала расскажите подробнее' },
-                { id: 'demo', text: 'Хочу демо' },
-                { id: 'later', text: 'Не сейчас' }
+                { id: 'yes', text: '✅ Да, покажите расчёт' },
+                { id: 'maybe', text: '🤔 Сначала расскажите подробнее' },
+                { id: 'demo', text: '🎮 Хочу демо' },
+                { id: 'later', text: '⏰ Не сейчас' }
             ]
         }
     };
@@ -115,7 +115,7 @@
                 </div>
                 <div class="hero-widget-info">
                     <div class="hero-widget-name">ChatBot24 Assistant</div>
-                    <div class="hero-widget-status-text">Онлайн</div>
+                    <div class="hero-widget-status-text">🟢 Онлайн</div>
                 </div>
             </div>
             <div class="hero-widget-messages" id="widget-messages">
