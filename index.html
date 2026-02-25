@@ -30,8 +30,8 @@
     <meta name="theme-color" content="#0f0f1a">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Google Fonts TEMPORARILY DISABLED - using system font -->
-    <!-- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'"> -->
+    <!-- TODO: Add Google Fonts if needed for blog/chat redesign -->
+    <!-- TODO: Add chat widget script here when implementing live chat feature -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/hero-widget.css">
@@ -521,6 +521,12 @@
             </div>
         </section>
 
+        <!-- TESTIMONIALS -->
+        <section class="section section-testimonials" id="testimonials">
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">Отзывы клиентов</h2>
+                <p class="section-subtitle" data-aos="fade-up">Результаты внедрения чат-ботов в разных нишах</p>
+                
                 <div class="testimonials-carousel" id="testimonialsCarousel">
                     <div class="testimonials-track">
                         <!-- Отзыв 1: Анна К. -->
@@ -620,17 +626,6 @@
                         </div>
                     </div>
                     
-                    <div class="testimonials-nav">
-                        <button class="testimonials-btn testimonials-prev" aria-label="Предыдущий отзыв">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
-                        </button>
-                        <div class="testimonials-dots"></div>
-                        <button class="testimonials-btn testimonials-next" aria-label="Следующий отзыв">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-                        </button>
-                    </div>
-                </div>
-                    
                     <!-- Отзыв 7: Наталья Р. -->
                     <div class="testimonial-card">
                         <div class="testimonial-header">
@@ -694,14 +689,55 @@
                             «Бот квалифицирует входящие заявки с сайта. Стоимость лида снизилась на <strong>22%</strong>, качество выросло.»
                         </blockquote>
                     </div>
+                    </div>
                     
-                </div>                            <h3 class="process-step-title">Тестирование и запуск (3–5 дней)</h3>
+                    <div class="testimonials-nav">
+                        <button class="testimonials-btn testimonials-prev" aria-label="Предыдущий отзыв">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+                        </button>
+                        <div class="testimonials-dots"></div>
+                        <button class="testimonials-btn testimonials-next" aria-label="Следующий отзыв">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROCESS -->
+        <section class="section section-process" id="process">
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">Как мы работаем</h2>
+                <p class="section-subtitle" data-aos="fade-up">Прозрачный процесс от аудита до запуска</p>
+                
+                <div class="process-steps">
+                    <!-- Process steps 1-4 -->
+                    <div class="process-step" data-aos="fade-up" data-aos-delay="0">
+                        <div class="process-number">1</div>
+                        <div class="process-content">
+                            <h3 class="process-step-title">Аудит воронки (день 1)</h3>
+                            <p class="process-text">Смотрим текущий поток заявок: откуда приходят, где теряются, сколько не доходят до оплаты. Определяем точки роста.</p>
+                            <div class="process-meta"><span class="process-result">Понимание проблемы</span></div>
+                        </div>
+                    </div>
+                    <div class="process-step" data-aos="fade-up" data-aos-delay="100">
+                        <div class="process-number">2</div>
+                        <div class="process-content">
+                            <h3 class="process-step-title">Сценарий и прототип (2–3 дня)</h3>
+                            <p class="process-text">Проектируем логику бота: вопросы, ветвления, интеграции. Делаем тестовый прототип, который можно «потрогать».</p>
+                            <div class="process-meta"><span class="process-result">Утверждённый сценарий</span></div>
+                        </div>
+                    </div>
+                    <div class="process-step" data-aos="fade-up" data-aos-delay="200">
+                        <div class="process-number">3</div>
+                        <div class="process-content">
+                            <h3 class="process-step-title">Тестирование и запуск (3–5 дней)</h3>
                             <p class="process-text">Тестируем сценарий на реальных лидах, убираем тупики, усиливаем формулировки. Запускаем постепенно: с части трафика на полный поток.</p>
                             <div class="process-meta"><span class="process-result">Готовность к запуску</span></div>
                         </div>
                     </div>
                     <div class="process-step" data-aos="fade-up" data-aos-delay="300">
-                        <div class="process-number">5</div>
+                        <div class="process-number">4</div>
                         <div class="process-content">
                             <h3 class="process-step-title">Поддержка и развитие</h3>
                             <p class="process-text">После запуска: смотрим аналитику, усиливаем слабые места, добавляем автоворонки, подключаем рекламу. Бот становится центром входящего трафика.</p>
@@ -714,7 +750,7 @@
             </div>
         </section>
 
-        <!-- PRICING (NEW BLOCK) -->
+        <!-- PRICING -->
         <section class="section" id="pricing">
             <div class="container">
                 <h2 class="section-title" data-aos="fade-up">Формат работы и оплата</h2>
@@ -904,6 +940,8 @@
             </div>
         </section>
     </main>
+
+    <!-- TODO: Add blog section here - "Latest from our blog" with 3 recent articles -->
 
     <!-- FOOTER -->
     <footer class="footer">
