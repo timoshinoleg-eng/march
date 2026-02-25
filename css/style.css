@@ -691,31 +691,33 @@ body {
 
 .testimonials-track {
   position: relative;
-  min-height: 400px;
+  min-height: 350px;
 }
 
 .testimonial-card {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
   background: var(--color-card-bg);
   backdrop-filter: blur(10px);
   border: 1px solid var(--color-card-border);
   border-radius: 20px;
   padding: 32px;
   opacity: 0;
-  transform: translateX(50px) scale(0.95);
+  transform: translateX(100px);
   pointer-events: none;
   transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .testimonial-card.active {
   opacity: 1;
-  transform: translateX(0) scale(1);
+  transform: translateX(0);
   pointer-events: all;
 }
 
 .testimonial-card.prev {
-  transform: translateX(-50px) scale(0.95);
+  transform: translateX(-100px);
   opacity: 0;
 }
 

@@ -723,10 +723,13 @@ document.addEventListener('DOMContentLoaded', () => {
 function initFAQAccordion() {
     const faqItems = document.querySelectorAll('.faq-item');
     
+    console.log('FAQ items found:', faqItems.length); // Debug
+    
     faqItems.forEach(item => {
         const question = item.querySelector('.faq-question');
         
         question.addEventListener('click', () => {
+            console.log('FAQ clicked'); // Debug
             const isActive = item.classList.contains('active');
             
             // Close all items
@@ -739,6 +742,7 @@ function initFAQAccordion() {
             if (!isActive) {
                 item.classList.add('active');
                 question.setAttribute('aria-expanded', 'true');
+                console.log('FAQ opened'); // Debug
             }
         });
     });
