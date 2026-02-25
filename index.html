@@ -3,1111 +3,767 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com https://mc.yandex.ru; style-src 'self' 'unsafe-inline' https://unpkg.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self';">
+    <title>ChatBot24 Studio — Telegram-боты под ключ для бизнеса</title>
+    <meta name="description" content="Telegram-бот под ключ от 9 990 ₽. Запуск за 3 рабочих дня. Интеграции: Bitrix24, Google Sheets, Webhook. Заполните бриф в Telegram — ответим в течение часа.">
     
-    <title>Чат-боты под ключ для бизнеса | ChatBot24 Studio</title>
-    <meta name="description" content="Разрабатываем чат-ботов под ключ для бизнеса. Интеграция с CRM, автоматизация заявок. Бесплатный аудит воронки.">
-    <meta name="keywords" content="чат-боты для бизнеса, разработка чат-ботов, telegram бот, автоматизация заявок, битрикс24 бот, amoCRM бот">
-    <meta name="robots" content="index, follow">
-    
-    <meta property="og:title" content="Чат-боты под ключ для бизнеса | Автоматизация заявок и интеграция с CRM">
-    <meta property="og:description" content="Разработаем чат-бота под ключ для вашего бизнеса. Автоматизация процессов, интеграция с CRM и повышение конверсии — всё в одном решении.">
-    <meta property="og:image" content="/assets/og-image.jpg">
-    <meta property="og:url" content="https://www.chatbot24.su">
+    <!-- Open Graph -->
+    <meta property="og:title" content="ChatBot24 Studio — Telegram-боты под ключ для бизнеса">
+    <meta property="og:description" content="Telegram-бот под ключ от 9 990 ₽. Запуск за 3 рабочих дня. Интеграции: Bitrix24, Google Sheets, Webhook.">
+    <meta property="og:url" content="https://chatbot24.su">
     <meta property="og:type" content="website">
-    <meta property="og:locale" content="ru_RU">
+    <!-- TODO: добавить og:image при наличии изображения -->
     
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Чат-боты под ключ для бизнеса | ChatBot24 Studio">
-    <meta name="twitter:description" content="Автоматизация заявок и интеграция с CRM">
-    <meta name="twitter:image" content="/assets/og-image.jpg">
+    <!-- Favicon SVG -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%20fill%3D%22none%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22gradD4%22%20x1%3D%2220%25%22%20y1%3D%220%25%22%20x2%3D%2280%25%22%20y2%3D%22100%25%22%3E%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%2322c55e%3Bstop-opacity%3A1%22%2F%3E%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%23047857%3Bstop-opacity%3A1%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2228%22%20fill%3D%22url(%23gradD4)%22%2F%3E%3Cpath%20d%3D%22M%2052%208%20L%2048%2018%20L%2054%2018%20L%2050%2028%22%20stroke%3D%22%23fbbf24%22%20stroke-width%3D%223.5%22%20fill%3D%22none%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20opacity%3D%220.9%22%2F%3E%3Cpath%20d%3D%22M%2046%2012%20L%2044%2016%22%20stroke%3D%22%23fde047%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20opacity%3D%220.6%22%2F%3E%3Cpath%20d%3D%22M%2056%2020%20L%2058%2024%22%20stroke%3D%22%23fde047%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20opacity%3D%220.6%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2249%22%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2245%22%20font-weight%3D%22900%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%3Eb%3C%2Ftext%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%2248%22%20r%3D%222%22%20fill%3D%22%23065f46%22%20opacity%3D%220.4%22%2F%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2252%22%20r%3D%221.5%22%20fill%3D%22%23065f46%22%20opacity%3D%220.3%22%2F%3E%3C%2Fsvg%3E">
     
-    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-    <link rel="icon" type="image/svg+xml" sizes="32x32" href="/assets/favicon-32x32.svg">
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.svg">
-    <link rel="manifest" href="/assets/site.webmanifest">
-    <meta name="theme-color" content="#0f0f1a">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- TODO: Add Google Fonts if needed for blog/chat redesign -->
-    <!-- TODO: Add chat widget script here when implementing live chat feature -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/hero-widget.css">
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/hero-widget.css">
     
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://www.chatbot24.su/">
-    
-    <!-- Hreflang -->
-    <link rel="alternate" hreflang="ru" href="https://www.chatbot24.su/">
-    <link rel="alternate" hreflang="x-default" href="https://www.chatbot24.su/">
-    
-    <!-- Preconnect для внешних ресурсов -->
-    <link rel="preconnect" href="https://mc.yandex.ru">
-    
-    <!-- Schema.org JSON-LD -->
+    <!-- JSON-LD Schema -->
     <script type="application/ld+json">
     {
-      "@context": "https://schema.org",
-      "@type": "LocalBusiness",
-      "name": "ChatBot24 Studio",
-      "url": "https://www.chatbot24.su",
-      "logo": "https://www.chatbot24.su/assets/favicon.svg",
-      "description": "Разработка чат-ботов под ключ для бизнеса",
-      "email": "info@ChatBot24.su",
-      "areaServed": "RU",
-      "sameAs": [
-        "https://t.me/ChatBot24su_bot",
-        "https://www.chatbot24.su/brief.html"
-      ]
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Organization",
+                "name": "ChatBot24 Studio",
+                "url": "https://chatbot24.su",
+                "email": "hello@chatbot24.su",
+                "sameAs": ["https://t.me/ChatBot24su_bot"]
+            },
+            {
+                "@type": "WebSite",
+                "name": "ChatBot24 Studio",
+                "url": "https://chatbot24.su"
+            },
+            {
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "Сколько стоит Telegram-бот под ключ?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Базовое решение — от 9 990 ₽. В стоимость входит: сценарий диалога, тексты, ветвления, передача на менеджера, интеграция с Bitrix24, Google Sheets или Webhook. Сложные многошаговые сценарии, оплата в боте и интеграции с внешними API рассчитываются отдельно."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Какие сроки запуска?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Базовый бот запускаем за 2–3 рабочих дня после согласования сценария. Сложные проекты с интеграциями — до 7 рабочих дней. Точные сроки озвучиваем после брифа."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Бот работает круглосуточно?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Да, бот отвечает клиентам 24/7. Наша команда на связи 12 часов в день без выходных. В рабочее время отвечаем на заявки в течение часа."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Какие интеграции доступны?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Bitrix24 (сделки, контакты, задачи), Google Sheets (запись в таблицы), Webhook (передача данных в любую систему). Можно начать без CRM и подключить позже."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Как происходит передача на менеджера?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Бот собирает вводные данные (что нужно клиенту, сроки, бюджет) и передаёт их в Telegram менеджеру или в CRM. Менеджер видит контекст и отвечает быстрее, без лишних вопросов."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Что нужно от меня для старта?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Прайс-лист или меню, список частых вопросов клиентов, ссылки на соцсети/сайт. Если нет готовых материалов — поможем составить на этапе брифа."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Можно ли дорабатывать бота после запуска?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Да. После запуска анализируем статистику диалогов и предлагаем улучшения: новые ветки, уточнение текстов, добавление шагов. Доработки оплачиваются отдельно по оценке."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Как безопасно передавать доступы?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Запрашиваем минимально необходимые права: только на чтение/запись в конкретную таблицу или воронку. Не храним ваши пароли. Можно отозвать доступ в любой момент."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Работаете ли с другими мессенджерами?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Основной фокус — Telegram. Есть опыт с MAX и другими платформами — можем обсудить ваш случай отдельно."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Как защищены персональные данные клиентов?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Данные хранятся в защищённых системах (Telegram, Bitrix24, Google Sheets с ограниченным доступом). Не передаём третьим лицам. По запросу удаляем данные в течение 30 дней."
+                        }
+                    }
+                ]
+            }
+        ]
     }
     </script>
-    
-    <!-- Open Graph теги -->
-    <meta property="og:title" content="Чат-боты под ключ для бизнеса | Автоматизация заявок и интеграция с CRM">
-    <meta property="og:description" content="Разрабатываем Telegram- и сайт-чат-ботов под ваш бизнес. Автоматизация заявок, интеграция с Bitrix24, amoCRM, 1С. От разбора воронки до запуска за 7–14 дней.">
-    <meta property="og:image" content="https://www.chatbot24.su/assets/og-image.jpg">
-    <meta property="og:url" content="https://www.chatbot24.su/">
-    <meta property="og:type" content="website">
-    <meta property="og:locale" content="ru_RU">
-    
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Чат-боты под ключ для бизнеса | ChatBot24 Studio">
-    <meta name="twitter:description" content="Автоматизация заявок и интеграция с CRM">
-    <meta name="twitter:image" content="https://www.chatbot24.su/assets/og-image.jpg">
-    
-    <!-- Yandex.Metrika counter -->
-    <script type="text/javascript">
-        (function(m,e,t,r,i,k,a){
-            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-            m[i].l=1*new Date();
-            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=106988133', 'ym');
-
-        ym(106988133, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
-    </script>
-    <noscript><div><img src="https://mc.yandex.ru/watch/106988133" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-    <!-- /Yandex.Metrika counter -->
 </head>
 <body>
-    <!-- Cookie Banner -->
-    <div class="cookie-banner" id="cookieBanner">
-        <div class="cookie-content">
-            <div class="cookie-icon">🍪</div>
-            <p class="cookie-text">
-                Мы используем файлы cookie и сервис веб-аналитики <strong>Яндекс.Метрика</strong> для анализа посещаемости сайта. 
-                Продолжая использование сайта, вы соглашаетесь с обработкой данных в соответствии с <a href="/privacy-policy.html" class="cookie-link">Политикой конфиденциальности</a>.
-            </p>
-            <div class="cookie-actions">
-                <button class="cookie-btn cookie-btn-primary" id="cookieAccept">Принять</button>
-                <a href="/privacy-policy.html" class="cookie-btn cookie-btn-secondary">Подробнее</a>
-            </div>
-        </div>
-    </div>
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
     
-    <!-- Gradient Orbs Background -->
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
-    <div class="noise-overlay"></div>
-    <!-- HEADER -->
-    <header class="header" id="header">
-        <div class="container">
-            <div class="header-inner">
-                <a href="#" class="logo">
-                    <span class="logo-icon">🤖</span>
-                    <span class="logo-text">ChatBot24 Studio</span>
-                </a>
-                <nav class="nav" id="nav">
-                    <a href="#problem" class="nav-link">Проблема</a>
-                    <a href="#solution" class="nav-link">Решение</a>
-                    <a href="#cases" class="nav-link">Кейсы</a>
-                    <a href="#process" class="nav-link">Процесс</a>
-                    <a href="#pricing" class="nav-link">Оплата</a>
-                    <a href="#faq" class="nav-link">FAQ</a>
-                    <a href="/blog.html" class="nav-link">Блог</a>
-                </nav>
-                <a href="/brief.html" class="btn btn-primary btn-magnetic header-cta">Получить бесплатный план внедрения бота</a>
-                <button class="burger" id="burger" aria-label="Меню" aria-expanded="false">
-                    <span class="burger-line"></span>
-                    <span class="burger-line"></span>
-                    <span class="burger-line"></span>
+    <!-- Header -->
+    <header class="header" role="banner">
+        <div class="container header-container">
+            <a href="#" class="logo" aria-label="ChatBot24 Studio">
+                <svg class="logo-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                    <circle cx="14" cy="14" r="12" fill="url(#logoGrad)"/>
+                    <defs>
+                        <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#22c55e"/>
+                            <stop offset="100%" style="stop-color:#047857"/>
+                        </linearGradient>
+                    </defs>
+                    <text x="14" y="20" font-size="16" font-weight="900" fill="white" text-anchor="middle">b</text>
+                </svg>
+                <span class="logo-text">ChatBot24 Studio</span>
+            </a>
+            
+            <nav class="nav" role="navigation" aria-label="Основная навигация">
+                <button class="menu-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Открыть меню">
+                    <span class="menu-toggle-line"></span>
+                    <span class="menu-toggle-line"></span>
+                    <span class="menu-toggle-line"></span>
                 </button>
-            </div>
-        </div>
-        <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
-            <nav class="mobile-nav">
-                <a href="#problem" class="mobile-nav-link">Проблема</a>
-                <a href="#solution" class="mobile-nav-link">Решение</a>
-                <a href="#cases" class="mobile-nav-link">Кейсы</a>
-                <a href="#process" class="mobile-nav-link">Процесс</a>
-                <a href="#pricing" class="mobile-nav-link">Оплата</a>
-                <a href="#faq" class="mobile-nav-link">FAQ</a>
-                <a href="/blog.html" class="mobile-nav-link">Блог</a>
+                
+                <ul id="nav-menu" class="nav-menu" role="menubar">
+                    <li role="none"><a href="#scenarios" class="nav-link" role="menuitem">Сценарии</a></li>
+                    <li role="none"><a href="#features" class="nav-link" role="menuitem">Возможности</a></li>
+                    <li role="none"><a href="#how" class="nav-link" role="menuitem">Как работаем</a></li>
+                    <li role="none"><a href="#integrations" class="nav-link" role="menuitem">Интеграции</a></li>
+                    <li role="none"><a href="#faq" class="nav-link" role="menuitem">FAQ</a></li>
+                </ul>
             </nav>
-            <button class="btn btn-primary btn-magnetic mobile-cta" data-modal="form">Получить бесплатный план внедрения бота</button>
+            
+            <a href="https://t.me/ChatBot24su_bot?start=landing" class="btn btn--primary btn--sm header-cta-btn" target="_blank" rel="noopener noreferrer">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z" fill="currentColor"/>
+                </svg>
+                Бриф в Telegram
+            </a>
         </div>
     </header>
 
     <main>
-        <!-- HERO -->
-        <section class="hero" id="hero">
-            <div class="hero-glow"></div>
+        <!-- Hero Section -->
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="hero-bg" aria-hidden="true">
+                <div class="hero-aura"></div>
+                <div class="hero-noise"></div>
+            </div>
+            
+            <div class="container hero-container">
+                <div class="hero-content">
+                    <h1 id="hero-title" class="hero-title">
+                        Telegram-бот под ключ<br>от 9 990 ₽ — запуск за 3 рабочих дня
+                    </h1>
+                    
+                    <p class="hero-subtitle">
+                        Создаём сценарии, тексты и ветвления диалога. Передаём заявки на человека через Bitrix24, Google Sheets или Webhook. Для услуг, B2B и доставки. В рабочее время ответим в течение часа.
+                    </p>
+                    
+                    <div class="hero-actions">
+                        <a href="https://t.me/ChatBot24su_bot?start=landing" class="btn btn--primary btn--lg" target="_blank" rel="noopener noreferrer">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z" fill="currentColor"/>
+                            </svg>
+                            Заполнить бриф в Telegram
+                        </a>
+                        <a href="#scenarios" class="btn btn--secondary btn--lg">Посмотреть сценарии</a>
+                    </div>
+                    
+                    <div class="hero-trust">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <span>Бот работает 24/7. Команда на связи 12 часов в день, без выходных.</span>
+                    </div>
+                </div>
+                
+                <!-- Hero Widget -->
+                <div class="hero-widget-container" id="hero-widget-container">
+                    <!-- Widget will be inserted here by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Scenarios Section -->
+        <section id="scenarios" class="section section--scenarios" aria-labelledby="scenarios-title">
             <div class="container">
-                <div class="hero-grid">
-                    <div class="hero-content" data-aos="fade-up">
-                        <div class="hero-badge">
-                            <i data-lucide="sparkles" class="badge-icon"></i>
-                            <span>50+ успешных внедрений</span>
+                <header class="section-header">
+                    <h2 id="scenarios-title" class="section-title">Сценарии для вашей ниши</h2>
+                    <p class="section-subtitle">Три проверенных сценария, которые экономят время и повышают конверсию</p>
+                </header>
+                
+                <div class="scenarios-grid">
+                    <!-- Scenario 1: Services -->
+                    <article class="scenario-card">
+                        <div class="scenario-header">
+                            <div class="scenario-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <h3 class="scenario-title">Услуги: запись и напоминания</h3>
+                        </div>
+                        <p class="scenario-desc">Салоны, клиники, сервисные центры — автоматизируем запись и снимаем нагрузку с администратора</p>
+                        
+                        <div class="scenario-dialog">
+                            <div class="dialog-message dialog-message--user">
+                                <span class="dialog-label">Клиент:</span>
+                                <p>Хочу записаться на стрижку</p>
+                            </div>
+                            <div class="dialog-message dialog-message--bot">
+                                <span class="dialog-label">Бот:</span>
+                                <p>Выберите услугу и удобное время. Доступные слоты: сегодня 14:00, 16:00, завтра 10:00...</p>
+                            </div>
+                            <div class="dialog-message dialog-message--user">
+                                <span class="dialog-label">Клиент:</span>
+                                <p>Сегодня в 16:00, маникюр</p>
+                            </div>
+                            <div class="dialog-message dialog-message--bot">
+                                <span class="dialog-label">Бот:</span>
+                                <p>Отлично! Оставьте номер телефона для подтверждения. Напомним за 2 часа.</p>
+                            </div>
                         </div>
                         
-                        <h1 class="hero-title" data-aos="fade-up">
-                            <span class="gradient-text">Чат-боты под ключ</span>
-                            <br>для бизнеса, которые <span class="gradient-text">не теряют заявки</span>
-                        </h1>
+                        <div class="scenario-result">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" fill="currentColor"/>
+                            </svg>
+                            <span>Запись у администратора в Telegram или CRM</span>
+                        </div>
+                    </article>
+                    
+                    <!-- Scenario 2: B2B -->
+                    <article class="scenario-card">
+                        <div class="scenario-header">
+                            <div class="scenario-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <h3 class="scenario-title">B2B: квалификация обращений</h3>
+                        </div>
+                        <p class="scenario-desc">Собираем вводные данные до разговора с менеджером — сфера, задача, сроки, бюджет</p>
                         
-                        <p class="hero-subtitle">Разрабатываем Telegram- и сайт-чат-ботов под ваш бизнес: берут на себя первичный контакт, квалифицируют лидов, записывают на услуги и автоматически передают данные в CRM.</p>
-                        
-                        <div class="hero-features">
-                            <div class="hero-feature">
-                                <i data-lucide="message-circle" class="feature-icon"></i>
-                                <span>Ответ за 1 секунду 24/7</span>
+                        <div class="scenario-dialog">
+                            <div class="dialog-message dialog-message--user">
+                                <span class="dialog-label">Клиент:</span>
+                                <p>Нужен бот для компании</p>
                             </div>
-                            <div class="hero-feature">
-                                <i data-lucide="shield-check" class="feature-icon"></i>
-                                <span>Фильтрация нецелевых обращений</span>
+                            <div class="dialog-message dialog-message--bot">
+                                <span class="dialog-label">Бот:</span>
+                                <p>Расскажите о задаче: в какой сфере работаете и что хотите автоматизировать?</p>
                             </div>
-                            <div class="hero-feature">
-                                <i data-lucide="plug" class="feature-icon"></i>
-                                <span>Интеграция с CRM</span>
+                            <div class="dialog-message dialog-message--user">
+                                <span class="dialog-label">Клиент:</span>
+                                <p>Логистика, нужно принимать заявки на перевозку</p>
                             </div>
-                            <div class="hero-feature">
-                                <i data-lucide="rocket" class="feature-icon"></i>
-                                <span>Запуск за 7-14 дней</span>
+                            <div class="dialog-message dialog-message--bot">
+                                <span class="dialog-label">Бот:</span>
+                                <p>Понял. Какие сроки и примерный бюджет? Оставьте контакт — менеджер свяжется с готовым решением.</p>
                             </div>
                         </div>
                         
-                        <button class="btn-cta" data-modal="form">
-                            <span>Получить план внедрения</span>
-                            <i data-lucide="arrow-right" class="btn-icon"></i>
-                        </button>
+                        <div class="scenario-result">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" fill="currentColor"/>
+                            </svg>
+                            <span>Менеджер получает вводные и отвечает быстрее</span>
+                        </div>
+                    </article>
+                    
+                    <!-- Scenario 3: Delivery -->
+                    <article class="scenario-card">
+                        <div class="scenario-header">
+                            <div class="scenario-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <h3 class="scenario-title">Доставка/ресторан: меню и заказы</h3>
+                        </div>
+                        <p class="scenario-desc">Меню, адреса, акции, статус заказа — всё в одном месте без нагрузки на операторов</p>
                         
-                        <p class="hero-note">Бесплатный созвон 30-40 минут. Подготовим план сценария и смету в течение одного рабочего дня.</p>
+                        <div class="scenario-dialog">
+                            <div class="dialog-message dialog-message--user">
+                                <span class="dialog-label">Клиент:</span>
+                                <p>Какие у вас пиццы?</p>
+                            </div>
+                            <div class="dialog-message dialog-message--bot">
+                                <span class="dialog-label">Бот:</span>
+                                <p>🍕 Маргарита — 450 ₽<br>🍕 Пепперони — 550 ₽<br>🍕 Четыре сыра — 600 ₽<br><br>Хотите оформить заказ?</p>
+                            </div>
+                            <div class="dialog-message dialog-message--user">
+                                <span class="dialog-label">Клиент:</span>
+                                <p>Пепперони, адрес: Ленина 10</p>
+                            </div>
+                            <div class="dialog-message dialog-message--bot">
+                                <span class="dialog-label">Бот:</span>
+                                <p>Принято! Время доставки ~45 мин. Отслеживайте статус здесь или по телефону.</p>
+                            </div>
+                        </div>
                         
-                        <div class="hero-stats">
-                            <div class="stat-item">
-                                <span class="stat-value">50+</span>
-                                <span class="stat-label">проектов</span>
-                            </div>
-                            <div class="stat-divider"></div>
-                            <div class="stat-item">
-                                <span class="stat-value">+40%</span>
-                                <span class="stat-label">к конверсии</span>
-                            </div>
-                            <div class="stat-divider"></div>
-                            <div class="stat-item">
-                                <span class="stat-value">24/7</span>
-                                <span class="stat-label">работа бота</span>
-                            </div>
+                        <div class="scenario-result">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" fill="currentColor"/>
+                            </svg>
+                            <span>Меньше рутины у операторов, быстрые ответы клиентам</span>
+                        </div>
+                    </article>
+                </div>
+                
+                <div class="scenarios-cta">
+                    <a href="https://t.me/ChatBot24su_bot?start=landing" class="btn btn--primary btn--lg" target="_blank" rel="noopener noreferrer">
+                        Получить сценарий под мой бизнес
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="section section--features" aria-labelledby="features-title">
+            <div class="container">
+                <header class="section-header">
+                    <h2 id="features-title" class="section-title">Что входит в бота</h2>
+                    <p class="section-subtitle">Всё необходимое для автоматизации общения с клиентами</p>
+                </header>
+                
+                <div class="features-list">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="feature-content">
+                            <h3 class="feature-title">Сценарий диалога</h3>
+                            <p class="feature-desc">Логика вопросов и ответов под ваш бизнес, без шаблонных «да/нет»</p>
                         </div>
                     </div>
                     
-                    <div class="hero-visual" data-aos="fade-left">
-                        <!-- Hero Widget -->
-                        <div class="hero-widget-container" id="hero-widget-container">
-                            <div class="hero-widget">
-                                <div class="hero-widget-header">
-                                    <div class="hero-widget-avatar">
-                                        <span class="hero-widget-status"></span>
-                                    </div>
-                                    <div class="hero-widget-info">
-                                        <h4 class="hero-widget-name">ChatBot24 Assistant</h4>
-                                        <p class="hero-widget-role">Онлайн</p>
-                                    </div>
-                                </div>
-                                <div class="hero-widget-body" id="hero-widget-body">
-                                    <!-- Widget content loaded by JS -->
-                                </div>
-                            </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="feature-content">
+                            <h3 class="feature-title">Продающие тексты</h3>
+                            <p class="feature-desc">Понятные сообщения, которые ведут клиента к целевому действию</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="feature-content">
+                            <h3 class="feature-title">Ветвления и кнопки</h3>
+                            <p class="feature-desc">Клиент выбирает варианты — бот ведёт по нужной ветке</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57-.35-.11-.74-.03-1.02.24l-2.2 2.2c-2.83-1.44-5.15-3.75-6.59-6.59l2.2-2.21c.28-.26.36-.65.25-1.01A11.36 11.36 0 0 1 8.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="feature-content">
+                            <h3 class="feature-title">Передача на менеджера</h3>
+                            <p class="feature-desc">Сбор вводных и передача диалога в Telegram или CRM</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="feature-content">
+                            <h3 class="feature-title">Bitrix24</h3>
+                            <p class="feature-desc">Создание сделок, контактов и задач прямо из диалога</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="feature-content">
+                            <h3 class="feature-title">Google Sheets</h3>
+                            <p class="feature-desc">Запись заявок в таблицу для аналитики и обработки</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="feature-content">
+                            <h3 class="feature-title">Webhook</h3>
+                            <p class="feature-desc">Передача данных в любую вашу систему через API</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="feature-content">
+                            <h3 class="feature-title">Напоминания</h3>
+                            <p class="feature-desc">Автоматические уведомления клиентам и менеджерам</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- FEATURES -->
-        <section class="section" id="features">
+        <!-- How It Works Section -->
+        <section id="how" class="section section--how" aria-labelledby="how-title">
             <div class="container">
-                <h2 class="section-title" data-aos="fade-up">Что бот берёт на себя</h2>
-                <p class="section-intro" data-aos="fade-up">Автоматизация первичного контакта и квалификации лидов</p>
-                <div class="features-grid">
-                    <div class="feature-card" data-tilt data-aos="fade-up" data-aos-delay="100">
-                        <div class="feature-card-content">
-                            <div class="feature-icon-wrapper">
-                                <i data-lucide="zap" class="feature-icon"></i>
-                            </div>
-                            <h3 class="feature-title">Мгновенный ответ</h3>
-                            <p class="feature-desc">Клиент получает ответ за секунды, а не ждёт 20–40 минут</p>
+                <header class="section-header">
+                    <h2 id="how-title" class="section-title">Как мы работаем</h2>
+                    <p class="section-subtitle">От брифа до запуска — прозрачно и предсказуемо</p>
+                </header>
+                
+                <div class="steps">
+                    <article class="step">
+                        <div class="step-number">01</div>
+                        <div class="step-content">
+                            <h3 class="step-title">Бриф в Telegram</h3>
+                            <p class="step-text">1–2 минуты: расскажите о бизнесе, задаче и желаемом результате. В рабочее время ответим в течение часа.</p>
                         </div>
-                    </div>
-                    <div class="feature-card" data-tilt data-aos="fade-up" data-aos-delay="200">
-                        <div class="feature-card-content">
-                            <div class="feature-icon-wrapper">
-                                <i data-lucide="filter" class="feature-icon"></i>
-                            </div>
-                            <h3 class="feature-title">Фильтрация лидов</h3>
-                            <p class="feature-desc">Только «тёплые» клиенты попадают к менеджерам</p>
+                    </article>
+                    
+                    <article class="step">
+                        <div class="step-number">02</div>
+                        <div class="step-content">
+                            <h3 class="step-title">Черновик сценария и оценка</h3>
+                            <p class="step-text">Покажем структуру диалога, озвучим сроки и стоимость. Базовый бот — от 9 990 ₽, запуск за 3 рабочих дня.</p>
                         </div>
-                    </div>
-                    <div class="feature-card" data-tilt data-aos="fade-up" data-aos-delay="300">
-                        <div class="feature-card-content">
-                            <div class="feature-icon-wrapper">
-                                <i data-lucide="workflow" class="feature-icon"></i>
-                            </div>
-                            <h3 class="feature-title">Автоматизация CRM</h3>
-                            <p class="feature-desc">Данные сразу в Bitrix24, amoCRM, 1С, Google Sheets</p>
+                    </article>
+                    
+                    <article class="step">
+                        <div class="step-number">03</div>
+                        <div class="step-content">
+                            <h3 class="step-title">Тестовая версия и согласование</h3>
+                            <p class="step-text">Покажем работающего бота до финальной оплаты. Внесём правки по вашим замечаниям.</p>
                         </div>
-                    </div>
-                    <div class="feature-card" data-tilt data-aos="fade-up" data-aos-delay="400">
-                        <div class="feature-card-content">
-                            <div class="feature-icon-wrapper">
-                                <i data-lucide="clock" class="feature-icon"></i>
-                            </div>
-                            <h3 class="feature-title">Запуск за 7–14 дней</h3>
-                            <p class="feature-desc">От первого созвона до рабочего бота</p>
+                    </article>
+                    
+                    <article class="step">
+                        <div class="step-number">04</div>
+                        <div class="step-content">
+                            <h3 class="step-title">Запуск и поддержка</h3>
+                            <p class="step-text">Публикуем бота, подключаем интеграции. После запуска — аналитика, доработки и улучшения.</p>
                         </div>
-                    </div>
+                    </article>
                 </div>
             </div>
         </section>
 
-        <!-- PROBLEM -->
-        <section class="section section-dark" id="problem">
+        <!-- Integrations Section -->
+        <section id="integrations" class="section section--integrations" aria-labelledby="integrations-title">
             <div class="container">
-                <h2 class="section-title" data-aos="fade-up">Почему без автоматизации вы каждый день теряете заявки и деньги</h2>
-                <div class="problem-intro" data-aos="fade-up">
-                    <p class="problem-accent">Мы посчитали: если у вас 20+ заявок в день и средний чек от 15 000 ₽, даже 10% потерь — это минимум 90 000 ₽ в месяц, которые уходят к конкурентам.</p>
-                </div>
-                <div class="problem-grid">
-                    <div class="problem-card" data-aos="fade-up" data-aos-delay="100" class="fade-up fade-up-delay-1">
-                        <div class="problem-icon pain-icon"><i data-lucide="clock" class="problem-lucide-icon"></i></div>
-                        <h3 class="problem-card-title">Менеджеры физически не могут отвечать 24/7</h3>
-                        <p class="problem-card-text">Клиент пишет вечером или ночью и не получает ответ. Через 10–15 минут он уже общается с тем, кто ответил быстрее.</p>
-                    </div>
-                    <div class="problem-card" data-aos="fade-up" data-aos-delay="150" class="fade-up fade-up-delay-2">
-                        <div class="problem-icon pain-icon"><i data-lucide="trending-down" class="problem-lucide-icon"></i></div>
-                        <h3 class="problem-card-title">Заявки теряются в мессенджерах и не доходят до CRM</h3>
-                        <p class="problem-card-text">Диалоги «висят» в личных чатах менеджеров, часть обращений вообще не заносится в CRM — вы видите не воронку, а её фрагменты.</p>
-                    </div>
-                    <div class="problem-card" data-aos="fade-up" data-aos-delay="200" class="fade-up fade-up-delay-3">
-                        <div class="problem-icon pain-icon"><i data-lucide="filter-x" class="problem-lucide-icon"></i></div>
-                        <h3 class="problem-card-title">Нет фильтрации нецелевых обращений</h3>
-                        <p class="problem-card-text">Менеджеры тратят время на людей, которые не готовы покупать.</p>
-                    </div>
-                    <div class="problem-card" data-aos="fade-up" data-aos-delay="250" class="fade-up fade-up-delay-4">
-                        <div class="problem-icon pain-icon"><i data-lucide="repeat" class="problem-lucide-icon"></i></div>
-                        <h3 class="problem-card-title">Рутина съедает часы рабочего времени</h3>
-                        <p class="problem-card-text">Менеджеры по 30–50 раз в день отвечают на одни и те же вопросы. Это зарплата, которая уходит на копипаст, а не на продажи.</p>
-                    </div>
-                </div>
-                <div class="section-cta" data-aos="fade-up"><button class="btn btn-primary btn-magnetic" data-modal="form">Получить бесплатный план внедрения бота</button></div>
-            </div>
-        </section>
-        <!-- SOLUTION -->
-        <section class="section" id="solution">
-            <div class="container">
-                <h2 class="section-title" data-aos="fade-up">Что бот берёт на себя, и что получает ваш бизнес взамен</h2>
-                <p class="section-intro" data-aos="fade-up">Мы не просто «делаем бота». Мы выстраиваем систему автоматического сбора и квалификации заявок.</p>
-                <div class="solution-grid">
-                    <div class="solution-card" data-aos="fade-up" data-aos-delay="100" class="fade-up fade-up-delay-1">
-                        <div class="solution-number">01</div>
-                        <h3 class="solution-card-title">Мгновенный ответ клиенту после клика по рекламе</h3>
-                        <p class="solution-card-text">Сразу после клика по объявлению человек попадает в сценарий бота в Telegram или на сайте и получает первый ответ за доли секунды: без ожидания и «мы вам перезвоним».</p>
-                        <div class="solution-metric">Фактически — ответ за 0 секунд вместо 20–40 минут ожидания менеджера.</div>
-                    </div>
-                    <div class="solution-card" data-aos="fade-up" data-aos-delay="150" class="fade-up fade-up-delay-2">
-                        <div class="solution-number">02</div>
-                        <h3 class="solution-card-title">Квалификация лидов по вашим правилам</h3>
-                        <p class="solution-card-text">Бот задаёт 5–7 уточняющих вопросов (бюджет, срок, формат, город, интересующий продукт) и делит обращения на «тёплые» и «холодные».</p>
-                        <div class="solution-metric">Менеджеры сразу видят приоритет лида и экономят до 2–3 часов в день на пустых диалогах.</div>
-                    </div>
-                    <div class="solution-card" data-aos="fade-up" data-aos-delay="200" class="fade-up fade-up-delay-3">
-                        <div class="solution-number">03</div>
-                        <h3 class="solution-card-title">Автоматическая передача данных в CRM</h3>
-                        <p class="solution-card-text">После прохождения сценария данные автоматически создаются в Bitrix24, amoCRM или другой системе. Никаких «я забыл внести».</p>
-                        <div class="solution-metric">100% лидов фиксируются</div>
-                    </div>
-                    <div class="solution-card" data-aos="fade-up" data-aos-delay="250" class="fade-up fade-up-delay-4">
-                        <div class="solution-number">04</div>
-                        <h3 class="solution-card-title">Запись на консультацию без участия менеджера</h3>
-                        <p class="solution-card-text">Бот записывает на консультацию, вебинар или услугу через календарь. Клиент выбирает время сам.</p>
-                        <div class="solution-metric">−18% отмен встреч</div>
-                    </div>
-                </div>
-                <div class="section-cta" data-aos="fade-up"><button class="btn btn-primary btn-magnetic" data-modal="form">Получить бесплатный план внедрения бота</button></div>
-            </div>
-        </section>
-
-        <!-- BENEFITS -->
-        <section class="section section-dark" id="benefits">
-            <div class="container">
-                <h2 class="section-title" data-aos="fade-up">Что получает ваш бизнес после внедрения чат-бота</h2>
-                <p class="section-intro" data-aos="fade-up">Это не просто автоматизация — это контроль над воронкой продаж.</p>
-                <div class="benefits-grid">
-                    <div class="benefit-card" data-aos="fade-up" data-aos-delay="100" class="fade-up fade-up-delay-1">
-                        <div class="benefit-icon">📈</div>
-                        <h3 class="benefit-card-title">Рост конверсии из трафика</h3>
-                        <p class="benefit-card-text">Клиент получает ответ сразу, а не через час. Скорость ответа = конверсия.</p>
-                        <div class="benefit-metric">+20-30% к конверсии</div>
-                    </div>
-                    <div class="benefit-card" data-aos="fade-up" data-aos-delay="150" class="fade-up fade-up-delay-2">
-                        <div class="benefit-icon">⏳</div>
-                        <h3 class="benefit-card-title">Экономия времени менеджеров</h3>
-                        <p class="benefit-card-text">До 1–3 часов в день на каждом сотруднике. Бот забирает рутину, люди занимаются продажами.</p>
-                        <div class="benefit-metric">Экономия до 60 часов в месяц</div>
-                    </div>
-                    <div class="benefit-card" data-aos="fade-up" data-aos-delay="200" class="fade-up fade-up-delay-3">
-                        <div class="benefit-icon">📊</div>
-                        <h3 class="benefit-card-title">Прозрачная аналитика заявок</h3>
-                        <p class="benefit-card-text">Все заявки фиксируются в CRM. Вы видите реальные цифры, а не догадки.</p>
-                        <div class="benefit-metric">100% видимость воронки</div>
-                    </div>
-                    <div class="benefit-card" data-aos="fade-up" data-aos-delay="250" class="fade-up fade-up-delay-4">
-                        <div class="benefit-icon">🌐</div>
-                        <h3 class="benefit-card-title">Стабильная обработка обращений 24/7</h3>
-                        <p class="benefit-card-text">Бот работает даже когда офис закрыт. Ночью, в выходные, в праздники.</p>
-                        <div class="benefit-metric">0 пропущенных заявок</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- INTEGRATIONS -->
-        <section class="section" id="integrations">
-            <div class="container">
-                <h2 class="section-title" data-aos="fade-up">Интеграция чат-бота с CRM и сервисами</h2>
-                <p class="section-intro" data-aos="fade-up">Мы подключаем чат-бот к вашей экосистеме. Все данные передаются автоматически — без ручного ввода.</p>
                 <div class="integrations-grid">
-                    <div class="integration-card" data-aos="fade-up" data-aos-delay="100" class="fade-up fade-up-delay-1">
-                        <div class="integration-logos"><div class="integration-logo integration-bitrix">B24</div><div class="integration-logo integration-amocrm">amo</div></div>
-                        <h3 class="integration-card-title">Подключение к Bitrix24 и amoCRM</h3>
-                        <p class="integration-card-text">Полная интеграция с популярными CRM. Лиды, сделки, контакты — всё создаётся автоматически.</p>
-                    </div>
-                    <div class="integration-card" data-aos="fade-up" data-aos-delay="150" class="fade-up fade-up-delay-2">
-                        <div class="integration-logos"><div class="integration-logo integration-sheets">GS</div><div class="integration-logo integration-1c">1С</div></div>
-                        <h3 class="integration-card-title">Передача данных в Google Sheets и 1С</h3>
-                        <p class="integration-card-text">Экспорт в таблицы и учётные системы. Гибкая настройка под ваши процессы.</p>
-                    </div>
-                    <div class="integration-card" data-aos="fade-up" data-aos-delay="200" class="fade-up fade-up-delay-3">
-                        <div class="integration-logos"><div class="integration-icon">📅</div><div class="integration-icon">🔄</div></div>
-                        <h3 class="integration-card-title">Интеграция с календарями и автоворонками</h3>
-                        <p class="integration-card-text">Автоматическая запись на консультации. Прогрев клиентов через цепочку сообщений.</p>
-                    </div>
-                    <div class="integration-card" data-aos="fade-up" data-aos-delay="250" class="fade-up fade-up-delay-4">
-                        <div class="integration-logos"><div class="integration-icon">✈️</div><div class="integration-icon">✉️</div></div>
-                        <h3 class="integration-card-title">Уведомления менеджерам в мессенджеры</h3>
-                        <p class="integration-card-text">Мгновенные алерты в Telegram или email. Менеджер узнаёт о горячей заявке за секунды.</p>
-                    </div>
-                </div>
-                <p class="integration-note" data-aos="fade-up">Если у вас используется другая CRM или специфическая интеграция — обсудим возможность подключения на созвоне.</p>
-            </div>
-        </section>
-
-        <!-- PLATFORMS -->
-        <section class="section section-dark" id="platforms">
-            <div class="container">
-                <h2 class="section-title" data-aos="fade-up">Где работает ваш бот</h2>
-                <div class="niches" data-aos="fade-up">
-                    <span class="niche-tag">Онлайн-школы</span>
-                    <span class="niche-tag">E-commerce</span>
-                    <span class="niche-tag">Услуги</span>
-                    <span class="niche-tag">Франшизы</span>
-                    <span class="niche-tag">B2B</span>
-                </div>
-                <div class="platforms-grid">
-                    <div class="platform-card" data-aos="fade-right">
-                        <div class="platform-header"><div class="platform-icon">✈️</div><h3 class="platform-title">Telegram-бот для бизнеса</h3></div>
-                        <p class="platform-text">Если ваша аудитория в Telegram — бот начинает продавать прямо в мессенджере.</p>
-                        <ul class="platform-list">
-                            <li>автоматическая консультация</li>
-                            <li>запись на услугу</li>
-                            <li>продажа продукта</li>
-                            <li>рассылки</li>
-                            <li>прогрев</li>
-                        </ul>
-                        <p class="platform-note">Telegram сегодня — это личное пространство клиента. Бот позволяет вам зайти туда корректно и системно.</p>
-                    </div>
-                    <div class="platform-card" data-aos="fade-left">
-                        <div class="platform-header"><div class="platform-icon">🌐</div><h3 class="platform-title">Бот для сайта</h3></div>
-                        <p class="platform-text">Человек зашёл на сайт. Если он не получил ответ за 30 секунд — он ушёл.</p>
-                        <p class="platform-text">Бот:</p>
-                        <ul class="platform-list">
-                            <li>встречает</li>
-                            <li>задаёт вопросы</li>
-                            <li>предлагает решение</li>
-                            <li>собирает контакты</li>
-                            <li>передаёт менеджеру только тёплого клиента</li>
-                        </ul>
-                        <p class="platform-accent">Это фильтр, который экономит зарплаты.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- CASES -->
-        <section class="section" id="cases">
-            <div class="container">
-                <h2 class="section-title" data-aos="fade-up">Кейсы внедрения чат-ботов для бизнеса</h2>
-                <p class="section-intro" data-aos="fade-up">Мы не работаем в теории. Вот что происходит, когда бот внедрён правильно.</p>
-                
-                <div class="mini-cases" data-aos="fade-up">
-                    <div class="mini-case"><div class="mini-case-client">Онлайн-школа «Английский+»</div><div class="mini-case-result"><span class="counter" data-target="42">+42</span>% конверсии, <span class="counter" data-target="35">−35</span>% нагрузки на менеджеров</div></div>
-                    <div class="mini-case"><div class="mini-case-client">Сеть студий красоты «Персона»</div><div class="mini-case-result"><span class="counter" data-target="31">+31</span>% повторных записей, <span class="counter" data-target="18">−18</span>% отмен</div></div>
-                    <div class="mini-case"><div class="mini-case-client">Финансовая компания «Финансы это просто»</div><div class="mini-case-result">Конверсия <span class="counter" data-target="9">9</span>% → <span class="counter" data-target="21">21</span>%, CPA <span class="counter" data-target="24">−24</span>%</div></div>
-                </div>
-                
-                <div class="cases-detail">
-                    <div class="case-card" data-aos="fade-up">
-                        <div class="case-header"><span class="case-tag">Кейс 1</span><h3 class="case-title">Онлайн-школа «Английский+»</h3></div>
-                        <div class="case-body">
-                            <div class="case-section"><p class="case-label">Задача:</p><p class="case-text">автоматизировать приём заявок с рекламы.</p></div>
-                            <div class="case-section"><p class="case-label">Было:</p><ul class="case-list"><li>120–150 заявок в день</li><li>30% терялись из-за медленного ответа</li><li>менеджеры перегружены</li><li>хаос в CRM</li></ul></div>
-                            <div class="case-section"><p class="case-label">Решение:</p><p class="case-text">Telegram-бот с автоквалификацией, сегментацией по интересу, автозаписью на консультацию, интеграцией с amoCRM.</p></div>
-                            <div class="case-section case-results"><p class="case-label">Результат за 30 дней:</p><ul class="case-results-list"><li><span class="case-metric">+42%</span> к конверсии в запись</li><li><span class="case-metric">−35%</span> нагрузка на менеджеров</li><li><span class="case-metric">100%</span> лидов фиксируются</li><li><span class="case-metric">+27%</span> рост выручки</li></ul></div>
-                        </div>
-                    </div>
-                    
-                    <div class="case-card" data-aos="fade-up" data-aos-delay="100" class="fade-up fade-up-delay-1">
-                        <div class="case-header"><span class="case-tag">Кейс 2</span><h3 class="case-title">Сеть студий красоты «Персона»</h3></div>
-                        <div class="case-body">
-                            <div class="case-section"><p class="case-label">Задача:</p><p class="case-text">автоматизировать запись и квалификацию клиентов.</p></div>
-                            <div class="case-section"><p class="case-label">Было:</p><ul class="case-list"><li>заявки в директ, Telegram, на сайте</li><li>пропущенные сообщения вечером</li><li>администраторы путались в записи</li></ul></div>
-                            <div class="case-section"><p class="case-label">Решение:</p><p class="case-text">единый бот для записи с синхронизацией с расписанием, автонапоминаниями, сбором повторных визитов.</p></div>
-                            <div class="case-section case-results"><p class="case-label">Результат:</p><ul class="case-results-list"><li><span class="case-metric">+31%</span> к повторным записям</li><li><span class="case-metric">−18%</span> снижение отмен</li><li><span class="case-metric">1.5</span> экономия штатных единиц</li></ul></div>
-                        </div>
-                    </div>
-                    
-                    <div class="case-card" data-aos="fade-up" data-aos-delay="200" class="fade-up fade-up-delay-3">
-                        <div class="case-header"><span class="case-tag">Кейс 3</span><h3 class="case-title">Финансовая компания «Финансы это просто»</h3></div>
-                        <div class="case-body">
-                            <div class="case-section"><p class="case-label">Задача:</p><p class="case-text">квалификация лидов перед передачей в отдел продаж.</p></div>
-                            <div class="case-section"><p class="case-label">Было:</p><ul class="case-list"><li>дорогой трафик</li><li>длинный цикл сделки</li><li>низкая конверсия в консультацию</li></ul></div>
-                            <div class="case-section"><p class="case-label">Решение:</p><p class="case-text">бот с прогревом через серию сообщений, автоматический сбор данных, сегментация по уровню дохода, передача только целевых заявок.</p></div>
-                            <div class="case-section case-results"><p class="case-label">Результат:</p><ul class="case-results-list"><li>конверсия в консультацию выросла с <span class="case-metric">9%</span> до <span class="case-metric">21%</span></li><li>стоимость привлечения снизилась на <span class="case-metric">24%</span></li><li>менеджеры стали закрывать чаще</li></ul></div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="roi-section" data-aos="fade-up">
-                    <div class="roi-title">Без бота / С ботом</div>
-                    <div class="roi-grid">
-                        <div class="roi-column roi-column-before">
-                            <h4 class="roi-column-title">Без бота:</h4>
-                            <ul class="roi-list"><li>теряется до 30% заявок</li><li>менеджеры тратят 2–3 часа на рутину</li><li>нет прозрачной аналитики</li></ul>
-                        </div>
-                        <div class="roi-column roi-column-after">
-                            <h4 class="roi-column-title">С ботом ChatBot24 Studio:</h4>
-                            <ul class="roi-list roi-list-positive"><li>заявки фиксируются 100%</li><li>менеджеры работают только с «тёплыми» клиентами</li><li>экономия зарплаты и времени уже в первый месяц</li><li>рост выручки от 20% до 40% за 1–2 месяца</li></ul>
-                        </div>
-                    </div>
-                    <p class="roi-conclusion">Вы сразу видите: бот окупается через 1–2 месяца на экономии времени и увеличении конверсии.</p>
-                    <p class="roi-note">Важно: Мы не обещаем «+300% за неделю». Мы анализируем текущую воронку, считаем реальную точку потерь, внедряем автоматизацию там, где она даёт максимум эффекта.</p>
-                </div>
-                
-                <div class="section-cta" data-aos="fade-up"><button class="btn btn-primary btn-magnetic btn-lg" data-modal="form">Хочу такие же цифры</button></div>
-            </div>
-        </section>
-
-        <!-- TESTIMONIALS -->
-        <section class="section section-testimonials" id="testimonials">
-            <div class="container">
-                <h2 class="section-title" data-aos="fade-up">Отзывы клиентов</h2>
-                <p class="section-subtitle" data-aos="fade-up">Результаты внедрения чат-ботов в разных нишах</p>
-                
-                <div class="testimonials-carousel" id="testimonialsCarousel">
-                    <div class="testimonials-track">
-                        <!-- Отзыв 1: Анна К. -->
-                        <div class="testimonial-card active">
-                            <div class="testimonial-header">
-                                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=120&h=120&fit=crop&crop=face" alt="Анна К." class="testimonial-photo" loading="lazy">
-                                <div class="testimonial-meta">
-                                    <h4>Анна К.</h4>
-                                    <span class="testimonial-role">Основатель</span>
-                                    <span class="testimonial-niche">Онлайн-школа</span>
-                                </div>
-                            </div>
-                            <div class="testimonial-rating">★★★★★</div>
-                            <blockquote class="testimonial-text">
-                                «Telegram-бот взял на себя <strong>80% вопросов</strong> студентов по курсам и домашним заданиям. Интеграция с Bitrix24 работает без сбоев — все заявки автоматически попадают в воронку.»
-                            </blockquote>
-                        </div>
+                    <div class="integrations-content">
+                        <h2 id="integrations-title" class="section-title">Интеграции и безопасность</h2>
                         
-                        <!-- Отзыв 2: Михаил С. -->
-                        <div class="testimonial-card">
-                            <div class="testimonial-header">
-                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&h=120&fit=crop&crop=face" alt="Михаил С." class="testimonial-photo" loading="lazy">
-                                <div class="testimonial-meta">
-                                    <h4>Михаил С.</h4>
-                                    <span class="testimonial-role">Директор</span>
-                                    <span class="testimonial-niche">Медицинская клиника</span>
-                                </div>
+                        <div class="integrations-list">
+                            <div class="integration-item">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="currentColor"/>
+                                </svg>
+                                <span>Заявки падают в Telegram, Bitrix24 или Google Sheets — вы выбираете</span>
                             </div>
-                            <div class="testimonial-rating">★★★★★</div>
-                            <blockquote class="testimonial-text">
-                                «Запись на приём через бота выросла на <strong>40%</strong> за первый месяц. Пропущенных звонков практически не осталось, администраторы разгружены.»
-                            </blockquote>
+                            <div class="integration-item">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="currentColor"/>
+                                </svg>
+                                <span>Запрашиваем минимальные доступы — только на нужные таблицы и воронки</span>
+                            </div>
+                            <div class="integration-item">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="currentColor"/>
+                                </svg>
+                                <span>Можно начать без CRM и подключить позже</span>
+                            </div>
+                            <div class="integration-item">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="currentColor"/>
+                                </svg>
+                                <span>Сценарий согласуем до разработки, покажем тестовую версию</span>
+                            </div>
                         </div>
+                    </div>
+                    
+                    <div class="integrations-badges">
+                        <div class="badge">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z" fill="currentColor"/>
+                            </svg>
+                            <span>Bitrix24</span>
+                        </div>
+                        <div class="badge">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z" fill="currentColor"/>
+                            </svg>
+                            <span>Google Sheets</span>
+                        </div>
+                        <div class="badge">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" fill="currentColor"/>
+                            </svg>
+                            <span>Webhook</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="section section--faq" aria-labelledby="faq-title">
+            <div class="container">
+                <header class="section-header">
+                    <h2 id="faq-title" class="section-title">Вопросы и ответы</h2>
+                </header>
+                
+                <div class="faq-list">
+                    <details class="faq-item">
+                        <summary class="faq-question">Сколько стоит Telegram-бот под ключ?</summary>
+                        <div class="faq-answer">
+                            <p>Базовое решение — от 9 990 ₽. В стоимость входит: сценарий диалога, тексты, ветвления, передача на менеджера, интеграция с Bitrix24, Google Sheets или Webhook. Сложные многошаговые сценарии, оплата в боте и интеграции с внешними API рассчитываются отдельно.</p>
+                        </div>
+                    </details>
+                    
+                    <details class="faq-item">
+                        <summary class="faq-question">Какие сроки запуска?</summary>
+                        <div class="faq-answer">
+                            <p>Базовый бот запускаем за 2–3 рабочих дня после согласования сценария. Сложные проекты с интеграциями — до 7 рабочих дней. Точные сроки озвучиваем после брифа.</p>
+                        </div>
+                    </details>
+                    
+                    <details class="faq-item">
+                        <summary class="faq-question">Бот работает круглосуточно?</summary>
+                        <div class="faq-answer">
+                            <p>Да, бот отвечает клиентам 24/7. Наша команда на связи 12 часов в день без выходных. В рабочее время отвечаем на заявки в течение часа.</p>
+                        </div>
+                    </details>
+                    
+                    <details class="faq-item">
+                        <summary class="faq-question">Какие интеграции доступны?</summary>
+                        <div class="faq-answer">
+                            <p>Bitrix24 (сделки, контакты, задачи), Google Sheets (запись в таблицы), Webhook (передача данных в любую систему). Можно начать без CRM и подключить позже.</p>
+                        </div>
+                    </details>
+                    
+                    <details class="faq-item">
+                        <summary class="faq-question">Как происходит передача на менеджера?</summary>
+                        <div class="faq-answer">
+                            <p>Бот собирает вводные данные (что нужно клиенту, сроки, бюджет) и передаёт их в Telegram менеджеру или в CRM. Менеджер видит контекст и отвечает быстрее, без лишних вопросов.</p>
+                        </div>
+                    </details>
+                    
+                    <details class="faq-item">
+                        <summary class="faq-question">Что нужно от меня для старта?</summary>
+                        <div class="faq-answer">
+                            <p>Прайс-лист или меню, список частых вопросов клиентов, ссылки на соцсети/сайт. Если нет готовых материалов — поможем составить на этапе брифа.</p>
+                        </div>
+                    </details>
+                    
+                    <details class="faq-item">
+                        <summary class="faq-question">Можно ли дорабатывать бота после запуска?</summary>
+                        <div class="faq-answer">
+                            <p>Да. После запуска анализируем статистику диалогов и предлагаем улучшения: новые ветки, уточнение текстов, добавление шагов. Доработки оплачиваются отдельно по оценке.</p>
+                        </div>
+                    </details>
+                    
+                    <details class="faq-item">
+                        <summary class="faq-question">Как безопасно передавать доступы?</summary>
+                        <div class="faq-answer">
+                            <p>Запрашиваем минимально необходимые права: только на чтение/запись в конкретную таблицу или воронку. Не храним ваши пароли. Можно отозвать доступ в любой момент.</p>
+                        </div>
+                    </details>
+                    
+                    <details class="faq-item">
+                        <summary class="faq-question">Работаете ли с другими мессенджерами?</summary>
+                        <div class="faq-answer">
+                            <p>Основной фокус — Telegram. Есть опыт с MAX и другими платформами — можем обсудить ваш случай отдельно.</p>
+                        </div>
+                    </details>
+                    
+                    <details class="faq-item">
+                        <summary class="faq-question">Как защищены персональные данные клиентов?</summary>
+                        <div class="faq-answer">
+                            <p>Данные хранятся в защищённых системах (Telegram, Bitrix24, Google Sheets с ограниченным доступом). Не передаём третьим лицам. По запросу удаляем данные в течение 30 дней.</p>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA Section -->
+        <section class="section section--cta-final" aria-labelledby="cta-final-title">
+            <div class="container">
+                <div class="cta-final-content">
+                    <h2 id="cta-final-title" class="cta-final-title">Заполните бриф в Telegram — и получите сценарий</h2>
+                    <p class="cta-final-text">В рабочее время ответим в течение часа: сценарий, сроки, стоимость.</p>
+                    
+                    <a href="https://t.me/ChatBot24su_bot?start=landing" class="btn btn--primary btn--xl" target="_blank" rel="noopener noreferrer">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z" fill="currentColor"/>
+                        </svg>
+                        Заполнить бриф в Telegram
+                    </a>
+                    
+                    <!-- Fallback Form -->
+                    <div class="fallback-form-wrapper">
+                        <p class="fallback-hint">Если удобнее — оставьте Telegram, мы напишем вам:</p>
                         
-                        <!-- Отзыв 3: Елена В. -->
-                        <div class="testimonial-card">
-                            <div class="testimonial-header">
-                                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=120&h=120&fit=crop&crop=face" alt="Елена В." class="testimonial-photo" loading="lazy">
-                                <div class="testimonial-meta">
-                                    <h4>Елена В.</h4>
-                                    <span class="testimonial-role">РОП</span>
-                                    <span class="testimonial-niche">B2B-услуги</span>
-                                </div>
+                        <form id="fallback-form" class="fallback-form" novalidate>
+                            <div class="fallback-field">
+                                <label for="fallback-telegram" class="fallback-label">Telegram <span class="required">*</span></label>
+                                <input 
+                                    type="text" 
+                                    id="fallback-telegram" 
+                                    name="telegram" 
+                                    class="fallback-input" 
+                                    placeholder="@username"
+                                    required
+                                    autocomplete="off"
+                                >
+                                <span class="fallback-error" id="fallback-telegram-error"></span>
                             </div>
-                            <div class="testimonial-rating">★★★★★</div>
-                            <blockquote class="testimonial-text">
-                                «Квалификация лидов теперь полностью автоматическая — бот задаёт 7 вопросов перед передачей менеджеру. Сотрудники получают только горячие заявки с бюджетом от 100 000 ₽.»
-                            </blockquote>
-                        </div>
-                        
-                        <!-- Отзыв 4: Дмитрий П. -->
-                        <div class="testimonial-card">
-                            <div class="testimonial-header">
-                                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&h=120&fit=crop&crop=face" alt="Дмитрий П." class="testimonial-photo" loading="lazy">
-                                <div class="testimonial-meta">
-                                    <h4>Дмитрий П.</h4>
-                                    <span class="testimonial-role">Владелец</span>
-                                    <span class="testimonial-niche">Интернет-магазин</span>
-                                </div>
+                            
+                            <div class="fallback-field">
+                                <label for="fallback-name" class="fallback-label">Имя</label>
+                                <input 
+                                    type="text" 
+                                    id="fallback-name" 
+                                    name="name" 
+                                    class="fallback-input" 
+                                    placeholder="Как к вам обращаться?"
+                                    autocomplete="name"
+                                >
                             </div>
-                            <div class="testimonial-rating">★★★★★</div>
-                            <blockquote class="testimonial-text">
-                                «Интеграция с Битрикс24 работает идеально — заказы из бота мгновенно создают сделки в CRM. Обработка заявки сократилась с 30 минут до 2 минут.»
-                            </blockquote>
-                        </div>
-                        
-                        <!-- Отзыв 5: Ольга М. -->
-                        <div class="testimonial-card">
-                            <div class="testimonial-header">
-                                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&h=120&fit=crop&crop=face" alt="Ольга М." class="testimonial-photo" loading="lazy">
-                                <div class="testimonial-meta">
-                                    <h4>Ольга М.</h4>
-                                    <span class="testimonial-role">CEO</span>
-                                    <span class="testimonial-niche">Консалтинг</span>
-                                </div>
+                            
+                            <div class="fallback-field fallback-field--full">
+                                <label for="fallback-message" class="fallback-label">Сообщение <span class="required">*</span></label>
+                                <textarea 
+                                    id="fallback-message" 
+                                    name="message" 
+                                    class="fallback-input fallback-textarea" 
+                                    placeholder="Расскажите о задаче: чем занимаетесь, что нужно автоматизировать"
+                                    required
+                                    rows="3"
+                                ></textarea>
+                                <span class="fallback-error" id="fallback-message-error"></span>
                             </div>
-                            <div class="testimonial-rating">★★★★★</div>
-                            <blockquote class="testimonial-text">
-                                «Бот собирает данные клиентов до созвона — бюджет, сроки, задачи. Экономим <strong>30 минут</strong> на каждой встрече, менеджеры приходят уже подготовленными.»
-                            </blockquote>
-                        </div>
-                        
-                        <!-- Отзыв 6: Игорь Л. -->
-                        <div class="testimonial-card">
-                            <div class="testimonial-header">
-                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&h=120&fit=crop&crop=face" alt="Игорь Л." class="testimonial-photo" loading="lazy">
-                                <div class="testimonial-meta">
-                                    <h4>Игорь Л.</h4>
-                                    <span class="testimonial-role">Организатор</span>
-                                    <span class="testimonial-niche">Мероприятия</span>
-                                </div>
-                            </div>
-                            <div class="testimonial-rating">★★★★★</div>
-                            <blockquote class="testimonial-text">
-                                «Автоматическая регистрация на вебинары и рассылки напоминаний. <strong>500+ участников</strong> без ручной работы, явка выросла на 35%.»
-                            </blockquote>
-                        </div>
+                            
+                            <button type="submit" class="btn btn--secondary" id="fallback-submit">
+                                Отправить запрос
+                            </button>
+                            
+                            <p class="fallback-consent">Ответим в Telegram в течение часа (в рабочее время). Спам не отправляем.</p>
+                        </form>
                     </div>
-                    
-                    <!-- Отзыв 7: Наталья Р. -->
-                    <div class="testimonial-card">
-                        <div class="testimonial-header">
-                            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=120&h=120&fit=crop&crop=face" alt="Наталья Р." class="testimonial-photo" loading="lazy">
-                            <div class="testimonial-meta">
-                                <h4>Наталья Р.</h4>
-                                <span class="testimonial-role">Управляющий</span>
-                                <span class="testimonial-niche">Салон красоты</span>
-                            </div>
-                        </div>
-                        <div class="testimonial-rating">★★★★★</div>
-                        <blockquote class="testimonial-text">
-                            «Напоминания о записи снизили ноу-шоу на <strong>60%</strong>. Клиенты довольны удобством — записаться можно в любое время суток через Telegram.»
-                        </blockquote>
-                    </div>
-                    
-                    <!-- Отзыв 8: Андрей Т. -->
-                    <div class="testimonial-card">
-                        <div class="testimonial-header">
-                            <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=120&h=120&fit=crop&crop=face" alt="Андрей Т." class="testimonial-photo" loading="lazy">
-                            <div class="testimonial-meta">
-                                <h4>Андрей Т.</h4>
-                                <span class="testimonial-role">Коммерческий директор</span>
-                                <span class="testimonial-niche">Производство</span>
-                            </div>
-                        </div>
-                        <div class="testimonial-rating">★★★★★</div>
-                        <blockquote class="testimonial-text">
-                            «Внедрили бота для квалификации оптовых заявок. Отсекли <strong>70% нецелевых</strong> обращений, отдел продаж фокусируется на крупных клиентах.»
-                        </blockquote>
-                    </div>
-                    
-                    <!-- Отзыв 9: Светлана К. -->
-                    <div class="testimonial-card">
-                        <div class="testimonial-header">
-                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&h=120&fit=crop&crop=face" alt="Светлана К." class="testimonial-photo" loading="lazy">
-                            <div class="testimonial-meta">
-                                <h4>Светлана К.</h4>
-                                <span class="testimonial-role">Маркетолог</span>
-                                <span class="testimonial-niche">Недвижимость</span>
-                            </div>
-                        </div>
-                        <div class="testimonial-rating">★★★★★</div>
-                        <blockquote class="testimonial-text">
-                            «Бот фильтрует заявки по бюджету и району интереса. Конверсия в просмотр объектов выросла с <strong>12% до 28%</strong> за 2 месяца.»
-                        </blockquote>
-                    </div>
-                    
-                    <!-- Отзыв 10: Виктор К. -->
-                    <div class="testimonial-card">
-                        <div class="testimonial-header">
-                            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=120&h=120&fit=crop&crop=face" alt="Виктор К." class="testimonial-photo" loading="lazy">
-                            <div class="testimonial-meta">
-                                <h4>Виктор К.</h4>
-                                <span class="testimonial-role">—</span>
-                                <span class="testimonial-niche">Рекламное агентство</span>
-                            </div>
-                        </div>
-                        <div class="testimonial-rating">★★★★★</div>
-                        <blockquote class="testimonial-text">
-                            «Бот квалифицирует входящие заявки с сайта. Стоимость лида снизилась на <strong>22%</strong>, качество выросло.»
-                        </blockquote>
-                    </div>
-                    </div>
-                    
-                    <div class="testimonials-nav">
-                        <button class="testimonials-btn testimonials-prev" aria-label="Предыдущий отзыв">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
-                        </button>
-                        <div class="testimonials-dots"></div>
-                        <button class="testimonials-btn testimonials-next" aria-label="Следующий отзыв">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- PROCESS -->
-        <section class="section section-process" id="process">
-            <div class="container">
-                <h2 class="section-title" data-aos="fade-up">Как мы работаем</h2>
-                <p class="section-subtitle" data-aos="fade-up">Прозрачный процесс от аудита до запуска</p>
-                
-                <div class="process-steps">
-                    <!-- Process steps 1-4 -->
-                    <div class="process-step" data-aos="fade-up" data-aos-delay="0">
-                        <div class="process-number">1</div>
-                        <div class="process-content">
-                            <h3 class="process-step-title">Аудит воронки (день 1)</h3>
-                            <p class="process-text">Смотрим текущий поток заявок: откуда приходят, где теряются, сколько не доходят до оплаты. Определяем точки роста.</p>
-                            <div class="process-meta"><span class="process-result">Понимание проблемы</span></div>
-                        </div>
-                    </div>
-                    <div class="process-step" data-aos="fade-up" data-aos-delay="100">
-                        <div class="process-number">2</div>
-                        <div class="process-content">
-                            <h3 class="process-step-title">Сценарий и прототип (2–3 дня)</h3>
-                            <p class="process-text">Проектируем логику бота: вопросы, ветвления, интеграции. Делаем тестовый прототип, который можно «потрогать».</p>
-                            <div class="process-meta"><span class="process-result">Утверждённый сценарий</span></div>
-                        </div>
-                    </div>
-                    <div class="process-step" data-aos="fade-up" data-aos-delay="200">
-                        <div class="process-number">3</div>
-                        <div class="process-content">
-                            <h3 class="process-step-title">Тестирование и запуск (3–5 дней)</h3>
-                            <p class="process-text">Тестируем сценарий на реальных лидах, убираем тупики, усиливаем формулировки. Запускаем постепенно: с части трафика на полный поток.</p>
-                            <div class="process-meta"><span class="process-result">Готовность к запуску</span></div>
-                        </div>
-                    </div>
-                    <div class="process-step" data-aos="fade-up" data-aos-delay="300">
-                        <div class="process-number">4</div>
-                        <div class="process-content">
-                            <h3 class="process-step-title">Поддержка и развитие</h3>
-                            <p class="process-text">После запуска: смотрим аналитику, усиливаем слабые места, добавляем автоворонки, подключаем рекламу. Бот становится центром входящего трафика.</p>
-                            <div class="process-meta"><span class="process-result">Стабильная работа и развитие</span></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="process-note" data-aos="fade-up"><p>Средний срок запуска — 7–14 дней.</p></div>
-                <div class="section-cta" data-aos="fade-up"><button class="btn btn-primary btn-magnetic btn-lg" data-modal="form">Получить бесплатный план внедрения бота</button></div>
-            </div>
-        </section>
-
-        <!-- PRICING -->
-        <section class="section" id="pricing">
-            <div class="container">
-                <h2 class="section-title" data-aos="fade-up">Формат работы и оплата</h2>
-                <p class="section-intro" data-aos="fade-up">Прозрачные условия работы без скрытых платежей.</p>
-                
-                <div class="pricing-features" data-aos="fade-up">
-                    <div class="pricing-feature">
-                        <div class="pricing-feature-icon">📋</div>
-                        <h3 class="pricing-feature-title">Фикс за проект</h3>
-                        <p class="pricing-feature-text">цена известна до начала работ</p>
-                    </div>
-                    <div class="pricing-feature">
-                        <div class="pricing-feature-icon">⚙️</div>
-                        <h3 class="pricing-feature-title">Что влияет на цену</h3>
-                        <p class="pricing-feature-text">сложность сценария, количество интеграций, кастомные функции</p>
-                    </div>
-                    <div class="pricing-feature">
-                        <div class="pricing-feature-icon">🔄</div>
-                        <h3 class="pricing-feature-title">Поддержка отдельно</h3>
-                        <p class="pricing-feature-text">ежемесячное сопровождение после запуска</p>
-                    </div>
-                </div>
-                
-                <div class="pricing-range" data-aos="fade-up">
-                    <p class="pricing-range-text">Средний диапазон: от 45 000 ₽ до 120 000 ₽ за полный цикл «под ключ».</p>
-                    <p class="pricing-range-note">Точная сумма после аудита воронки и согласования ТЗ.</p>
-                </div>
-                
-                <div class="pricing-highlight" data-aos="fade-up">
-                    <p>Первый созвон — разбор вашей ситуации, ориентировочная смета, план работ. Никаких предоплат до согласования объёма.</p>
-                </div>
-                
-                <div class="section-cta" data-aos="fade-up"><button class="btn btn-primary btn-magnetic" data-modal="form">Получить бесплатный план внедрения бота</button></div>
-            </div>
-        </section>
-
-        <!-- TARGET -->
-        <section class="section section-dark" id="target">
-            <div class="container">
-                <h2 class="section-title" data-aos="fade-up">Кому это нужно</h2>
-                <p class="section-subtitle" data-aos="fade-up">Лучше всего подходит для компаний с платным трафиком и сложным циклом сделки</p>
-                <div class="target-content" data-aos="fade-up">
-                    <p class="target-intro">Если вы:</p>
-                    <ul class="target-list">
-                        <li>получаете от 20 заявок в день</li>
-                        <li>используете рекламу</li>
-                        <li>работаете в услугах, продаёте онлайн, обучаете, строите франшизу</li>
-                        <li>и при этом часть клиентов «теряется» — вам нужен бот.</li>
-                    </ul>
-                    <div class="target-warning"><p><strong>Важно:</strong> Если заявок 2–3 в неделю — сначала займитесь маркетингом. Мы работаем с теми, у кого уже есть поток.</p></div>
-                    
-                    <div class="target-b2b" data-aos="fade-up">
-                        <p class="target-b2b-title">Дополнительно для B2B:</p>
-                        <ul class="target-b2b-list">
-                            <li>B2B‑компаниям с платным трафиком и ценными заявками</li>
-                            <li>Сервисам и подрядчикам, у которых отдел продаж перегружен и не успевает обрабатывать все обращения</li>
-                            <li>Проектам с длинным циклом сделки, где важно быстро реагировать и не терять контакт</li>
-                            <li>Компаний, которые хотят видеть всю воронку в CRM, а не в переписках менеджеров</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="section-cta" data-aos="fade-up"><button class="btn btn-primary btn-magnetic" data-modal="form">Проверить ваш бизнес</button></div>
-            </div>
-        </section>
-
-        <!-- WHY US + GUARANTEES -->
-        <section class="section" id="why-us">
-            <div class="container">
-                <h2 class="section-title" data-aos="fade-up">Почему ChatBot24 Studio</h2>
-                <p class="section-intro" data-aos="fade-up">Мы не продаём «модный инструмент». Мы строим систему.</p>
-                <div class="why-features" data-aos="fade-up">
-                    <div class="why-feature">✅ Понятная логика продаж</div>
-                    <div class="why-feature">✅ Прозрачная воронка</div>
-                    <div class="why-feature">✅ Измеримые цифры и интеграции</div>
-                    <div class="why-feature">✅ Поддержка на этапе запуска</div>
-                </div>
-                <div class="stats-grid" data-aos="fade-up">
-                    <div class="stat-item"><div class="stat-number">50+</div><div class="stat-label">реализованных ботов</div></div>
-                    <div class="stat-item"><div class="stat-number">24/7</div><div class="stat-label">работа без перерыва</div></div>
-                    <div class="stat-item"><div class="stat-number">3</div><div class="stat-label">дня средний срок запуска (первый прототип)</div></div>
-                </div>
-                
-                <!-- Guarantees Block -->
-                <div class="guarantees" data-aos="fade-up">
-                    <h3 class="guarantees-title">Наши гарантии</h3>
-                    <div class="guarantees-grid">
-                        <div class="guarantees-column">
-                            <h4 class="guarantees-column-title">Что мы гарантируем</h4>
-                            <ul class="guarantees-list guarantees-list-positive">
-                                <li>Прозрачную смету до начала работ</li>
-                                <li>Работающий бот с вашими интеграциями</li>
-                                <li>Обучение менеджеров работе с системой</li>
-                                <li>Поддержку в первый месяц после запуска</li>
-                            </ul>
-                        </div>
-                        <div class="guarantees-column">
-                            <h4 class="guarantees-column-title">Чего не обещаем</h4>
-                            <ul class="guarantees-list guarantees-list-negative">
-                                <li>«+300% за неделю» — чудес не бывает</li>
-                                <li>Результаты без трафика — бот работает с существующим потоком</li>
-                                <li>Магию без вашей вовлечённости — нужны исходные данные о воронке</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="why-mission" data-aos="fade-up">
-                    <p>Наша цель — не просто сделать бота. Наша цель — чтобы вы зарабатывали больше с текущего трафика.</p>
-                    <div class="why-highlight">
-                        <p>И главное:</p>
-                        <p>Бот не заменяет менеджеров. Он заменяет: ожидание, хаос, человеческий фактор, потери. Он забирает рутину. И оставляет людям продажи.</p>
-                    </div>
-                </div>
-                <div class="section-cta" data-aos="fade-up"><button class="btn btn-primary btn-magnetic btn-lg" data-modal="form">Получить бесплатный план внедрения бота</button></div>
-            </div>
-        </section>
-
-        <!-- FAQ -->
-        <section class="section section-dark" id="faq">
-            <div class="container">
-                <h2 class="section-title" data-aos="fade-up">Ответы на частые вопросы о разработке чат-ботов</h2>
-                <div class="faq-list" data-aos="fade-up">
-                    <div class="faq-item">
-                        <button class="faq-question" aria-expanded="false">
-                            <span>Сколько времени занимает запуск?</span>
-                            <span class="faq-icon"><span class="faq-icon-plus"></span></span>
-                        </button>
-                        <div class="faq-answer"><p>В среднем от 7 до 14 дней. Сложные проекты с нестандартными интеграциями — до 3-4 недель.</p></div>
-                    </div>
-                    <div class="faq-item">
-                        <button class="faq-question" aria-expanded="false">
-                            <span>Можно ли дорабатывать бота после запуска?</span>
-                            <span class="faq-icon"><span class="faq-icon-plus"></span></span>
-                        </button>
-                        <div class="faq-answer"><p>Да, сценарий можно масштабировать и дополнять. Мы обеспечиваем поддержку и доработки после запуска.</p></div>
-                    </div>
-                    <div class="faq-item">
-                        <button class="faq-question" aria-expanded="false">
-                            <span>Работает ли бот с нашей CRM?</span>
-                            <span class="faq-icon"><span class="faq-icon-plus"></span></span>
-                        </button>
-                        <div class="faq-answer"><p>В большинстве случаев — да. Подключаемся через API к Bitrix24, amoCRM, 1С, Google Sheets и другим системам.</p></div>
-                    </div>
-                    <div class="faq-item">
-                        <button class="faq-question" aria-expanded="false">
-                            <span>Нужна ли техническая команда с нашей стороны?</span>
-                            <span class="faq-icon"><span class="faq-icon-plus"></span></span>
-                        </button>
-                        <div class="faq-answer"><p>Нет. Мы берём разработку и интеграции на себя. Вам не нужны программисты.</p></div>
-                    </div>
-                    <div class="faq-item">
-                        <button class="faq-question" aria-expanded="false">
-                            <span>Кто будет поддерживать бота?</span>
-                            <span class="faq-icon"><span class="faq-icon-plus"></span></span>
-                        </button>
-                        <div class="faq-answer"><p>Мы обеспечиваем сопровождение после запуска: мониторинг, доработки, консультации.</p></div>
-                    </div>
-                    <div class="faq-item">
-                        <button class="faq-question" aria-expanded="false">
-                            <span>Сколько стоит разработка чат-бота?</span>
-                            <span class="faq-icon"><span class="faq-icon-plus"></span></span>
-                        </button>
-                        <div class="faq-answer"><p>Средний диапазон: от 45 000 ₽ до 120 000 ₽ за полный цикл «под ключ». Точная сумма после аудита воронки и согласования ТЗ.</p></div>
-                    </div>
-                    <div class="faq-item">
-                        <button class="faq-question" aria-expanded="false">
-                            <span>Чем вы отличаетесь от конструкторов ботов?</span>
-                            <span class="faq-icon"><span class="faq-icon-plus"></span></span>
-                        </button>
-                        <div class="faq-answer"><p>Мы делаем систему под вашу воронку, а не просто «бота». Конструкторы дают инструменты, мы — готовое решение с аналитикой, интеграциями и поддержкой.</p></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- FINAL CTA -->
-        <section class="section final-cta" id="contact">
-            <div class="container">
-                <div class="final-cta-content" data-aos="fade-up">
-                    <h2 class="final-cta-title">Получите план внедрения чат-бота под ваш бизнес</h2>
-                    <p class="final-cta-subtitle">Разберём вашу задачу и предложим структуру сценария и интеграций.</p>
-                    <p class="final-cta-text">Мы разберём вашу воронку и покажем, где вы теряете деньги уже сейчас. И если автоматизация вам не нужна — скажем об этом честно.</p>
-                    <p class="final-cta-accent">Но в 9 из 10 случаев проблема не в рекламе. Проблема в скорости ответа и системности.</p>
-                    <button class="btn btn-primary btn-magnetic btn-xl" data-modal="form">Получить бесплатный план внедрения бота</button>
-                    <p class="final-cta-note">Оставьте контакты — в течение одного рабочего дня свяжемся, зададим 5–7 уточняющих вопросов и подготовим для вас план сценария и интеграций и ориентировочную смету по этапам. Без навязчивых продаж: вы получаете понятный план, по которому можно работать с нами или своей командой.</p>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- TODO: Add blog section here - "Latest from our blog" with 3 recent articles -->
-
-    <!-- FOOTER -->
-    <footer class="footer">
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand">
-                    <div class="footer-logo">ChatBot24 Studio</div>
-                    <div class="footer-contacts">
-                        <a href="mailto:info@ChatBot24.su" class="footer-contact">info@ChatBot24.su</a>
-                        <a href="https://t.me/zerocoder1" target="_blank" rel="noopener noreferrer" class="footer-contact">@zerocoder1</a>
-                    </div>
+                    <a href="#" class="footer-logo">
+                        <svg width="24" height="24" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                            <circle cx="14" cy="14" r="12" fill="url(#footerLogoGrad)"/>
+                            <defs>
+                                <linearGradient id="footerLogoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#22c55e"/>
+                                    <stop offset="100%" style="stop-color:#047857"/>
+                                </linearGradient>
+                            </defs>
+                            <text x="14" y="20" font-size="16" font-weight="900" fill="white" text-anchor="middle">b</text>
+                        </svg>
+                        <span>ChatBot24 Studio</span>
+                    </a>
+                    <p class="footer-tagline">Telegram-боты под ключ для бизнеса</p>
                 </div>
-                <div class="footer-links">
-                    <a href="#problem" class="footer-link">Проблема</a>
-                    <a href="#solution" class="footer-link">Решение</a>
-                    <a href="#cases" class="footer-link">Кейсы</a>
-                    <a href="#process" class="footer-link">Процесс</a>
-                    <a href="#pricing" class="footer-link">Оплата</a>
-                    <a href="#faq" class="footer-link">FAQ</a>
-                    <a href="/blog.html" class="footer-link">Блог</a>
-                </div>
-                <div class="footer-legal">
-                    <a href="/privacy-policy.html" class="footer-link">Политика конфиденциальности</a>
-                    <p class="footer-copyright">© 2025 ChatBot24 Studio</p>
+                
+                <div class="footer-contacts">
+                    <h3 class="footer-title">Контакты</h3>
+                    <ul class="footer-list">
+                        <li>
+                            <a href="https://t.me/ChatBot24su_bot" target="_blank" rel="noopener noreferrer" class="footer-link">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z" fill="currentColor"/>
+                                </svg>
+                                @ChatBot24su_bot
+                            </a>
+                        </li>
+                        <li>
+                            <a href="mailto:hello@chatbot24.su" class="footer-link">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.89 2 2 2h16c1.1 0 2-.89 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" fill="currentColor"/>
+                                </svg>
+                                hello@chatbot24.su
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
-            <div class="footer-cta-mobile">
-                <button class="btn btn-primary btn-magnetic" data-modal="form">Получить бесплатный план внедрения бота</button>
+            
+            <div class="footer-bottom">
+                <p>&copy; ChatBot24 Studio, 2024</p>
             </div>
         </div>
     </footer>
 
-    <!-- Telegram Consent Notice -->
-    <div class="telegram-consent" id="telegramConsent">
-        <p class="telegram-consent-text">
-            Нажимая кнопку перехода в Telegram, вы даёте согласие на обработку персональных данных в соответствии с <a href="/privacy-policy.html" target="_blank" rel="noopener noreferrer">Политикой конфиденциальности</a>
-        </p>
-        <button class="telegram-consent-btn" id="telegramConsentBtn">Понятно</button>
-    </div>
-
-    <!-- BRIEF FLOATING BUTTON -->
-    <a href="/brief.html" class="brief-widget" id="briefWidget" aria-label="Заполнить бриф">
-        <svg class="brief-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-        </svg>
-        <span class="brief-tooltip">Заполнить бриф</span>
-    </a>
-
-    <!-- MODAL FORM -->
-    <div class="modal" id="formModal" aria-hidden="true">
-        <div class="modal-overlay" data-modal-close></div>
-        <div class="modal-content">
-            <button class="modal-close" data-modal-close aria-label="Закрыть">×</button>
-            
-            <div class="modal-form" id="formContainer">
-                <h3 class="modal-title">Получить план внедрения</h3>
-                <p class="modal-subtitle">Заполните форму — мы свяжемся с вами в течение одного рабочего дня</p>
-                
-                <form class="form" id="leadForm" novalidate>
-                    <div class="form-group">
-                        <label for="name" class="form-label">Имя *</label>
-                        <input type="text" id="name" name="name" class="form-input" placeholder="Ваше имя" required minlength="2" aria-describedby="nameError">
-                        <span class="form-error" id="nameError"></span>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="phone" class="form-label">Телефон *</label>
-                        <input type="tel" id="phone" name="phone" class="form-input" placeholder="+7 (999) 999-99-99" required aria-describedby="phoneError">
-                        <span class="form-error" id="phoneError"></span>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="telegram" class="form-label">Telegram</label>
-                        <input type="text" id="telegram" name="telegram" class="form-input" placeholder="@username" aria-describedby="telegramError">
-                        <span class="form-error" id="telegramError"></span>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="businessType" class="form-label">Тип бизнеса</label>
-                        <select id="businessType" name="businessType" class="form-input form-select">
-                            <option value="">Выберите тип бизнеса</option>
-                            <option value="services">Услуги</option>
-                            <option value="ecommerce">E-commerce</option>
-                            <option value="education">Онлайн-обучение</option>
-                            <option value="franchise">Франшиза</option>
-                            <option value="b2b">B2B</option>
-                            <option value="other">Другое</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group form-group-checkbox">
-                        <label class="checkbox-label">
-                            <input type="checkbox" id="consent" name="consent" class="checkbox-input" required aria-describedby="consentError">
-                            <span class="checkbox-custom"></span>
-                            <span class="checkbox-text">Нажимая кнопку, я даю согласие Оператору на обработку предоставленных мной персональных данных в целях обратной связи и обсуждения сотрудничества. Согласие действует до достижения целей обработки либо до его отзыва. <a href="/privacy-policy.html" target="_blank" rel="noopener noreferrer">Политика конфиденциальности</a></span>
-                        </label>
-                        <span class="form-error" id="consentError"></span>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-primary btn-magnetic btn-lg form-submit" id="submitBtn">
-                        <span class="submit-text">Отправить заявку</span>
-                        <span class="submit-loader" hidden>Отправка...</span>
-                    </button>
-                </form>
-                
-                <p class="form-footer">Оставьте контакты — в течение одного рабочего дня свяжемся, зададим 5–7 уточняющих вопросов и подготовим для вас план сценария и интеграций.</p>
-                
-                <div class="form-trust">
-                    <div class="form-trust-item">
-                        <span>⚡</span>
-                        <span>Ответим в течение одного рабочего дня</span>
-                    </div>
-                    <div class="form-trust-item">
-                        <span>🔒</span>
-                        <span>100% конфиденциально. Данные не передаются третьим лицам</span>
-                    </div>
-                    <div class="form-trust-item">
-                        <span>✓</span>
-                        <span>Без обязательств и скрытых платежей</span>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="modal-success" id="successMessage" hidden>
-                <div class="success-icon">✓</div>
-                <h3 class="success-title">Спасибо!</h3>
-                <p class="success-text">Мы получили вашу заявку и свяжемся с вами в течение одного рабочего дня.</p>
-                <button class="btn btn-secondary" data-modal-close>Закрыть</button>
-            </div>
-            
-            <div class="modal-error" id="errorMessage" hidden>
-                <div class="error-icon">✕</div>
-                <h3 class="error-title">Ошибка связи</h3>
-                <p class="error-text">Позвоните нам или напишите в Telegram.</p>
-                <div class="error-contacts">
-                    <a href="mailto:info@ChatBot24.su">info@ChatBot24.su</a>
-                    <a href="https://t.me/zerocoder1" target="_blank" rel="noopener noreferrer">@zerocoder1</a>
-                </div>
-                <button class="btn btn-primary btn-magnetic" id="retryBtn">Попробовать снова</button>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
-    <script src="https://unpkg.com/lucide@0.575.0/dist/umd/lucide.min.js" defer></script>
-    <script src="/js/hero-widget.js"></script>
-    <script src="/js/main.js" defer></script>
-    <script>
-        // Wait for all deferred scripts to load
-        window.addEventListener('load', function() {
-            // Initialize Lucide icons
-            if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
-            }
-            
-            // Initialize AOS if available
-            if (typeof AOS !== 'undefined') {
-                AOS.init({
-                    duration: 800,
-                    easing: 'ease-out-cubic',
-                    once: true,
-                    offset: 100,
-                    disable: function() { return window.innerWidth < 768; }
-                });
-            }
-        });
-    </script>
+    <script src="script.js"></script>
+    <script src="js/hero-widget.js"></script>
 </body>
 </html>
