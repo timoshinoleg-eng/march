@@ -647,7 +647,18 @@ const demoMessages = [
 function initDemoChat() {
   const container = document.getElementById('demoMessages');
   const typingIndicator = document.getElementById('typingIndicator');
-  if (!container) return;
+  
+  console.log('initDemoChat called, container:', container); // Debug
+  
+  if (!container) {
+    console.error('demoMessages container not found!');
+    return;
+  }
+  
+  if (!typingIndicator) {
+    console.error('typingIndicator not found!');
+    return;
+  }
 
   let messageIndex = 0;
 

@@ -8,27 +8,120 @@
     <link rel="canonical" href="https://www.chatbot24.su/blog/kak-chat-bot-uvelichivaet-konversiyu.html">
     <link rel="alternate" hreflang="ru" href="https://www.chatbot24.su/blog/kak-chat-bot-uvelichivaet-konversiyu.html">
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-    <link rel="icon" type="image/svg+xml" sizes="32x32" href="/assets/favicon-32x32.svg">
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.svg">
-    <link rel="manifest" href="/assets/site.webmanifest">
-    <meta name="theme-color" content="#0f0f1a">
-    <link rel="preconnect" href="https://mc.yandex.ru">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
     <style>
-        .article-header { padding: 120px 0 60px; text-align: center; background: var(--color-bg-gradient); }
+        .article-header { padding: 120px 0 60px; text-align: center; background: linear-gradient(135deg, #0f0f2a 0%, #1a1a3e 100%); }
         .article-content { padding: 60px 0; max-width: 800px; margin: 0 auto; }
-        .article-content h2 { margin: 40px 0 20px; font-size: 28px; }
-        .article-content p { margin-bottom: 20px; font-size: 18px; line-height: 1.7; }
+        .article-content h2 { margin: 40px 0 20px; font-size: 28px; color: white; }
+        .article-content p { margin-bottom: 20px; font-size: 18px; line-height: 1.7; color: rgba(255,255,255,0.8); }
         .article-content ul { margin: 20px 0; padding-left: 30px; }
-        .article-content li { margin-bottom: 10px; font-size: 18px; }
-        .article-meta { color: var(--color-text-muted); font-size: 14px; margin-bottom: 30px; }
-        .back-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 40px; }
-        .breadcrumb { display: flex; gap: 8px; align-items: center; font-size: 14px; color: var(--color-text-muted); margin-bottom: 24px; justify-content: center; }
-        .breadcrumb a { color: var(--color-text-secondary); text-decoration: none; }
-        .breadcrumb a:hover { color: white; }
-        .highlight-box { background: var(--color-card-bg); padding: 30px; border-radius: 16px; margin: 40px 0; border: 1px solid var(--color-card-border); }
+        .article-content li { margin-bottom: 10px; font-size: 18px; color: rgba(255,255,255,0.8); }
+        .article-meta { color: rgba(255,255,255,0.5); font-size: 14px; margin-bottom: 30px; }
+        .back-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 40px; color: #ec4899; text-decoration: none; }
+        .breadcrumb { display: flex; gap: 8px; align-items: center; font-size: 14px; color: rgba(255,255,255,0.5); margin-bottom: 24px; justify-content: center; }
+        .breadcrumb a { color: rgba(255,255,255,0.7); text-decoration: none; }
+        .highlight-box { background: rgba(255,255,255,0.05); padding: 30px; border-radius: 16px; margin: 40px 0; border: 1px solid rgba(255,255,255,0.1); }
     </style>
-    
-    
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="/" class="logo">
+                    <span class="logo-icon">🤖</span>
+                    <span class="logo-text">ChatBot24 Studio</span>
+                </a>
+                <nav class="nav">
+                    <a href="/blog.html" class="nav-link">← Назад в блог</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <article class="article-header">
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="/">Главная</a>
+                <span>/</span>
+                <a href="/blog.html">Блог</a>
+                <span>/</span>
+                <span>Кейс</span>
+            </nav>
+            
+            <h1 style="font-size: 42px; font-weight: 700; margin-bottom: 20px; color: white;">Как чат-бот увеличивает конверсию на 40%</h1>
+            
+            <div class="article-meta">
+                <span>📅 15 января 2025</span>
+                <span> • </span>
+                <span>⏱️ 5 минут чтения</span>
+            </div>
+        </div>
+    </article>
+
+    <div class="article-content">
+        <div class="container">
+            <p><strong>Клиент:</strong> Сеть медицинских клиник «Здоровье+» (3 филиала в Москве)</p>
+            
+            <p><strong>Задача:</strong> Автоматизировать запись на приём, снизить нагрузку на администраторов, уменьшить количество пропущенных звонков.</p>
+
+            <h2>Ситуация до внедрения</h2>
+            
+            <p>Клиника получала около 150 звонков в день. Администраторы не успевали обрабатывать все обращения:</p>
+            
+            <ul>
+                <li>30-40 звонков пропадали в час пик</li>
+                <li>Пациенты ждали ответа 10-15 минут</li>
+                <li>Вечером и ночью — только автоответчик</li>
+                <li>60% звонков — повторяющиеся вопросы о ценах и расписании</li>
+            </ul>
+
+            <h2>Решение</h2>
+            
+            <p>Внедрили Telegram-бота для записи на приём:</p>
+            
+            <ul>
+                <li><strong>Выбор услуги:</strong> бот показывает расписание и свободные окна</li>
+                <li><strong>Выбор врача:</strong> с фото, специализацией и отзывами</li>
+                <li><strong>Запись:</strong> пациент выбирает удобное время</li>
+                <li><strong>Напоминания:</strong> за день и за 2 часа до приёма</li>
+                <li><strong>Интеграция:</strong> с МИС клиники (1С:Медицина)</li>
+            </ul>
+
+            <div class="highlight-box">
+                <p style="margin: 0; font-size: 20px; font-weight: 600; color: white;">📈 Результат через 3 месяца:</p>
+                <ul style="margin: 16px 0 0 0;">
+                    <li>+40% к конверсии записей</li>
+                    <li>−35% пропущенных звонков</li>
+                    <li>Администраторы перестали работать в авральном режиме</li>
+                    <li>Запись доступна 24/7 — даже ночью</li>
+                </ul>
+            </div>
+
+            <h2>Как это работает</h2>
+            
+            <p>Пациент заходит в Telegram, выбирает нужное направление — терапевт, стоматолог, УЗИ. Бот мгновенно показывает ближайшие свободные окна. Запись занимает 2 минуты вместо 10-минутного разговора.</p>
+
+            <p>Если пациент не может выбрать — бот предлагает связаться с администратором. Но 80% записей проходят полностью автоматически.</p>
+
+            <h2>Почему это сработало</h2>
+            
+            <ul>
+                <li><strong>Скорость:</strong> ответ мгновенно, не нужно ждать</li>
+                <li><strong>Доступность:</strong> работает ночью и в выходные</li>
+                <li><strong>Удобство:</strong> не нужно звонить и стоять в очереди</li>
+                <li><strong>Надёжность:</strong> напоминания снижают количество неявок</li>
+            </ul>
+
+            <p><strong>Вывод:</strong> Чат-бот не заменил администраторов — он забрал рутину и дал им время на качественное обслуживание сложных случаев.</p>
+
+            <a href="/blog.html" class="back-link">← Вернуться к списку статей</a>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p style="text-align: center; color: rgba(255,255,255,0.5); padding: 40px 0;">© 2025 ChatBot24 Studio. Все права защищены.</p>
+        </div>
+    </footer>
+</body>
+</html>

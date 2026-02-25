@@ -1061,6 +1061,11 @@
     <script>
         // Wait for all deferred scripts to load
         window.addEventListener('load', function() {
+            // Initialize Lucide icons
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+            
             // Initialize AOS if available
             if (typeof AOS !== 'undefined') {
                 AOS.init({
@@ -1070,11 +1075,6 @@
                     offset: 100,
                     disable: function() { return window.innerWidth < 768; }
                 });
-            }
-            
-            // Initialize Lucide icons if available
-            if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
             }
         });
     </script>
