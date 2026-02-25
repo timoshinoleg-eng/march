@@ -748,7 +748,7 @@ function initDemoChat() {
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
   initTestimonialsCarousel();
-  initDemoChat();
+  // initDemoChat(); // Disabled - using hero-widget instead
   initFAQAccordion();
 });
 
