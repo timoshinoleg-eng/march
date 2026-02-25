@@ -498,17 +498,18 @@ document.addEventListener('DOMContentLoaded', function() {
 // ========================================
 // TESTIMONIALS CAROUSEL
 // ========================================
+// TESTIMONIALS CAROUSEL
+// ========================================
 function initTestimonialsCarousel() {
-    const slider = document.querySelector('.testimonials-slider');
-    if (!slider) return;
+    const carousel = document.querySelector('.testimonials-carousel');
+    if (!carousel) return;
     
-    const track = slider.querySelector('.testimonials-track');
-    const prevBtn = slider.querySelector('.slider-btn-prev');
-    const nextBtn = slider.querySelector('.slider-btn-next');
-    const dotsContainer = slider.querySelector('.slider-dots');
-    const cards = slider.querySelectorAll('.testimonial-card');
+    const cards = carousel.querySelectorAll('.testimonial-card');
+    const prevBtn = carousel.querySelector('.testimonials-prev');
+    const nextBtn = carousel.querySelector('.testimonials-next');
+    const dotsContainer = carousel.querySelector('.testimonials-dots');
     
-    if (!track || cards.length === 0) return;
+    if (!cards.length) return;
     
     let currentIndex = 0;
     const totalCards = cards.length;
@@ -516,26 +517,23 @@ function initTestimonialsCarousel() {
     
     // Create dots
     cards.forEach((_, i) => {
-        const dot = document.createElement('button');
-        dot.className = 'slider-dot' + (i === 0 ? ' active' : '');
-        dot.setAttribute('aria-label', `Перейти к отзыву ${i + 1}`);
+        const dot = document.createElement('div');
+        dot.className = 'testimonials-dot' + (i === 0 ? ' active' : '');
         dot.addEventListener('click', () => goToSlide(i));
         dotsContainer.appendChild(dot);
     });
     
-    const dots = slider.querySelectorAll('.slider-dot');
+    const dots = carousel.querySelectorAll('.testimonials-dot');
     
-    function getVisibleCount() {
-        if (window.innerWidth <= 768) return 1;
-        if (window.innerWidth <= 1024) return 2;
-        return 3;
-    }
-    
-    function updateSlider() {
-        const visibleCount = getVisibleCount();
-        const cardWidth = cards[0].offsetWidth + 24;
-        const offset = -currentIndex * cardWidth;
-        track.style.transform = `translateX(${offset}px)`;
+    function updateCarousel() {
+        cards.forEach((card, i) => {
+            card.classList.remove('active', 'prev');
+            if (i === currentIndex) {
+                card.classList.add('active');
+            } else if (i < currentIndex) {
+                card.classList.add('prev');
+            }
+        });
         
         dots.forEach((dot, i) => {
             dot.classList.toggle('active', i === currentIndex);
@@ -543,27 +541,17 @@ function initTestimonialsCarousel() {
     }
     
     function goToSlide(index) {
-        const visibleCount = getVisibleCount();
-        const maxIndex = totalCards - visibleCount;
-        currentIndex = Math.max(0, Math.min(index, maxIndex));
-        updateSlider();
+        currentIndex = (index + totalCards) % totalCards;
+        updateCarousel();
         resetAutoPlay();
     }
     
     function nextSlide() {
-        const visibleCount = getVisibleCount();
-        const maxIndex = totalCards - visibleCount;
-        if (currentIndex < maxIndex) {
-            goToSlide(currentIndex + 1);
-        } else {
-            goToSlide(0);
-        }
+        goToSlide(currentIndex + 1);
     }
     
     function prevSlide() {
-        if (currentIndex > 0) {
-            goToSlide(currentIndex - 1);
-        }
+        goToSlide(currentIndex - 1);
     }
     
     function startAutoPlay() {
@@ -575,28 +563,31 @@ function initTestimonialsCarousel() {
         startAutoPlay();
     }
     
-    function throttle(func, limit) {
-        let inThrottle;
-        return function(...args) {
-            if (!inThrottle) {
-                func.apply(this, args);
-                inThrottle = true;
-                setTimeout(() => inThrottle = false, limit);
-            }
-        };
-    }
+    if (prevBtn) prevBtn.addEventListener('click', () => { prevSlide(); resetAutoPlay(); });
+    if (nextBtn) nextBtn.addEventListener('click', () => { nextSlide(); resetAutoPlay(); });
     
-    prevBtn.addEventListener('click', () => { prevSlide(); resetAutoPlay(); });
-    nextBtn.addEventListener('click', () => { nextSlide(); resetAutoPlay(); });
-    
-    // Touch/swipe support
+    // Touch support
     let touchStartX = 0;
-    track.addEventListener('touchstart', (e) => {
+    carousel.addEventListener('touchstart', (e) => {
         touchStartX = e.touches[0].clientX;
     }, { passive: true });
     
-    track.addEventListener('touchend', (e) => {
+    carousel.addEventListener('touchend', (e) => {
         const touchEndX = e.changedTouches[0].clientX;
+        const diff = touchStartX - touchEndX;
+        if (Math.abs(diff) > 50) {
+            if (diff > 0) nextSlide();
+            else prevSlide();
+        }
+    }, { passive: true });
+    
+    // Pause on hover
+    carousel.addEventListener('mouseenter', () => clearInterval(autoPlayInterval));
+    carousel.addEventListener('mouseleave', startAutoPlay);
+    
+    updateCarousel();
+    startAutoPlay();
+}
         const diff = touchStartX - touchEndX;
         if (Math.abs(diff) > 50) {
             if (diff > 0) nextSlide();
