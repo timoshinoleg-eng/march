@@ -115,7 +115,7 @@
                 </div>
                 <div class="hero-widget-info">
                     <div class="hero-widget-name">ChatBot24 Assistant</div>
-                    <div class="hero-widget-status-text">🟢 Онлайн</div>
+                    <div class="hero-widget-status-text">Онлайн</div>
                 </div>
             </div>
             <div class="hero-widget-messages" id="widget-messages">
