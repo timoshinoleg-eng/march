@@ -319,7 +319,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     throw new Error('Server error');
                 }
             } catch (error) {
-                console.error('Form error:', error);
+                // Form submission error handled by UI
                 formContainer.hidden = true;
                 errorMessage.hidden = false;
             } finally {
@@ -445,11 +445,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if (typeof ym !== 'undefined' && YANDEX_METRICA_ID !== 'YANDEX_METRICA_ID') {
             ym(YANDEX_METRICA_ID, 'reachGoal', eventName);
         }
-        console.log('Analytics:', eventName);
+        // Analytics event tracked
     }
 
-    // Telegram widget click
-    const telegramWidget = document.getElementById('telegramWidget');
+    // Telegram widget click (reuse telegramWidget variable declared earlier)
     if (telegramWidget) {
         telegramWidget.addEventListener('click', () => {
             sendAnalytics('telegram_widget_click');
@@ -492,18 +491,17 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     }
 
-    console.log('ChatBot24 Studio v3.2 - Initialized');
+    // Initialize testimonials carousel
+    initTestimonialsCarousel();
 });
 
-// ========================================
-// TESTIMONIALS CAROUSEL
 // ========================================
 // TESTIMONIALS CAROUSEL
 // ========================================
 function initTestimonialsCarousel() {
     const carousel = document.querySelector('.testimonials-carousel');
     if (!carousel) {
-        console.log('Carousel not found');
+        // Carousel element not found on this page
         return;
     }
     
@@ -512,7 +510,7 @@ function initTestimonialsCarousel() {
     const nextBtn = carousel.querySelector('.testimonials-next');
     const dotsContainer = carousel.querySelector('.testimonials-dots');
     
-    console.log('Carousel init:', cards.length, 'cards, prevBtn:', !!prevBtn, 'nextBtn:', !!nextBtn);
+    // Carousel initialized
     
     if (!cards.length) return;
     
@@ -549,18 +547,18 @@ function initTestimonialsCarousel() {
     
     function goToSlide(index) {
         currentIndex = (index + totalCards) % totalCards;
-        console.log('Go to slide:', currentIndex);
+        // Slide changed
         updateCarousel();
         resetAutoPlay();
     }
     
     function nextSlide() {
-        console.log('Next slide');
+
         goToSlide(currentIndex + 1);
     }
     
     function prevSlide() {
-        console.log('Prev slide');
+
         goToSlide(currentIndex - 1);
     }
     
@@ -575,7 +573,7 @@ function initTestimonialsCarousel() {
     
     if (prevBtn) {
         prevBtn.addEventListener('click', () => { 
-            console.log('Prev clicked');
+
             prevSlide(); 
             resetAutoPlay(); 
         });
@@ -583,7 +581,7 @@ function initTestimonialsCarousel() {
     
     if (nextBtn) {
         nextBtn.addEventListener('click', () => { 
-            console.log('Next clicked');
+
             nextSlide(); 
             resetAutoPlay(); 
         });
@@ -610,37 +608,10 @@ function initTestimonialsCarousel() {
     
     updateCarousel();
     startAutoPlay();
-    console.log('Carousel initialized');
+    // Carousel initialized
 }
-            else prevSlide();
-        }
-    }, { passive: true });
-    
-    // Pause on hover
-    carousel.addEventListener('mouseenter', () => clearInterval(autoPlayInterval));
-    carousel.addEventListener('mouseleave', startAutoPlay);
-    
-    updateCarousel();
-    startAutoPlay();
-}
-        const diff = touchStartX - touchEndX;
-        if (Math.abs(diff) > 50) {
-            if (diff > 0) nextSlide();
-            else prevSlide();
-        }
-    }, { passive: true });
-    
-    // Pause on hover
-    slider.addEventListener('mouseenter', () => clearInterval(autoPlayInterval));
-    slider.addEventListener('mouseleave', startAutoPlay);
-    
-    // Update on resize
-    window.addEventListener('resize', throttle(updateSlider, 200));
-    
-    // Init
-    updateSlider();
-    startAutoPlay();
-}
+
+// TODO: Add chat widget initialization here for future chat feature
 
 // 3D Tilt Effect for Feature Cards
 document.querySelectorAll('[data-tilt]').forEach(card => {
@@ -683,17 +654,7 @@ function initDemoChat() {
   const container = document.getElementById('demoMessages');
   const typingIndicator = document.getElementById('typingIndicator');
   
-  console.log('initDemoChat called, container:', container); // Debug
-  
-  if (!container) {
-    console.error('demoMessages container not found!');
-    return;
-  }
-  
-  if (!typingIndicator) {
-    console.error('typingIndicator not found!');
-    return;
-  }
+  if (!container || !typingIndicator) return;
 
   let messageIndex = 0;
 
@@ -745,40 +706,4 @@ function initDemoChat() {
   setTimeout(playNextMessage, 1000);
 }
 
-// Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-  initTestimonialsCarousel();
-  // initDemoChat(); // Disabled - using hero-widget instead
-  initFAQAccordion();
-});
 
-// ========================================
-// FAQ ACCORDION
-// ========================================
-function initFAQAccordion() {
-    const faqItems = document.querySelectorAll('.faq-item');
-    
-    console.log('FAQ items found:', faqItems.length); // Debug
-    
-    faqItems.forEach(item => {
-        const question = item.querySelector('.faq-question');
-        
-        question.addEventListener('click', () => {
-            console.log('FAQ clicked'); // Debug
-            const isActive = item.classList.contains('active');
-            
-            // Close all items
-            faqItems.forEach(i => {
-                i.classList.remove('active');
-                i.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
-            });
-            
-            // Open clicked item if it wasn't active
-            if (!isActive) {
-                item.classList.add('active');
-                question.setAttribute('aria-expanded', 'true');
-                console.log('FAQ opened'); // Debug
-            }
-        });
-    });
-}

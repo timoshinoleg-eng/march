@@ -375,49 +375,6 @@ ${formData.audience_desc ? 'Портрет: ' + formData.audience_desc : ''}
 
 <b>6. Функции:</b> ${formData.features || 'Не указано'}
 
-<b>7. Примеры:</u003e
-${formData.examples || 'Не указано'}
-
-<b>8. Сервисы:</u003e ${formData.services || 'Не указано'}
-<b>Интеграция:</u003e ${formData.integration || 'Не указано'}
-${formData.integration_details ? 'Детали: ' + formData.integration_details : ''}
-
-<b>9. Бюджет:</u003e ${formData.budget || 'Не указано'}
-<b>Сроки:</u003e ${formData.timeline || 'Не указано'}
-
-<b>10. Контакты:</b>
-👤 ${formData.name}
-📞 ${formData.phone}
-📧 ${formData.email || 'Не указан'}
-
-<b>Комментарий:</b>
-${formData.comment || 'Нет'}
-                `.trim();
-
-                // Send to Telegram group
-                const botToken = '7703636299:AAEK6SlB3CtP2Qvw1iPq0U3YrNXdzU4F9vI';
-                const chatId = '3771638944';
-                
-                // Build message for Telegram
-                const message = `
-<b>📝 Новый бриф на разработку чат-бота</b>
-
-<b>1. О бизнесе:</b>
-${formData.business_niche}
-
-<b>2. Цель:</b> ${formData.goals || 'Не указано'}
-<b>Приоритет:</b> ${formData.priority}/10
-
-<b>3. Текущий процесс:</b>
-${formData.current_process || 'Не указано'}
-
-<b>4. Платформа:</b> ${formData.platform || 'Не указано'}
-
-<b>5. Аудитория:</b> ${formData.audience || 'Не указано'}
-${formData.audience_desc ? 'Портрет: ' + formData.audience_desc : ''}
-
-<b>6. Функции:</b> ${formData.features || 'Не указано'}
-
 <b>7. Примеры:</b>
 ${formData.examples || 'Не указано'}
 
@@ -437,6 +394,10 @@ ${formData.integration_details ? 'Детали: ' + formData.integration_details
 ${formData.comment || 'Нет'}
                 `.trim();
 
+                // Send to Telegram group
+                const botToken = '7703636299:AAEK6SlB3CtP2Qvw1iPq0U3YrNXdzU4F9vI';
+                const chatId = '3771638944';
+
                 // Send to Telegram via API (with fallback)
                 const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
                 
@@ -448,25 +409,17 @@ ${formData.comment || 'Нет'}
                         text: message,
                         parse_mode: 'HTML'
                     })
-                }).then(response => {
-                    console.log('Brief sent successfully', response);
-                }).catch(err => {
-                    console.error('Error sending brief:', err);
+                }).then(() => {
+                    // Success handling
+                }).catch(() => {
                     // Fallback: open Telegram with pre-filled message
                     const shortMessage = encodeURIComponent(`Новый бриф от ${formData.name}. Телефон: ${formData.phone}`);
                     window.open(`https://t.me/ChatBot24su_bot?text=${shortMessage}`, '_blank');
                 });
                 
-                // Show success message immediately
+                // Show success message and scroll to top
                 briefForm.style.display = 'none';
                 successMessage.classList.add('active');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                
-                // Show success message
-                briefForm.style.display = 'none';
-                successMessage.classList.add('active');
-                
-                // Scroll to top
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         }
