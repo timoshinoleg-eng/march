@@ -394,27 +394,22 @@ ${formData.integration_details ? 'Детали: ' + formData.integration_details
 ${formData.comment || 'Нет'}
                 `.trim();
 
-                // Send to Telegram group
-                const botToken = '7703636299:AAEK6SlB3CtP2Qvw1iPq0U3YrNXdzU4F9vI';
-                const chatId = '3771638944';
-
-                // Send to Telegram via API (with fallback)
-                const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
-                
-                fetch(telegramUrl, {
+                // Send to Telegram via serverless API
+                fetch('/api/send-telegram', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        chat_id: chatId,
-                        text: message,
-                        parse_mode: 'HTML'
+                        name: formData.name,
+                        phone: formData.phone,
+                        email: formData.email,
+                        message: formData.comment
                     })
-                }).then(() => {
-                    // Success handling
-                }).catch(() => {
-                    // Fallback: open Telegram with pre-filled message
-                    const shortMessage = encodeURIComponent(`Новый бриф от ${formData.name}. Телефон: ${formData.phone}`);
-                    window.open(`https://t.me/ChatBot24su_bot?text=${shortMessage}`, '_blank');
+                }).then(response => {
+                    if (!response.ok) {
+                        console.error('Failed to send to Telegram');
+                    }
+                }).catch(err => {
+                    console.error('Error:', err);
                 });
                 
                 // Show success message and scroll to top
