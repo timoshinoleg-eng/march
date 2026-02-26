@@ -4,6 +4,17 @@
  */
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize AOS
+    if (typeof AOS !== 'undefined') {
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out',
+            once: true,
+            offset: 100,
+            disable: function() { return window.innerWidth < 768; }
+        });
+    }
+
     // UTM Parameters tracking
     function getUTMParams() {
         const urlParams = new URLSearchParams(window.location.search);
@@ -30,49 +41,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     window.addEventListener('scroll', throttle(handleScroll, 100), { passive: true });
-
-    // ========================================
-    // COOKIE BANNER
-    // ========================================
-    const cookieBanner = document.getElementById('cookieBanner');
-    const cookieAccept = document.getElementById('cookieAccept');
-
-    if (cookieBanner && !localStorage.getItem('cookiesAccepted')) {
-        setTimeout(() => cookieBanner.classList.add('active'), 1000);
-    }
-
-    if (cookieAccept) {
-        cookieAccept.addEventListener('click', () => {
-            localStorage.setItem('cookiesAccepted', 'true');
-            cookieBanner.classList.remove('active');
-        });
-    }
-
-    // ========================================
-    // TELEGRAM CONSENT NOTICE
-    // ========================================
-    const telegramConsent = document.getElementById('telegramConsent');
-    const telegramConsentBtn = document.getElementById('telegramConsentBtn');
-    const telegramWidget = document.getElementById('telegramWidget');
-
-    if (telegramConsent && !localStorage.getItem('telegramConsentAccepted')) {
-        setTimeout(() => telegramConsent.classList.add('active'), 2000);
-    }
-
-    if (telegramConsentBtn) {
-        telegramConsentBtn.addEventListener('click', () => {
-            localStorage.setItem('telegramConsentAccepted', 'true');
-            telegramConsent.classList.remove('active');
-        });
-    }
-
-    if (telegramWidget && telegramConsent) {
-        telegramWidget.addEventListener('mouseenter', () => {
-            if (!localStorage.getItem('telegramConsentAccepted')) {
-                telegramConsent.classList.add('active');
-            }
-        });
-    }
 
     // ========================================
     // MOBILE MENU
@@ -278,7 +246,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             if (!consentInput.checked) {
-                showError('consentError', 'Необходимо согласие на обработку персональных данных (152-ФЗ)');
+                showError('consentError', 'Необходимо согласие на обработку персональных данных');
                 isValid = false;
             }
 
@@ -301,14 +269,31 @@ document.addEventListener('DOMContentLoaded', function() {
                 ...utmParams
             };
 
-            try {
+            // Отправка на серверный API (Vercel)
+            async function sendFormToServer(formData) {
                 const response = await fetch('/api/send-form', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(formData)
                 });
+                return response.ok;
+            }
 
-                if (response.ok) {
+            // Функция отправки с повторными попытками
+            async function submitWithRetry(formData, maxRetries = 3) {
+                for (let i = 0; i < maxRetries; i++) {
+                    try {
+                        return await sendFormToServer(formData);
+                    } catch (error) {
+                        if (i === maxRetries - 1) throw error;
+                        await new Promise(r => setTimeout(r, 1000 * (i + 1)));
+                    }
+                }
+            }
+
+            try {
+                const success = await submitWithRetry(formData);
+                if (success) {
                     formContainer.hidden = true;
                     successMessage.hidden = false;
                     sendAnalytics('form_submit');
@@ -316,10 +301,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         if (!successMessage.hidden) closeModal();
                     }, 5000);
                 } else {
-                    throw new Error('Server error');
+                    throw new Error('Telegram API error');
                 }
             } catch (error) {
-                // Form submission error handled by UI
+                console.error('Form error:', error);
                 formContainer.hidden = true;
                 errorMessage.hidden = false;
             } finally {
@@ -405,50 +390,17 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ========================================
-    // FADE UP ANIMATIONS
-    // ========================================
-    const fadeElements = document.querySelectorAll('.fade-up');
-    if (fadeElements.length > 0 && 'IntersectionObserver' in window) {
-        const fadeObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    fadeObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-        
-        fadeElements.forEach(el => fadeObserver.observe(el));
-    }
-
-    // ========================================
-    // MAGNETIC BUTTONS
-    // ========================================
-    if (!window.matchMedia('(pointer: coarse)').matches) {
-        document.querySelectorAll('.btn-magnetic').forEach(btn => {
-            btn.addEventListener('mousemove', (e) => {
-                const rect = btn.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                btn.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
-            });
-            btn.addEventListener('mouseleave', () => {
-                btn.style.transform = 'translate(0, 0)';
-            });
-        });
-    }
-
-    // ========================================
     // ANALYTICS
     // ========================================
     function sendAnalytics(eventName) {
         if (typeof ym !== 'undefined' && YANDEX_METRICA_ID !== 'YANDEX_METRICA_ID') {
             ym(YANDEX_METRICA_ID, 'reachGoal', eventName);
         }
-        // Analytics event tracked
+        console.log('Analytics:', eventName);
     }
 
-    // Telegram widget click (reuse telegramWidget variable declared earlier)
+    // Telegram widget click
+    const telegramWidget = document.getElementById('telegramWidget');
     if (telegramWidget) {
         telegramWidget.addEventListener('click', () => {
             sendAnalytics('telegram_widget_click');
@@ -491,75 +443,78 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     }
 
-    // Initialize testimonials carousel
-    initTestimonialsCarousel();
+    console.log('ChatBot24 Studio v3.0 - Initialized');
 });
+/* ChatBot24 Studio v3.1 - Main JS with testimonials carousel */
 
-// ========================================
-// TESTIMONIALS CAROUSEL
-// ========================================
+// Testimonials Carousel
 function initTestimonialsCarousel() {
-    const carousel = document.querySelector('.testimonials-carousel');
-    if (!carousel) {
-        // Carousel element not found on this page
-        return;
-    }
+    const slider = document.querySelector('.testimonials-slider');
+    if (!slider) return;
     
-    const cards = carousel.querySelectorAll('.testimonial-card');
-    const prevBtn = carousel.querySelector('.testimonials-prev');
-    const nextBtn = carousel.querySelector('.testimonials-next');
-    const dotsContainer = carousel.querySelector('.testimonials-dots');
+    const track = slider.querySelector('.testimonials-track');
+    const prevBtn = slider.querySelector('.slider-btn-prev');
+    const nextBtn = slider.querySelector('.slider-btn-next');
+    const dotsContainer = slider.querySelector('.slider-dots');
+    const cards = slider.querySelectorAll('.testimonial-card');
     
-    // Carousel initialized
-    
-    if (!cards.length) return;
+    if (!track || cards.length === 0) return;
     
     let currentIndex = 0;
     const totalCards = cards.length;
     let autoPlayInterval;
     
     // Create dots
-    if (dotsContainer) {
-        cards.forEach((_, i) => {
-            const dot = document.createElement('div');
-            dot.className = 'testimonials-dot' + (i === 0 ? ' active' : '');
-            dot.addEventListener('click', () => goToSlide(i));
-            dotsContainer.appendChild(dot);
-        });
+    cards.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.className = 'slider-dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', `Перейти к отзыву ${i + 1}`);
+        dot.addEventListener('click', () => goToSlide(i));
+        dotsContainer.appendChild(dot);
+    });
+    
+    const dots = slider.querySelectorAll('.slider-dot');
+    
+    function getVisibleCount() {
+        if (window.innerWidth <= 768) return 1;
+        if (window.innerWidth <= 1024) return 2;
+        return 3;
     }
     
-    const dots = carousel.querySelectorAll('.testimonials-dot');
-    
-    function updateCarousel() {
-        cards.forEach((card, i) => {
-            card.classList.remove('active', 'prev');
-            if (i === currentIndex) {
-                card.classList.add('active');
-            } else if (i < currentIndex) {
-                card.classList.add('prev');
-            }
-        });
+    function updateSlider() {
+        const visibleCount = getVisibleCount();
+        const cardWidth = cards[0].offsetWidth + 24; // including gap
+        const offset = -currentIndex * cardWidth;
+        track.style.transform = `translateX(${offset}px)`;
         
+        // Update dots
         dots.forEach((dot, i) => {
             dot.classList.toggle('active', i === currentIndex);
         });
     }
     
     function goToSlide(index) {
-        currentIndex = (index + totalCards) % totalCards;
-        // Slide changed
-        updateCarousel();
+        const visibleCount = getVisibleCount();
+        const maxIndex = totalCards - visibleCount;
+        currentIndex = Math.max(0, Math.min(index, maxIndex));
+        updateSlider();
         resetAutoPlay();
     }
     
     function nextSlide() {
-
-        goToSlide(currentIndex + 1);
+        const visibleCount = getVisibleCount();
+        const maxIndex = totalCards - visibleCount;
+        if (currentIndex < maxIndex) {
+            goToSlide(currentIndex + 1);
+        } else {
+            goToSlide(0);
+        }
     }
     
     function prevSlide() {
-
-        goToSlide(currentIndex - 1);
+        if (currentIndex > 0) {
+            goToSlide(currentIndex - 1);
+        }
     }
     
     function startAutoPlay() {
@@ -571,29 +526,17 @@ function initTestimonialsCarousel() {
         startAutoPlay();
     }
     
-    if (prevBtn) {
-        prevBtn.addEventListener('click', () => { 
-
-            prevSlide(); 
-            resetAutoPlay(); 
-        });
-    }
+    // Event listeners
+    prevBtn.addEventListener('click', () => { prevSlide(); resetAutoPlay(); });
+    nextBtn.addEventListener('click', () => { nextSlide(); resetAutoPlay(); });
     
-    if (nextBtn) {
-        nextBtn.addEventListener('click', () => { 
-
-            nextSlide(); 
-            resetAutoPlay(); 
-        });
-    }
-    
-    // Touch support
+    // Touch/swipe support
     let touchStartX = 0;
-    carousel.addEventListener('touchstart', (e) => {
+    track.addEventListener('touchstart', (e) => {
         touchStartX = e.touches[0].clientX;
     }, { passive: true });
     
-    carousel.addEventListener('touchend', (e) => {
+    track.addEventListener('touchend', (e) => {
         const touchEndX = e.changedTouches[0].clientX;
         const diff = touchStartX - touchEndX;
         if (Math.abs(diff) > 50) {
@@ -603,107 +546,28 @@ function initTestimonialsCarousel() {
     }, { passive: true });
     
     // Pause on hover
-    carousel.addEventListener('mouseenter', () => clearInterval(autoPlayInterval));
-    carousel.addEventListener('mouseleave', startAutoPlay);
+    slider.addEventListener('mouseenter', () => clearInterval(autoPlayInterval));
+    slider.addEventListener('mouseleave', startAutoPlay);
     
-    updateCarousel();
+    // Update on resize
+    window.addEventListener('resize', throttle(updateSlider, 200));
+    
+    // Init
+    updateSlider();
     startAutoPlay();
-    // Carousel initialized
 }
 
-// TODO: Add chat widget initialization here for future chat feature
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', initTestimonialsCarousel);
 
-// 3D Tilt Effect for Feature Cards
-document.querySelectorAll('[data-tilt]').forEach(card => {
-    if (window.matchMedia('(pointer: coarse)').matches) return; // Disable on touch devices
-    
-    card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        
-        const rotateX = (y - centerY) / 15;
-        const rotateY = (centerX - x) / 15;
-        
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
-    });
-    
-    card.addEventListener('mouseleave', () => {
-        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
-    });
-});
-
-// ========================================
-// DEMO CHAT ANIMATION
-// ========================================
-const demoMessages = [
-  { type: 'user', text: 'Привет! У вас есть курсы английского для начинающих?' },
-  { type: 'bot', text: 'Добрый день! Да, конечно. У нас есть курсы для всех уровней.' },
-  { type: 'bot', text: 'Какой у вас текущий уровень английского?' },
-  { type: 'user', text: 'Начинающий, с нуля' },
-  { type: 'bot', text: 'Отлично! У нас есть программа "English Start" — 3 месяца, 2 раза в неделю.' },
-  { type: 'bot', text: 'Стоимость: 12 000 ₽/месяц. Первое занятие бесплатное!' },
-  { type: 'user', text: 'Хочу записаться на пробное' },
-  { type: 'bot', text: 'Замечательно! Оставьте ваш телефон — менеджер свяжется в течение 15 минут.' }
-];
-
-function initDemoChat() {
-  const container = document.getElementById('demoMessages');
-  const typingIndicator = document.getElementById('typingIndicator');
-  
-  if (!container || !typingIndicator) return;
-
-  let messageIndex = 0;
-
-  function addMessage(message) {
-    const msgDiv = document.createElement('div');
-    msgDiv.className = `demo-message ${message.type}`;
-    msgDiv.textContent = message.text;
-    container.appendChild(msgDiv);
-    container.scrollTop = container.scrollHeight;
-  }
-
-  function showTyping() {
-    typingIndicator.classList.add('active');
-    container.scrollTop = container.scrollHeight;
-  }
-
-  function hideTyping() {
-    typingIndicator.classList.remove('active');
-  }
-
-  function playNextMessage() {
-    if (messageIndex >= demoMessages.length) {
-      messageIndex = 0;
-      setTimeout(() => {
-        container.innerHTML = '';
-        playNextMessage();
-      }, 3000);
-      return;
-    }
-
-    const message = demoMessages[messageIndex];
-    
-    if (message.type === 'bot') {
-      showTyping();
-      setTimeout(() => {
-        hideTyping();
-        addMessage(message);
-        messageIndex++;
-        setTimeout(playNextMessage, 1500);
-      }, 1200);
-    } else {
-      addMessage(message);
-      messageIndex++;
-      setTimeout(playNextMessage, 1000);
-    }
-  }
-
-  // Start animation
-  setTimeout(playNextMessage, 1000);
+// Utility functions
+function throttle(func, limit) {
+    let inThrottle;
+    return function(...args) {
+        if (!inThrottle) {
+            func.apply(this, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    };
 }
-
-

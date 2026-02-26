@@ -1,106 +1,63 @@
-/**
- * API Route: /api/send-form
- * Send form data to Telegram bot with UTM tracking
- */
+// Vercel Serverless Function для отправки заявок в Telegram
+// Файл: api/send-form.js
 
 export default async function handler(req, res) {
-    if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Method not allowed' });
+  // Разрешаем только POST запросы
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  // Получаем данные из тела запроса
+  const { name, phone, telegram, businessType, timestamp, url, utm_source, utm_medium, utm_campaign } = req.body;
+
+  // Проверяем обязательные поля
+  if (!name || !phone) {
+    return res.status(400).json({ error: 'Name and phone are required' });
+  }
+
+  // Получаем токен и chat_id из переменных окружения Vercel
+  const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+  const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
+
+  if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
+    console.error('Telegram credentials not configured');
+    return res.status(500).json({ error: 'Server configuration error' });
+  }
+
+  // Формируем сообщение
+  const message = `📬 Новая заявка с сайта ChatBot24!
+
+👤 Имя: ${name}
+📞 Телефон: ${phone}
+✈️ Telegram: ${telegram || '—'}
+🏢 Тип бизнеса: ${businessType || '—'}
+⏰ Время: ${timestamp || new Date().toLocaleString('ru-RU')}
+🔗 Страница: ${url || '—'}
+📊 UTM: ${utm_source || '—'} ${utm_medium || ''} ${utm_campaign || ''}`;
+
+  try {
+    // Отправляем в Telegram
+    const telegramResponse = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: TELEGRAM_CHAT_ID,
+        text: message,
+        parse_mode: 'HTML'
+      })
+    });
+
+    if (!telegramResponse.ok) {
+      const errorData = await telegramResponse.json();
+      console.error('Telegram API error:', errorData);
+      return res.status(500).json({ error: 'Failed to send message' });
     }
 
-    try {
-        const { name, phone, telegram, businessType, timestamp, url, 
-                utm_source, utm_medium, utm_campaign, utm_content, utm_term } = req.body;
+    // Успешно отправлено
+    return res.status(200).json({ success: true });
 
-        if (!name || !phone) {
-            return res.status(400).json({ 
-                error: 'Missing required fields',
-                details: 'Name and phone are required'
-            });
-        }
-
-        const botToken = process.env.TELEGRAM_BOT_TOKEN;
-        const chatId = process.env.TELEGRAM_CHAT_ID;
-
-        if (!botToken || !chatId) {
-            console.error('Missing Telegram configuration');
-            return res.status(500).json({ error: 'Server configuration error' });
-        }
-
-        // Build UTM string
-        const utmParams = [];
-        if (utm_source) utmParams.push(`source: ${utm_source}`);
-        if (utm_medium) utmParams.push(`medium: ${utm_medium}`);
-        if (utm_campaign) utmParams.push(`campaign: ${utm_campaign}`);
-        if (utm_content) utmParams.push(`content: ${utm_content}`);
-        if (utm_term) utmParams.push(`term: ${utm_term}`);
-        
-        const utmString = utmParams.length > 0 ? utmParams.join(', ') : '—';
-
-        const messageText = `
-🎯 <b>Новая заявка с сайта ChatBot24 Studio</b>
-
-👤 <b>Имя:</b> ${escapeHtml(name)}
-📞 <b>Телефон:</b> ${escapeHtml(phone)}
-✈️ <b>Telegram:</b> ${escapeHtml(telegram)}
-🏢 <b>Тип бизнеса:</b> ${escapeHtml(businessType)}
-
-📊 <b>UTM метки:</b> ${escapeHtml(utmString)}
-
-🕐 <b>Время:</b> ${escapeHtml(timestamp)}
-🔗 <b>Источник:</b> ${escapeHtml(url)}
-        `.trim();
-
-        const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
-        
-        const response = await fetch(telegramUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                chat_id: chatId,
-                text: messageText,
-                parse_mode: 'HTML'
-            })
-        });
-
-        const result = await response.json();
-
-        if (!response.ok || !result.ok) {
-            console.error('Telegram API error:', result);
-            return res.status(500).json({ 
-                error: 'Failed to send message',
-                details: result.description || 'Unknown error'
-            });
-        }
-
-        return res.status(200).json({ 
-            success: true,
-            message: 'Form submitted successfully'
-        });
-
-    } catch (error) {
-        console.error('API error:', error);
-        return res.status(500).json({ 
-            error: 'Internal server error',
-            details: error.message
-        });
-    }
+  } catch (error) {
+    console.error('Error sending to Telegram:', error);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
 }
-
-function escapeHtml(text) {
-    if (!text) return '';
-    return text
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
-}
-
-export const config = {
-    api: {
-        bodyParser: {
-            sizeLimit: '1mb'
-        }
-    }
-};
