@@ -2,79 +2,29 @@
 
 import { motion } from "framer-motion";
 import Button from "@/components/ui/Button";
+import Logo from "@/components/Logo";
 import { ArrowRight, Clock, CheckCircle, Building2 } from "lucide-react";
-
-// CSS анимированный логотип (замена для video)
-function AnimatedLogo({ className }: { className?: string }) {
-  return (
-    <div className={`relative ${className}`}>
-      <svg
-        viewBox="0 0 100 100"
-        className="w-full h-full"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <defs>
-          <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#0d9488">
-              <animate
-                attributeName="stop-color"
-                values="#0d9488;#14b8a6;#2dd4bf;#14b8a6;#0d9488"
-                dur="3s"
-                repeatCount="indefinite"
-              />
-            </stop>
-            <stop offset="100%" stopColor="#2dd4bf">
-              <animate
-                attributeName="stop-color"
-                values="#2dd4bf;#14b8a6;#0d9488;#14b8a6;#2dd4bf"
-                dur="3s"
-                repeatCount="indefinite"
-              />
-            </stop>
-          </linearGradient>
-        </defs>
-        <rect
-          width="100"
-          height="100"
-          rx="20"
-          fill="url(#logoGradient)"
-        />
-        <text
-          x="50"
-          y="70"
-          fontSize="55"
-          fontWeight="bold"
-          fill="white"
-          textAnchor="middle"
-          fontFamily="system-ui, sans-serif"
-        >
-          C
-        </text>
-      </svg>
-    </div>
-  );
-}
 
 export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-bg-primary">
-      {/* Background Effects */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 -left-32 w-96 h-96 bg-primary-500/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-primary-400/10 rounded-full blur-3xl" />
+      {/* Background Effects - оптимизированные для производительности */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/4 -left-32 w-96 h-96 bg-primary-500/20 rounded-full blur-3xl will-change-transform" />
+        <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-primary-400/10 rounded-full blur-3xl will-change-transform" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#021c1b_100%)]" />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-32">
         <div className="text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-500/10 border border-primary-500/20 mb-8"
+            className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-primary-500/10 border border-primary-500/20 mb-6 sm:mb-8"
           >
-            <AnimatedLogo className="w-8 h-8" />
-            <span className="text-sm text-primary-300">
+            <Logo size="sm" />
+            <span className="text-xs sm:text-sm text-primary-300">
               Инженерное бюро автоматизации
             </span>
           </motion.div>
@@ -83,7 +33,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight mb-4 sm:mb-6"
           >
             <span className="text-white">Автоматизация входящих заявок</span>
             <br />
@@ -96,7 +46,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto mb-10"
+            className="text-base sm:text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-8 sm:mb-10 px-4"
           >
             Запускаем систему обработки обращений за 7–14 дней. 
             Подходит компаниям с 10+ заявками в день.
@@ -106,16 +56,16 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
+            className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-12 sm:mb-16 px-4"
           >
-            <a href="#final-cta">
-              <Button size="lg" className="group">
+            <a href="#final-cta" className="w-full sm:w-auto">
+              <Button size="lg" className="group w-full sm:w-auto">
                 Получить консультацию
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </a>
-            <a href="#calculator">
-              <Button variant="outline" size="lg">
+            <a href="#calculator" className="w-full sm:w-auto">
+              <Button variant="outline" size="lg" className="w-full sm:w-auto">
                 Рассчитать потери
               </Button>
             </a>
@@ -125,7 +75,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto"
+            className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 max-w-3xl mx-auto px-4"
           >
             {[
               {
@@ -148,9 +98,9 @@ export default function Hero() {
                 key={index}
                 className="flex flex-col items-center p-4 rounded-xl bg-bg-secondary/50 border border-primary-500/10"
               >
-                <item.icon className="w-8 h-8 text-primary-400 mb-3" />
-                <h3 className="font-semibold text-white mb-1">{item.title}</h3>
-                <p className="text-sm text-gray-400">{item.desc}</p>
+                <item.icon className="w-6 h-6 sm:w-8 sm:h-8 text-primary-400 mb-2 sm:mb-3" />
+                <h3 className="font-semibold text-white text-sm sm:text-base mb-1">{item.title}</h3>
+                <p className="text-xs sm:text-sm text-gray-400">{item.desc}</p>
               </div>
             ))}
           </motion.div>
@@ -162,13 +112,13 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2"
       >
-        <div className="w-6 h-10 rounded-full border-2 border-primary-500/30 flex justify-center pt-2">
+        <div className="w-5 h-8 sm:w-6 sm:h-10 rounded-full border-2 border-primary-500/30 flex justify-center pt-1.5 sm:pt-2">
           <motion.div
             animate={{ y: [0, 8, 0] }}
             transition={{ repeat: Infinity, duration: 1.5 }}
-            className="w-1.5 h-1.5 rounded-full bg-primary-400"
+            className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-primary-400"
           />
         </div>
       </motion.div>

@@ -12,10 +12,18 @@ import FAQ from "@/components/sections/FAQ";
 import FinalCTA from "@/components/sections/FinalCTA";
 import Footer from "@/components/sections/Footer";
 
+// Компонент загрузки для Suspense
+function SectionSkeleton({ className = "" }: { className?: string }) {
+  return <div className={`min-h-[300px] animate-pulse bg-bg-secondary/30 ${className}`} />;
+}
+
 export default function Home() {
   return (
-    <main className="min-h-screen bg-bg-primary">
+    <main className="min-h-screen bg-bg-primary overflow-x-hidden">
+      {/* Hero - критический контент, загружаем сразу */}
       <Hero />
+      
+      {/* Остальные секции с приоритетами */}
       <Problems />
       <HowItWorks />
       <Pricing />
@@ -25,9 +33,12 @@ export default function Home() {
       <Cases />
       <Process />
       <FAQ />
-      <Suspense fallback={<div className="h-96 bg-bg-secondary/30" />}>
+      
+      {/* FinalCTA с Suspense из-за useSearchParams */}
+      <Suspense fallback={<SectionSkeleton className="bg-bg-secondary/30" />}>
         <FinalCTA />
       </Suspense>
+      
       <Footer />
     </main>
   );

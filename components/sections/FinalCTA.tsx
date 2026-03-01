@@ -46,7 +46,7 @@ const crmTypeOptions = [
   { value: "none", label: "Нет CRM" },
 ];
 
-export default function FinalCTA() {
+function FinalCTAContent() {
   const searchParams = useSearchParams();
   
   const [formData, setFormData] = useState({
@@ -58,27 +58,17 @@ export default function FinalCTA() {
     crmType: "",
   });
   
-  const [utmData, setUtmData] = useState({
-    utmSource: "",
-    utmMedium: "",
-    utmCampaign: "",
-    utmContent: "",
-    utmTerm: "",
-  });
-  
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
   // Сбор UTM-меток из URL
-  useEffect(() => {
-    setUtmData({
-      utmSource: searchParams.get("utm_source") || "",
-      utmMedium: searchParams.get("utm_medium") || "",
-      utmCampaign: searchParams.get("utm_campaign") || "",
-      utmContent: searchParams.get("utm_content") || "",
-      utmTerm: searchParams.get("utm_term") || "",
-    });
-  }, [searchParams]);
+  const utmData = {
+    utmSource: searchParams.get("utm_source") || "",
+    utmMedium: searchParams.get("utm_medium") || "",
+    utmCampaign: searchParams.get("utm_campaign") || "",
+    utmContent: searchParams.get("utm_content") || "",
+    utmTerm: searchParams.get("utm_term") || "",
+  };
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const formatted = formatPhone(e.target.value);
@@ -99,14 +89,15 @@ export default function FinalCTA() {
       name: formData.name,
       company: formData.company,
       phone: formData.phone,
-      email: formData.email || undefined,
-      dailyLeads: formData.dailyLeads || undefined,
-      crmType: formData.crmType || undefined,
-      ...utmData,
+      ...(formData.email && { email: formData.email }),
+      ...(formData.dailyLeads && { dailyLeads: formData.dailyLeads }),
+      ...(formData.crmType && { crmType: formData.crmType }),
+      ...(utmData.utmSource && { utmSource: utmData.utmSource }),
+      ...(utmData.utmMedium && { utmMedium: utmData.utmMedium }),
+      ...(utmData.utmCampaign && { utmCampaign: utmData.utmCampaign }),
+      ...(utmData.utmContent && { utmContent: utmData.utmContent }),
+      ...(utmData.utmTerm && { utmTerm: utmData.utmTerm }),
     };
-
-    // Debug log
-    console.log("[Lead Form] Submitting payload:", payload);
 
     try {
       const response = await fetch("/api/lead", {
@@ -116,7 +107,6 @@ export default function FinalCTA() {
       });
 
       const data = await response.json();
-      console.log("[Lead Form] Response:", data);
 
       if (data.success) {
         setIsSuccess(true);
@@ -128,11 +118,9 @@ export default function FinalCTA() {
           dailyLeads: "",
           crmType: "",
         });
-      } else {
-        console.error("[Lead Form] Error:", data.error, data.details);
       }
     } catch (error) {
-      console.error("[Lead Form] Submission error:", error);
+      console.error("Form submission error:", error);
     } finally {
       setIsSubmitting(false);
     }
@@ -140,7 +128,7 @@ export default function FinalCTA() {
 
   return (
     <Section id="final-cta" className="bg-bg-secondary/30">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -148,45 +136,45 @@ export default function FinalCTA() {
         >
           <Card variant="gradient" className="relative overflow-hidden">
             {/* Background decoration */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-primary-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary-400/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+            <div className="absolute top-0 right-0 w-48 h-48 sm:w-64 sm:h-64 bg-primary-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+            <div className="absolute bottom-0 left-0 w-48 h-48 sm:w-64 sm:h-64 bg-primary-400/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
 
-            <div className="relative z-10">
-              <div className="text-center mb-8">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-500/10 border border-primary-500/20 mb-6">
+            <div className="relative z-10 p-6 sm:p-8">
+              <div className="text-center mb-6 sm:mb-8">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-primary-500/10 border border-primary-500/20 mb-4 sm:mb-6">
                   <Calculator className="w-4 h-4 text-primary-400" />
-                  <span className="text-sm text-primary-300">
+                  <span className="text-xs sm:text-sm text-primary-300">
                     Бесплатный расчет
                   </span>
                 </div>
-                <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4">
                   Готовы перестать
                   <br />
                   <span className="bg-gradient-emerald bg-clip-text text-transparent">
                     терять заявки?
                   </span>
                 </h2>
-                <p className="text-gray-400 max-w-lg mx-auto">
+                <p className="text-sm sm:text-base text-gray-400 max-w-lg mx-auto">
                   Оставьте контакты — мы рассчитаем, сколько заявок и денег
-                  вы теряете сейчас, и подготовим персональное предложение
+                  вы теряете сейчас
                 </p>
               </div>
 
               {isSuccess ? (
-                <div className="text-center py-8">
-                  <div className="w-16 h-16 rounded-full bg-primary-500/20 flex items-center justify-center mx-auto mb-4">
-                    <CheckCircle className="w-8 h-8 text-primary-400" />
+                <div className="text-center py-6 sm:py-8">
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-primary-500/20 flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                    <CheckCircle className="w-7 h-7 sm:w-8 sm:h-8 text-primary-400" />
                   </div>
-                  <h3 className="text-xl font-semibold text-white mb-2">
+                  <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">
                     Заявка отправлена!
                   </h3>
-                  <p className="text-gray-400">
+                  <p className="text-sm sm:text-base text-gray-400">
                     Мы свяжемся с вами в ближайшее время
                   </p>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     <Input
                       name="name"
                       value={formData.name}
@@ -223,7 +211,7 @@ export default function FinalCTA() {
                         name="dailyLeads"
                         value={formData.dailyLeads}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 bg-bg-secondary border border-primary-500/20 rounded-lg text-white appearance-none focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                        className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-bg-secondary border border-primary-500/20 rounded-lg text-white text-sm sm:text-base appearance-none focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                       >
                         {dailyLeadsOptions.map((option) => (
                           <option key={option.value} value={option.value} className="bg-bg-secondary">
@@ -232,7 +220,7 @@ export default function FinalCTA() {
                         ))}
                       </select>
                       <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-                        <svg className="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-4 h-4 sm:w-5 sm:h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                         </svg>
                       </div>
@@ -244,7 +232,7 @@ export default function FinalCTA() {
                         name="crmType"
                         value={formData.crmType}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 bg-bg-secondary border border-primary-500/20 rounded-lg text-white appearance-none focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                        className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-bg-secondary border border-primary-500/20 rounded-lg text-white text-sm sm:text-base appearance-none focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                       >
                         {crmTypeOptions.map((option) => (
                           <option key={option.value} value={option.value} className="bg-bg-secondary">
@@ -253,7 +241,7 @@ export default function FinalCTA() {
                         ))}
                       </select>
                       <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-                        <svg className="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-4 h-4 sm:w-5 sm:h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                         </svg>
                       </div>
@@ -267,12 +255,12 @@ export default function FinalCTA() {
                     isLoading={isSubmitting}
                   >
                     Получить расчет
-                    <ArrowRight className="ml-2 w-5 h-5" />
+                    <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
                   </Button>
                 </form>
               )}
 
-              <div className="mt-6 flex flex-wrap items-center justify-center gap-4 text-xs text-gray-500">
+              <div className="mt-4 sm:mt-6 flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-xs text-gray-500">
                 <div className="flex items-center gap-1">
                   <CheckCircle className="w-3 h-3 text-primary-400" />
                   <span>Ответ в течение 2 часов</span>
@@ -292,4 +280,25 @@ export default function FinalCTA() {
       </div>
     </Section>
   );
+}
+
+// Обёртка для предотвращения hydration errors
+export default function FinalCTA() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <Section id="final-cta" className="bg-bg-secondary/30">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+          <div className="h-[400px] sm:h-[450px] bg-bg-secondary/50 rounded-xl animate-pulse" />
+        </div>
+      </Section>
+    );
+  }
+
+  return <FinalCTAContent />;
 }

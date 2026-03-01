@@ -18,6 +18,8 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -29,8 +31,37 @@ body {
   )
   rgb(var(--background-start-rgb));
   min-height: 100vh;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  text-rendering: optimizeLegibility;
 }
 
+/* Оптимизация для мобильных устройств */
+@media (max-width: 640px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+/* Отключение анимаций для пользователей с предпочтением reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Оптимизация изображений */
+img, video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Утилиты для производительности */
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -43,4 +74,36 @@ body {
   .gradient-text {
     @apply bg-gradient-emerald bg-clip-text text-transparent;
   }
+  
+  /* GPU acceleration для анимаций */
+  .gpu-accelerated {
+    transform: translateZ(0);
+    will-change: transform;
+  }
+  
+  /* Предотвращение сдвига контента (CLS) */
+  .aspect-auto {
+    aspect-ratio: auto;
+  }
+}
+
+/* Стили для форм */
+input, select, textarea {
+  font-family: inherit;
+}
+
+/* Улучшение доступности фокуса */
+:focus-visible {
+  outline: 2px solid #14b8a6;
+  outline-offset: 2px;
+}
+
+/* Скрытие скроллбара но сохранение функциональности */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }

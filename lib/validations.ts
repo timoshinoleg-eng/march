@@ -22,19 +22,25 @@ export const leadSchema = z.object({
     .string()
     .email("Введите корректный email адрес")
     .max(100, "Email слишком длинный")
-    .optional(),
+    .optional()
+    .or(z.literal("")),
+  // Используем string().optional() вместо enum для гибкости
   dailyLeads: z
-    .enum(["до 10", "10-30", "30-100", "100+"])
-    .optional(),
+    .string()
+    .max(20)
+    .optional()
+    .or(z.literal("")),
   crmType: z
-    .enum(["bitrix24", "amocrm", "other", "none"])
-    .optional(),
+    .string()
+    .max(20)
+    .optional()
+    .or(z.literal("")),
   // UTM-метки
-  utmSource: z.string().max(100).optional(),
-  utmMedium: z.string().max(100).optional(),
-  utmCampaign: z.string().max(100).optional(),
-  utmContent: z.string().max(100).optional(),
-  utmTerm: z.string().max(100).optional(),
+  utmSource: z.string().max(100).optional().or(z.literal("")),
+  utmMedium: z.string().max(100).optional().or(z.literal("")),
+  utmCampaign: z.string().max(100).optional().or(z.literal("")),
+  utmContent: z.string().max(100).optional().or(z.literal("")),
+  utmTerm: z.string().max(100).optional().or(z.literal("")),
 });
 
 // Тип для данных формы
