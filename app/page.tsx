@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import { Suspense, lazy } from "react";
 import Hero from "@/components/sections/Hero";
 import Problems from "@/components/sections/Problems";
 import HowItWorks from "@/components/sections/HowItWorks";
@@ -9,12 +9,19 @@ import TechStack from "@/components/sections/TechStack";
 import Cases from "@/components/sections/Cases";
 import Process from "@/components/sections/Process";
 import FAQ from "@/components/sections/FAQ";
-import FinalCTA from "@/components/sections/FinalCTA";
 import Footer from "@/components/sections/Footer";
+
+// Dynamic imports для тяжелых секций
+const FinalCTA = lazy(() => import("@/components/sections/FinalCTA"));
 
 // Компонент загрузки для Suspense
 function SectionSkeleton({ className = "" }: { className?: string }) {
-  return <div className={`min-h-[300px] animate-pulse bg-bg-secondary/30 ${className}`} />;
+  return (
+    <div 
+      className={`min-h-[300px] animate-pulse bg-bg-secondary/30 ${className}`} 
+      aria-hidden="true"
+    />
+  );
 }
 
 export default function Home() {
@@ -23,7 +30,7 @@ export default function Home() {
       {/* Hero - критический контент, загружаем сразу */}
       <Hero />
       
-      {/* Остальные секции с приоритетами */}
+      {/* Основные секции */}
       <Problems />
       <HowItWorks />
       <Pricing />

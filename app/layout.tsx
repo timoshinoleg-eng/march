@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Suspense } from "react";
 import "./globals.css";
 import YandexMetrika from "@/components/YandexMetrika";
+import Header from "@/components/Header";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -27,9 +28,9 @@ export const metadata: Metadata = {
     follow: true,
   },
   icons: {
-    icon: "/favicon.svg",
-    apple: "/favicon.svg",
-    shortcut: "/favicon.svg",
+    icon: "/favicon.png",
+    apple: "/favicon.png",
+    shortcut: "/favicon.png",
   },
   manifest: "/manifest.json",
   openGraph: {
@@ -57,7 +58,29 @@ export const metadata: Metadata = {
   verification: {
     yandex: "106988133",
   },
+  other: {
+    "format-detection": "telephone=no",
+  },
 };
+
+// Critical CSS inline для LCP
+const criticalCSS = `
+  :root {
+    --color-bg-primary: #021c1b;
+    --color-primary-500: #14b8a6;
+    --color-primary-400: #2dd4bf;
+  }
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+  }
+  body {
+    margin: 0;
+    background-color: var(--color-bg-primary);
+    color: white;
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+`;
 
 export default function RootLayout({
   children,
@@ -67,13 +90,16 @@ export default function RootLayout({
   return (
     <html lang="ru" suppressHydrationWarning>
       <head>
+        <style dangerouslySetInnerHTML={{ __html: criticalCSS }} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://mc.yandex.ru" />
       </head>
       <body 
         className="font-sans antialiased bg-bg-primary text-white min-h-screen"
         suppressHydrationWarning
       >
+        <Header />
         {children}
         <Suspense fallback={null}>
           <YandexMetrika />

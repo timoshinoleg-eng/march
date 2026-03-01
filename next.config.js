@@ -3,14 +3,28 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   compress: true,
+  output: 'standalone',
+  
+  // Turbopack config
+  turbopack: {
+    resolveExtensions: ['.mdx', '.tsx', '.ts', '.jsx', '.js', '.mjs', '.json'],
+  },
+
+  // Image optimization
   images: {
     formats: ['image/avif', 'image/webp'],
-    minimumCacheTTL: 60,
+    minimumCacheTTL: 86400,
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
   },
+
+  // Experimental features
   experimental: {
     optimizeCss: true,
     nextScriptWorkers: true,
+    scrollRestoration: true,
   },
+
+  // Security headers
   headers: async () => [
     {
       source: '/:path*',
@@ -39,16 +53,40 @@ const nextConfig = {
           key: 'Referrer-Policy',
           value: 'origin-when-cross-origin',
         },
+        {
+          key: 'Permissions-Policy',
+          value: 'camera=(), microphone=(), geolocation=()',
+        },
       ],
     },
+    // Cache static assets
     {
-      source: '/(favicon.svg|manifest.json)',
+      source: '/(favicon.png|manifest.json|robots.txt|sitemap.xml)',
       headers: [
         {
           key: 'Cache-Control',
-          value: 'public, max-age=86400, immutable',
+          value: 'public, max-age=86400, stale-while-revalidate=86400',
         },
       ],
+    },
+    // Cache fonts
+    {
+      source: '/fonts/:path*',
+      headers: [
+        {
+          key: 'Cache-Control',
+          value: 'public, max-age=31536000, immutable',
+        },
+      ],
+    },
+  ],
+
+  // Redirects
+  redirects: async () => [
+    {
+      source: '/home',
+      destination: '/',
+      permanent: true,
     },
   ],
 };

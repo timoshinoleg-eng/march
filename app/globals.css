@@ -20,6 +20,7 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-size-adjust: 100%;
 }
 
 body {
@@ -33,6 +34,7 @@ body {
   min-height: 100vh;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   text-rendering: optimizeLegibility;
+  line-height: 1.5;
 }
 
 /* Оптимизация для мобильных устройств */
@@ -61,6 +63,22 @@ img, video {
   display: block;
 }
 
+/* Accessibility: Skip to main content */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #14b8a6;
+  color: white;
+  padding: 8px;
+  text-decoration: none;
+  z-index: 100;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
 /* Утилиты для производительности */
 @layer utilities {
   .text-balance {
@@ -85,6 +103,11 @@ img, video {
   .aspect-auto {
     aspect-ratio: auto;
   }
+
+  /* Фокус видимый для accessibility */
+  .focus-visible-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 focus:ring-offset-bg-primary;
+  }
 }
 
 /* Стили для форм */
@@ -106,4 +129,20 @@ input, select, textarea {
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .border-primary-500\/10,
+  .border-primary-500\/20,
+  .border-primary-500\/30 {
+    border-color: rgba(20, 184, 166, 0.5);
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
 }

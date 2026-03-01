@@ -29,15 +29,15 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
     ref
   ) => {
     const baseStyles =
-      "inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-bg-primary disabled:opacity-50 disabled:cursor-not-allowed";
+      "inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 focus:ring-offset-bg-primary disabled:opacity-50 disabled:cursor-not-allowed";
 
     const variants = {
       primary:
-        "bg-gradient-emerald text-white hover:shadow-lg hover:shadow-primary-500/25 hover:scale-[1.02]",
+        "bg-gradient-emerald text-white hover:shadow-lg hover:shadow-primary-500/25 hover:scale-[1.02] active:scale-[0.98]",
       secondary:
         "bg-bg-tertiary text-primary-400 border border-primary-500/30 hover:border-primary-500/60 hover:bg-bg-secondary",
       outline:
-        "bg-transparent border-2 border-primary-500 text-primary-400 hover:bg-primary-500/10",
+        "bg-transparent border-2 border-primary-500 text-primary-400 hover:bg-primary-500/10 hover:text-primary-300",
       ghost:
         "bg-transparent text-primary-400 hover:bg-primary-500/10 hover:text-primary-300",
     };
@@ -68,6 +68,7 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
+              aria-hidden="true"
             >
               <circle
                 className="opacity-25"

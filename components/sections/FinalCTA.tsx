@@ -161,7 +161,7 @@ function FinalCTAContent() {
               </div>
 
               {isSuccess ? (
-                <div className="text-center py-6 sm:py-8">
+                <div className="text-center py-6 sm:py-8" role="status" aria-live="polite">
                   <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-primary-500/20 flex items-center justify-center mx-auto mb-3 sm:mb-4">
                     <CheckCircle className="w-7 h-7 sm:w-8 sm:h-8 text-primary-400" />
                   </div>
@@ -173,45 +173,73 @@ function FinalCTAContent() {
                   </p>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4" noValidate>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                    <Input
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      placeholder="Ваше имя *"
-                      required
-                    />
-                    <Input
-                      name="company"
-                      value={formData.company}
-                      onChange={handleChange}
-                      placeholder="Компания *"
-                      required
-                    />
-                    <Input
-                      name="phone"
-                      type="tel"
-                      value={formData.phone}
-                      onChange={handlePhoneChange}
-                      placeholder="+7 (___) ___-__-__ *"
-                      required
-                    />
-                    <Input
-                      name="email"
-                      type="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="Email"
-                    />
+                    <div>
+                      <label htmlFor="name" className="sr-only">Ваше имя</label>
+                      <Input
+                        id="name"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        placeholder="Ваше имя *"
+                        required
+                        aria-label="Ваше имя"
+                        aria-required="true"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="company" className="sr-only">Компания</label>
+                      <Input
+                        id="company"
+                        name="company"
+                        value={formData.company}
+                        onChange={handleChange}
+                        placeholder="Компания *"
+                        required
+                        aria-label="Название компании"
+                        aria-required="true"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="phone" className="sr-only">Телефон</label>
+                      <Input
+                        id="phone"
+                        name="phone"
+                        type="tel"
+                        value={formData.phone}
+                        onChange={handlePhoneChange}
+                        placeholder="+7 (___) ___-__-__ *"
+                        required
+                        aria-label="Номер телефона"
+                        aria-required="true"
+                        inputMode="tel"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="email" className="sr-only">Email</label>
+                      <Input
+                        id="email"
+                        name="email"
+                        type="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        placeholder="Email"
+                        aria-label="Email адрес"
+                        inputMode="email"
+                      />
+                    </div>
                     
                     {/* Select для dailyLeads */}
                     <div className="relative">
+                      <label htmlFor="dailyLeads" className="sr-only">Количество заявок в день</label>
                       <select
+                        id="dailyLeads"
                         name="dailyLeads"
                         value={formData.dailyLeads}
                         onChange={handleChange}
                         className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-bg-secondary border border-primary-500/20 rounded-lg text-white text-sm sm:text-base appearance-none focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                        aria-label="Количество заявок в день"
                       >
                         {dailyLeadsOptions.map((option) => (
                           <option key={option.value} value={option.value} className="bg-bg-secondary">
@@ -220,7 +248,7 @@ function FinalCTAContent() {
                         ))}
                       </select>
                       <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-                        <svg className="w-4 h-4 sm:w-5 sm:h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-4 h-4 sm:w-5 sm:h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                         </svg>
                       </div>
@@ -228,11 +256,14 @@ function FinalCTAContent() {
 
                     {/* Select для crmType */}
                     <div className="relative">
+                      <label htmlFor="crmType" className="sr-only">Используемая CRM</label>
                       <select
+                        id="crmType"
                         name="crmType"
                         value={formData.crmType}
                         onChange={handleChange}
                         className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-bg-secondary border border-primary-500/20 rounded-lg text-white text-sm sm:text-base appearance-none focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                        aria-label="Используемая CRM система"
                       >
                         {crmTypeOptions.map((option) => (
                           <option key={option.value} value={option.value} className="bg-bg-secondary">
@@ -241,7 +272,7 @@ function FinalCTAContent() {
                         ))}
                       </select>
                       <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-                        <svg className="w-4 h-4 sm:w-5 sm:h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-4 h-4 sm:w-5 sm:h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                         </svg>
                       </div>
@@ -253,6 +284,7 @@ function FinalCTAContent() {
                     size="lg"
                     className="w-full"
                     isLoading={isSubmitting}
+                    aria-label="Отправить заявку на расчет"
                   >
                     Получить расчет
                     <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
@@ -262,15 +294,15 @@ function FinalCTAContent() {
 
               <div className="mt-4 sm:mt-6 flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-xs text-gray-500">
                 <div className="flex items-center gap-1">
-                  <CheckCircle className="w-3 h-3 text-primary-400" />
+                  <CheckCircle className="w-3 h-3 text-primary-400" aria-hidden="true" />
                   <span>Ответ в течение 2 часов</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <CheckCircle className="w-3 h-3 text-primary-400" />
+                  <CheckCircle className="w-3 h-3 text-primary-400" aria-hidden="true" />
                   <span>Бесплатный аудит</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <CheckCircle className="w-3 h-3 text-primary-400" />
+                  <CheckCircle className="w-3 h-3 text-primary-400" aria-hidden="true" />
                   <span>Без спама</span>
                 </div>
               </div>
@@ -292,9 +324,9 @@ export default function FinalCTA() {
 
   if (!mounted) {
     return (
-      <Section id="final-cta" className="bg-bg-secondary/30">
+      <Section id="final-cta" className="bg-bg-secondary/30" aria-label="Контактная форма">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
-          <div className="h-[400px] sm:h-[450px] bg-bg-secondary/50 rounded-xl animate-pulse" />
+          <div className="h-[400px] sm:h-[450px] bg-bg-secondary/50 rounded-xl animate-pulse" aria-hidden="true" />
         </div>
       </Section>
     );
