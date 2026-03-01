@@ -94,17 +94,29 @@ export default function FinalCTA() {
     e.preventDefault();
     setIsSubmitting(true);
 
+    // Подготовка данных для API - убираем пустые строки для опциональных полей
+    const payload = {
+      name: formData.name,
+      company: formData.company,
+      phone: formData.phone,
+      email: formData.email || undefined,
+      dailyLeads: formData.dailyLeads || undefined,
+      crmType: formData.crmType || undefined,
+      ...utmData,
+    };
+
+    // Debug log
+    console.log("[Lead Form] Submitting payload:", payload);
+
     try {
       const response = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...formData,
-          ...utmData,
-        }),
+        body: JSON.stringify(payload),
       });
 
       const data = await response.json();
+      console.log("[Lead Form] Response:", data);
 
       if (data.success) {
         setIsSuccess(true);
@@ -116,9 +128,11 @@ export default function FinalCTA() {
           dailyLeads: "",
           crmType: "",
         });
+      } else {
+        console.error("[Lead Form] Error:", data.error, data.details);
       }
     } catch (error) {
-      console.error("Form submission error:", error);
+      console.error("[Lead Form] Submission error:", error);
     } finally {
       setIsSubmitting(false);
     }

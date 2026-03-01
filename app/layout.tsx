@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import "./globals.css";
 import YandexMetrika from "@/components/YandexMetrika";
 
@@ -43,9 +44,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
-      <body className="font-sans antialiased bg-bg-primary text-white">
+      <body className="font-sans antialiased bg-bg-primary text-white" suppressHydrationWarning>
         {children}
-        <YandexMetrika />
+        <Suspense fallback={null}>
+          <YandexMetrika />
+        </Suspense>
       </body>
     </html>
   );
