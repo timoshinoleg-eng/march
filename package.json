@@ -11,8 +11,6 @@
   "dependencies": {
     "@ai-sdk/openai": "^3.0.37",
     "@hookform/resolvers": "^3.9.0",
-    "@upstash/ratelimit": "^2.0.8",
-    "@vercel/kv": "^3.0.0",
     "ai": "^6.0.105",
     "clsx": "^2.1.1",
     "critters": "^0.0.23",
