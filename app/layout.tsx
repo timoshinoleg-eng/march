@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Suspense } from "react";
+import Script from "next/script";
 import "./globals.css";
-import YandexMetrika from "@/components/YandexMetrika";
 import Header from "@/components/Header";
 import ChatWidgetProvider from "@/components/ChatWidgetProvider";
 
@@ -34,6 +34,11 @@ export const metadata: Metadata = {
     shortcut: "/favicon.png",
   },
   manifest: "/manifest.json",
+  alternates: {
+    types: {
+      'application/rss+xml': '/turbo.xml',
+    },
+  },
   openGraph: {
     title: "ChatBot24 - Автоматизация входящих заявок",
     description: "Инженерное бюро автоматизации. Запускаем систему обработки обращений за 7–14 дней. MVP-бот от 49 000 ₽.",
@@ -95,6 +100,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://mc.yandex.ru" />
+        <link rel="alternate" type="application/rss+xml" title="ChatBot24 Turbo" href="/turbo.xml" />
       </head>
       <body 
         className="font-sans antialiased bg-bg-primary text-white min-h-screen"
@@ -102,10 +108,37 @@ export default function RootLayout({
       >
         <Header />
         {children}
+        
+        {/* Chat Widget */}
         <Suspense fallback={null}>
-          <YandexMetrika />
+          <ChatWidgetProvider />
         </Suspense>
-        <ChatWidgetProvider />
+
+        {/* Yandex.Metrika */}
+        <Script id="yandex-metrika" strategy="afterInteractive">
+          {`
+            (function(m,e,t,r,i,k,a){
+              m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+              m[i].l=1*new Date();
+              for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+              k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+            })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js?id=107072365', 'ym');
+            ym(107072365, 'init', {
+              ssr: true,
+              webvisor: true,
+              clickmap: true,
+              ecommerce: "dataLayer",
+              accurateTrackBounce: true,
+              trackLinks: true
+            });
+          `}
+        </Script>
+        <noscript>
+          <div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="https://mc.yandex.ru/watch/107072365" style={{ position: 'absolute', left: '-9999px' }} alt="" />
+          </div>
+        </noscript>
       </body>
     </html>
   );

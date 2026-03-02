@@ -15,6 +15,38 @@ export const metadata: Metadata = {
   },
 };
 
+// JSON-LD для списка статей
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "url": "https://chatbot24.su/blog/5-oshibok",
+      "name": "5 ошибок при выборе чат-бота, которые стоят вам клиентов"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "url": "https://chatbot24.su/blog/konversiya-40",
+      "name": "Как мы подняли конверсию на 40% с помощью чат-бота"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "url": "https://chatbot24.su/blog/sekundy-reshayut",
+      "name": "Почему секунды решают: скорость ответа и конверсия"
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "url": "https://chatbot24.su/blog/telegram-vs-whatsapp",
+      "name": "Telegram vs WhatsApp: где размещать чат-бота в 2024"
+    }
+  ]
+};
+
 const articles = [
   {
     slug: "5-oshibok",
@@ -53,6 +85,10 @@ const articles = [
 export default function BlogPage() {
   return (
     <main className="min-h-screen bg-bg-primary pt-24 sm:pt-32">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Hero Section */}
       <section className="relative overflow-hidden pb-16 sm:pb-20">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">

@@ -3,7 +3,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { 
   MessageCircle, 
-  X, 
   Send, 
   Loader2, 
   CheckCircle2,
@@ -25,6 +24,7 @@ interface LeadData {
 }
 
 export default function ChatWidget() {
+  const [isClient, setIsClient] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [leadSubmitted, setLeadSubmitted] = useState(false);
@@ -41,7 +41,11 @@ export default function ChatWidget() {
   const [error, setError] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const abortControllerRef = useRef<AbortController | null>(null);
+
+  // CRITICAL: Only render on client
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   // Auto-scroll to bottom
   useEffect(() => {
@@ -50,10 +54,10 @@ export default function ChatWidget() {
 
   // Focus input when opened
   useEffect(() => {
-    if (isOpen && !showForm) {
+    if (isOpen && !showForm && isClient) {
       setTimeout(() => inputRef.current?.focus(), 100);
     }
-  }, [isOpen, showForm]);
+  }, [isOpen, showForm, isClient]);
 
   // Show form after 3 user messages if not shown yet
   useEffect(() => {
@@ -69,7 +73,6 @@ export default function ChatWidget() {
     const trimmedInput = input.trim();
     if (!trimmedInput || isLoading) return;
 
-    // Add user message
     const userMessage: Message = {
       id: Date.now().toString(),
       role: 'user',
@@ -81,7 +84,6 @@ export default function ChatWidget() {
     setIsLoading(true);
     setError(null);
 
-    // Create assistant message placeholder
     const assistantId = (Date.now() + 1).toString();
     setMessages(prev => [...prev, {
       id: assistantId,
@@ -90,8 +92,6 @@ export default function ChatWidget() {
     }]);
 
     try {
-      abortControllerRef.current = new AbortController();
-
       const response = await fetch('/api/agent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -101,7 +101,6 @@ export default function ChatWidget() {
             { role: 'user', content: trimmedInput }
           ]
         }),
-        signal: abortControllerRef.current.signal
       });
 
       if (!response.ok) {
@@ -130,7 +129,6 @@ export default function ChatWidget() {
         ));
       }
 
-      // Check if form should be shown
       const triggerWords = ['контакт', 'телефон', 'менеджер', 'связаться', 'передать'];
       const shouldShowForm = triggerWords.some(word => 
         fullContent.toLowerCase().includes(word)
@@ -141,15 +139,11 @@ export default function ChatWidget() {
       }
 
     } catch (err) {
-      if (err instanceof Error && err.name === 'AbortError') {
-        return;
-      }
       console.error('Chat error:', err);
       setError('Ошибка соединения. Попробуйте снова.');
       setMessages(prev => prev.filter(m => m.id !== assistantId));
     } finally {
       setIsLoading(false);
-      abortControllerRef.current = null;
     }
   }, [input, isLoading, messages, leadSubmitted]);
 
@@ -202,6 +196,11 @@ export default function ChatWidget() {
     setLeadData({ name: '', phone: '', email: '', budget: '' });
     setError(null);
   };
+
+  // CRITICAL: Return null during SSR to prevent hydration mismatch
+  if (!isClient) {
+    return null;
+  }
 
   // Closed state - floating button
   if (!isOpen) {
@@ -259,7 +258,7 @@ export default function ChatWidget() {
 
         {/* Messages */}
         <div className="flex-1 overflow-y-auto p-4 space-y-4 min-h-[300px] max-h-[400px] bg-bg-secondary/30">
-          {messages.map((m, idx) => (
+          {messages.map((m) => (
             <div
               key={m.id}
               className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}
