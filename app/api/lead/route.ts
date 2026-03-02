@@ -1,194 +1,101 @@
-import { NextRequest, NextResponse } from "next/server";
-import { leadSchema } from "@/lib/validations";
-import { sendToTelegram } from "@/lib/telegram";
+import { NextRequest, NextResponse } from 'next/server';
+import { Ratelimit } from '@upstash/ratelimit';
+import { kv } from '@vercel/kv';
 
-// Rate limiting store (в продакшене лучше использовать Redis)
-const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
+const ratelimit = new Ratelimit({
+  redis: kv,
+  limiter: Ratelimit.slidingWindow(5, '60 s'),
+});
 
-// Ограничение: 5 запросов в минуту
-const RATE_LIMIT = 5;
-const RATE_LIMIT_WINDOW = 60 * 1000; // 1 минута в мс
-
-interface RateLimitResult {
-  allowed: boolean;
-  remaining: number;
-  resetTime: number;
-}
-
-// Функция проверки rate limit
-function checkRateLimit(ip: string): RateLimitResult {
-  const now = Date.now();
-  const record = rateLimitMap.get(ip);
-
-  if (!record || now > record.resetTime) {
-    // Новое окно или первый запрос
-    rateLimitMap.set(ip, {
-      count: 1,
-      resetTime: now + RATE_LIMIT_WINDOW,
-    });
-    return {
-      allowed: true,
-      remaining: RATE_LIMIT - 1,
-      resetTime: now + RATE_LIMIT_WINDOW,
-    };
-  }
-
-  if (record.count >= RATE_LIMIT) {
-    // Лимит исчерпан
-    return {
-      allowed: false,
-      remaining: 0,
-      resetTime: record.resetTime,
-    };
-  }
-
-  // Увеличиваем счетчик
-  record.count++;
-  return {
-    allowed: true,
-    remaining: RATE_LIMIT - record.count,
-    resetTime: record.resetTime,
-  };
-}
-
-// Получение IP адреса из запроса
-function getClientIP(request: NextRequest): string {
-  const forwarded = request.headers.get("x-forwarded-for");
+// Get IP from headers
+function getClientIp(req: NextRequest): string {
+  const forwarded = req.headers.get('x-forwarded-for');
   if (forwarded) {
-    return forwarded.split(",")[0].trim();
+    return forwarded.split(',')[0].trim();
   }
-  return request.headers.get("x-real-ip") || "unknown";
+  const realIp = req.headers.get('x-real-ip');
+  if (realIp) {
+    return realIp;
+  }
+  return '127.0.0.1';
 }
 
-// Получение UTM-меток из заголовков или тела запроса
-function getUTMParams(request: NextRequest, body: Record<string, unknown>) {
-  // Сначала проверяем тело запроса
-  const fromBody = {
-    utmSource: body.utmSource as string | undefined,
-    utmMedium: body.utmMedium as string | undefined,
-    utmCampaign: body.utmCampaign as string | undefined,
-    utmContent: body.utmContent as string | undefined,
-    utmTerm: body.utmTerm as string | undefined,
-  };
-
-  // Если есть в теле - используем их
-  if (fromBody.utmSource || fromBody.utmMedium) {
-    return fromBody;
-  }
-
-  // Иначе пытаемся получить из заголовков
-  return {
-    utmSource: request.headers.get("x-utm-source") || undefined,
-    utmMedium: request.headers.get("x-utm-medium") || undefined,
-    utmCampaign: request.headers.get("x-utm-campaign") || undefined,
-    utmContent: request.headers.get("x-utm-content") || undefined,
-    utmTerm: request.headers.get("x-utm-term") || undefined,
-  };
-}
-
-export async function POST(request: NextRequest) {
+export async function POST(req: NextRequest) {
   try {
-    // Получаем IP и проверяем rate limit
-    const clientIP = getClientIP(request);
-    const rateLimitResult = checkRateLimit(clientIP);
-
-    if (!rateLimitResult.allowed) {
+    // Rate limiting
+    const ip = getClientIp(req);
+    const { success: rateOk } = await ratelimit.limit(ip);
+    if (!rateOk) {
       return NextResponse.json(
-        {
-          success: false,
-          error: "Слишком много запросов. Попробуйте позже.",
-          retryAfter: Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000),
-        },
-        {
-          status: 429,
-          headers: {
-            "X-RateLimit-Limit": String(RATE_LIMIT),
-            "X-RateLimit-Remaining": "0",
-            "X-RateLimit-Reset": String(Math.ceil(rateLimitResult.resetTime / 1000)),
-          },
-        }
+        { success: false, error: 'Слишком много заявок. Попробуйте позже.' },
+        { status: 429 }
       );
     }
 
-    const body = await request.json();
+    const body = await req.json();
+    const { name, phone, email, budget, timeline, source = 'AI Chat', message } = body;
 
-    // Получаем UTM-метки из заголовков или тела
-    const utmParams = getUTMParams(request, body);
-
-    // Объединяем данные формы с UTM
-    const dataWithUTM = {
-      ...body,
-      ...utmParams,
-    };
-
-    // Валидация данных
-    const result = leadSchema.safeParse(dataWithUTM);
-
-    if (!result.success) {
+    if (!name || !phone) {
       return NextResponse.json(
-        {
-          success: false,
-          error: "Некорректные данные",
-          details: result.error.errors,
-        },
+        { success: false, error: 'Имя и телефон обязательны' },
         { status: 400 }
       );
     }
 
-    // Добавляем IP в данные для логирования
-    const dataWithIP = {
-      ...result.data,
-      ip: clientIP,
-    };
-
-    // Отправка в Telegram
-    const telegramResult = await sendToTelegram(dataWithIP);
-
-    if (!telegramResult.success) {
+    // Validate phone format (basic)
+    const phoneRegex = /^[\d\s\+\-\(\)]{10,20}$/;
+    if (!phoneRegex.test(phone)) {
       return NextResponse.json(
-        {
-          success: false,
-          error: "Ошибка отправки сообщения",
-        },
+        { success: false, error: 'Некорректный формат телефона' },
+        { status: 400 }
+      );
+    }
+
+    const bitrixWebhook = process.env.BITRIX24_WEBHOOK;
+    if (!bitrixWebhook) {
+      console.error('BITRIX24_WEBHOOK not configured');
+      return NextResponse.json(
+        { success: false, error: 'Сервис временно недоступен' },
         { status: 500 }
       );
     }
 
-    return NextResponse.json(
-      {
-        success: true,
-        message: "Заявка успешно отправлена",
-      },
-      {
-        status: 200,
-        headers: {
-          "X-RateLimit-Limit": String(RATE_LIMIT),
-          "X-RateLimit-Remaining": String(rateLimitResult.remaining),
-          "X-RateLimit-Reset": String(Math.ceil(rateLimitResult.resetTime / 1000)),
+    // Send to Bitrix24
+    const bitrixResponse = await fetch(`${bitrixWebhook}/crm.lead.add.json`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        fields: {
+          TITLE: `Заявка с сайта - ${name}`,
+          NAME: name,
+          PHONE: [{ VALUE: phone, VALUE_TYPE: 'WORK' }],
+          EMAIL: email ? [{ VALUE: email, VALUE_TYPE: 'WORK' }] : undefined,
+          COMMENTS: `Бюджет: ${budget || 'не указан'}\nСроки: ${timeline || 'не указаны'}\nИсточник: ${source}${message ? '\nСообщение: ' + message : ''}`,
+          SOURCE_ID: 'WEB',
+          SOURCE_DESCRIPTION: source,
         },
-      }
-    );
+        params: { REGISTER_SONET_EVENT: 'Y' }
+      }),
+    });
+
+    const bitrixData = await bitrixResponse.json();
+
+    if (bitrixData.error) {
+      console.error('Bitrix24 error:', bitrixData.error);
+      throw new Error(bitrixData.error_description || 'Bitrix24 API error');
+    }
+
+    return NextResponse.json({ 
+      success: true, 
+      leadId: bitrixData.result,
+      message: 'Заявка успешно создана'
+    });
+
   } catch (error) {
-    console.error("Lead submission error:", error);
+    console.error('Lead creation error:', error);
     return NextResponse.json(
-      {
-        success: false,
-        error: "Внутренняя ошибка сервера",
-      },
+      { success: false, error: 'Ошибка при создании заявки' },
       { status: 500 }
     );
   }
-}
-
-export async function GET() {
-  return NextResponse.json(
-    {
-      message: "Lead API endpoint. Use POST to submit leads.",
-      rateLimit: {
-        limit: RATE_LIMIT,
-        window: "1 minute",
-      },
-    },
-    { status: 200 }
-  );
 }

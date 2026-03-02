@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import "./globals.css";
 import YandexMetrika from "@/components/YandexMetrika";
 import Header from "@/components/Header";
+import ChatWidgetProvider from "@/components/ChatWidgetProvider";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -104,6 +105,7 @@ export default function RootLayout({
         <Suspense fallback={null}>
           <YandexMetrika />
         </Suspense>
+        <ChatWidgetProvider />
       </body>
     </html>
   );
