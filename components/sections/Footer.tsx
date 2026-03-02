@@ -43,7 +43,7 @@ export default function Footer() {
             <div className="space-y-3">
               <div className="flex items-center gap-3 text-sm text-gray-400">
                 <Phone className="w-4 h-4 text-primary-400" />
-                <span>+7 (800) 555-35-35</span>
+                <span>+7 (993) 336-61-02</span>
               </div>
               <div className="flex items-center gap-3 text-sm text-gray-400">
                 <Mail className="w-4 h-4 text-primary-400" />
@@ -51,7 +51,7 @@ export default function Footer() {
               </div>
               <div className="flex items-center gap-3 text-sm text-gray-400">
                 <MapPin className="w-4 h-4 text-primary-400" />
-                <span>г. Москва, Пресненская наб., 12</span>
+                <span>г. Москва</span>
               </div>
             </div>
           </div>
