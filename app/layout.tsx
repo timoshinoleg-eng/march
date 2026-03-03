@@ -4,6 +4,7 @@ import Script from "next/script";
 import "./globals.css";
 import Header from "@/components/Header";
 import ChatWidgetProvider from "@/components/ChatWidgetProvider";
+import WidgetDebug from "@/components/WidgetDebug";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -113,6 +114,9 @@ export default function RootLayout({
         <Suspense fallback={null}>
           <ChatWidgetProvider />
         </Suspense>
+
+        {/* Debug Panel (only in development) */}
+        {process.env.NODE_ENV === 'development' && <WidgetDebug />}
 
         {/* Yandex.Metrika */}
         <Script id="yandex-metrika" strategy="afterInteractive">
