@@ -30,10 +30,29 @@ export async function OPTIONS(req: NextRequest) {
   return setCorsHeaders(new Response(null, { status: 204 }), origin);
 }
 
+interface HealthStatus {
+  status: 'healthy' | 'degraded' | 'unhealthy';
+  timestamp: string;
+  version: string;
+  environment: string;
+  config: {
+    yandexConfigured: boolean;
+    folderId: string;
+    allowedOrigins: string[];
+  };
+  services: {
+    yandex: {
+      status: string;
+      latencyMs?: number;
+      error?: string;
+    };
+  };
+}
+
 export async function GET(req: NextRequest) {
   const origin = req.headers.get('origin');
   
-  const health = {
+  const health: HealthStatus = {
     status: 'healthy',
     timestamp: new Date().toISOString(),
     version: '1.0.0',
