@@ -2,9 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export const runtime = 'edge';
 
-const GIGACHAT_AUTH_URL = 'https://ngw.devices.sberbank.ru:9443/api/v2/oauth';
-const GIGACHAT_API_URL = 'https://gigachat.devices.sberbank.ru/api/v1/chat/completions';
-
 const SYSTEM_PROMPT = `Ты — AI-ассистент "Алексей" от компании ChatBot24. Ты квалифицируешь лидов для автоматизации обработки заявок.
 
 ТВОИ ЗАДАЧИ:
@@ -25,46 +22,6 @@ const SYSTEM_PROMPT = `Ты — AI-ассистент "Алексей" от ко
 - Sales (129 000₽): до 30 сценариев, воронки продаж, аналитика
 - AI (240 000₽): нейросети, RAG, сложные интеграции, безлимит сценариев`;
 
-// Кэш токена (глобальный для edge runtime)
-declare global {
-  var gigachatToken: { token: string; expiresAt: number } | undefined;
-}
-
-async function getGigaChatToken(): Promise<string> {
-  // Проверяем кэш
-  if (global.gigachatToken && global.gigachatToken.expiresAt > Date.now()) {
-    return global.gigachatToken.token;
-  }
-
-  // Получаем новый токен
-  const response = await fetch(GIGACHAT_AUTH_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Accept': 'application/json',
-      'RqUID': crypto.randomUUID(),
-      'Authorization': `Basic ${process.env.GIGACHAT_API_KEY}`,
-    },
-    body: new URLSearchParams({
-      scope: process.env.GIGACHAT_SCOPE || 'GIGACHAT_API_PERS',
-    }),
-  });
-
-  if (!response.ok) {
-    throw new Error(`GigaChat auth failed: ${await response.text()}`);
-  }
-
-  const data = await response.json();
-  
-  // Кэшируем с запасом 5 минут
-  global.gigachatToken = {
-    token: data.access_token,
-    expiresAt: data.expires_at - 5 * 60 * 1000,
-  };
-
-  return data.access_token;
-}
-
 export async function POST(req: NextRequest) {
   try {
     const { messages } = await req.json();
@@ -73,25 +30,19 @@ export async function POST(req: NextRequest) {
       return Response.json({ error: 'Messages required' }, { status: 400 });
     }
 
-    // Получаем токен
-    const token = await getGigaChatToken();
-
-    // Запрос к GigaChat
-    const response = await fetch(GIGACHAT_API_URL, {
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${token}`,
+        'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
+        'HTTP-Referer': 'https://www.chatbot24.su',
+        'X-Title': 'ChatBot24 AI Widget',
       },
       body: JSON.stringify({
-        model: 'GigaChat-Pro',
+        model: 'anthropic/claude-3.5-sonnet',
         messages: [
           { role: 'system', content: SYSTEM_PROMPT },
-          ...messages.map((m: any) => ({
-            role: m.role === 'system' ? 'system' : m.role === 'assistant' ? 'assistant' : 'user',
-            content: m.content,
-          }))
+          ...messages
         ],
         temperature: 0.7,
         max_tokens: 1000,
@@ -100,21 +51,15 @@ export async function POST(req: NextRequest) {
     });
 
     if (!response.ok) {
-      // Если 401 — пробуем обновить токен и повторить
-      if (response.status === 401) {
-        global.gigachatToken = undefined;
-        return POST(req); // Один retry
-      }
-      
       const error = await response.text();
-      console.error('GigaChat error:', error);
+      console.error('OpenRouter error:', error);
       return Response.json(
         { error: 'AI service error' },
         { status: 500 }
       );
     }
 
-    // Streaming
+    // Stream the response
     const encoder = new TextEncoder();
     const decoder = new TextDecoder();
     
@@ -169,7 +114,6 @@ export async function POST(req: NextRequest) {
         'Connection': 'keep-alive',
       },
     });
-
   } catch (error) {
     console.error('Agent error:', error);
     return Response.json(
