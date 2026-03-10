@@ -10,6 +10,7 @@ import Cases from "@/components/sections/Cases"
 import Process from "@/components/sections/Process"
 import FAQ from "@/components/sections/FAQ"
 import Footer from "@/components/sections/Footer"
+import ChatWidget from "@/components/ChatWidget"
 
 export default function Home() {
   return (
@@ -28,6 +29,7 @@ export default function Home() {
         <FAQ />
       </main>
       <Footer />
+      <ChatWidget />
     </>
   )
 }
