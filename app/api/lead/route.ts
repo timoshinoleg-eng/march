@@ -10,7 +10,7 @@ import { getBitrix24ExtendedClient, ExtendedLeadData } from '@/lib/bitrix24-ext'
 import { getBitrix24TasksClient } from '@/lib/bitrix24-tasks';
 import { getBitrix24TriggersClient } from '@/lib/bitrix24-triggers';
 import { logStep, createRequestContext } from '@/lib/logger';
-import { chatSessions } from '@/app/api/analytics/route';
+import { chatSessions } from '@/lib/analytics-store';
 
 export const dynamic = 'force-dynamic';
 

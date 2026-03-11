@@ -42,8 +42,6 @@ interface HealthStatus {
   services: {
     gigachat: {
       status: string;
-      latencyMs?: number;
-      error?: string;
     };
   };
 }
@@ -68,39 +66,6 @@ export async function GET(request: NextRequest) {
       },
     },
   };
-
-  // Проверяем GigaChat API если настроен
-  if (gigachat.isConfigured()) {
-    const startTime = Date.now();
-    try {
-      const testResponse = await gigachat.createCompletion(
-        [{ role: 'user', content: 'hi' }],
-        { max_tokens: 5 }
-      );
-
-      const latencyMs = Date.now() - startTime;
-      
-      if (testResponse.choices?.[0]?.message?.content) {
-        health.services.gigachat = {
-          status: 'connected',
-          latencyMs,
-        };
-      } else {
-        health.services.gigachat = {
-          status: 'error',
-          error: 'Empty response',
-          latencyMs,
-        };
-        health.status = 'degraded';
-      }
-    } catch (e) {
-      health.services.gigachat = {
-        status: 'error',
-        error: e instanceof Error ? e.message : 'Network error',
-      };
-      health.status = 'degraded';
-    }
-  }
 
   const statusCode = health.status === 'healthy' ? 200 : 503;
   
