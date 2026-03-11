@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // output: 'export', // Убрано для работы API routes на Vercel
-  distDir: 'dist',
+  // Убрано output: 'export' для работы API routes
+  // distDir убран — используем стандартный .next для Vercel
   images: {
     unoptimized: true,
   },
