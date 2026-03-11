@@ -5,25 +5,9 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { Bitrix24Client } from '@/lib/bitrix24';
+import { chatSessions, addChatSession, updateChatSession, getChatSession } from '@/lib/analytics-store';
 
 export const dynamic = 'force-dynamic';
-
-// In-memory analytics store (use database in production)
-export interface ChatSession {
-  id: string;
-  startTime: number;
-  endTime?: number;
-  messages: number;
-  convertedToLead: boolean;
-  sentiment: string;
-  score?: number;
-  userId?: string;
-  pageUrl?: string;
-  source?: string;
-}
-
-// Shared in-memory store - exported for use in other routes
-export const chatSessions: ChatSession[] = [];
 
 export async function POST(request: NextRequest) {
   try {
@@ -32,7 +16,7 @@ export async function POST(request: NextRequest) {
 
     // Track chat events
     if (event === 'chat_start') {
-      chatSessions.push({
+      addChatSession({
         id: data.sessionId || Date.now().toString(),
         startTime: Date.now(),
         messages: 0,
@@ -43,7 +27,7 @@ export async function POST(request: NextRequest) {
         source: data.source,
       });
     } else if (event === 'chat_message') {
-      const session = chatSessions.find(s => s.id === data.sessionId);
+      const session = getChatSession(data.sessionId);
       if (session) {
         session.messages++;
         if (data.sentiment) {
@@ -51,7 +35,7 @@ export async function POST(request: NextRequest) {
         }
       }
     } else if (event === 'lead_created') {
-      const session = chatSessions.find(s => s.id === data.sessionId);
+      const session = getChatSession(data.sessionId);
       if (session) {
         session.convertedToLead = true;
         session.score = data.score;
