@@ -138,7 +138,7 @@ export function ModeSwitcher({
             className={cn(
               "flex h-6 w-6 items-center justify-center rounded-full",
               currentMode === "faq" && "bg-green-100 text-green-600",
-              currentMode === "sales" && "bg-blue-100 text-[#14b8a6]",
+              currentMode === "sales" && "bg-blue-100 text-blue-600",
               currentMode === "support" && "bg-purple-100 text-purple-600"
             )}
           >
@@ -163,7 +163,7 @@ export function ModeSwitcher({
                   className={cn(
                     "flex w-full items-start gap-3 rounded-md px-3 py-2 text-left transition-colors",
                     currentMode === mode
-                      ? "bg-[#14b8a6]/10 text-blue-900"
+                      ? "bg-blue-50 text-blue-900"
                       : "text-gray-700 hover:bg-gray-50"
                   )}
                 >
@@ -171,7 +171,7 @@ export function ModeSwitcher({
                     className={cn(
                       "mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full",
                       mode === "faq" && "bg-green-100 text-green-600",
-                      mode === "sales" && "bg-blue-100 text-[#14b8a6]",
+                      mode === "sales" && "bg-blue-100 text-blue-600",
                       mode === "support" && "bg-purple-100 text-purple-600"
                     )}
                   >
@@ -211,7 +211,7 @@ export function ModeSwitcher({
                 ? mode === "faq"
                   ? "border-green-500 bg-green-50 text-green-700"
                   : mode === "sales"
-                  ? "border-blue-500 bg-[#14b8a6]/10 text-blue-700"
+                  ? "border-blue-500 bg-blue-50 text-blue-700"
                   : "border-purple-500 bg-purple-50 text-purple-700"
                 : "border-gray-200 bg-white text-gray-600 hover:border-gray-300"
             )}

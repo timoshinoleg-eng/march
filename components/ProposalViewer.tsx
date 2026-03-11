@@ -152,7 +152,7 @@ export function ProposalViewer({ onClose, context }: ProposalViewerProps) {
       <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 p-4">
         <div className="w-full max-w-md rounded-2xl bg-white p-8 text-center shadow-2xl">
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center">
-            <Loader2 className="h-8 w-8 animate-spin text-[#14b8a6]" />
+            <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
           </div>
           <h3 className="mb-2 text-xl font-semibold text-gray-900">
             Генерация КП...
@@ -181,7 +181,7 @@ export function ProposalViewer({ onClose, context }: ProposalViewerProps) {
           <div className="flex gap-3 justify-center">
             <Button
               onClick={handleDownload}
-              className="bg-[#14b8a6] hover:bg-[#0d9488]"
+              className="bg-blue-600 hover:bg-blue-700"
             >
               <Download className="mr-2 h-4 w-4" />
               Скачать PDF
@@ -202,7 +202,7 @@ export function ProposalViewer({ onClose, context }: ProposalViewerProps) {
         <div className="sticky top-0 flex items-center justify-between border-b border-gray-100 bg-white px-6 py-4">
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100">
-              <FileText className="h-5 w-5 text-[#14b8a6]" />
+              <FileText className="h-5 w-5 text-blue-600" />
             </div>
             <div>
               <h3 className="text-lg font-semibold text-gray-900">
@@ -321,7 +321,7 @@ export function ProposalViewer({ onClose, context }: ProposalViewerProps) {
                   className={cn(
                     "flex items-center justify-between rounded-lg border p-3 transition-colors cursor-pointer",
                     selectedServices.includes(service.id)
-                      ? "border-blue-500 bg-[#14b8a6]/10"
+                      ? "border-blue-500 bg-blue-50"
                       : "border-gray-200 hover:border-gray-300"
                   )}
                   onClick={() => toggleService(service.id)}
@@ -346,7 +346,7 @@ export function ProposalViewer({ onClose, context }: ProposalViewerProps) {
             {/* Total */}
             <div className="flex items-center justify-between rounded-lg bg-gray-50 p-4">
               <span className="font-medium text-gray-700">ИТОГО:</span>
-              <span className="text-xl font-bold text-[#14b8a6]">
+              <span className="text-xl font-bold text-blue-600">
                 {calculateTotal().toLocaleString("ru-RU")} ₽
               </span>
             </div>
@@ -399,7 +399,7 @@ export function ProposalViewer({ onClose, context }: ProposalViewerProps) {
           <div className="flex gap-3 pt-4">
             <Button
               onClick={handleGenerate}
-              className="flex-1 bg-[#14b8a6] hover:bg-[#0d9488]"
+              className="flex-1 bg-blue-600 hover:bg-blue-700"
             >
               Сгенерировать КП
             </Button>

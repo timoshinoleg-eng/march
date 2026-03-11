@@ -303,7 +303,7 @@ export function LeadForm({ onSubmit, onClose, sessionId, initialData }: LeadForm
 
           <Button
             type="submit"
-            className="w-full bg-[#14b8a6] hover:bg-[#0d9488]"
+            className="w-full bg-blue-600 hover:bg-blue-700"
             disabled={isSubmitting}
           >
             {isSubmitting ? (

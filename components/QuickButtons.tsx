@@ -61,7 +61,7 @@ export function QuickButtons({
             onClick={() => handleClick(button)}
             className={cn(
               "flex items-center gap-1 whitespace-nowrap rounded-full px-3 py-1.5 text-xs",
-              "bg-[#14b8a6]/10 text-[#14b8a6] shadow-sm transition-all",
+              "bg-blue-50 text-blue-600 shadow-sm transition-all",
               "hover:bg-blue-100 hover:shadow-md active:scale-95",
               "border border-blue-100"
             )}
@@ -84,7 +84,7 @@ export function QuickButtons({
             className={cn(
               "rounded-md px-2.5 py-1 text-xs",
               "bg-gray-100 text-gray-700 transition-colors",
-              "hover:bg-[#14b8a6]/10 hover:text-[#14b8a6]"
+              "hover:bg-blue-50 hover:text-blue-600"
             )}
           >
             {button.label}
@@ -103,7 +103,7 @@ export function QuickButtons({
           className={cn(
             "group flex items-center gap-1 rounded-lg px-3 py-2 text-xs",
             "bg-white text-gray-700 shadow-sm transition-all",
-            "hover:bg-[#14b8a6]/10 hover:text-[#14b8a6] hover:shadow-md",
+            "hover:bg-blue-50 hover:text-blue-600 hover:shadow-md",
             "border border-gray-200 hover:border-blue-200"
           )}
         >

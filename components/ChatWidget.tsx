@@ -699,7 +699,7 @@ export function ChatWidget() {
           "fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full shadow-lg transition-all duration-300 hover:scale-110",
           isOpen
             ? "bg-red-500 hover:bg-red-600"
-            : "bg-gradient-to-r from-[#14b8a6] to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
+            : "bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
         )}
       >
         {isOpen ? (
@@ -713,7 +713,7 @@ export function ChatWidget() {
       {isOpen && (
         <div className="fixed bottom-24 right-6 z-50 flex h-[600px] w-[400px] flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl">
           {/* Header */}
-          <div className="flex items-center justify-between border-b border-gray-100 bg-gradient-to-r from-[#14b8a6] to-indigo-600 px-4 py-3">
+          <div className="flex items-center justify-between border-b border-gray-100 bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-3">
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20">
                 <Bot className="h-5 w-5 text-white" />
@@ -792,7 +792,7 @@ export function ChatWidget() {
                   )}
                 >
                   {message.role === "user" ? (
-                    <User className="h-4 w-4 text-[#14b8a6]" />
+                    <User className="h-4 w-4 text-blue-600" />
                   ) : (
                     <Bot className="h-4 w-4 text-white" />
                   )}
@@ -801,7 +801,7 @@ export function ChatWidget() {
                   className={cn(
                     "max-w-[75%] rounded-2xl px-4 py-2 text-sm",
                     message.role === "user"
-                      ? "bg-[#14b8a6] text-white"
+                      ? "bg-blue-600 text-white"
                       : "bg-gray-100 text-gray-800"
                   )}
                 >
@@ -833,7 +833,7 @@ export function ChatWidget() {
                   <button
                     key={`${button.action}-${index}`}
                     onClick={() => handleQuickButtonClick(button.action, button.label)}
-                    className="rounded-lg px-3 py-2 text-xs font-medium bg-white text-gray-700 border border-gray-200 hover:bg-[#14b8a6]/10 hover:text-[#14b8a6] hover:border-blue-200 shadow-sm transition-all"
+                    className="rounded-lg px-3 py-2 text-xs font-medium bg-white text-gray-700 border border-gray-200 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200 shadow-sm transition-all"
                   >
                     {button.label}
                   </button>
@@ -859,7 +859,7 @@ export function ChatWidget() {
                 type="submit"
                 size="icon"
                 disabled={isLoading || !input.trim()}
-                className="bg-[#14b8a6] hover:bg-[#0d9488]"
+                className="bg-blue-600 hover:bg-blue-700"
               >
                 <Send className="h-4 w-4" />
               </Button>

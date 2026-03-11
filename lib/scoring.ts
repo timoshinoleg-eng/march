@@ -495,7 +495,7 @@ export function getScoreColor(status: LeadScore['status'] | LegacyLeadScore['sta
     case 'WARM':
       return 'text-amber-600 bg-amber-50 border-amber-200';
     case 'COLD':
-      return 'text-[#14b8a6] bg-[#14b8a6]/10 border-blue-200';
+      return 'text-blue-600 bg-blue-50 border-blue-200';
     default:
       return 'text-gray-600 bg-gray-50 border-gray-200';
   }
@@ -511,7 +511,7 @@ export function getPriorityColor(priority: LegacyLeadScore['priority']): string 
     case 'MEDIUM':
       return 'bg-amber-500';
     case 'LOW':
-      return 'bg-[#14b8a6]/100';
+      return 'bg-blue-500';
     default:
       return 'bg-gray-500';
   }
