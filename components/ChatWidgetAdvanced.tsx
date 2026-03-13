@@ -282,7 +282,7 @@ export default function ChatWidgetAdvanced() {
       setMessages(prev => [...prev, {
         id: `confirmation_${Date.now()}`,
         role: "assistant",
-        content: `✅ Заявка принята!\n\nВаша оценка: ${category} (${score} баллов)\n\nМенеджер свяжется с вами в течение рабочего дня.`,
+        content: `✅ Заявка принята!\n\nМенеджер свяжется с вами в течение рабочего дня.`,
         timestamp: new Date(),
       }]);
 
