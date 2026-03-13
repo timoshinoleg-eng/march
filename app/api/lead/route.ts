@@ -12,7 +12,13 @@ export async function POST(req: NextRequest) {
       category,
       sessionId,
       source = 'AI Chat Widget',
-      messages = []
+      messages = [],
+      // Brief data
+      businessType,
+      channels,
+      dailyRequests,
+      botTasks,
+      hasExamples,
     } = await req.json();
 
     if (!name || !phone) {
@@ -22,13 +28,23 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Build brief info
+    const briefInfo = businessType ? `
+📋 ДАННЫЕ БРИФА:
+Сфера: ${businessType || 'не указана'}
+Каналы: ${channels?.join(', ') || 'не указаны'}
+Заявок в день: ${dailyRequests || 'не указано'}
+Задачи бота: ${botTasks?.join(', ') || 'не указаны'}
+Примеры: ${hasExamples || 'не указано'}
+` : '';
+
     // Build conversation history for Bitrix24
     const conversationHistory = messages
       .map((m: any) => `${m.role === 'user' ? 'Клиент' : 'AI'}: ${m.content}`)
       .join('\n\n');
 
     const comments = `📊 Оценка лида: ${category} (${score} баллов)
-
+${briefInfo}
 💰 Бюджет: ${budget || 'не указан'}
 ⏰ Сроки: ${timeline || 'не указаны'}
 🔗 Источник: ${source}
@@ -44,7 +60,7 @@ ${conversationHistory || 'Нет данных'}`;
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           fields: {
-            TITLE: `[${category}] Заявка с чата - ${name}`,
+            TITLE: `[${category}] ${businessType ? 'Бриф' : 'Чат'} - ${name}`,
             NAME: name,
             PHONE: [{ VALUE: phone, VALUE_TYPE: 'WORK' }],
             EMAIL: email ? [{ VALUE: email, VALUE_TYPE: 'WORK' }] : undefined,

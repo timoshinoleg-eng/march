@@ -9,7 +9,8 @@ import {
   Bot,
   User,
   FileText,
-  Sparkles
+  Sparkles,
+  CheckCircle
 } from "lucide-react";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
@@ -29,39 +30,95 @@ interface Message {
   };
 }
 
-interface LeadData {
-  name: string;
-  phone: string;
-  email: string;
-  budget: string;
-  timeline: string;
+interface BriefData {
+  businessType?: string;
+  channels?: string[];
+  dailyRequests?: string;
+  botTasks?: string[];
+  hasExamples?: string;
+  budget?: string;
+  name?: string;
+  phone?: string;
+  email?: string;
 }
 
-// Quick action buttons
+// Quick action buttons for initial chat
 const QUICK_BUTTONS = [
   { label: "Сколько стоит?", action: "price" },
   { label: "Сроки разработки", action: "timeline" },
   { label: "Какие возможности?", action: "features" },
-  { label: "Получить консультацию", action: "consultation" },
+  { label: "Заполнить бриф", action: "brief" },
 ];
+
+// Brief steps configuration
+const BRIEF_STEPS = [
+  {
+    id: "businessType",
+    question: "Какая у вас сфера бизнеса?",
+    options: ["Магазин/ритейл", "Услуги", "Образование", "Медицина", "Недвижимость", "Другое"],
+    multiple: false,
+  },
+  {
+    id: "channels",
+    question: "Где приходят заявки? (можно несколько)",
+    options: ["Telegram", "WhatsApp", "Instagram", "Сайт", "Звонки"],
+    multiple: true,
+  },
+  {
+    id: "dailyRequests",
+    question: "Сколько заявок в день обрабатываете?",
+    options: ["До 10", "10-50", "50-100", "100+"],
+    multiple: false,
+  },
+  {
+    id: "botTasks",
+    question: "Что должен делать бот? (можно несколько)",
+    options: ["Отвечать на вопросы", "Записывать клиентов", "Считать стоимость", "Подключить к CRM", "Собирать отзывы"],
+    multiple: true,
+  },
+  {
+    id: "hasExamples",
+    question: "Есть примеры ботов для вдохновения?",
+    options: ["Да, пришлю ссылку", "Нет", "Есть свои идеи"],
+    multiple: false,
+  },
+  {
+    id: "budget",
+    question: "Какой бюджет планируете?",
+    options: ["До 50 000₽", "50-100к", "100-200к", "200к+", "Обсудить с менеджером"],
+    multiple: false,
+  },
+];
+
+// Get response message based on current time
+function getTimeBasedResponse(): string {
+  const now = new Date();
+  const hour = now.getHours();
+  const day = now.getDay(); // 0 = Sunday, 6 = Saturday
+  const isWeekend = day === 0 || day === 6;
+  
+  if (isWeekend || hour >= 18) {
+    return "Отлично! Бриф заполнен. Менеджер получит заявку, подготовит индивидуальное предложение и отправит его вам в ближайший рабочий день до обеда.";
+  } else if (hour < 14) {
+    return "Отлично! Бриф заполнен. Менеджер получит заявку, подготовит индивидуальное предложение и отправит его вам сегодня.";
+  } else {
+    return "Отлично! Бриф заполнен. Менеджер получит заявку, подготовит индивидуальное предложение и отправит его вам сегодня вечером или завтра утром.";
+  }
+}
 
 export default function ChatWidgetAdvanced() {
   const [isClient, setIsClient] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [leadSubmitted, setLeadSubmitted] = useState(false);
-  const [leadData, setLeadData] = useState<LeadData>({ 
-    name: "", 
-    phone: "", 
-    email: "", 
-    budget: "",
-    timeline: "" 
-  });
+  const [briefMode, setBriefMode] = useState(false);
+  const [briefStep, setBriefStep] = useState(0);
+  const [briefData, setBriefData] = useState<BriefData>({});
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "welcome",
       role: "assistant",
-      content: "Привет! 👋 Я AI-ассистент ChatBot24.\n\nПомогаю автоматизировать обработку заявок. Задайте вопрос или расскажите о вашей задаче!",
+      content: "Привет! 👋 Я Алексей из ChatBot24.\n\nПомогаю автоматизировать обработку заявок. Задайте вопрос или нажмите \"Заполнить бриф\" — это займёт 2 минуты.",
       timestamp: new Date(),
     }
   ]);
@@ -83,13 +140,6 @@ export default function ChatWidgetAdvanced() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, showForm, isLoading]);
 
-  // Focus input when opened
-  useEffect(() => {
-    if (isOpen && !showForm && isClient) {
-      setTimeout(() => inputRef.current?.focus(), 100);
-    }
-  }, [isOpen, showForm, isClient]);
-
   // Track analytics
   useEffect(() => {
     if (isOpen && isClient) {
@@ -104,25 +154,77 @@ export default function ChatWidgetAdvanced() {
     }
   }, [isOpen, isClient]);
 
-  const handleQuickAction = (action: string) => {
-    let message = "";
-    switch (action) {
-      case "price":
-        message = "Сколько стоит разработка чат-бота?";
-        break;
-      case "timeline":
-        message = "Какие сроки разработки?";
-        break;
-      case "features":
-        message = "Какие возможности у ваших ботов?";
-        break;
-      case "consultation":
-        message = "Хочу получить консультацию";
-        break;
-      default:
-        message = action;
+  // Start brief mode
+  const startBrief = () => {
+    setBriefMode(true);
+    setBriefStep(0);
+    const firstStep = BRIEF_STEPS[0];
+    setMessages(prev => [...prev, {
+      id: `brief_start_${Date.now()}`,
+      role: "assistant",
+      content: `Давайте заполним короткий бриф — это поможет подготовить точное предложение.\n\n${firstStep.question}`,
+      timestamp: new Date(),
+    }]);
+  };
+
+  // Handle brief step selection
+  const handleBriefSelection = (option: string) => {
+    const currentStep = BRIEF_STEPS[briefStep];
+    const stepId = currentStep.id as keyof BriefData;
+    
+    // Update brief data
+    setBriefData(prev => {
+      if (currentStep.multiple) {
+        const current = (prev[stepId] as string[]) || [];
+        if (current.includes(option)) {
+          return { ...prev, [stepId]: current.filter(o => o !== option) };
+        }
+        return { ...prev, [stepId]: [...current, option] };
+      }
+      return { ...prev, [stepId]: option };
+    });
+
+    // If single selection, move to next step
+    if (!currentStep.multiple) {
+      if (briefStep < BRIEF_STEPS.length - 1) {
+        setBriefStep(prev => prev + 1);
+        const nextStep = BRIEF_STEPS[briefStep + 1];
+        setMessages(prevMessages => [...prevMessages, 
+          { id: `user_${Date.now()}`, role: "user", content: option, timestamp: new Date() },
+          { id: `bot_${Date.now()}`, role: "assistant", content: nextStep.question, timestamp: new Date() }
+        ]);
+      } else {
+        // Last step completed, show contact form
+        setMessages(prevMessages => [...prevMessages, 
+          { id: `user_${Date.now()}`, role: "user", content: option, timestamp: new Date() },
+          { id: `bot_${Date.now()}`, role: "assistant", content: "Почти готово! Оставьте контакты, чтобы менеджер мог отправить предложение.", timestamp: new Date() }
+        ]);
+        setShowForm(true);
+      }
     }
-    handleSend(message);
+  };
+
+  // Handle quick action
+  const handleQuickAction = (action: string) => {
+    if (action === "brief") {
+      startBrief();
+    } else {
+      let message = "";
+      switch (action) {
+        case "price":
+          message = "Сколько стоит разработка чат-бота?";
+          break;
+        case "timeline":
+          message = "Какие сроки разработки?";
+          break;
+        case "features":
+          message = "Какие возможности у ваших ботов?";
+          break;
+        default:
+          message = action;
+      }
+      handleSend(message);
+    }
   };
 
   const handleSend = async (text?: string) => {
@@ -203,14 +305,21 @@ export default function ChatWidgetAdvanced() {
 
       setMessages(prev => [...prev, assistantMessage]);
 
-      // Check if we should show lead form
-      const triggerWords = ["контакт", "телефон", "менеджер", "связаться", "передать", "консультация", "заявка"];
-      const shouldShowForm = triggerWords.some(word => 
-        aiResponse.toLowerCase().includes(word)
+      // Check if we should show brief option
+      const triggerWords = ["цена", "стоимость", "сколько", "предложение", "консультация", "заявка", "заинтересовал"];
+      const shouldSuggestBrief = triggerWords.some(word => 
+        messageText.toLowerCase().includes(word) || aiResponse.toLowerCase().includes(word)
       );
       
-      if (shouldShowForm && !leadSubmitted && messages.length > 3) {
-        setTimeout(() => setShowForm(true), 1000);
+      if (shouldSuggestBrief && !briefMode && messages.length > 2) {
+        setTimeout(() => {
+          setMessages(prev => [...prev, {
+            id: `suggest_brief_${Date.now()}`,
+            role: "assistant",
+            content: "💡 Чтобы получить точное предложение, можно заполнить короткий бриф — это займёт 2 минуты.",
+            timestamp: new Date(),
+          }]);
+        }, 500);
       }
 
     } catch (err) {
@@ -220,7 +329,7 @@ export default function ChatWidgetAdvanced() {
       setMessages(prev => [...prev, {
         id: `error_${Date.now()}`,
         role: "assistant",
-        content: "Извините, произошла ошибка соединения. Пожалуйста, попробуйте ещё раз или свяжитесь с нами по телефону.",
+        content: "Извините, произошла ошибка соединения. Попробуйте ещё раз или нажмите \"Заполнить бриф\".",
         timestamp: new Date(),
       }]);
     } finally {
@@ -236,28 +345,36 @@ export default function ChatWidgetAdvanced() {
   const submitLead = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!leadData.name || !leadData.phone) return;
+    if (!briefData.name || !briefData.phone) return;
 
     setIsLoading(true);
 
     try {
-      // Calculate lead score
+      // Calculate lead score based on brief data
       const score = calculateLeadScore({
-        budget: leadData.budget,
-        timeline: leadData.timeline,
+        budget: briefData.budget,
+        timeline: "Не определено",
       });
       const category = getLeadCategory(score);
 
-      // Send to API
+      // Send to API with brief data
       await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          ...leadData,
+          name: briefData.name,
+          phone: briefData.phone,
+          email: briefData.email,
+          budget: briefData.budget,
+          businessType: briefData.businessType,
+          channels: briefData.channels,
+          dailyRequests: briefData.dailyRequests,
+          botTasks: briefData.botTasks,
+          hasExamples: briefData.hasExamples,
           score,
           category,
           sessionId: sessionId.current,
-          source: "chat_widget",
+          source: "chat_widget_brief",
           messages: messages.map(m => ({ role: m.role, content: m.content })),
         }),
       });
@@ -271,7 +388,8 @@ export default function ChatWidgetAdvanced() {
           data: { 
             sessionId: sessionId.current, 
             score,
-            category 
+            category,
+            hasBrief: true,
           },
         }),
       }).catch(console.error);
@@ -279,10 +397,13 @@ export default function ChatWidgetAdvanced() {
       setLeadSubmitted(true);
       setShowForm(false);
       
+      // Time-based response
+      const timeMessage = getTimeBasedResponse();
+      
       setMessages(prev => [...prev, {
         id: `confirmation_${Date.now()}`,
         role: "assistant",
-        content: `✅ Заявка принята!\n\nМенеджер свяжется с вами в течение рабочего дня.`,
+        content: timeMessage,
         timestamp: new Date(),
       }]);
 
@@ -308,6 +429,9 @@ export default function ChatWidgetAdvanced() {
     );
   }
 
+  // Get current brief step options
+  const currentBriefStep = briefMode && briefStep < BRIEF_STEPS.length ? BRIEF_STEPS[briefStep] : null;
+
   return (
     <>
       {/* Chat Button */}
@@ -332,10 +456,10 @@ export default function ChatWidgetAdvanced() {
                 <Bot className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h3 className="font-semibold text-white">AI-ассистент</h3>
+                <h3 className="font-semibold text-white">Алексей</h3>
                 <p className="text-xs text-gray-400 flex items-center gap-1">
                   <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                  Онлайн
+                  Консультант ChatBot24
                 </p>
               </div>
             </div>
@@ -401,67 +525,93 @@ export default function ChatWidgetAdvanced() {
               </div>
             )}
 
-            {/* Lead Form */}
+            {/* Brief Step Options */}
+            {currentBriefStep && !showForm && (
+              <div className="bg-bg-secondary rounded-2xl p-4 border border-primary-500/20">
+                <p className="text-sm text-gray-400 mb-3">
+                  {currentBriefStep.multiple ? "Выберите один или несколько вариантов:" : "Выберите вариант:"}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {currentBriefStep.options.map((option) => {
+                    const isSelected = currentBriefStep.multiple 
+                      ? (briefData[currentBriefStep.id as keyof BriefData] as string[])?.includes(option)
+                      : false;
+                    return (
+                      <button
+                        key={option}
+                        onClick={() => handleBriefSelection(option)}
+                        className={cn(
+                          "px-3 py-2 text-sm rounded-lg border transition-all",
+                          isSelected
+                            ? "bg-primary-500 border-primary-500 text-white"
+                            : "bg-bg-primary border-primary-500/20 text-gray-300 hover:border-primary-500/50 hover:bg-primary-500/10"
+                        )}
+                      >
+                        {option}
+                        {isSelected && <CheckCircle className="w-3 h-3 inline ml-1" />}
+                      </button>
+                    );
+                  })}
+                </div>
+                {currentBriefStep.multiple && (
+                  <button
+                    onClick={() => {
+                      if (briefStep < BRIEF_STEPS.length - 1) {
+                        setBriefStep(prev => prev + 1);
+                        const nextStep = BRIEF_STEPS[briefStep + 1];
+                        setMessages(prevMessages => [...prevMessages, {
+                          id: `bot_${Date.now()}`,
+                          role: "assistant",
+                          content: nextStep.question,
+                          timestamp: new Date(),
+                        }]);
+                      }
+                    }}
+                    className="mt-3 px-4 py-2 bg-primary-500 text-white rounded-lg text-sm hover:bg-primary-600 transition-colors"
+                  >
+                    Далее →
+                  </button>
+                )}
+              </div>
+            )}
+
+            {/* Contact Form */}
             {showForm && !leadSubmitted && (
               <div className="bg-bg-secondary rounded-2xl p-4 border border-primary-500/20">
                 <h4 className="font-semibold text-white mb-3 flex items-center gap-2">
                   <FileText className="w-4 h-4 text-primary-400" />
-                  Оставить заявку
+                  Оставьте контакты
                 </h4>
                 <form onSubmit={submitLead} className="space-y-3">
                   <Input
                     placeholder="Ваше имя"
-                    value={leadData.name}
-                    onChange={(e) => setLeadData({ ...leadData, name: e.target.value })}
+                    value={briefData.name || ""}
+                    onChange={(e) => setBriefData({ ...briefData, name: e.target.value })}
                     required
                   />
                   <Input
                     placeholder="Телефон"
                     type="tel"
-                    value={leadData.phone}
-                    onChange={(e) => setLeadData({ ...leadData, phone: e.target.value })}
+                    value={briefData.phone || ""}
+                    onChange={(e) => setBriefData({ ...briefData, phone: e.target.value })}
                     required
                   />
                   <Input
                     placeholder="Email (необязательно)"
                     type="email"
-                    value={leadData.email}
-                    onChange={(e) => setLeadData({ ...leadData, email: e.target.value })}
+                    value={briefData.email || ""}
+                    onChange={(e) => setBriefData({ ...briefData, email: e.target.value })}
                   />
-                  <select
-                    value={leadData.budget}
-                    onChange={(e) => setLeadData({ ...leadData, budget: e.target.value })}
-                    className="w-full px-4 py-3 bg-bg-secondary border border-primary-500/20 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary-400"
-                  >
-                    <option value="">Бюджет (необязательно)</option>
-                    <option value="до 50 000₽">до 50 000₽</option>
-                    <option value="50 000₽ - 100 000₽">50 000₽ - 100 000₽</option>
-                    <option value="100 000₽ - 250 000₽">100 000₽ - 250 000₽</option>
-                    <option value="250 000₽+">250 000₽+</option>
-                  </select>
-                  <select
-                    value={leadData.timeline}
-                    onChange={(e) => setLeadData({ ...leadData, timeline: e.target.value })}
-                    className="w-full px-4 py-3 bg-bg-secondary border border-primary-500/20 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary-400"
-                  >
-                    <option value="">Сроки (необязательно)</option>
-                    <option value="Срочно">Срочно</option>
-                    <option value="1 неделя">1 неделя</option>
-                    <option value="1 месяц">1 месяц</option>
-                    <option value="Не определено">Не определено</option>
-                  </select>
                   <div className="flex gap-2">
                     <Button
                       type="button"
                       variant="ghost"
-                      size="sm"
                       onClick={() => setShowForm(false)}
                     >
-                      Отмена
+                      Назад
                     </Button>
                     <Button
                       type="submit"
-                      size="sm"
                       isLoading={isLoading}
                       className="flex-1"
                     >
@@ -482,7 +632,7 @@ export default function ChatWidgetAdvanced() {
           </div>
 
           {/* Quick Buttons */}
-          {!showForm && (
+          {!showForm && !currentBriefStep && (
             <div className="px-4 pb-2 flex flex-wrap gap-2">
               {QUICK_BUTTONS.map((btn) => (
                 <button
@@ -497,7 +647,7 @@ export default function ChatWidgetAdvanced() {
           )}
 
           {/* Input */}
-          {!showForm && (
+          {!showForm && !currentBriefStep && (
             <form onSubmit={handleSubmit} className="p-4 border-t border-primary-500/20">
               <div className="flex gap-2">
                 <Input
@@ -528,7 +678,7 @@ export default function ChatWidgetAdvanced() {
           <div className="px-4 py-2 bg-bg-secondary/50 border-t border-primary-500/10 text-center">
             <p className="text-xs text-gray-500 flex items-center justify-center gap-1">
               <Sparkles className="w-3 h-3 text-primary-400" />
-              AI-ассистент ChatBot24
+              ChatBot24 — Автоматизация заявок
             </p>
           </div>
         </div>
