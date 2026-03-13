@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Button from "@/components/ui/Button";
 import Logo from "@/components/Logo";
+import { openChatWidget } from "@/lib/chat";
 import { ArrowRight, Clock, CheckCircle, Building2 } from "lucide-react";
 
 export default function Hero() {
@@ -58,12 +59,14 @@ export default function Hero() {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-12 sm:mb-16 px-4"
           >
-            <a href="#final-cta" className="w-full sm:w-auto">
-              <Button size="lg" className="group w-full sm:w-auto">
-                Получить консультацию
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </a>
+            <Button 
+              size="lg" 
+              className="group w-full sm:w-auto"
+              onClick={() => openChatWidget('brief')}
+            >
+              Получить консультацию
+              <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </Button>
             <a href="#calculator" className="w-full sm:w-auto">
               <Button variant="outline" size="lg" className="w-full sm:w-auto">
                 Рассчитать потери

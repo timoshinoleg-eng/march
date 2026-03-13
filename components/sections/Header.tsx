@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Logo from "../Logo";
+import { openChatWidget } from "@/lib/chat";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -92,12 +93,12 @@ export default function Header() {
 
             {/* CTA Button Desktop */}
             <div className="hidden md:block">
-              <Link
-                href="/#final-cta"
+              <button
+                onClick={() => openChatWidget('brief')}
                 className="px-4 py-2 bg-gradient-emerald text-white text-sm font-medium rounded-lg hover:shadow-lg hover:shadow-primary-500/25 transition-shadow"
               >
                 Оставить заявку
-              </Link>
+              </button>
             </div>
 
             {/* Mobile Menu Button */}
@@ -155,13 +156,15 @@ export default function Header() {
                 transition={{ delay: navItems.length * 0.05 }}
                 className="w-full max-w-xs mt-4"
               >
-                <Link
-                  href="/#final-cta"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="block px-6 py-3 bg-gradient-emerald text-white font-medium rounded-lg text-center"
+                <button
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    openChatWidget('brief');
+                  }}
+                  className="block w-full px-6 py-3 bg-gradient-emerald text-white font-medium rounded-lg text-center"
                 >
                   Оставить заявку
-                </Link>
+                </button>
               </motion.div>
             </nav>
           </motion.div>

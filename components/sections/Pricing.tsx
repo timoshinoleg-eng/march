@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import Section from "@/components/ui/Section";
+import { openChatWidget } from "@/lib/chat";
 import { Check, Star } from "lucide-react";
 import { pricingPlans } from "@/data/pricing";
 
@@ -108,6 +109,7 @@ export default function Pricing() {
               <Button
                 variant={plan.highlight ? "primary" : "outline"}
                 className="w-full"
+                onClick={() => openChatWidget('brief')}
               >
                 Выбрать
               </Button>

@@ -140,6 +140,24 @@ export default function ChatWidgetAdvanced() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, showForm, isLoading]);
 
+  // Listen for external open chat events
+  useEffect(() => {
+    if (!isClient) return;
+    
+    const handleOpenChat = (e: CustomEvent<{ mode?: string }>) => {
+      setIsOpen(true);
+      // If mode is 'brief', start brief immediately
+      if (e.detail?.mode === 'brief') {
+        setTimeout(() => {
+          startBrief();
+        }, 300);
+      }
+    };
+    
+    window.addEventListener('openChatWidget' as any, handleOpenChat);
+    return () => window.removeEventListener('openChatWidget' as any, handleOpenChat);
+  }, [isClient]);
+
   // Track analytics
   useEffect(() => {
     if (isOpen && isClient) {
