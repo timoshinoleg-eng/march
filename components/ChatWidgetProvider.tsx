@@ -3,7 +3,7 @@
 import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
 
-const ChatWidget = dynamic(() => import('./ChatWidget'), {
+const ChatWidgetAdvanced = dynamic(() => import('./ChatWidgetAdvanced'), {
   ssr: false,
   loading: () => null,
 });
@@ -11,7 +11,7 @@ const ChatWidget = dynamic(() => import('./ChatWidget'), {
 export default function ChatWidgetProvider() {
   return (
     <Suspense fallback={null}>
-      <ChatWidget />
+      <ChatWidgetAdvanced />
     </Suspense>
   );
 }
