@@ -54,62 +54,78 @@ ${briefInfo}
 ${conversationHistory || 'Нет данных'}`;
 
     // Send to Bitrix24 if configured
+    console.log('BITRIX24_WEBHOOK configured:', !!process.env.BITRIX24_WEBHOOK);
+    
     if (process.env.BITRIX24_WEBHOOK) {
-      const bitrixResponse = await fetch(`${process.env.BITRIX24_WEBHOOK}/crm.lead.add.json`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          fields: {
-            TITLE: `[${category}] ${businessType ? 'Бриф' : 'Чат'} - ${name}`,
-            NAME: name,
-            PHONE: [{ VALUE: phone, VALUE_TYPE: 'WORK' }],
-            EMAIL: email ? [{ VALUE: email, VALUE_TYPE: 'WORK' }] : undefined,
-            COMMENTS: comments,
-            SOURCE_ID: 'WEB',
-            SOURCE_DESCRIPTION: `${source} (${category})`,
-            // Custom fields for lead scoring
-            UF_CRM_LEAD_SCORE: score,
-            UF_CRM_LEAD_CATEGORY: category,
-          },
-          params: { REGISTER_SONET_EVENT: 'Y' }
-        }),
-      });
+      try {
+        const bitrixUrl = `${process.env.BITRIX24_WEBHOOK}/crm.lead.add.json`;
+        console.log('Sending to Bitrix24:', { name, phone, category });
+        
+        const bitrixResponse = await fetch(bitrixUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            fields: {
+              TITLE: `[${category}] ${businessType ? 'Бриф' : 'Чат'} - ${name}`,
+              NAME: name,
+              PHONE: [{ VALUE: phone, VALUE_TYPE: 'WORK' }],
+              EMAIL: email ? [{ VALUE: email, VALUE_TYPE: 'WORK' }] : undefined,
+              COMMENTS: comments,
+              SOURCE_ID: 'WEB',
+              SOURCE_DESCRIPTION: `${source} (${category})`,
+            },
+            params: { REGISTER_SONET_EVENT: 'Y' }
+          }),
+        });
 
-      const bitrixData = await bitrixResponse.json();
-      
-      if (bitrixData.error) {
-        console.error('Bitrix24 error:', bitrixData.error);
-        // Don't throw - we still want to return success to the user
-      }
-
-      // Create task for HOT leads
-      if (category === 'HOT' && process.env.BITRIX24_MANAGER_ID) {
-        try {
-          await fetch(`${process.env.BITRIX24_WEBHOOK}/tasks.task.add.json`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              fields: {
-                TITLE: `🔥 Срочная обработка лида: ${name}`,
-                DESCRIPTION: `HOT лид с оценкой ${score} баллов\n\nТелефон: ${phone}\n\n${comments}`,
-                RESPONSIBLE_ID: process.env.BITRIX24_MANAGER_ID,
-                PRIORITY: '2', // High priority
-                DEADLINE: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(), // 2 hours
-              },
-            }),
-          });
-        } catch (taskError) {
-          console.error('Task creation error:', taskError);
+        const bitrixData = await bitrixResponse.json();
+        console.log('Bitrix24 response:', bitrixData);
+        
+        if (bitrixData.error) {
+          console.error('Bitrix24 error:', bitrixData.error);
+          return NextResponse.json({ 
+            success: false, 
+            error: 'Ошибка Bitrix24: ' + bitrixData.error_description,
+            details: bitrixData.error
+          }, { status: 500 });
         }
-      }
 
-      return NextResponse.json({ 
-        success: true, 
-        leadId: bitrixData.result,
-        category,
-        score,
-        message: 'Заявка успешно создана'
-      });
+        // Create task for HOT leads
+        if (category === 'HOT' && process.env.BITRIX24_MANAGER_ID) {
+          try {
+            await fetch(`${process.env.BITRIX24_WEBHOOK}/tasks.task.add.json`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                fields: {
+                  TITLE: `🔥 Срочная обработка лида: ${name}`,
+                  DESCRIPTION: `HOT лид с оценкой ${score} баллов\n\nТелефон: ${phone}\n\n${comments}`,
+                  RESPONSIBLE_ID: process.env.BITRIX24_MANAGER_ID,
+                  PRIORITY: '2',
+                  DEADLINE: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(),
+                },
+              }),
+            });
+          } catch (taskError) {
+            console.error('Task creation error:', taskError);
+          }
+        }
+
+        return NextResponse.json({ 
+          success: true, 
+          leadId: bitrixData.result,
+          category,
+          score,
+          message: 'Заявка успешно создана'
+        });
+      } catch (bitrixError) {
+        console.error('Bitrix24 fetch error:', bitrixError);
+        return NextResponse.json({ 
+          success: false, 
+          error: 'Ошибка связи с Bitrix24',
+          details: String(bitrixError)
+        }, { status: 500 });
+      }
     }
 
     // If no Bitrix24 configured, just log and return success
