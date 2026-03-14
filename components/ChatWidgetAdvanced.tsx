@@ -114,14 +114,7 @@ export default function ChatWidgetAdvanced() {
   const [briefMode, setBriefMode] = useState(false);
   const [briefStep, setBriefStep] = useState(0);
   const [briefData, setBriefData] = useState<BriefData>({});
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: "welcome",
-      role: "assistant",
-      content: "Привет! 👋 Я Алексей из ChatBot24.\n\nПомогаю автоматизировать обработку заявок. Задайте вопрос или нажмите \"Заполнить бриф\" — это займёт 2 минуты.",
-      timestamp: new Date(),
-    }
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -130,9 +123,16 @@ export default function ChatWidgetAdvanced() {
   const inputRef = useRef<HTMLInputElement>(null);
   const sessionId = useRef(`session_${Date.now()}`);
 
-  // CRITICAL: Only render on client
+  // CRITICAL: Only render on client + init messages
   useEffect(() => {
     setIsClient(true);
+    // Initialize welcome message on client only to prevent hydration mismatch
+    setMessages([{
+      id: "welcome",
+      role: "assistant",
+      content: "Привет! 👋 Я Алексей из ChatBot24.\n\nПомогаю автоматизировать обработку заявок. Задайте вопрос или нажмите \"Заполнить бриф\" — это займёт 2 минуты.",
+      timestamp: new Date(),
+    }]);
   }, []);
 
   // Auto-scroll to bottom

@@ -28,7 +28,11 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Build brief info
+    console.log('Lead API received:', { 
+      name, phone, email, budget, 
+      businessType, channels, dailyRequests, botTasks, hasExamples,
+      hasBriefData: !!businessType 
+    });
     const briefInfo = businessType ? `
 📋 ДАННЫЕ БРИФА:
 Сфера: ${businessType || 'не указана'}
