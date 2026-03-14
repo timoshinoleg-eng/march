@@ -77,6 +77,15 @@ ${conversationHistory || 'Нет данных'}`;
               COMMENTS: comments,
               SOURCE_ID: 'WEB',
               SOURCE_DESCRIPTION: `${source} (${category})`,
+              // Пользовательские поля брифа
+              UF_CRM_BUSINESS_TYPE: businessType || undefined,
+              UF_CRM_CHANNELS: channels || undefined,
+              UF_CRM_DAILY_REQUESTS: dailyRequests || undefined,
+              UF_CRM_BOT_TASKS: botTasks || undefined,
+              UF_CRM_HAS_EXAMPLES: hasExamples || undefined,
+              UF_CRM_BUDGET: budget || undefined,
+              UF_CRM_LEAD_SCORE: score || undefined,
+              UF_CRM_LEAD_CATEGORY: category || undefined,
             },
             params: { REGISTER_SONET_EVENT: 'Y' }
           }),
