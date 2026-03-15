@@ -119,6 +119,7 @@ export default function ChatWidgetAdvanced() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [typingIndicator, setTypingIndicator] = useState(false);
+  const [sessionInitialized, setSessionInitialized] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const sessionId = useRef(`session_${Date.now()}`);
@@ -158,9 +159,30 @@ export default function ChatWidgetAdvanced() {
     return () => window.removeEventListener('openChatWidget' as any, handleOpenChat);
   }, [isClient]);
 
-  // Track analytics
+  // Track analytics + init session
   useEffect(() => {
-    if (isOpen && isClient) {
+    if (isOpen && isClient && !sessionInitialized) {
+      // Create session
+      fetch("/api/chat/session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          sessionId: sessionId.current,
+          metadata: {
+            referrer: document.referrer,
+            userAgent: navigator.userAgent,
+            // UTM params from URL
+            utm: {
+              source: new URLSearchParams(window.location.search).get("utm_source") || undefined,
+              medium: new URLSearchParams(window.location.search).get("utm_medium") || undefined,
+              campaign: new URLSearchParams(window.location.search).get("utm_campaign") || undefined,
+            },
+          },
+        }),
+      }).catch(console.error);
+
+      setSessionInitialized(true);
+
       fetch("/api/analytics", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -170,7 +192,50 @@ export default function ChatWidgetAdvanced() {
         }),
       }).catch(console.error);
     }
-  }, [isOpen, isClient]);
+  }, [isOpen, isClient, sessionInitialized]);
+
+  // Log messages to database
+  const logMessage = useCallback((role: "user" | "assistant", content: string, sentiment?: string) => {
+    if (!sessionInitialized) return;
+    
+    fetch("/api/chat/message", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        sessionId: sessionId.current,
+        role,
+        content,
+        sentiment,
+      }),
+    }).catch(console.error);
+  }, [sessionInitialized]);
+
+  // Log brief completion
+  const logBrief = useCallback((contactData?: { name: string; phone: string; email?: string }) => {
+    if (!sessionInitialized) return;
+
+    const score = calculateLeadScore({ budget: briefData.budget });
+    const category = getLeadCategory(score);
+
+    fetch("/api/chat/brief", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        sessionId: sessionId.current,
+        businessType: briefData.businessType,
+        channels: briefData.channels,
+        dailyRequests: briefData.dailyRequests,
+        botTasks: briefData.botTasks,
+        hasExamples: briefData.hasExamples,
+        budget: briefData.budget,
+        score,
+        category,
+        contactName: contactData?.name,
+        contactPhone: contactData?.phone,
+        contactEmail: contactData?.email,
+      }),
+    }).catch(console.error);
+  }, [sessionInitialized, briefData]);
 
   // Start brief mode
   const startBrief = () => {
@@ -275,6 +340,9 @@ export default function ChatWidgetAdvanced() {
     setError(null);
     setTypingIndicator(true);
 
+    // Log user message
+    logMessage("user", messageText);
+
     try {
       // Analyze sentiment
       const sentiment = analyzeSentiment(messageText);
@@ -322,6 +390,9 @@ export default function ChatWidgetAdvanced() {
       };
 
       setMessages(prev => [...prev, assistantMessage]);
+
+      // Log assistant message
+      logMessage("assistant", aiResponse, sentiment?.label);
 
       // Check if we should show brief option
       const triggerWords = ["цена", "стоимость", "сколько", "предложение", "консультация", "заявка", "заинтересовал"];
@@ -409,6 +480,25 @@ export default function ChatWidgetAdvanced() {
             category,
             hasBrief: true,
           },
+        }),
+      }).catch(console.error);
+
+      // Log brief to database and Telegram
+      logBrief({
+        name: briefData.name!,
+        phone: briefData.phone!,
+        email: briefData.email,
+      });
+
+      // Update contacts in database
+      fetch("/api/chat/contacts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          sessionId: sessionId.current,
+          name: briefData.name,
+          phone: briefData.phone,
+          email: briefData.email,
         }),
       }).catch(console.error);
 

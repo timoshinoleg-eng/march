@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
+    "@vercel/postgres": "^0.10.0",
     "ai": "^6.0.105",
     "clsx": "^2.1.1",
     "critters": "^0.0.23",
