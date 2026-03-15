@@ -73,15 +73,15 @@ export async function initDatabase() {
       )
     `;
 
-    // Таблица брифов
+    // Таблица брифов - channels и bot_tasks как JSON
     await sql`
       CREATE TABLE IF NOT EXISTS briefs (
         id SERIAL PRIMARY KEY,
         session_id VARCHAR(255) REFERENCES chat_sessions(id) ON DELETE CASCADE,
         business_type VARCHAR(255),
-        channels TEXT[],
+        channels TEXT,
         daily_requests VARCHAR(50),
-        bot_tasks TEXT[],
+        bot_tasks TEXT,
         has_examples VARCHAR(255),
         budget VARCHAR(255),
         score INTEGER,
@@ -154,7 +154,7 @@ export async function saveMessage(
   }
 }
 
-// Сохранение брифа
+// Сохранение брифа - массивы сохраняем как JSON
 export async function saveBrief(sessionId: string, briefData: {
   businessType?: string;
   channels?: string[];
@@ -173,9 +173,9 @@ export async function saveBrief(sessionId: string, briefData: {
       ) VALUES (
         ${sessionId},
         ${briefData.businessType || null},
-        ${briefData.channels || null},
+        ${briefData.channels ? JSON.stringify(briefData.channels) : null},
         ${briefData.dailyRequests || null},
-        ${briefData.botTasks || null},
+        ${briefData.botTasks ? JSON.stringify(briefData.botTasks) : null},
         ${briefData.hasExamples || null},
         ${briefData.budget || null},
         ${briefData.score || null},
@@ -228,10 +228,17 @@ export async function getSessionHistory(sessionId: string) {
       SELECT * FROM briefs WHERE session_id = ${sessionId}
     `;
 
+    // Парсим JSON поля
+    const parsedBrief = brief.rows[0] ? {
+      ...brief.rows[0],
+      channels: brief.rows[0].channels ? JSON.parse(brief.rows[0].channels) : null,
+      bot_tasks: brief.rows[0].bot_tasks ? JSON.parse(brief.rows[0].bot_tasks) : null,
+    } : null;
+
     return {
       session: session.rows[0] || null,
       messages: messages.rows,
-      brief: brief.rows[0] || null,
+      brief: parsedBrief,
     };
   } catch (error) {
     console.error("Get session history error:", error);
@@ -248,7 +255,7 @@ export async function getStats(days: number = 7) {
         COUNT(CASE WHEN has_contacts THEN 1 END) as with_contacts,
         COUNT(CASE WHEN NOT has_contacts THEN 1 END) as anonymous
       FROM chat_sessions
-      WHERE created_at > CURRENT_TIMESTAMP - INTERVAL '${days} days'
+      WHERE created_at > CURRENT_TIMESTAMP - INTERVAL '1 days' * ${days}
     `;
 
     const messages = await sql`
@@ -257,7 +264,7 @@ export async function getStats(days: number = 7) {
         COUNT(CASE WHEN role = 'user' THEN 1 END) as user_messages,
         COUNT(CASE WHEN role = 'assistant' THEN 1 END) as bot_messages
       FROM chat_messages
-      WHERE created_at > CURRENT_TIMESTAMP - INTERVAL '${days} days'
+      WHERE created_at > CURRENT_TIMESTAMP - INTERVAL '1 days' * ${days}
     `;
 
     const briefs = await sql`
@@ -267,7 +274,7 @@ export async function getStats(days: number = 7) {
         COUNT(CASE WHEN category = 'WARM' THEN 1 END) as warm_leads,
         COUNT(CASE WHEN category = 'COLD' THEN 1 END) as cold_leads
       FROM briefs
-      WHERE created_at > CURRENT_TIMESTAMP - INTERVAL '${days} days'
+      WHERE created_at > CURRENT_TIMESTAMP - INTERVAL '1 days' * ${days}
     `;
 
     return {
