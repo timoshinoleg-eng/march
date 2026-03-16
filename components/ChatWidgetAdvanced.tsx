@@ -122,11 +122,15 @@ export default function ChatWidgetAdvanced() {
   const [sessionInitialized, setSessionInitialized] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const sessionId = useRef(`session_${Date.now()}`);
+  const sessionId = useRef<string>("");
 
   // CRITICAL: Only render on client + init messages
   useEffect(() => {
     setIsClient(true);
+    // Initialize sessionId on client only
+    if (!sessionId.current) {
+      sessionId.current = `session_${Date.now()}`;
+    }
     // Initialize welcome message on client only to prevent hydration mismatch
     setMessages([{
       id: "welcome",

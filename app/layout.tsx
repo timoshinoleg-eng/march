@@ -117,7 +117,7 @@ export default function RootLayout({
         {/* WidgetDebug is client-only, load dynamically to avoid hydration issues */}
 
         {/* Yandex.Metrika */}
-        <Script id="yandex-metrika" strategy="afterInteractive">
+        <Script id="yandex-metrika" strategy="afterInteractive" suppressHydrationWarning>
           {`
             (function(m,e,t,r,i,k,a){
               m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
