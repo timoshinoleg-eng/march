@@ -1,9 +1,14 @@
 import type { Metadata, Viewport } from "next";
 import { Suspense } from "react";
-import Script from "next/script";
+import dynamic from "next/dynamic";
 import "./globals.css";
 import ChatWidgetProvider from "@/components/ChatWidgetProvider";
 import WidgetDebug from "@/components/WidgetDebug";
+
+// Динамический импорт Яндекс.Метрики (только клиент)
+const YandexMetrika = dynamic(() => import("@/components/YandexMetrika"), {
+  ssr: false,
+});
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -116,31 +121,8 @@ export default function RootLayout({
         {/* Debug Panel - disabled in production */}
         {/* WidgetDebug is client-only, load dynamically to avoid hydration issues */}
 
-        {/* Yandex.Metrika */}
-        <Script id="yandex-metrika" strategy="afterInteractive" suppressHydrationWarning>
-          {`
-            (function(m,e,t,r,i,k,a){
-              m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-              m[i].l=1*new Date();
-              for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-              k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-            })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js?id=107072365', 'ym');
-            ym(107072365, 'init', {
-              ssr: true,
-              webvisor: true,
-              clickmap: true,
-              ecommerce: "dataLayer",
-              accurateTrackBounce: true,
-              trackLinks: true
-            });
-          `}
-        </Script>
-        <noscript>
-          <div>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="https://mc.yandex.ru/watch/107072365" style={{ position: 'absolute', left: '-9999px' }} alt="" />
-          </div>
-        </noscript>
+        {/* Yandex.Metrika - client only */}
+        <YandexMetrika />
       </body>
     </html>
   );
