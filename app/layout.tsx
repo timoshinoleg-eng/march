@@ -1,14 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Suspense } from "react";
-import dynamic from "next/dynamic";
 import "./globals.css";
 import ChatWidgetProvider from "@/components/ChatWidgetProvider";
 import WidgetDebug from "@/components/WidgetDebug";
-
-// Динамический импорт Яндекс.Метрики (только клиент)
-const YandexMetrika = dynamic(() => import("@/components/YandexMetrika"), {
-  ssr: false,
-});
+import ClientScripts from "@/components/ClientScripts";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -122,7 +117,7 @@ export default function RootLayout({
         {/* WidgetDebug is client-only, load dynamically to avoid hydration issues */}
 
         {/* Yandex.Metrika - client only */}
-        <YandexMetrika />
+        <ClientScripts />
       </body>
     </html>
   );
