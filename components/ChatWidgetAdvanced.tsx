@@ -523,13 +523,14 @@ export default function ChatWidgetAdvanced() {
     }
   };
 
-  // Prevent hydration mismatch - don't render until client-side
+  // Prevent hydration mismatch - render placeholder during SSR
   if (!isClient) {
     return (
-      <div className="fixed bottom-6 right-6 z-50">
+      <div className="fixed bottom-6 right-6 z-50" suppressHydrationWarning>
         <button
-          className="w-14 h-14 rounded-full bg-gradient-to-r from-primary-500 to-primary-400 text-white shadow-lg hover:shadow-xl transition-all hover:scale-105 flex items-center justify-center"
+          className="w-14 h-14 rounded-full bg-gradient-to-r from-primary-500 to-primary-400 text-white shadow-lg flex items-center justify-center"
           aria-label="Открыть чат"
+          suppressHydrationWarning
         >
           <MessageCircle className="w-6 h-6" />
         </button>
