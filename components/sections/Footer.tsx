@@ -111,7 +111,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-primary-500/10 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-gray-500 text-sm">
-            © {new Date().getFullYear()} ChatBot24. Все права защищены.
+            © 2026 ChatBot24. Все права защищены.
           </p>
           <div className="flex items-center gap-2">
             <span className="text-xs text-gray-500">Инженерное бюро автоматизации</span>
