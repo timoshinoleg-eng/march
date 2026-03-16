@@ -115,8 +115,8 @@ export default function RootLayout({
           <ChatWidgetProvider />
         </Suspense>
 
-        {/* Debug Panel (only in development) */}
-        {process.env.NODE_ENV === 'development' && <WidgetDebug />}
+        {/* Debug Panel - disabled in production */}
+        {/* WidgetDebug is client-only, load dynamically to avoid hydration issues */}
 
         {/* Yandex.Metrika */}
         <Script id="yandex-metrika" strategy="afterInteractive">

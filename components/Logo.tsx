@@ -12,8 +12,14 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
     lg: "w-12 h-12",
   };
 
+  const sizeStyles = {
+    sm: { width: "1.5rem", height: "1.5rem" },
+    md: { width: "2rem", height: "2rem" },
+    lg: { width: "3rem", height: "3rem" },
+  };
+
   return (
-    <div className={`relative ${sizes[size]} ${className}`}>
+    <div className={`relative ${sizes[size]} ${className}`} style={sizeStyles[size]}>
       <svg
         viewBox="0 0 100 100"
         className="w-full h-full"
