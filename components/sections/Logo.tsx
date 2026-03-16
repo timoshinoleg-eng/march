@@ -22,22 +22,8 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
       >
         <defs>
           <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#0d9488">
-              <animate
-                attributeName="stop-color"
-                values="#0d9488;#14b8a6;#2dd4bf;#14b8a6;#0d9488"
-                dur="3s"
-                repeatCount="indefinite"
-              />
-            </stop>
-            <stop offset="100%" stopColor="#2dd4bf">
-              <animate
-                attributeName="stop-color"
-                values="#2dd4bf;#14b8a6;#0d9488;#14b8a6;#2dd4bf"
-                dur="3s"
-                repeatCount="indefinite"
-              />
-            </stop>
+            <stop offset="0%" stopColor="#14b8a6" />
+            <stop offset="100%" stopColor="#2dd4bf" />
           </linearGradient>
         </defs>
         <rect width="100" height="100" rx="20" fill="url(#logoGradient)" />

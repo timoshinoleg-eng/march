@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import { LeadFormData } from "@/lib/validations";
@@ -64,15 +64,14 @@ export default function LeadForm({ onSuccess, className = "" }: LeadFormProps) {
 
   return (
     <div className={className}>
-      <AnimatePresence mode="wait">
-        {isSuccess ? (
-          <motion.div
-            key="success"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            className="text-center py-8"
-          >
+      {isSuccess ? (
+        <motion.div
+          key="success"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="text-center py-8"
+          suppressHydrationWarning
+        >
             <div className="w-16 h-16 rounded-full bg-primary-500/20 flex items-center justify-center mx-auto mb-4">
               <CheckCircle className="w-8 h-8 text-primary-400" />
             </div>
@@ -88,9 +87,9 @@ export default function LeadForm({ onSuccess, className = "" }: LeadFormProps) {
             key="form"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
             onSubmit={handleSubmit}
             className="space-y-4"
+            suppressHydrationWarning
           >
             <Input
               label="Ваше имя *"
@@ -139,8 +138,7 @@ export default function LeadForm({ onSuccess, className = "" }: LeadFormProps) {
               Отправить заявку
             </Button>
           </motion.form>
-        )}
-      </AnimatePresence>
+      )}
     </div>
   );
 }
