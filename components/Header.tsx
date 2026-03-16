@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Logo from "./Logo";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
@@ -114,15 +114,15 @@ export default function Header() {
       </header>
 
       {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 lg:hidden"
-          >
+      {isMobileMenuOpen && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.2 }}
+          className="fixed inset-0 z-40 lg:hidden"
+          suppressHydrationWarning
+        >
             <div 
               className="absolute inset-0 bg-bg-primary/95 backdrop-blur-md pt-20"
               onClick={() => setIsMobileMenuOpen(false)}
@@ -165,8 +165,8 @@ export default function Header() {
               </motion.div>
             </nav>
           </motion.div>
-        )}
-      </AnimatePresence>
+        )
+      }
     </>
   );
 }
