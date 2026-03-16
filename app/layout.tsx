@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { Suspense } from "react";
 import Script from "next/script";
 import "./globals.css";
-import Header from "@/components/Header";
 import ChatWidgetProvider from "@/components/ChatWidgetProvider";
 import WidgetDebug from "@/components/WidgetDebug";
 
@@ -107,7 +106,6 @@ export default function RootLayout({
         className="font-sans antialiased bg-bg-primary text-white min-h-screen"
         suppressHydrationWarning
       >
-        <Header />
         {children}
         
         {/* Chat Widget */}
