@@ -28,13 +28,11 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    console.log("Lead API received FULL:", JSON.stringify({ name, phone, email, budget, businessType, channels, dailyRequests, botTasks, hasExamples, score, category }, null, 2));
-    console.log("Lead API received:", { 
+    console.log('Lead API received:', { 
       name, phone, email, budget, 
       businessType, channels, dailyRequests, botTasks, hasExamples,
       hasBriefData: !!businessType 
     });
-    console.log("businessType value:", businessType, "hasBriefData:", !!businessType);
     const briefInfo = businessType ? `
 📋 ДАННЫЕ БРИФА:
 Сфера: ${businessType || 'не указана'}
@@ -49,14 +47,15 @@ export async function POST(req: NextRequest) {
       .map((m: any) => `${m.role === 'user' ? 'Клиент' : 'AI'}: ${m.content}`)
       .join('\n\n');
 
-    // Формируем comments
-    let comments = "Оценка: " + category + " (" + score + " баллов)\n";
-    if (businessType) comments += "Сфера: " + businessType + "\n";
-    if (channels && channels.length) comments += "Каналы: " + channels.join(", ") + "\n";
-    if (dailyRequests) comments += "Заявок/день: " + dailyRequests + "\n";
-    if (botTasks && botTasks.length) comments += "Задачи: " + botTasks.join(", ") + "\n";
-    if (hasExamples) comments += "Примеры: " + hasExamples + "\n";
-    comments += "Бюджет: " + (budget || "не указан");
+    const comments = `📊 Оценка лида: ${category} (${score} баллов)
+${briefInfo}
+💰 Бюджет: ${budget || 'не указан'}
+⏰ Сроки: ${timeline || 'не указаны'}
+🔗 Источник: ${source}
+🆔 Сессия: ${sessionId}
+
+💬 История переписки:
+${conversationHistory || 'Нет данных'}`;
 
     // Send to Bitrix24 if configured
     console.log('BITRIX24_WEBHOOK configured:', !!process.env.BITRIX24_WEBHOOK);
@@ -77,7 +76,7 @@ export async function POST(req: NextRequest) {
               EMAIL: email ? [{ VALUE: email, VALUE_TYPE: 'WORK' }] : undefined,
               COMMENTS: comments,
               SOURCE_ID: 'WEB',
-              SOURCE_DESCRIPTION: businessType ? `Brief: ${businessType} | Budget: ${budget || "no"} | Score: ${score}` : `${source} (${category})`,
+              SOURCE_DESCRIPTION: `${source} (${category})`,
               // Пользовательские поля брифа
               UF_CRM_BUSINESS_TYPE: businessType || undefined,
               UF_CRM_CHANNELS: channels || undefined,

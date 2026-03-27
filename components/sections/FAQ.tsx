@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Section from "@/components/ui/Section";
+import FAQSchema from "@/components/FAQSchema";
 import { ChevronDown } from "lucide-react";
 
 const faqs = [
@@ -92,6 +93,7 @@ export default function FAQ() {
           </div>
         ))}
       </div>
+      <FAQSchema faqs={faqs} />
     </Section>
   );
 }

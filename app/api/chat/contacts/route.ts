@@ -13,18 +13,10 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const success = await updateContacts(sessionId, { name, phone, email });
-
-    if (!success) {
-      return NextResponse.json(
-        { error: "Failed to update contacts" },
-        { status: 500 }
-      );
-    }
-
+    await updateContacts(sessionId, { name, phone, email });
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Update contacts error:", error);
-    return NextResponse.json({ success: true }); // Silent fail
+    return NextResponse.json({ success: true });
   }
 }

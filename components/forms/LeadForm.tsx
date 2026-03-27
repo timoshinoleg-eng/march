@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import { LeadFormData } from "@/lib/validations";
+import { trackFormSubmit } from "@/lib/metrika";
 import { Send, CheckCircle } from "lucide-react";
 
 interface LeadFormProps {
@@ -39,6 +40,7 @@ export default function LeadForm({ onSuccess, className = "" }: LeadFormProps) {
 
       if (data.success) {
         setIsSuccess(true);
+        trackFormSubmit("lead_form");
         setFormData({ name: "", phone: "", email: "", company: "" });
         onSuccess?.();
       } else {

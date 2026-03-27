@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Button from "@/components/ui/Button";
 import Logo from "@/components/Logo";
 import { openChatWidget } from "@/lib/chat";
+import { trackGoal } from "@/lib/metrika";
 import { ArrowRight, Clock, CheckCircle, Building2 } from "lucide-react";
 
 export default function Hero() {
@@ -62,7 +63,7 @@ export default function Hero() {
             <Button 
               size="lg" 
               className="group w-full sm:w-auto"
-              onClick={() => openChatWidget('brief')}
+              onClick={() => { trackGoal("brief_cta_click"); openChatWidget('brief'); }}
             >
               Получить консультацию
               <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />

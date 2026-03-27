@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     title: "Как мы подняли конверсию на 40% с помощью чат-бота",
     description: "Реальный кейс: автоматизация первичной обработки заявок в онлайн-школе.",
     type: "article",
-    publishedTime: "2024-01-10T00:00:00Z",
+    publishedTime: "2026-01-30T00:00:00Z",
     authors: ["ChatBot24"],
     tags: ["кейс", "конверсия", "онлайн-школа", "автоматизация"],
   },
@@ -24,7 +24,7 @@ const jsonLd = {
   "headline": "Как мы подняли конверсию на 40% с помощью чат-бота",
   "description": "Реальный кейс: автоматизация первичной обработки заявок в онлайн-школе и рост продаж без увеличения рекламного бюджета.",
   "image": "https://chatbot24.su/og-image.jpg",
-  "datePublished": "2024-01-10T00:00:00Z",
+  "datePublished": "2026-01-30T00:00:00Z",
   "author": {
     "@type": "Organization",
     "name": "ChatBot24",
@@ -55,7 +55,7 @@ const allArticles = [
     slug: "konversiya-40",
     title: "Как мы подняли конверсию на 40% с помощью чат-бота",
     excerpt: "Реальный кейс: автоматизация первичной обработки заявок в онлайн-школе.",
-    date: "10 января 2024",
+    date: "30 января 2026",
   },
   {
     slug: "sekundy-reshayut",
@@ -95,7 +95,7 @@ export default function ArticlePage() {
           <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 mb-4">
             <span className="flex items-center gap-1">
               <Calendar className="w-4 h-4" />
-              10 января 2024
+              30 января 2026
             </span>
             <span className="flex items-center gap-1">
               <Clock className="w-4 h-4" />

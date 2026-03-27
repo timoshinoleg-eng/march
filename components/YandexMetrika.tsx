@@ -1,41 +1,103 @@
 'use client';
 
-import { useEffect } from "react";
+import { useEffect, Suspense } from 'react';
+import { usePathname, useSearchParams } from 'next/navigation';
 
-export default function YandexMetrika() {
+const METRIKA_ID = 107072365;
+
+declare global {
+  interface Window {
+    ym?: (id: number, type: string, goal: string, params?: Record<string, any>) => void;
+    dataLayer?: any[];
+  }
+}
+
+// Компонент для отслеживания навигации
+function NavigationTracker() {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    if (typeof window === 'undefined') return;
     
-    // @ts-ignore
-    (function(m,e,t,r,i,k,a){
-      // @ts-ignore
-      m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-      // @ts-ignore
-      m[i].l=1*new Date();
-      for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-      k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-    })(window, document, "script", "https://mc.yandex.ru/metrika/tag.js?id=107072365", "ym");
+    const url = pathname + (searchParams?.toString() ? '?' + searchParams.toString() : '');
     
-    // @ts-ignore
-    ym(107072365, "init", {
+    const sendHit = () => {
+      if ((window as any).ym) {
+        (window as any).ym(METRIKA_ID, 'hit', url, {
+          referer: document.referrer,
+        });
+        console.log('[YM] Page view:', url);
+      }
+    };
+
+    sendHit();
+    setTimeout(sendHit, 500);
+  }, [pathname, searchParams]);
+
+  return null;
+}
+
+// Компонент инициализации счётчика
+function MetrikaInit() {
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    // Инициализируем dataLayer для E-commerce
+    window.dataLayer = window.dataLayer || [];
+
+    // Загружаем скрипт Яндекс.Метрики
+    (function(m: Window, e: Document, t: string, r: string, i: string, k?: HTMLScriptElement, a?: HTMLScriptElement) {
+      (m as any)[i] = (m as any)[i] || function() {
+        ((m as any)[i].a = (m as any)[i].a || []).push(arguments);
+      };
+      (m as any)[i].l = 1 * new Date().getTime();
+      
+      for (var j = 0; j < e.scripts.length; j++) {
+        if (e.scripts[j].src === r) return;
+      }
+      
+      k = e.createElement(t) as HTMLScriptElement;
+      a = e.getElementsByTagName(t)[0] as HTMLScriptElement;
+      k.async = true;
+      k.src = r;
+      a?.parentNode?.insertBefore(k, a);
+    })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js?id=' + METRIKA_ID, 'ym');
+
+    // Инициализация счётчика
+    (window as any).ym?.(METRIKA_ID, 'init', {
       ssr: true,
       webvisor: true,
       clickmap: true,
-      ecommerce: "dataLayer",
+      ecommerce: 'dataLayer',
       accurateTrackBounce: true,
-      trackLinks: true
+      trackLinks: true,
+      triggerEvent: true,
+      defer: true,
     });
+
+    console.log('[YM] Counter initialized');
   }, []);
 
+  return null;
+}
+
+export default function YandexMetrika() {
   return (
-    <noscript>
-      <div>
-        <img 
-          src="https://mc.yandex.ru/watch/107072365" 
-          style={{ position: "absolute", left: "-9999px" }} 
-          alt="" 
-        />
-      </div>
-    </noscript>
+    <>
+      <MetrikaInit />
+      <Suspense fallback={null}>
+        <NavigationTracker />
+      </Suspense>
+      <noscript>
+        <div>
+          <img
+            src={`https://mc.yandex.ru/watch/${METRIKA_ID}`}
+            style={{ position: 'absolute', left: '-9999px' }}
+            alt=""
+          />
+        </div>
+      </noscript>
+    </>
   );
 }

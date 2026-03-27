@@ -1,29 +1,87 @@
-import Link from "next/link";
-import Button from "@/components/ui/Button";
-import { ArrowRight, MessageCircle } from "lucide-react";
+"use client";
+import { trackGoal } from "@/lib/metrika";
 
-export default function ArticleCTA() {
+interface ArticleCTAProps {
+  primary?: {
+    text: string;
+    href: string;
+    description: string;
+  };
+  secondary?: {
+    text: string;
+    href: string;
+    description: string;
+  };
+}
+
+export function ArticleCTA({ 
+  primary = {
+    text: "Записаться на аудит",
+    href: "/brief",
+    description: "Без generic презентаций. Только цифры и конкретика."
+  },
+  secondary = {
+    text: "Скачать чек-лист",
+    href: "#form",
+    description: "PDF, 1 страница."
+  }
+}: ArticleCTAProps) {
+  const handleChecklistClick = () => {
+    // Отслеживание цели Яндекс Метрики - скачивание чек-листа
+    if (secondary?.href?.includes('checklist')) {
+      trackGoal('checklist_download');
+    }
+  };
+
   return (
-    <section className="mt-12 sm:mt-16 p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-bg-secondary to-bg-tertiary border border-primary-500/20">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
-        <div className="p-3 rounded-xl bg-primary-500/10">
-          <MessageCircle className="w-8 h-8 text-primary-400" />
-        </div>
-        <div className="flex-grow">
-          <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
-            Хотите так же?
-          </h3>
-          <p className="text-gray-400 text-sm sm:text-base">
-            Получите бесплатную консультацию и узнайте, как чат-бот поможет вашему бизнесу
-          </p>
-        </div>
-        <Link href="/#final-cta" className="w-full sm:w-auto">
-          <Button size="lg" className="w-full sm:w-auto">
-            Оставить заявку
-            <ArrowRight className="ml-2 w-5 h-5" />
-          </Button>
-        </Link>
+    <div className="bg-gradient-to-br from-emerald-900/40 to-teal-900/40 rounded-2xl p-8 my-12 border border-emerald-700/50">
+      <h3 className="text-2xl font-bold mb-2 text-center text-white">
+        Где именно в вашем бизнесе автоматизация даст результат быстрее всего?
+      </h3>
+      
+      <p className="text-gray-400 text-center mb-8 max-w-2xl mx-auto">
+        Мы проводим «Аудит пригодности процессов к автоматизации» — 25-минутный разговор, на котором:
+      </p>
+      
+      <ul className="max-w-xl mx-auto mb-8 space-y-2 text-gray-300">
+        <li className="flex items-center gap-2">
+          <span className="text-emerald-400">✓</span> Разбираем ваш текущий поток обращений
+        </li>
+        <li className="flex items-center gap-2">
+          <span className="text-emerald-400">✓</span> Находим 2–3 точки с максимальным потенциалом экономии
+        </li>
+        <li className="flex items-center gap-2">
+          <span className="text-emerald-400">✓</span> Считаем ROI на ваших реальных цифрах
+        </li>
+        <li className="flex items-center gap-2">
+          <span className="text-emerald-400">✓</span> Даём честный вердикт: стоит ли сейчас запускать
+        </li>
+      </ul>
+      
+      <div className="bg-emerald-600 text-white rounded-xl p-6 mb-6 text-center">
+        <h4 className="text-xl font-semibold mb-2">{primary?.text}</h4>
+        <p className="text-emerald-100 mb-4">{primary?.description}</p>
+        <a 
+          href={primary?.href}
+          className="inline-block bg-white text-emerald-700 px-8 py-3 rounded-lg font-semibold hover:bg-emerald-50 transition-colors"
+        >
+          Записаться →
+        </a>
       </div>
-    </section>
+      
+      <div className="text-center">
+        <p className="text-gray-500 text-sm mb-2">Или</p>
+        <a 
+          href={secondary?.href} 
+          onClick={handleChecklistClick}
+          className="text-emerald-400 hover:text-emerald-300 font-medium hover:underline"
+        >
+          {secondary?.text}
+        </a>
+        <p className="text-gray-500 text-sm mt-1">{secondary?.description}</p>
+      </div>
+    </div>
   );
 }
+
+export default ArticleCTA;

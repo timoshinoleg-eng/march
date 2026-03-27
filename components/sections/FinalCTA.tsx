@@ -8,6 +8,7 @@ import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Section from "@/components/ui/Section";
 import { Calculator, CheckCircle, ArrowRight } from "lucide-react";
+import { trackFormSubmit } from "@/lib/metrika";
 
 // Маска телефона: +7 (XXX) XXX-XX-XX
 function formatPhone(value: string): string {
@@ -110,6 +111,8 @@ function FinalCTAContent() {
 
       if (data.success) {
         setIsSuccess(true);
+        // Отслеживание цели Яндекс Метрики - отправка формы
+        trackFormSubmit("brief_form");
         setFormData({
           name: "",
           company: "",

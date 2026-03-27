@@ -1,49 +1,27 @@
-import { sql } from "@vercel/postgres";
+import { Pool } from "pg";
 
-// Типы для чат-сессий
-export interface ChatSession {
-  id: string;
-  created_at: Date;
-  updated_at: Date;
-  ip?: string;
-  user_agent?: string;
-  referrer?: string;
-  utm_source?: string;
-  utm_medium?: string;
-  utm_campaign?: string;
-  has_contacts: boolean;
-  contact_name?: string;
-  contact_phone?: string;
-  contact_email?: string;
-}
+const pool = new Pool({
+  connectionString: process.env.POSTGRES_URL
+});
 
-export interface ChatMessage {
-  id: string;
-  session_id: string;
-  role: "user" | "assistant";
-  content: string;
-  created_at: Date;
-  sentiment?: string;
-}
+pool.on('error', (err) => {
+  console.error('Unexpected error on idle client', err);
+});
 
-export interface BriefData {
-  session_id: string;
-  business_type?: string;
-  channels?: string[];
-  daily_requests?: string;
-  bot_tasks?: string[];
-  has_examples?: string;
-  budget?: string;
-  score?: number;
-  category?: string;
-  created_at: Date;
+export async function query(text: string, params?: any[]) {
+  const client = await pool.connect();
+  try {
+    const result = await client.query(text, params);
+    return result;
+  } finally {
+    client.release();
+  }
 }
 
 // Инициализация таблиц
 export async function initDatabase() {
   try {
-    // Таблица сессий чата
-    await sql`
+    await query(`
       CREATE TABLE IF NOT EXISTS chat_sessions (
         id VARCHAR(255) PRIMARY KEY,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -59,10 +37,9 @@ export async function initDatabase() {
         contact_phone VARCHAR(50),
         contact_email VARCHAR(255)
       )
-    `;
+    `);
 
-    // Таблица сообщений
-    await sql`
+    await query(`
       CREATE TABLE IF NOT EXISTS chat_messages (
         id SERIAL PRIMARY KEY,
         session_id VARCHAR(255) REFERENCES chat_sessions(id) ON DELETE CASCADE,
@@ -71,219 +48,181 @@ export async function initDatabase() {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         sentiment VARCHAR(20)
       )
-    `;
+    `);
 
-    // Таблица брифов - channels и bot_tasks как JSON
-    await sql`
+    await query(`
       CREATE TABLE IF NOT EXISTS briefs (
         id SERIAL PRIMARY KEY,
         session_id VARCHAR(255) REFERENCES chat_sessions(id) ON DELETE CASCADE,
-        business_type VARCHAR(255),
-        channels TEXT,
+        business_type VARCHAR(100),
+        channels JSONB,
         daily_requests VARCHAR(50),
-        bot_tasks TEXT,
-        has_examples VARCHAR(255),
-        budget VARCHAR(255),
+        bot_tasks JSONB,
+        has_examples VARCHAR(20),
+        budget VARCHAR(100),
         score INTEGER,
         category VARCHAR(20),
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
-    `;
+    `);
+
+    await query(`CREATE INDEX IF NOT EXISTS idx_sessions_created ON chat_sessions(created_at)`);
+    await query(`CREATE INDEX IF NOT EXISTS idx_messages_session ON chat_messages(session_id)`);
+    await query(`CREATE INDEX IF NOT EXISTS idx_briefs_session ON briefs(session_id)`);
 
     console.log("Database initialized successfully");
-    return true;
   } catch (error) {
     console.error("Database initialization error:", error);
-    return false;
   }
 }
 
-// Создание новой сессии
+// Создать сессию
 export async function createSession(
   sessionId: string,
-  metadata: {
+  data: {
     ip?: string;
     userAgent?: string;
     referrer?: string;
-    utm?: { source?: string; medium?: string; campaign?: string };
+    utmSource?: string;
+    utmMedium?: string;
+    utmCampaign?: string;
   }
-) {
-  try {
-    await sql`
-      INSERT INTO chat_sessions (
-        id, ip, user_agent, referrer, utm_source, utm_medium, utm_campaign
-      ) VALUES (
-        ${sessionId}, 
-        ${metadata.ip || null}, 
-        ${metadata.userAgent || null}, 
-        ${metadata.referrer || null},
-        ${metadata.utm?.source || null},
-        ${metadata.utm?.medium || null},
-        ${metadata.utm?.campaign || null}
-      )
-    `;
-    return true;
-  } catch (error) {
-    console.error("Create session error:", error);
-    return false;
-  }
+): Promise<void> {
+  await query(
+    `INSERT INTO chat_sessions (id, ip, user_agent, referrer, utm_source, utm_medium, utm_campaign)
+     VALUES ($1, $2, $3, $4, $5, $6, $7)
+     ON CONFLICT (id) DO NOTHING`,
+    [sessionId, data.ip || null, data.userAgent || null, data.referrer || null,
+     data.utmSource || null, data.utmMedium || null, data.utmCampaign || null]
+  );
 }
 
-// Сохранение сообщения
+// Сохранить сообщение
 export async function saveMessage(
   sessionId: string,
-  role: "user" | "assistant",
+  role: string,
   content: string,
   sentiment?: string
-) {
-  try {
-    await sql`
-      INSERT INTO chat_messages (session_id, role, content, sentiment)
-      VALUES (${sessionId}, ${role}, ${content}, ${sentiment || null})
-    `;
-    
-    // Обновляем время последней активности
-    await sql`
-      UPDATE chat_sessions SET updated_at = CURRENT_TIMESTAMP WHERE id = ${sessionId}
-    `;
-    
-    return true;
-  } catch (error) {
-    console.error("Save message error:", error);
-    return false;
-  }
+): Promise<void> {
+  await query(
+    `INSERT INTO chat_messages (session_id, role, content, sentiment)
+     VALUES ($1, $2, $3, $4)`,
+    [sessionId, role, content, sentiment || null]
+  );
+  await query(
+    `UPDATE chat_sessions SET updated_at = CURRENT_TIMESTAMP WHERE id = $1`,
+    [sessionId]
+  );
 }
 
-// Сохранение брифа - массивы сохраняем как JSON
-export async function saveBrief(sessionId: string, briefData: {
-  businessType?: string;
-  channels?: string[];
-  dailyRequests?: string;
-  botTasks?: string[];
-  hasExamples?: string;
-  budget?: string;
-  score?: number;
-  category?: string;
-}) {
-  try {
-    await sql`
-      INSERT INTO briefs (
-        session_id, business_type, channels, daily_requests, 
-        bot_tasks, has_examples, budget, score, category
-      ) VALUES (
-        ${sessionId},
-        ${briefData.businessType || null},
-        ${briefData.channels ? JSON.stringify(briefData.channels) : null},
-        ${briefData.dailyRequests || null},
-        ${briefData.botTasks ? JSON.stringify(briefData.botTasks) : null},
-        ${briefData.hasExamples || null},
-        ${briefData.budget || null},
-        ${briefData.score || null},
-        ${briefData.category || null}
-      )
-    `;
-    return true;
-  } catch (error) {
-    console.error("Save brief error:", error);
-    return false;
-  }
-}
-
-// Обновление контактов
+// Обновить контакты
 export async function updateContacts(
   sessionId: string,
-  contacts: { name: string; phone: string; email?: string }
-) {
-  try {
-    await sql`
-      UPDATE chat_sessions 
-      SET 
-        has_contacts = TRUE,
-        contact_name = ${contacts.name},
-        contact_phone = ${contacts.phone},
-        contact_email = ${contacts.email || null}
-      WHERE id = ${sessionId}
-    `;
-    return true;
-  } catch (error) {
-    console.error("Update contacts error:", error);
-    return false;
+  data: {
+    name: string;
+    phone: string;
+    email?: string;
   }
+): Promise<void> {
+  await query(
+    `UPDATE chat_sessions 
+     SET has_contacts = TRUE, 
+         contact_name = $1, 
+         contact_phone = $2, 
+         contact_email = $3,
+         updated_at = CURRENT_TIMESTAMP
+     WHERE id = $4`,
+    [data.name, data.phone, data.email || null, sessionId]
+  );
 }
 
-// Получение полной истории сессии
+// Сохранить бриф
+export async function saveBrief(
+  sessionId: string,
+  data: {
+    businessType: string;
+    channels: string[];
+    dailyRequests: string;
+    botTasks: string[];
+    hasExamples: string;
+    budget: string;
+    score: number;
+    category: string;
+  }
+): Promise<void> {
+  await query(
+    `INSERT INTO briefs (session_id, business_type, channels, daily_requests, bot_tasks, has_examples, budget, score, category)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+     ON CONFLICT (session_id) DO UPDATE SET
+       business_type = EXCLUDED.business_type,
+       channels = EXCLUDED.channels,
+       daily_requests = EXCLUDED.daily_requests,
+       bot_tasks = EXCLUDED.bot_tasks,
+       has_examples = EXCLUDED.has_examples,
+       budget = EXCLUDED.budget,
+       score = EXCLUDED.score,
+       category = EXCLUDED.category`,
+    [sessionId, data.businessType, JSON.stringify(data.channels), data.dailyRequests,
+     JSON.stringify(data.botTasks), data.hasExamples, data.budget, data.score, data.category]
+  );
+}
+
+// Получить статистику
+export async function getStats(days?: number): Promise<any> {
+  let dateFilter = '';
+  const params: any[] = [];
+  
+  if (days) {
+    dateFilter = 'WHERE created_at >= NOW() - INTERVAL \'$1 days\'';
+    params.push(days);
+  }
+  
+  const sessionsResult = await query(`SELECT COUNT(*) as total FROM chat_sessions ${dateFilter}`, params);
+  const messagesResult = await query(`SELECT COUNT(*) as total FROM chat_messages ${dateFilter}`, params);
+  const briefsResult = await query(`SELECT COUNT(*) as total FROM briefs ${dateFilter}`, params);
+  
+  let contactsQuery = 'SELECT COUNT(*) as total FROM chat_sessions WHERE has_contacts = TRUE';
+  if (days) {
+    contactsQuery += ' AND created_at >= NOW() - INTERVAL \'$1 days\'';
+  }
+  const contactsResult = await query(contactsQuery, days ? params : []);
+
+  return {
+    totalSessions: parseInt(sessionsResult.rows[0].total),
+    totalMessages: parseInt(messagesResult.rows[0].total),
+    totalBriefs: parseInt(briefsResult.rows[0].total),
+    totalContacts: parseInt(contactsResult.rows[0].total),
+  };
+}
+
+// Получить историю сессии
 export async function getSessionHistory(sessionId: string) {
-  try {
-    const session = await sql`
-      SELECT * FROM chat_sessions WHERE id = ${sessionId}
-    `;
-    
-    const messages = await sql`
-      SELECT * FROM chat_messages 
-      WHERE session_id = ${sessionId} 
-      ORDER BY created_at ASC
-    `;
-    
-    const brief = await sql`
-      SELECT * FROM briefs WHERE session_id = ${sessionId}
-    `;
+  const sessionResult = await query(
+    `SELECT * FROM chat_sessions WHERE id = $1`,
+    [sessionId]
+  );
+  
+  const messagesResult = await query(
+    `SELECT * FROM chat_messages WHERE session_id = $1 ORDER BY created_at ASC`,
+    [sessionId]
+  );
+  
+  const briefResult = await query(
+    `SELECT * FROM briefs WHERE session_id = $1`,
+    [sessionId]
+  );
 
-    // Парсим JSON поля
-    const parsedBrief = brief.rows[0] ? {
-      ...brief.rows[0],
-      channels: brief.rows[0].channels ? JSON.parse(brief.rows[0].channels) : null,
-      bot_tasks: brief.rows[0].bot_tasks ? JSON.parse(brief.rows[0].bot_tasks) : null,
-    } : null;
+  const brief = briefResult.rows[0] ? {
+    ...briefResult.rows[0],
+    channels: briefResult.rows[0].channels ? briefResult.rows[0].channels : null,
+    bot_tasks: briefResult.rows[0].bot_tasks ? briefResult.rows[0].bot_tasks : null,
+  } : null;
 
-    return {
-      session: session.rows[0] || null,
-      messages: messages.rows,
-      brief: parsedBrief,
-    };
-  } catch (error) {
-    console.error("Get session history error:", error);
-    return null;
-  }
+  return {
+    session: sessionResult.rows[0] || null,
+    messages: messagesResult.rows,
+    brief,
+  };
 }
 
-// Получение статистики
-export async function getStats(days: number = 7) {
-  try {
-    const sessions = await sql`
-      SELECT 
-        COUNT(*) as total_sessions,
-        COUNT(CASE WHEN has_contacts THEN 1 END) as with_contacts,
-        COUNT(CASE WHEN NOT has_contacts THEN 1 END) as anonymous
-      FROM chat_sessions
-      WHERE created_at > CURRENT_TIMESTAMP - INTERVAL '1 days' * ${days}
-    `;
-
-    const messages = await sql`
-      SELECT 
-        COUNT(*) as total_messages,
-        COUNT(CASE WHEN role = 'user' THEN 1 END) as user_messages,
-        COUNT(CASE WHEN role = 'assistant' THEN 1 END) as bot_messages
-      FROM chat_messages
-      WHERE created_at > CURRENT_TIMESTAMP - INTERVAL '1 days' * ${days}
-    `;
-
-    const briefs = await sql`
-      SELECT 
-        COUNT(*) as total_briefs,
-        COUNT(CASE WHEN category = 'HOT' THEN 1 END) as hot_leads,
-        COUNT(CASE WHEN category = 'WARM' THEN 1 END) as warm_leads,
-        COUNT(CASE WHEN category = 'COLD' THEN 1 END) as cold_leads
-      FROM briefs
-      WHERE created_at > CURRENT_TIMESTAMP - INTERVAL '1 days' * ${days}
-    `;
-
-    return {
-      sessions: sessions.rows[0],
-      messages: messages.rows[0],
-      briefs: briefs.rows[0],
-    };
-  } catch (error) {
-    console.error("Get stats error:", error);
-    return null;
-  }
-}
+export default pool;

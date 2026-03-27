@@ -22,25 +22,32 @@ const jsonLd = {
   "itemListElement": [
     {
       "@type": "ListItem",
-      "position": 1,
+      "position": 2,
+      "url": "https://chatbot24.su/blog/pwc-ai-roi-56-percent",
+      "name": "PwC: 56% инвестиций в ИИ сгорело. Как не попасть в эту статистику"
+    },
+
+    {
+      "@type": "ListItem",
+      "position": 2,
       "url": "https://chatbot24.su/blog/5-oshibok",
       "name": "5 ошибок при выборе чат-бота, которые стоят вам клиентов"
     },
     {
       "@type": "ListItem",
-      "position": 2,
+      "position": 3,
       "url": "https://chatbot24.su/blog/konversiya-40",
       "name": "Как мы подняли конверсию на 40% с помощью чат-бота"
     },
     {
       "@type": "ListItem",
-      "position": 3,
+      "position": 4,
       "url": "https://chatbot24.su/blog/sekundy-reshayut",
       "name": "Почему секунды решают: скорость ответа и конверсия"
     },
     {
       "@type": "ListItem",
-      "position": 4,
+      "position": 5,
       "url": "https://chatbot24.su/blog/telegram-vs-whatsapp",
       "name": "Telegram vs WhatsApp: где размещать чат-бота в 2024"
     }
@@ -49,10 +56,19 @@ const jsonLd = {
 
 const articles = [
   {
+    slug: "pwc-ai-roi-56-percent",
+    title: "PwC: 56% инвестиций в ИИ сгорело. Как не попасть в эту статистику",
+    excerpt: "Исследование PwC: почему большинство компаний теряет деньги на ИИ и как попасть в 12% успешных. Реальные кейсы, калькулятор ROI.",
+    date: "25 марта 2026",
+    readTime: "9 мин",
+    category: "Исследования",
+  },
+
+  {
     slug: "5-oshibok",
     title: "5 ошибок при выборе чат-бота, которые стоят вам клиентов",
     excerpt: "Как не попасть в ловушку шаблонных решений и выбрать действительно эффективный инструмент для автоматизации заявок.",
-    date: "15 января 2024",
+    date: "15 января 2026",
     readTime: "5 мин",
     category: "Выбор решения",
   },
@@ -60,7 +76,7 @@ const articles = [
     slug: "konversiya-40",
     title: "Как мы подняли конверсию на 40% с помощью чат-бота",
     excerpt: "Реальный кейс: автоматизация первичной обработки заявок в онлайн-школе и рост продаж без увеличения рекламного бюджета.",
-    date: "10 января 2024",
+    date: "30 января 2026",
     readTime: "7 мин",
     category: "Кейсы",
   },
@@ -68,7 +84,7 @@ const articles = [
     slug: "sekundy-reshayut",
     title: "Почему секунды решают: скорость ответа и конверсия",
     excerpt: "Научные исследования и практика: как время ответа влияет на решение клиента о покупке. Каждая секунда дорога.",
-    date: "5 января 2024",
+    date: "15 февраля 2026",
     readTime: "6 мин",
     category: "Исследования",
   },
@@ -76,7 +92,7 @@ const articles = [
     slug: "telegram-vs-whatsapp",
     title: "Telegram vs WhatsApp: где размещать чат-бота в 2024",
     excerpt: "Сравнение платформ по охвату аудитории, стоимости, функционалу. Выбираем оптимальный канал для вашего бизнеса.",
-    date: "28 декабря 2023",
+    date: "25 февраля 2026",
     readTime: "8 мин",
     category: "Сравнение",
   },

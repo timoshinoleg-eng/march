@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     title: "Telegram vs WhatsApp: где размещать чат-бота в 2024",
     description: "Сравнение платформ по охвату аудитории, стоимости, функционалу.",
     type: "article",
-    publishedTime: "2023-12-28T00:00:00Z",
+    publishedTime: "2026-02-25T00:00:00Z",
     authors: ["ChatBot24"],
     tags: ["сравнение", "telegram", "whatsapp", "выбор платформы"],
   },
@@ -24,7 +24,7 @@ const jsonLd = {
   "headline": "Telegram vs WhatsApp: где размещать чат-бота в 2024",
   "description": "Сравнение платформ по охвату аудитории, стоимости, функционалу. Выбираем оптимальный канал для вашего бизнеса.",
   "image": "https://chatbot24.su/og-image.jpg",
-  "datePublished": "2023-12-28T00:00:00Z",
+  "datePublished": "2026-02-25T00:00:00Z",
   "author": {
     "@type": "Organization",
     "name": "ChatBot24",
@@ -67,7 +67,7 @@ const allArticles = [
     slug: "telegram-vs-whatsapp",
     title: "Telegram vs WhatsApp: где размещать чат-бота в 2024",
     excerpt: "Сравнение платформ по охвату аудитории, стоимости, функционалу.",
-    date: "28 декабря 2023",
+    date: "25 февраля 2026",
   },
 ];
 
@@ -95,7 +95,7 @@ export default function ArticlePage() {
           <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 mb-4">
             <span className="flex items-center gap-1">
               <Calendar className="w-4 h-4" />
-              28 декабря 2023
+              25 февраля 2026
             </span>
             <span className="flex items-center gap-1">
               <Clock className="w-4 h-4" />

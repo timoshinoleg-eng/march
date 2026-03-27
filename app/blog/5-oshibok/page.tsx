@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     title: "5 ошибок при выборе чат-бота, которые стоят вам клиентов",
     description: "Как не попасть в ловушку шаблонных решений и выбрать действительно эффективный инструмент.",
     type: "article",
-    publishedTime: "2024-01-15T00:00:00Z",
+    publishedTime: "2026-01-15T00:00:00Z",
     authors: ["ChatBot24"],
     tags: ["чат-бот", "ошибки", "выбор решения", "автоматизация"],
   },
@@ -25,8 +25,8 @@ const jsonLd = {
   "headline": "5 ошибок при выборе чат-бота, которые стоят вам клиентов",
   "description": "Как не попасть в ловушку шаблонных решений и выбрать действительно эффективный инструмент для автоматизации заявок.",
   "image": "https://chatbot24.su/og-image.jpg",
-  "datePublished": "2024-01-15T00:00:00Z",
-  "dateModified": "2024-01-15T00:00:00Z",
+  "datePublished": "2026-01-15T00:00:00Z",
+  "dateModified": "2026-01-15T00:00:00Z",
   "author": {
     "@type": "Organization",
     "name": "ChatBot24",
@@ -51,7 +51,7 @@ const allArticles = [
     slug: "5-oshibok",
     title: "5 ошибок при выборе чат-бота, которые стоят вам клиентов",
     excerpt: "Как не попасть в ловушку шаблонных решений и выбрать действительно эффективный инструмент.",
-    date: "15 января 2024",
+    date: "15 января 2026",
   },
   {
     slug: "konversiya-40",
@@ -98,7 +98,7 @@ export default function ArticlePage() {
           <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 mb-4">
             <span className="flex items-center gap-1">
               <Calendar className="w-4 h-4" />
-              15 января 2024
+              15 января 2026
             </span>
             <span className="flex items-center gap-1">
               <Clock className="w-4 h-4" />

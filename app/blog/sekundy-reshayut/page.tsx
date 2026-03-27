@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, Calendar, Clock, User, Timer, AlertTriangle } from "lucide-react";
+import Image from "next/image";
 import ShareButtons from "@/components/blog/ShareButtons";
 import RelatedArticles from "@/components/blog/RelatedArticles";
 import ArticleCTA from "@/components/blog/ArticleCTA";
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
     title: "Почему секунды решают: скорость ответа и конверсия",
     description: "Научные исследования и практика: как время ответа влияет на решение клиента.",
     type: "article",
-    publishedTime: "2024-01-05T00:00:00Z",
+    publishedTime: "2026-02-15T00:00:00Z",
     authors: ["ChatBot24"],
     tags: ["исследования", "скорость ответа", "конверсия", "клиентский опыт"],
   },
@@ -24,7 +25,7 @@ const jsonLd = {
   "headline": "Почему секунды решают: скорость ответа и конверсия",
   "description": "Научные исследования и практика: как время ответа влияет на решение клиента о покупке. Каждая секунда дорога.",
   "image": "https://chatbot24.su/og-image.jpg",
-  "datePublished": "2024-01-05T00:00:00Z",
+  "datePublished": "2026-02-15T00:00:00Z",
   "author": {
     "@type": "Organization",
     "name": "ChatBot24",
@@ -49,7 +50,7 @@ const allArticles = [
     slug: "5-oshibok",
     title: "5 ошибок при выборе чат-бота, которые стоят вам клиентов",
     excerpt: "Как не попасть в ловушку шаблонных решений и выбрать действительно эффективный инструмент.",
-    date: "15 января 2024",
+    date: "115 февраля 2026",
   },
   {
     slug: "konversiya-40",
@@ -61,7 +62,7 @@ const allArticles = [
     slug: "sekundy-reshayut",
     title: "Почему секунды решают: скорость ответа и конверсия",
     excerpt: "Научные исследования и практика: как время ответа влияет на решение клиента.",
-    date: "5 января 2024",
+    date: "15 февраля 2026",
   },
   {
     slug: "telegram-vs-whatsapp",
@@ -95,7 +96,7 @@ export default function ArticlePage() {
           <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 mb-4">
             <span className="flex items-center gap-1">
               <Calendar className="w-4 h-4" />
-              5 января 2024
+              15 февраля 2026
             </span>
             <span className="flex items-center gap-1">
               <Clock className="w-4 h-4" />
@@ -114,6 +115,15 @@ export default function ArticlePage() {
             </span>
             : скорость ответа и конверсия
           </h1>
+          <div className="relative w-full aspect-video rounded-xl overflow-hidden mb-8">
+            <Image
+              src="/images/articles/19d21b10-fae2-8347-8000-00000c8baccc_daviddd03411_isometric_3D_illustration_of_chatbot_development_4c8e5938-d82c-4950-acb6-f36f43f2ac5a_1.png"
+              alt="Чат-бот и автоматизация ответов"
+              fill
+              className="object-cover"
+              priority
+            />
+          </div>
 
           <div className="flex flex-wrap gap-2 mb-6">
             <span className="px-3 py-1 rounded-full bg-primary-500/10 text-primary-400 text-sm">
@@ -147,6 +157,15 @@ export default function ArticlePage() {
             </div>
           </div>
 
+          
+          <div className="relative w-full aspect-video rounded-xl overflow-hidden mb-6">
+            <Image
+              src="/images/articles/19d21b11-dc82-8332-8000-00001deae4c0_daviddd03411_ultra_realistic_photo_of_a_modern_developer_desk_e00c5fa9-2cdb-40c0-87f3-0a1df3e0157f_2.png"
+              alt="Рабочее место разработчика и исследования"
+              fill
+              className="object-cover"
+            />
+          </div>
           <h2 className="text-xl sm:text-2xl font-bold text-white mt-8 mb-4">
             Что говорят исследования
           </h2>
@@ -217,6 +236,15 @@ export default function ArticlePage() {
             </table>
           </div>
 
+          
+          <div className="relative w-full aspect-video rounded-xl overflow-hidden mb-6">
+            <Image
+              src="/images/articles/19d21b11-dbc2-86a4-8000-00008a0f6ec4_daviddd03411_modern_3D_isometric_illustration_of_business_pro_44dd700b-58ba-440b-9d1b-b94979d69ea6_0.png"
+              alt="Автоматизация бизнес-процессов"
+              fill
+              className="object-cover"
+            />
+          </div>
           <h2 className="text-xl sm:text-2xl font-bold text-white mt-8 mb-4">
             Как чат-бот решает проблему
           </h2>

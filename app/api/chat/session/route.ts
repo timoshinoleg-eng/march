@@ -2,9 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { 
   initDatabase, 
   createSession, 
-  saveMessage, 
-  saveBrief, 
-  updateContacts,
   getSessionHistory 
 } from "@/lib/db";
 
@@ -20,19 +17,8 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Инициализируем БД если нужно
     await initDatabase();
-
-    // Создаем сессию
-    const success = await createSession(sessionId, metadata || {});
-
-    if (!success) {
-      return NextResponse.json(
-        { error: "Failed to create session" },
-        { status: 500 }
-      );
-    }
-
+    await createSession(sessionId, metadata || {});
     return NextResponse.json({ success: true, sessionId });
   } catch (error) {
     console.error("Chat session API error:", error);
@@ -58,7 +44,7 @@ export async function GET(req: NextRequest) {
 
     const history = await getSessionHistory(sessionId);
 
-    if (!history) {
+    if (!history || !history.session) {
       return NextResponse.json(
         { error: "Session not found" },
         { status: 404 }

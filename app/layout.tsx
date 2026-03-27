@@ -1,26 +1,45 @@
 import type { Metadata, Viewport } from "next";
-import { Suspense } from "react";
-import Script from "next/script";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import Script from "next/script";
 import ChatWidgetProvider from "@/components/ChatWidgetProvider";
-import WidgetDebug from "@/components/WidgetDebug";
+import YandexMetrika from "@/components/YandexMetrika";
+
+const inter = Inter({
+  subsets: ["latin", "cyrillic"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin", "cyrillic"],
+  variable: "--font-mono",
+  display: "swap",
+});
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 5,
-  themeColor: "#021c1b",
+  themeColor: [{ media: "(prefers-color-scheme: light)", color: "#ffffff" }],
 };
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://chatbot24.su"),
   title: {
-    default: "ChatBot24 - Автоматизация входящих заявок",
+    default: "Чат-боты для бизнеса в Telegram и WhatsApp | ChatBot24",
     template: "%s | ChatBot24",
   },
   description:
-    "Инженерное бюро автоматизации. Запускаем систему обработки обращений за 7–14 дней. MVP-бот от 49 000 ₽.",
-  keywords: ["чат-бот", "автоматизация заявок", "чатбот для бизнеса", "бот для заявок", "автоматизация продаж"],
+    "Разработка чат-ботов для бизнеса под ключ. Автоматизация заявок в Telegram, WhatsApp. Запуск за 7–14 дней. MVP от 49 000 ₽.",
+  keywords: [
+    "чат-бот",
+    "автоматизация заявок",
+    "чатбот для бизнеса",
+    "бот для заявок",
+    "автоматизация продаж",
+    "чат-бот telegram",
+    "разработка чат-ботов"
+  ],
   authors: [{ name: "ChatBot24" }],
   creator: "ChatBot24",
   publisher: "ChatBot24",
@@ -29,19 +48,26 @@ export const metadata: Metadata = {
     follow: true,
   },
   icons: {
-    icon: "/favicon.png",
-    apple: "/favicon.png",
-    shortcut: "/favicon.png",
+    icon: [
+      { url: "/favicon/favicon.ico", sizes: "any" },
+      { url: "/favicon/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: [
+      { url: "/favicon/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+    shortcut: "/favicon/favicon.ico",
   },
   manifest: "/manifest.json",
   alternates: {
+    canonical: "https://chatbot24.su",
     types: {
       'application/rss+xml': '/turbo.xml',
     },
   },
   openGraph: {
-    title: "ChatBot24 - Автоматизация входящих заявок",
-    description: "Инженерное бюро автоматизации. Запускаем систему обработки обращений за 7–14 дней. MVP-бот от 49 000 ₽.",
+    title: "Чат-боты для бизнеса в Telegram и WhatsApp | ChatBot24",
+    description: "Разработка чат-ботов для бизнеса под ключ. Автоматизация заявок. Запуск за 7–14 дней. MVP от 49 000 ₽.",
     type: "website",
     locale: "ru_RU",
     siteName: "ChatBot24",
@@ -51,14 +77,14 @@ export const metadata: Metadata = {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "ChatBot24 - Автоматизация входящих заявок",
+        alt: "Чат-боты для бизнеса в Telegram и WhatsApp",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "ChatBot24 - Автоматизация входящих заявок",
-    description: "Инженерное бюро автоматизации. Запускаем систему обработки обращений за 7–14 дней.",
+    title: "Чат-боты для бизнеса | ChatBot24",
+    description: "Разработка чат-ботов для бизнеса под ключ. Запуск за 7–14 дней.",
     images: ["/og-image.jpg"],
   },
   verification: {
@@ -69,78 +95,42 @@ export const metadata: Metadata = {
   },
 };
 
-// Critical CSS inline для LCP
-const criticalCSS = `
-  :root {
-    --color-bg-primary: #021c1b;
-    --color-primary-500: #14b8a6;
-    --color-primary-400: #2dd4bf;
-  }
-  html {
-    scroll-behavior: smooth;
-    -webkit-font-smoothing: antialiased;
-  }
-  body {
-    margin: 0;
-    background-color: var(--color-bg-primary);
-    color: white;
-    font-family: system-ui, -apple-system, sans-serif;
-  }
-`;
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru" suppressHydrationWarning>
-      <head>
-        <style dangerouslySetInnerHTML={{ __html: criticalCSS }} />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://mc.yandex.ru" />
-        <link rel="alternate" type="application/rss+xml" title="ChatBot24 Turbo" href="/turbo.xml" />
-      </head>
-      <body 
-        className="font-sans antialiased bg-bg-primary text-white min-h-screen"
-        suppressHydrationWarning
-      >
-        {children}
-        
-        {/* Chat Widget */}
-        <Suspense fallback={null}>
-          <ChatWidgetProvider />
-        </Suspense>
-
-        {/* Debug Panel - disabled in production */}
-        {/* WidgetDebug is client-only, load dynamically to avoid hydration issues */}
-
-        {/* Yandex.Metrika */}
-        <Script id="yandex-metrika" strategy="afterInteractive">
-          {`
-            (function(m,e,t,r,i,k,a){
-              m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-              m[i].l=1*new Date();
-              for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-              k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-            })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js?id=107072365', 'ym');
-            ym(107072365, 'init', {
-              ssr: true,
-              webvisor: true,
-              clickmap: true,
-              ecommerce: "dataLayer",
-              accurateTrackBounce: true,
-              trackLinks: true
-            });
-          `}
-        </Script>
-        <noscript>
-          <div>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="https://mc.yandex.ru/watch/107072365" style={{ position: 'absolute', left: '-9999px' }} alt="" />
-          </div>
-        </noscript>
+    <html lang="ru" className={`${inter.variable} ${jetbrainsMono.variable}`}>
+      <body className="font-sans antialiased bg-bg-primary text-text-primary">
+        <div className="flex min-h-screen flex-col">
+          <main className="flex-1">{children}</main>
+        </div>
+        <ChatWidgetProvider />
+        <YandexMetrika />
+        <Script
+          id="schema-localbusiness"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "ChatBot24",
+              url: "https://chatbot24.su",
+              logo: "https://chatbot24.su/favicon/favicon-32x32.png",
+              description: "Разработка чат-ботов для бизнеса. Автоматизация заявок в Telegram и WhatsApp.",
+              contactPoint: {
+                "@type": "ContactPoint",
+                telephone: "+7-999-999-9999",
+                contactType: "sales",
+                availableLanguage: ["Russian"],
+              },
+              sameAs: [
+                "https://t.me/junior_middle_it",
+              ],
+            }),
+          }}
+        />
       </body>
     </html>
   );

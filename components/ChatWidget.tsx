@@ -74,7 +74,7 @@ export default function ChatWidget() {
     if (!trimmedInput || isLoading) return;
 
     const userMessage: Message = {
-      id: Date.now().toString(),
+      id: Math.random().toString(36).substring(2, 15),
       role: 'user',
       content: trimmedInput
     };

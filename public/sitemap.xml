@@ -1,9 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Главная страница -->
   <url>
     <loc>https://chatbot24.su/</loc>
-    <lastmod>2024-01-01</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>2026-03-21</lastmod>
     <priority>1.0</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  
+  <!-- Блог главная -->
+  <url>
+    <loc>https://chatbot24.su/blog</loc>
+    <lastmod>2026-03-21</lastmod>
+    <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  
+  <!-- Статьи блога -->
+  <url>
+    <loc>https://chatbot24.su/blog/5-oshibok</loc>
+    <lastmod>2026-03-21</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  
+  <url>
+    <loc>https://chatbot24.su/blog/konversiya-40</loc>
+    <lastmod>2026-03-21</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  
+  <url>
+    <loc>https://chatbot24.su/blog/sekundy-reshayut</loc>
+    <lastmod>2026-03-21</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  
+  <url>
+    <loc>https://chatbot24.su/blog/telegram-vs-whatsapp</loc>
+    <lastmod>2026-03-21</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
   </url>
 </urlset>
