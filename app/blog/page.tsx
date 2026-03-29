@@ -143,7 +143,7 @@ export default function BlogPage() {
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6">
-              Блог о{" "}
+              Блог об{" "}
               <span className="bg-gradient-emerald bg-clip-text text-transparent">
                 автоматизации
               </span>
