@@ -197,11 +197,16 @@ export default function ArticlePage() {
 
       {/* CTA */}
       <ArticleCTA 
-        variant="mixed"
-        title="Заказать обучение команды цифровой ловкости"
-        description="Или обсудите внедрение чат-бота с экспертом"
-        primaryButton={{ text: "Обсудить внедрение", href: "/#final-cta" }}
-        secondaryButton={{ text: "Узнать об обучении", href: "/#final-cta" }}
+        primary={{
+          text: "Обсудить внедрение",
+          href: "/#final-cta",
+          description: "Без generic презентаций. Только цифры и конкретика."
+        }}
+        secondary={{
+          text: "Узнать об обучении",
+          href: "/#final-cta",
+          description: "Комплексный подход: технология + обучение команды."
+        }}
       />
 
       {/* Sources */}

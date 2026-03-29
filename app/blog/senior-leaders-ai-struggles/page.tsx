@@ -240,11 +240,16 @@ export default function ArticlePage() {
 
       {/* CTA */}
       <ArticleCTA 
-        variant="soft"
-        title="Скачать гайд «Как подготовить команду к внедрению ИИ»"
-        description="Или пройдите бесплатный аудит процессов для автоматизации"
-        primaryButton={{ text: "Получить гайд", href: "/#final-cta" }}
-        secondaryButton={{ text: "Записаться на аудит", href: "/#final-cta" }}
+        primary={{
+          text: "Записаться на аудит",
+          href: "/#final-cta",
+          description: "Без generic презентаций. Только цифры и конкретика."
+        }}
+        secondary={{
+          text: "Скачать гайд",
+          href: "/#final-cta",
+          description: "PDF, 1 страница. Проверьте готовность команды к ИИ."
+        }}
       />
 
       {/* Sources */}
