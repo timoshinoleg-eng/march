@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { generateYandexGPTResponse } from '@/lib/yandexgpt';
+import { generateOpenRouterResponse } from '@/lib/openrouter';
 
 export const runtime = 'edge';
 
@@ -10,7 +10,7 @@ const ALLOWED_ORIGINS = [
   'http://localhost:3000',
 ];
 
-// YandexGPT Pro - полностью российское решение
+// DeepSeek через OpenRouter - системный промпт
 const SYSTEM_PROMPT = `Ты — Алексей, старший консультант по автоматизации бизнеса в компании ChatBot24. Ты помогаешь предпринимателям внедрить чат-ботов для обработки заявок.
 
 === ТВОЯ ЗАДАЧА ===
@@ -104,7 +104,7 @@ export async function OPTIONS(req: NextRequest) {
   });
 }
 
-// POST /api/agent - обработка сообщения через YandexGPT Pro
+// POST /api/agent - обработка сообщения через DeepSeek (OpenRouter)
 export async function POST(req: NextRequest) {
   const startTime = Date.now();
   const origin = req.headers.get('origin');
@@ -128,17 +128,23 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Форматируем сообщения для YandexGPT
-    const yandexMessages = messages.map((msg: { role: string; content?: string; text?: string }) => ({
-      role: msg.role === 'assistant' ? 'assistant' : 'user',
-      text: msg.content || msg.text,
-    }));
+    // Форматируем сообщения для OpenRouter
+    const openRouterMessages = [
+      {
+        role: 'system' as const,
+        content: SYSTEM_PROMPT,
+      },
+      ...messages.map((msg: { role: string; content?: string; text?: string }) => ({
+        role: msg.role === 'assistant' ? 'assistant' as const : 'user' as const,
+        content: msg.content || msg.text || '',
+      })),
+    ];
 
-    // Генерируем ответ через YandexGPT Pro
-    const response = await generateYandexGPTResponse(yandexMessages as any, {
+    // Генерируем ответ через DeepSeek (OpenRouter)
+    const response = await generateOpenRouterResponse(openRouterMessages, {
       temperature: 0.6,
       maxTokens: 2000,
-      model: 'pro', // YandexGPT Pro
+      model: 'deepseek-chat',
     });
 
     // Оцениваем лид (упрощённая версия)
@@ -146,8 +152,8 @@ export async function POST(req: NextRequest) {
 
     const result = {
       response,
-      provider: 'yandexgpt-pro',
-      model: 'yandexgpt-pro',
+      provider: 'openrouter',
+      model: 'deepseek-chat',
       leadScore,
       latency: Date.now() - startTime,
     };
@@ -157,7 +163,7 @@ export async function POST(req: NextRequest) {
     });
 
   } catch (error) {
-    console.error('YandexGPT API Error:', error);
+    console.error('OpenRouter API Error:', error);
 
     // Возвращаем fallback ответ
     return NextResponse.json(

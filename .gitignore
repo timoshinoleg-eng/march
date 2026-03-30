@@ -20,3 +20,4 @@ ENDOFFILE
 PATCHEOF
 SCHEMA
 .vercel
+.env.local
