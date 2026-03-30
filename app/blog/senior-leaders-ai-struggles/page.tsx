@@ -2,6 +2,7 @@ import Image from "next/image";
 import { HighlightBox } from "@/components/blog/HighlightBox";
 import { DataTable } from "@/components/blog/DataTable";
 import { ArticleCTA } from "@/components/blog/ArticleCTA";
+import GuideDownloadForm from "@/components/GuideDownloadForm";
 import { metadata } from "./metadata";
 
 export { metadata };
@@ -239,18 +240,25 @@ export default function ArticlePage() {
       </div>
 
       {/* CTA */}
-      <ArticleCTA 
-        primary={{
-          text: "Записаться на аудит",
-          href: "/#final-cta",
-          description: "Без generic презентаций. Только цифры и конкретика."
-        }}
-        secondary={{
-          text: "Скачать гайд",
-          href: "/#final-cta",
-          description: "PDF, 1 страница. Проверьте готовность команды к ИИ."
-        }}
-      />
+      <div className="mt-12 grid md:grid-cols-2 gap-6">
+        <div className="bg-emerald-500/10 rounded-xl p-6 border border-emerald-500/20 text-center">
+          <h3 className="text-white font-semibold mb-2">Записаться на аудит</h3>
+          <p className="text-sm text-gray-400 mb-4">Без generic презентаций. Только цифры и конкретика.</p>
+          <a
+            href="/#final-cta"
+            className="inline-block px-6 py-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-medium rounded-lg hover:shadow-lg hover:shadow-emerald-500/25 transition-all"
+          >
+            Записаться →
+          </a>
+        </div>
+
+        <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
+          <GuideDownloadForm
+            title="Скачать гайд"
+            description="PDF, 1 страница. Проверьте готовность команды к ИИ."
+          />
+        </div>
+      </div>
 
       {/* Sources */}
       <div className="mt-12 pt-8 border-t border-gray-800">

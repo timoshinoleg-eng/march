@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 interface LogoProps {
   className?: string;
   size?: "sm" | "md" | "lg";
@@ -7,38 +9,21 @@ interface LogoProps {
 
 export default function Logo({ className = "", size = "md" }: LogoProps) {
   const sizes = {
-    sm: "w-6 h-6",
-    md: "w-8 h-8",
-    lg: "w-12 h-12",
+    sm: 24,
+    md: 32,
+    lg: 48,
   };
 
   return (
-    <div className={`relative ${sizes[size]} ${className}`}>
-      <svg
-        viewBox="0 0 100 100"
-        className="w-full h-full"
-        xmlns="http://www.w3.org/2000/svg"
-        aria-label="ChatBot24 Logo"
-      >
-        <defs>
-          <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#14b8a6" />
-            <stop offset="100%" stopColor="#2dd4bf" />
-          </linearGradient>
-        </defs>
-        <rect width="100" height="100" rx="20" fill="url(#logoGradient)" />
-        <text
-          x="50"
-          y="70"
-          fontSize="55"
-          fontWeight="bold"
-          fill="white"
-          textAnchor="middle"
-          fontFamily="system-ui, -apple-system, sans-serif"
-        >
-          C
-        </text>
-      </svg>
+    <div className={`relative ${className}`} style={{ width: sizes[size], height: sizes[size] }}>
+      <Image
+        src="/favicon.png"
+        alt="ChatBot24"
+        width={sizes[size]}
+        height={sizes[size]}
+        className="rounded-lg"
+        priority
+      />
     </div>
   );
 }
