@@ -255,7 +255,7 @@ export default function ArticlePage() {
         <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
           <GuideDownloadForm
             title="Скачать гайд"
-            description="PDF, 1 страница. Проверьте готовность команды к ИИ."
+            description="Гайд в разработке. Оставьте контакты — отправим первыми."
           />
         </div>
       </div>

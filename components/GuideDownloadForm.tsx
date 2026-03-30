@@ -8,8 +8,8 @@ interface GuideDownloadFormProps {
 }
 
 export default function GuideDownloadForm({
-  title = "Получить гайд",
-  description = "PDF, 1 страница. Проверьте готовность команды к ИИ.",
+  title = "Скачать гайд",
+  description = "Гайд в разработке. Оставьте контакты — отправим, как только будет готов.",
 }: GuideDownloadFormProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [email, setEmail] = useState("");
@@ -41,9 +41,9 @@ export default function GuideDownloadForm({
   if (isSubmitted) {
     return (
       <div className="text-center py-6 bg-emerald-500/10 rounded-xl border border-emerald-500/20">
-        <p className="text-emerald-400 font-medium mb-2">✅ Гайд отправлен!</p>
+        <p className="text-emerald-400 font-medium mb-2">✅ Контакты сохранены!</p>
         <p className="text-sm text-gray-400">
-          Проверьте email или Telegram в течение 5 минут
+          Как только гайд будет готов — сразу отправим вам
         </p>
       </div>
     );
@@ -98,7 +98,7 @@ export default function GuideDownloadForm({
           type="submit"
           className="w-full py-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-medium rounded-lg hover:shadow-lg hover:shadow-emerald-500/25 transition-all"
         >
-          Получить гайд
+          Сообщить, когда гайд будет готов
         </button>
 
         <button
