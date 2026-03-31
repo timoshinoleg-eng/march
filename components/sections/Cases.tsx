@@ -1,38 +1,72 @@
 import Card from "@/components/ui/Card";
 import Section from "@/components/ui/Section";
-import { TrendingUp, TrendingDown, Clock, Users, CheckCircle } from "lucide-react";
+import Button from "@/components/ui/Button";
+import Link from "next/link";
+import { TrendingUp, TrendingDown, ArrowRight, Building2, GraduationCap, ShoppingCart, Factory, Code } from "lucide-react";
 
 const cases = [
   {
-    company: "Онлайн-школа программирования",
-    industry: "Образование",
-    icon: TrendingUp,
+    company: "Сеть клиник в Москве",
+    industry: "Медицина",
+    icon: Building2,
     iconColor: "text-primary-400",
     iconBg: "bg-primary-500/10",
-    result: "+42%",
-    resultLabel: "рост конверсии",
+    result: "−85%",
+    resultLabel: "пропущенных звонков",
     description:
-      "Внедрили чат-бота для первичной обработки заявок. Бот квалифицирует студентов по уровню знаний и интересам, записывает на пробные уроки.",
+      "Telegram-бот для записи на приём с интеграцией в МИС. 70% записей проходит через бот, операторы освободились для сложных задач.",
     metrics: [
-      { label: "Время ответа", value: "2 мин → мгновенно" },
-      { label: "Квалификация", value: "Автоматическая 24/7" },
-      { label: "Нагрузка на менеджеров", value: "Снижена на 35%" },
+      { label: "Время записи", value: "4 мин → 45 сек" },
+      { label: "Конверсия в визит", value: "+45%" },
+      { label: "ROI", value: "280% за 6 мес" },
     ],
   },
   {
-    company: "Компания по B2B-услугам",
-    industry: "Консалтинг",
-    icon: TrendingDown,
+    company: "Онлайн-школа иностранных языков",
+    industry: "Образование",
+    icon: GraduationCap,
     iconColor: "text-primary-400",
     iconBg: "bg-primary-500/10",
-    result: "−40%",
-    resultLabel: "снижение нагрузки",
+    result: "+120%",
+    resultLabel: "рост лидов",
     description:
-      "Автоматизировали обработку входящих обращений. Система собирает данные о проекте, формирует КП и назначает встречу с менеджером.",
+      "Чат-бот с квизом для определения уровня языка и интеграцией в amoCRM. Квалификация лидов до передачи менеджеру.",
     metrics: [
-      { label: "Потерянных заявок", value: "С 25% до 3%" },
-      { label: "Скорость обработки", value: "В 4 раза быстрее" },
-      { label: "Качество лидов", value: "Рост на 60%" },
+      { label: "Конверсия в пробный", value: "+35%" },
+      { label: "Доходимость", value: "+60%" },
+      { label: "Рутина менеджеров", value: "−70%" },
+    ],
+  },
+  {
+    company: "Интернет-магазин электроники",
+    industry: "E-commerce",
+    icon: ShoppingCart,
+    iconColor: "text-primary-400",
+    iconBg: "bg-primary-500/10",
+    result: "80%",
+    resultLabel: "автоматизация",
+    description:
+      "AI-чат-бот с интеграцией в 1С и WhatsApp Business API. Круглосуточная поддержка, ответ за 2-10 секунд.",
+    metrics: [
+      { label: "Время ответа", value: "2-10 сек 24/7" },
+      { label: "CSAT", value: "4.7/5" },
+      { label: "Экономия", value: "450K ₽/мес" },
+    ],
+  },
+  {
+    company: "Поставщик промышленного оборудования",
+    industry: "B2B",
+    icon: Factory,
+    iconColor: "text-primary-400",
+    iconBg: "bg-primary-500/10",
+    result: "−60%",
+    resultLabel: "время обработки",
+    description:
+      "Telegram-бот с интеграцией в Битрикс24. Структурированный сбор данных, единая CRM-система, нулевые потери заявок.",
+    metrics: [
+      { label: "Ошибки в заявках", value: "−90%" },
+      { label: "Потерянные заявки", value: "0" },
+      { label: "ROI", value: "340% за год" },
     ],
   },
 ];
@@ -91,6 +125,19 @@ export default function Cases() {
             </div>
           </Card>
         ))}
+      </div>
+
+      <div className="mt-12 text-center">
+        <Link href="/cases">
+          <Button
+            size="lg"
+            variant="outline"
+            className="border-white/20 text-white hover:bg-white/10"
+          >
+            Все кейсы
+            <ArrowRight className="w-4 h-4 ml-2" />
+          </Button>
+        </Link>
       </div>
     </Section>
   );

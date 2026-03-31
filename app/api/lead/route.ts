@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { sendLeadToTelegram } from '@/lib/telegram-chat';
 
 export async function POST(req: NextRequest) {
   try {
@@ -35,6 +36,14 @@ export async function POST(req: NextRequest) {
       hasBriefData: !!businessType 
     });
     console.log("businessType value:", businessType, "hasBriefData:", !!businessType);
+
+    // Отправляем в Telegram
+    await sendLeadToTelegram({
+      type: businessType ? 'consultation' : 'callback',
+      name,
+      email,
+      phone,
+    });
     const briefInfo = businessType ? `
 📋 ДАННЫЕ БРИФА:
 Сфера: ${businessType || 'не указана'}

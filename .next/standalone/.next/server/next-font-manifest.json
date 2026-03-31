@@ -1,0 +1,85 @@
+{
+  "app": {
+    "[project]/app/_not-found/page": [
+      "static/media/9c72aa0f40e4eef8-s.p.0m6w47a4e5dy9.woff2",
+      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
+      "static/media/cc545e633e20c56d-s.p.0dza.stei.9v7.woff2",
+      "static/media/70bc3e132a0a741e-s.p.1409xf.ylxg8g.woff2"
+    ],
+    "[project]/app/admin/page": [
+      "static/media/9c72aa0f40e4eef8-s.p.0m6w47a4e5dy9.woff2",
+      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
+      "static/media/cc545e633e20c56d-s.p.0dza.stei.9v7.woff2",
+      "static/media/70bc3e132a0a741e-s.p.1409xf.ylxg8g.woff2"
+    ],
+    "[project]/app/blog/5-oshibok/page": [
+      "static/media/9c72aa0f40e4eef8-s.p.0m6w47a4e5dy9.woff2",
+      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
+      "static/media/cc545e633e20c56d-s.p.0dza.stei.9v7.woff2",
+      "static/media/70bc3e132a0a741e-s.p.1409xf.ylxg8g.woff2"
+    ],
+    "[project]/app/blog/ai-wont-fix-this/page": [
+      "static/media/9c72aa0f40e4eef8-s.p.0m6w47a4e5dy9.woff2",
+      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
+      "static/media/cc545e633e20c56d-s.p.0dza.stei.9v7.woff2",
+      "static/media/70bc3e132a0a741e-s.p.1409xf.ylxg8g.woff2"
+    ],
+    "[project]/app/blog/konversiya-40/page": [
+      "static/media/9c72aa0f40e4eef8-s.p.0m6w47a4e5dy9.woff2",
+      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
+      "static/media/cc545e633e20c56d-s.p.0dza.stei.9v7.woff2",
+      "static/media/70bc3e132a0a741e-s.p.1409xf.ylxg8g.woff2"
+    ],
+    "[project]/app/blog/page": [
+      "static/media/9c72aa0f40e4eef8-s.p.0m6w47a4e5dy9.woff2",
+      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
+      "static/media/cc545e633e20c56d-s.p.0dza.stei.9v7.woff2",
+      "static/media/70bc3e132a0a741e-s.p.1409xf.ylxg8g.woff2"
+    ],
+    "[project]/app/blog/pwc-ai-roi-56-percent/page": [
+      "static/media/9c72aa0f40e4eef8-s.p.0m6w47a4e5dy9.woff2",
+      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
+      "static/media/cc545e633e20c56d-s.p.0dza.stei.9v7.woff2",
+      "static/media/70bc3e132a0a741e-s.p.1409xf.ylxg8g.woff2"
+    ],
+    "[project]/app/blog/sekundy-reshayut/page": [
+      "static/media/9c72aa0f40e4eef8-s.p.0m6w47a4e5dy9.woff2",
+      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
+      "static/media/cc545e633e20c56d-s.p.0dza.stei.9v7.woff2",
+      "static/media/70bc3e132a0a741e-s.p.1409xf.ylxg8g.woff2"
+    ],
+    "[project]/app/blog/senior-leaders-ai-struggles/page": [
+      "static/media/9c72aa0f40e4eef8-s.p.0m6w47a4e5dy9.woff2",
+      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
+      "static/media/cc545e633e20c56d-s.p.0dza.stei.9v7.woff2",
+      "static/media/70bc3e132a0a741e-s.p.1409xf.ylxg8g.woff2"
+    ],
+    "[project]/app/blog/telegram-vs-whatsapp/page": [
+      "static/media/9c72aa0f40e4eef8-s.p.0m6w47a4e5dy9.woff2",
+      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
+      "static/media/cc545e633e20c56d-s.p.0dza.stei.9v7.woff2",
+      "static/media/70bc3e132a0a741e-s.p.1409xf.ylxg8g.woff2"
+    ],
+    "[project]/app/cases/page": [
+      "static/media/9c72aa0f40e4eef8-s.p.0m6w47a4e5dy9.woff2",
+      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
+      "static/media/cc545e633e20c56d-s.p.0dza.stei.9v7.woff2",
+      "static/media/70bc3e132a0a741e-s.p.1409xf.ylxg8g.woff2"
+    ],
+    "[project]/app/landing/ai-automation/page": [
+      "static/media/9c72aa0f40e4eef8-s.p.0m6w47a4e5dy9.woff2",
+      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
+      "static/media/cc545e633e20c56d-s.p.0dza.stei.9v7.woff2",
+      "static/media/70bc3e132a0a741e-s.p.1409xf.ylxg8g.woff2"
+    ],
+    "[project]/app/page": [
+      "static/media/9c72aa0f40e4eef8-s.p.0m6w47a4e5dy9.woff2",
+      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
+      "static/media/cc545e633e20c56d-s.p.0dza.stei.9v7.woff2",
+      "static/media/70bc3e132a0a741e-s.p.1409xf.ylxg8g.woff2"
+    ]
+  },
+  "appUsingSizeAdjust": true,
+  "pages": {},
+  "pagesUsingSizeAdjust": false
+}
