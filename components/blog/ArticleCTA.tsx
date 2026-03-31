@@ -1,5 +1,6 @@
 "use client";
 import { trackGoal } from "@/lib/metrika";
+import { BookingButton } from "@/components/BookingButton";
 
 interface ArticleCTAProps {
   primary?: {
@@ -61,12 +62,12 @@ export function ArticleCTA({
       <div className="bg-emerald-600 text-white rounded-xl p-6 mb-6 text-center">
         <h4 className="text-xl font-semibold mb-2">{primary?.text}</h4>
         <p className="text-emerald-100 mb-4">{primary?.description}</p>
-        <a 
-          href={primary?.href}
-          className="inline-block bg-white text-emerald-700 px-8 py-3 rounded-lg font-semibold hover:bg-emerald-50 transition-colors"
+        <BookingButton 
+          variant="secondary"
+          className="bg-white text-emerald-700 hover:bg-emerald-50 px-8 py-3"
         >
           Записаться →
-        </a>
+        </BookingButton>
       </div>
       
       <div className="text-center">

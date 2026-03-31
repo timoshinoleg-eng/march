@@ -1,0 +1,16 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/blog/layout,_N_T_/blog/pwc-ai-roi-56-percent/layout,_N_T_/blog/pwc-ai-roi-56-percent/page,_N_T_/blog/pwc-ai-roi-56-percent"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/blog/pwc-ai-roi-56-percent/__PAGE__",
+    "/blog/pwc-ai-roi-56-percent",
+    "/blog",
+    "/_index",
+    "/_head"
+  ]
+}

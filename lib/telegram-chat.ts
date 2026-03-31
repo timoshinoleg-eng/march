@@ -127,6 +127,54 @@ export async function sendBriefToTelegram(data: {
   }
 }
 
+// Отправка заявки (гайд, консультация, обратный звонок)
+export async function sendLeadToTelegram(data: {
+  type: 'guide' | 'consultation' | 'callback';
+  name?: string;
+  email?: string;
+  telegram?: string;
+  phone?: string;
+  message?: string;
+}): Promise<boolean> {
+  const config = getTelegramConfig();
+  if (!config) return false;
+
+  try {
+    const url = `https://api.telegram.org/bot${config.botToken}/sendMessage`;
+
+    const typeLabels: Record<string, string> = {
+      guide: '📚 Заявка на гайд',
+      consultation: '💬 Консультация',
+      callback: '📞 Обратный звонок',
+    };
+
+    let message = `<b>${typeLabels[data.type] || 'Новая заявка'}</b>\n\n`;
+
+    if (data.name) message += `<b>Имя:</b> ${data.name}\n`;
+    if (data.email) message += `<b>Email:</b> ${data.email}\n`;
+    if (data.telegram) message += `<b>Telegram:</b> @${data.telegram.replace('@', '')}\n`;
+    if (data.phone) message += `<b>Телефон:</b> ${data.phone}\n`;
+    if (data.message) message += `<b>Сообщение:</b> ${data.message}\n`;
+
+    message += `\n<i>${new Date().toLocaleString('ru-RU')}</i>`;
+
+    await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chat_id: config.chatId,
+        text: message,
+        parse_mode: "HTML",
+      }),
+    });
+
+    return true;
+  } catch (error) {
+    console.error("Telegram lead send error:", error);
+    return false;
+  }
+}
+
 // Отправка полной истории чата (для завершения сессии)
 export async function sendChatSummaryToTelegram(data: {
   sessionId: string;
