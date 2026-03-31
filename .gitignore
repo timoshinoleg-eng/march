@@ -6,6 +6,9 @@ update_token.sh
 *.pem
 *.key
 
+# Dependencies
+node_modules
+
 # Backups
 *.sql
 *.backup
