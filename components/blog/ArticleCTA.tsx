@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { trackGoal } from "@/lib/metrika";
 import { BookingButton } from "@/components/BookingButton";
 
@@ -13,6 +13,7 @@ interface ArticleCTAProps {
     href: string;
     description: string;
   };
+  showChecklist?: boolean;
 }
 
 export function ArticleCTA({ 
@@ -25,10 +26,10 @@ export function ArticleCTA({
     text: "Скачать чек-лист",
     href: "#form",
     description: "PDF, 1 страница."
-  }
+  },
+  showChecklist = false
 }: ArticleCTAProps) {
   const handleChecklistClick = () => {
-    // Отслеживание цели Яндекс Метрики - скачивание чек-листа
     if (secondary?.href?.includes('checklist')) {
       trackGoal('checklist_download');
     }
@@ -63,24 +64,26 @@ export function ArticleCTA({
         <h4 className="text-xl font-semibold mb-2">{primary?.text}</h4>
         <p className="text-emerald-100 mb-4">{primary?.description}</p>
         <BookingButton 
-          variant="secondary"
-          className="bg-white text-emerald-700 hover:bg-emerald-50 px-8 py-3"
+          variant="outline"
+          className="bg-white text-emerald-700 hover:bg-emerald-50 border-2 border-white px-8 py-3 font-semibold"
         >
           Записаться →
         </BookingButton>
       </div>
       
-      <div className="text-center">
-        <p className="text-gray-500 text-sm mb-2">Или</p>
-        <a 
-          href={secondary?.href} 
-          onClick={handleChecklistClick}
-          className="text-emerald-400 hover:text-emerald-300 font-medium hover:underline"
-        >
-          {secondary?.text}
-        </a>
-        <p className="text-gray-500 text-sm mt-1">{secondary?.description}</p>
-      </div>
+      {showChecklist && (
+        <div className="text-center">
+          <p className="text-gray-500 text-sm mb-2">Или</p>
+          <a 
+            href={secondary?.href} 
+            onClick={handleChecklistClick}
+            className="text-emerald-400 hover:text-emerald-300 font-medium hover:underline"
+          >
+            {secondary?.text}
+          </a>
+          <p className="text-gray-500 text-sm mt-1">{secondary?.description}</p>
+        </div>
+      )}
     </div>
   );
 }
