@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Калькулятор стоимости чат-бота для бизнеса. Узнайте цену за 20 секунд. Сравнение с конструкторами. Соответствие 152-ФЗ. Разработка от 19 900 ₽.">
+    <meta property="og:title" content="Калькулятор чат-бота | Chatbot24.su">
+    <meta property="og:description" content="Точная цена разработки чат-бота за 20 секунд. Без скрытых платежей.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://chatbot24.su/calculator">
+    <title>Калькулятор чат-бота | Chatbot24.su</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            opacity: 0.95;
+            font-size: 1.2em;
+            font-weight: 300;
+        }
+
+        .body {
+            padding: 40px;
+        }
+
+        /* Прогресс-бар */
+        .progress-bar {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            gap: 10px;
+        }
+
+        .progress-step {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: #999;
+            transition: all 0.3s;
+        }
+
+        .progress-step.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .progress-step.completed {
+            background: #4caf50;
+            color: white;
+        }
+
+        /* Шаги квиза */
+        .quiz-step {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .quiz-step.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .step-title {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+        }
+
+        .option-card {
+            background: #f8f9fa;
+            border: 2px solid transparent;
+            border-radius: 15px;
+            padding: 25px 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .option-card:hover {
+            border-color: #667eea;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .option-card.selected {
+            background: linear-gradient(135deg, #667eea10 0%, #764ba210 100%);
+            border-color: #667eea;
+        }
+
+        .option-icon {
+            font-size: 2.2em;
+            margin-bottom: 12px;
+        }
+
+        .option-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 6px;
+            font-size: 0.95em;
+        }
+
+        .option-desc {
+            font-size: 0.85em;
+            color: #666;
+        }
+
+        /* Кнопки навигации */
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 40px;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        /* Результат */
+        .result-section {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .price-display {
+            margin: 15px 0 10px;
+        }
+
+        .price-amount {
+            font-size: 3.5em;
+            font-weight: bold;
+            color: #667eea;
+            line-height: 1;
+            transition: all 0.3s ease;
+        }
+
+        .price-label {
+            color: #666;
+            margin-top: 8px;
+            font-size: 1em;
+        }
+
+        .tier-recommendation {
+            font-size: 0.85em;
+            color: #888;
+            margin-top: 5px;
+            font-style: italic;
+        }
+
+        /* Шкала тарифов */
+        .tariff-scale {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 10px;
+            margin: 20px 0;
+            position: relative;
+            padding: 0 10px;
+        }
+
+        .tariff-scale::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 8%;
+            right: 8%;
+            height: 3px;
+            background: #e0e0e0;
+            z-index: 0;
+        }
+
+        .scale-item {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            color: #999;
+            font-size: 0.7em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+            max-width: 70px;
+            padding: 5px 2px;
+            border-radius: 8px;
+        }
+
+        .scale-item::before {
+            content: '';
+            display: block;
+            width: 10px;
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 50%;
+            margin: 0 auto 8px;
+            transition: all 0.3s ease;
+        }
+
+        .scale-item:hover {
+            transform: translateY(-2px);
+        }
+
+        .scale-item.active {
+            color: #667eea;
+            font-weight: 600;
+            transform: scale(1.05);
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .scale-item.active::before {
+            background: #667eea;
+            transform: scale(1.5);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        }
+
+        .scale-item small {
+            display: block;
+            font-size: 0.9em;
+            opacity: 0.8;
+            margin-top: 2px;
+        }
+
+        /* Мета-информация (сроки + гарантии) */
+        .meta-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 25px 0;
+        }
+
+        .meta-badge {
+            background: #f8f9fa;
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-size: 0.9em;
+            color: #555;
+            border: 1px solid #e0e0e0;
+        }
+
+        .meta-badge strong {
+            color: #333;
+        }
+
+        /* Предупреждение при даунгрейде */
+        .enterprise-warning {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            font-size: 0.85em;
+            color: #856404;
+            display: none;
+        }
+
+        .enterprise-warning.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* TCO Сравнение */
+        .tco-compact {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: left;
+        }
+
+        .tco-compact h4 {
+            font-size: 0.95em;
+            color: #333;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .tco-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 0.9em;
+        }
+
+        .tco-row:last-of-type {
+            border-bottom: none;
+        }
+
+        .tco-row.highlight {
+            color: #667eea;
+            font-weight: 500;
+        }
+
+        .tco-row.savings {
+            color: #4caf50;
+            font-weight: 600;
+            font-size: 1em;
+        }
+
+        .tco-row.warning {
+            color: #ff9800;
+            font-weight: 500;
+        }
+
+        .tco-note {
+            font-size: 0.75em;
+            color: #888;
+            margin-top: 10px;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        .link-btn {
+            background: none;
+            border: none;
+            color: #667eea;
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-top: 15px;
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+
+        .tco-details {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .tco-details.show {
+            display: block;
+        }
+
+        .details-table {
+            width: 100%;
+            font-size: 0.85em;
+        }
+
+        .details-table td {
+            padding: 8px 0;
+            color: #555;
+        }
+
+        .details-table td:last-child {
+            text-align: right;
+            font-weight: 500;
+        }
+
+        /* Что включено */
+        .features-list {
+            max-width: 480px;
+            margin: 25px auto;
+            text-align: left;
+        }
+
+        .features-list h4 {
+            color: #333;
+            margin-bottom: 12px;
+            font-size: 1em;
+        }
+
+        .features-list ul {
+            list-style: none;
+        }
+
+        .features-list li {
+            padding: 8px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            color: #555;
+            font-size: 0.9em;
+        }
+
+        .features-list li::before {
+            content: "✓";
+            color: #4caf50;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        /* Дополнительно */
+        .extras-section {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 25px;
+        }
+
+        .extras-title {
+            font-size: 0.95em;
+            color: #333;
+            margin-bottom: 12px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .checkbox-pill {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 20px;
+            padding: 8px 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.85em;
+        }
+
+        .checkbox-pill:hover {
+            border-color: #667eea;
+        }
+
+        .checkbox-pill.selected {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+        }
+
+        .checkbox-pill.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: #f5f5f5;
+        }
+
+        /* Честный футер */
+        .honest-footer {
+            background: #fafafa;
+            border-left: 3px solid #667eea;
+            padding: 18px 20px;
+            margin-top: 25px;
+            font-size: 0.8em;
+            color: #555;
+            text-align: left;
+        }
+
+        .honest-footer p {
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .honest-footer ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+
+        .honest-footer li {
+            margin: 6px 0;
+            color: #666;
+            position: relative;
+        }
+
+        .info-tooltip {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 14px;
+            height: 14px;
+            background: #e0e0e0;
+            color: #666;
+            border-radius: 50%;
+            font-size: 0.7em;
+            margin-left: 5px;
+            cursor: help;
+            position: relative;
+        }
+
+        .info-tooltip:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.85em;
+            white-space: nowrap;
+            z-index: 100;
+            min-width: 200px;
+            text-align: center;
+        }
+
+        /* CTA */
+        .cta-section {
+            margin-top: 30px;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 35px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .cta-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 25px;
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 0.9em;
+            font-weight: 500;
+            margin-top: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .cta-secondary:hover {
+            background: #f8f9fa;
+        }
+
+        .disclaimer {
+            margin-top: 18px;
+            color: #888;
+            font-size: 0.8em;
+        }
+
+        /* Email форма */
+        .email-form {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .email-form.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .email-form input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 0.95em;
+            margin-bottom: 10px;
+        }
+
+        .email-form input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        /* Аккордеон compliance */
+        .compliance-accordion {
+            margin-top: 30px;
+            border-top: 1px solid #e0e0e0;
+            padding-top: 20px;
+        }
+
+        .compliance-accordion details {
+            background: #f8f9fa;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .compliance-accordion summary {
+            cursor: pointer;
+            color: #667eea;
+            font-weight: 500;
+            padding: 15px 20px;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .compliance-accordion summary::before {
+            content: '▶';
+            font-size: 0.7em;
+            transition: transform 0.3s;
+        }
+
+        .compliance-accordion details[open] summary::before {
+            transform: rotate(90deg);
+        }
+
+        .compliance-accordion .accordion-content {
+            padding: 0 20px 20px;
+            font-size: 0.85em;
+            color: #555;
+        }
+
+        .compliance-accordion p {
+            margin: 10px 0;
+            line-height: 1.5;
+        }
+
+        .compliance-accordion ul {
+            margin: 5px 0 10px;
+            padding-left: 20px;
+        }
+
+        .compliance-accordion li {
+            margin: 5px 0;
+        }
+
+        @media (max-width: 600px) {
+            .body {
+                padding: 25px;
+            }
+
+            .header {
+                padding: 30px 25px;
+            }
+
+            .header h1 {
+                font-size: 1.6em;
+            }
+
+            .price-amount {
+                font-size: 2.8em;
+            }
+
+            .options-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .tariff-scale {
+                gap: 6px;
+            }
+
+            .scale-item {
+                font-size: 0.65em;
+                padding: 5px 1px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Калькулятор чат-бота</h1>
+            <p>2 вопроса → точная цена за 20 секунд</p>
+        </div>
+
+        <div class="body">
+            <!-- Прогресс-бар: 2 шага -->
+            <div class="progress-bar">
+                <div class="progress-step active" id="stepIndicator1">1</div>
+                <div class="progress-step" id="stepIndicator2">2</div>
+            </div>
+
+            <!-- Шаг 1: Что должен делать бот -->
+            <div class="quiz-step active" id="step1">
+                <div class="step-title">Что должен делать ваш бот?</div>
+                
+                <div class="options-grid">
+                    <div class="option-card" onclick="selectOption('faq', 'step1')">
+                        <div class="option-icon">❓</div>
+                        <div class="option-title">Отвечать на вопросы</div>
+                        <div class="option-desc">FAQ, консультации</div>
+                    </div>
+                    
+                    <div class="option-card" onclick="selectOption('booking', 'step1')">
+                        <div class="option-icon">📅</div>
+                        <div class="option-title">Запись клиентов</div>
+                        <div class="option-desc">Салон, курсы, доставка</div>
+                    </div>
+                    
+                    <div class="option-card" onclick="selectOption('sales', 'step1')">
+                        <div class="option-icon">🛒</div>
+                        <div class="option-title">Продажи и оплата</div>
+                        <div class="option-desc">Каталог, корзина</div>
+                    </div>
+                    
+                    <div class="option-card" onclick="selectOption('ai', 'step1')">
+                        <div class="option-icon">🤖</div>
+                        <div class="option-title">AI-ассистент</div>
+                        <div class="option-desc">Умные ответы</div>
+                    </div>
+                    
+                    <div class="option-card" onclick="selectOption('medical', 'step1')">
+                        <div class="option-icon">🏥</div>
+                        <div class="option-title">Медицина</div>
+                        <div class="option-desc">Клиника, ЭМК</div>
+                    </div>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="btn btn-primary" id="btnStep1" onclick="nextStep(1)" disabled>
+                        Далее →
+                    </button>
+                </div>
+            </div>
+
+            <!-- Шаг 2: Масштаб -->
+            <div class="quiz-step" id="step2">
+                <div class="step-title">Сколько клиентов в месяц?</div>
+                
+                <div class="options-grid">
+                    <div class="option-card" onclick="selectOption('small', 'step2')">
+                        <div class="option-icon">🌱</div>
+                        <div class="option-title">До 100</div>
+                        <div class="option-desc">Микробизнес</div>
+                    </div>
+                    
+                    <div class="option-card" onclick="selectOption('medium', 'step2')">
+                        <div class="option-icon">🚀</div>
+                        <div class="option-title">100–500</div>
+                        <div class="option-desc">Растущий бизнес</div>
+                    </div>
+                    
+                    <div class="option-card" onclick="selectOption('large', 'step2')">
+                        <div class="option-icon">🏢</div>
+                        <div class="option-title">500+</div>
+                        <div class="option-desc">Крупный бизнес</div>
+                    </div>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" onclick="prevStep(2)">← Назад</button>
+                    <button class="btn btn-primary" id="btnStep2" onclick="showResult()" disabled>
+                        Рассчитать цену
+                    </button>
+                </div>
+            </div>
+
+            <!-- Результат -->
+            <div class="quiz-step" id="resultStep">
+                <div class="result-section">
+                    <div class="price-display">
+                        <div class="price-amount" id="resultPrice">69 000 ₽</div>
+                        <div class="price-label">Стоимость разработки</div>
+                        <div class="tier-recommendation" id="tierRecommendation">Рекомендуемый тариф для ваших задач</div>
+                    </div>
+
+                    <!-- Шкала тарифов (скрывается для Enterprise) -->
+                    <div class="tariff-scale" id="tariffScale">
+                        <div class="scale-item" data-tier="Lite" data-price="19900" onclick="forceTier('Lite')">
+                            Lite
+                            <small>19.9k</small>
+                        </div>
+                        <div class="scale-item" data-tier="Base" data-price="39000" onclick="forceTier('Base')">
+                            Base
+                            <small>39k</small>
+                        </div>
+                        <div class="scale-item active" data-tier="Standard" data-price="69000" onclick="forceTier('Standard')">
+                            Standard
+                            <small>69k</small>
+                        </div>
+                        <div class="scale-item" data-tier="AI" data-price="129000" onclick="forceTier('AI')">
+                            AI
+                            <small>129k</small>
+                        </div>
+                        <div class="scale-item" data-tier="Enterprise" data-price="249000" onclick="forceTier('Enterprise')" style="display:none;">
+                            Enterprise
+                            <small>от 249k</small>
+                        </div>
+                    </div>
+
+                    <!-- Предупреждение при даунгрейде с Enterprise -->
+                    <div class="enterprise-warning" id="enterpriseWarning">
+                        ⚠️ <strong>Внимание:</strong> Для медицины рекомендуется Enterprise (152-ФЗ, on-premise). 
+                        Другие тарифы не обеспечивают полное соответствие требованиям защиты медицинских данных.
+                    </div>
+
+                    <!-- Мета-информация -->
+                    <div class="meta-info">
+                        <span class="meta-badge">⏱️ Срок: <strong id="timelineBadge">7–10 дней</strong></span>
+                        <span class="meta-badge">🛡️ Гарантия: <strong>14 дней</strong> на тест</span>
+                        <span class="meta-badge">✅ Оплата по факту приемки</span>
+                    </div>
+
+                    <!-- TCO Сравнение -->
+                    <div class="tco-compact">
+                        <h4>💡 Сравнение: аренда SaaS vs своя разработка</h4>
+                        <div class="tco-row">
+                            <span>Облачный конструктор (SaaS)</span>
+                            <strong id="tcoConstructor">~90 000 ₽/год</strong>
+                        </div>
+                        <div class="tco-row highlight">
+                            <span>Chatbot24.su (свой бот)</span>
+                            <strong id="tcoCustom">~73 000 ₽/год</strong>
+                        </div>
+                        <div class="tco-row savings" id="tcoSavingsRow">
+                            <span id="tcoSavingsLabel">Экономия за 3 года + актив</span>
+                            <strong id="tcoSavings">~51 000 ₽</strong>
+                        </div>
+                        <p class="tco-note" id="tcoNote">Как с квартирой: аренда проще на старте, но через 2 года выгоднее иметь свою</p>
+                        <button class="link-btn" onclick="toggleTCODetails()">Подробный разбор →</button>
+                        
+                        <div class="tco-details" id="tcoDetails">
+                            <table class="details-table">
+                                <tr>
+                                    <td>Стоимость разработки (разово)</td>
+                                    <td id="detailDevCost">69 000 ₽</td>
+                                </tr>
+                                <tr>
+                                    <td>Абонентская плата SaaS</td>
+                                    <td id="detailSaaS">~4 000–15 000 ₽/мес*</td>
+                                </tr>
+                                <tr>
+                                    <td>Хостинг (наш вариант)</td>
+                                    <td>~2 000–5 000 ₽/мес</td>
+                                </tr>
+                                <tr>
+                                    <td>Лимиты на рост</td>
+                                    <td id="detailLimits">Нет</td>
+                                </tr>
+                            </table>
+                            <p style="font-size:0.75em; color:#888; margin-top:10px;">* Зависит от масштаба, каналов и функций</p>
+                        </div>
+                    </div>
+
+                    <div class="features-list">
+                        <h4>✓ Что включено:</h4>
+                        <ul id="resultFeatures">
+                            <li>3 канала коммуникации (Telegram, WhatsApp, сайт)</li>
+                            <li>До 15 сценариев диалога</li>
+                            <li>Интеграция с CRM</li>
+                            <li>Хостинг в России</li>
+                            <li>Исходный код — ваш</li>
+                        </ul>
+                    </div>
+
+                    <div class="extras-section" id="extrasSection">
+                        <div class="extras-title">Дополнительно можно добавить:</div>
+                        <div class="checkbox-group">
+                            <div class="checkbox-pill" id="pillAI" onclick="toggleExtra(this, 'ai')">
+                                🤖 AI-ответы (+40k)
+                            </div>
+                            <div class="checkbox-pill" onclick="toggleExtra(this, 'payment')">
+                                💳 Оплата в боте (+10k)
+                            </div>
+                            <div class="checkbox-pill" onclick="toggleExtra(this, 'admin')">
+                                ⚙️ Админ-панель (+15k)
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Честный футер -->
+                    <div class="honest-footer">
+                        <p>Что не входит в стоимость:</p>
+                        <ul>
+                            <li>
+                                WhatsApp Business API: оплачивается по тарифам провайдера (обычно 3–8 тыс/мес).
+                                <span class="info-tooltip" data-tooltip="Официальный API — без нашей наценки">ⓘ</span>
+                            </li>
+                            <li>
+                                Комиссия платежной системы: ~3.5% от суммы платежа.
+                                <span class="info-tooltip" data-tooltip="Стандартная комиссия банка-эквайера">ⓘ</span>
+                            </li>
+                            <li>Доработки после запуска: 3 000 ₽/час или подписка «Спокойствие» 3 900 ₽/мес.</li>
+                            <li>Сверхлимит AI: 0.5 ₽/запрос (при превышении включенного лимита).</li>
+                        </ul>
+                    </div>
+
+                    <div class="cta-section">
+                        <a href="https://t.me/chatbot24su" class="cta-button" target="_blank" aria-label="Обсудить проект в Telegram">
+                            ✈️ Обсудить проект в Telegram
+                        </a>
+                        
+                        <a href="https://wa.me/79933366102" class="cta-secondary" target="_blank" aria-label="Написать в WhatsApp">
+                            💬 Написать в WhatsApp
+                        </a>
+
+                        <button class="cta-secondary" onclick="showEmailForm()" style="margin-top: 10px;">
+                            📧 Отправить расчёт на email
+                        </button>
+
+                        <div class="email-form" id="emailForm">
+                            <input type="email" id="emailInput" placeholder="your@email.ru" aria-label="Email для отправки расчета" />
+                            <button type="button" class="btn btn-primary" onclick="sendToEmail()">Отправить</button>
+                        </div>
+                        
+                        <div class="disclaimer">
+                            Или напишите на WhatsApp: <a href="https://wa.me/79933366102">+7 (993) 336-61-02</a> · Отвечаем за 2 часа
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Аккордеон compliance -->
+                <div class="compliance-accordion">
+                    <details>
+                        <summary>🛡️ Про хранение данных и соответствие 152-ФЗ</summary>
+                        <div class="accordion-content">
+                            <p><strong>📍 Локализация данных:</strong><br>
+                            Серверы размещаются в дата-центрах РФ (уровня Tier III). Возможны варианты: коммерческие облака или on-premise в вашем ЦОД.</p>
+                            
+                            <p><strong>🔐 Защита информации:</strong></p>
+                            <ul>
+                                <li>Шифрование соединений и хранилищ.</li>
+                                <li>Ролевая модель доступа.</li>
+                                <li>Журналирование всех операций с ПДн.</li>
+                            </ul>
+                            
+                            <p><strong>🏥 Для медицины и финансов:</strong></p>
+                            <ul>
+                                <li>On-premise размещение — данные не покидают вашу инфраструктуру.</li>
+                                <li>Соответствие приказу Минздрава № 1030н (рекомендации по защите медицинских данных).</li>
+                                <li>Возможность интеграции с ЕГИСЗ.</li>
+                            </ul>
+                            
+                            <p><strong>🌍 Без зарубежных сервисов:</strong><br>
+                            Используем только российские LLM. Данные не передаются в иностранные API.</p>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ⚠️ ВАЖНО: Перед деплоем замените YOUR_WEBHOOK_TOKEN на реальный токен из Битрикс24
+        // Получить токен: Битрикс24 → Приложения → Вебхуки → Создать входящий вебхук
+        // Рекомендуется создать отдельного пользователя с правами только на добавление лидов
+        const BITRIX_WEBHOOK_URL = 'https://chatbot24.bitrix24.ru/rest/1/YOUR_WEBHOOK_TOKEN/crm.lead.add.json';
+
+        let answers = {
+            step1: null,
+            step2: null
+        };
+
+        let extras = {
+            ai: false,
+            payment: false,
+            admin: false
+        };
+
+        let currentTier = 'Standard';
+        let basePrice = 69000;
+        let isEnterprise = false;
+        let wasOriginallyEnterprise = false; // Отслеживаем, был ли изначально Enterprise
+
+        const prices = {
+            'Lite': 19900,
+            'Base': 39000,
+            'Standard': 69000,
+            'AI': 129000,
+            'Enterprise': 249000
+        };
+
+        const timelines = {
+            'Lite': '3–5 дней',
+            'Base': '5–7 дней',
+            'Standard': '7–10 дней',
+            'AI': '10–14 дней',
+            'Enterprise': '14–21 день'
+        };
+
+        function selectOption(value, step) {
+            answers[step] = value;
+            
+            const cards = document.querySelectorAll(`#${step} .option-card`);
+            cards.forEach(card => card.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+            
+            const btnNum = step.replace('step', '');
+            document.getElementById(`btnStep${btnNum}`).disabled = false;
+        }
+
+        function nextStep(currentStep) {
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            document.getElementById(`step${currentStep + 1}`).classList.add('active');
+            
+            document.getElementById(`stepIndicator${currentStep}`).classList.remove('active');
+            document.getElementById(`stepIndicator${currentStep}`).classList.add('completed');
+            document.getElementById(`stepIndicator${currentStep + 1}`).classList.add('active');
+        }
+
+        function prevStep(currentStep) {
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            document.getElementById(`step${currentStep - 1}`).classList.add('active');
+            
+            document.getElementById(`stepIndicator${currentStep}`).classList.remove('active');
+            document.getElementById(`stepIndicator${currentStep - 1}`).classList.remove('completed');
+            document.getElementById(`stepIndicator${currentStep - 1}`).classList.add('active');
+        }
+
+        function showResult() {
+            document.getElementById('step2').classList.remove('active');
+            document.getElementById('stepIndicator2').classList.remove('active');
+            document.getElementById('stepIndicator2').classList.add('completed');
+            
+            calculateAndShowResult();
+            document.getElementById('resultStep').classList.add('active');
+            
+            // Отправляем лид в Битрикс24
+            sendLeadToBitrix();
+        }
+
+        function calculateAndShowResult() {
+            const { step1: botType, step2: scale } = answers;
+            
+            let price = prices.Standard;
+            let tier = 'Standard';
+            let timeline = timelines.Standard;
+            isEnterprise = false;
+            wasOriginallyEnterprise = false;
+
+            if (botType === 'medical' || scale === 'large') {
+                price = prices.Enterprise;
+                tier = 'Enterprise';
+                timeline = timelines.Enterprise;
+                isEnterprise = true;
+                wasOriginallyEnterprise = true;
+            } else if (botType === 'ai') {
+                price = prices.AI;
+                tier = 'AI';
+                timeline = timelines.AI;
+            } else if (botType === 'faq' && scale === 'small') {
+                price = prices.Lite;
+                tier = 'Lite';
+                timeline = timelines.Lite;
+            } else if (scale === 'medium' && botType !== 'ai') {
+                price = prices.Base;
+                tier = 'Base';
+                timeline = timelines.Base;
+            }
+
+            currentTier = tier;
+            basePrice = price;
+
+            // Сбрасываем extras при новом расчете
+            extras = { ai: false, payment: false, admin: false };
+            document.querySelectorAll('.checkbox-pill').forEach(pill => pill.classList.remove('selected'));
+
+            updateResultUI(tier, price, timeline);
+        }
+
+        function getExtraPrice() {
+            let extraPrice = 0;
+            if (extras.ai) extraPrice += 40000;
+            if (extras.payment) extraPrice += 10000;
+            if (extras.admin) extraPrice += 15000;
+            return extraPrice;
+        }
+
+        function updateResultUI(tier, price, timeline) {
+            const { step1: botType, step2: scale } = answers;
+            const totalPrice = price + getExtraPrice();
+
+            // Цена с анимацией
+            animatePrice(document.getElementById('resultPrice'), totalPrice);
+            
+            // Подпись о рекомендации
+            const hasExtras = getExtraPrice() > 0;
+            const isManualSelection = !isRecommendedTier(tier);
+            
+            if (isEnterprise) {
+                document.getElementById('tierRecommendation').textContent = 'Корпоративное решение с усиленной защитой данных';
+            } else if (wasOriginallyEnterprise && tier !== 'Enterprise') {
+                document.getElementById('tierRecommendation').textContent = 'Выбрано вручную (вместо рекомендуемого Enterprise)';
+            } else if (isManualSelection) {
+                document.getElementById('tierRecommendation').textContent = 'Выбрано вручную';
+            } else if (hasExtras) {
+                document.getElementById('tierRecommendation').textContent = 'Рекомендуемый тариф + дополнительные опции';
+            } else {
+                document.getElementById('tierRecommendation').textContent = 'Рекомендуемый тариф для ваших задач';
+            }
+
+            // Управление шкалой тарифов
+            const scaleElement = document.getElementById('tariffScale');
+            
+            if (isEnterprise) {
+                // Показываем только Enterprise
+                scaleElement.style.display = 'flex';
+                document.querySelectorAll('.scale-item').forEach(item => {
+                    if (item.dataset.tier === 'Enterprise') {
+                        item.style.display = 'block';
+                        item.classList.add('active');
+                    } else {
+                        item.style.display = 'none';
+                        item.classList.remove('active');
+                    }
+                });
+            } else {
+                // Показываем обычную шкалу
+                scaleElement.style.display = 'flex';
+                document.querySelectorAll('.scale-item').forEach(item => {
+                    if (item.dataset.tier === 'Enterprise') {
+                        item.style.display = 'none';
+                    } else {
+                        item.style.display = 'block';
+                    }
+                    item.classList.remove('active');
+                    if (item.dataset.tier === tier) {
+                        item.classList.add('active');
+                    }
+                });
+            }
+
+            // Показываем/скрываем предупреждение о даунгрейде
+            const warningEl = document.getElementById('enterpriseWarning');
+            if (wasOriginallyEnterprise && tier !== 'Enterprise') {
+                warningEl.classList.add('show');
+            } else {
+                warningEl.classList.remove('show');
+            }
+
+            // Сроки
+            document.getElementById('timelineBadge').textContent = timeline;
+
+            // TCO — корректный расчет с учетом AI-тарифа
+            let constructorMonthly;
+            if (tier === 'AI' || extras.ai) {
+                // AI-функции в конструкторах стоят дороже
+                constructorMonthly = scale === 'large' ? 20000 : 12000;
+            } else {
+                constructorMonthly = scale === 'large' ? 8000 : 4290;
+            }
+            
+            const constructorYear1 = constructorMonthly * 12;
+            const monthlyCost = scale === 'large' ? 5000 : 2000;
+            const ourYear1 = totalPrice + (monthlyCost * 12);
+            const savings3y = (constructorYear1 - ourYear1) * 3;
+
+            document.getElementById('tcoConstructor').textContent = '~' + Math.round(constructorYear1 / 1000) + ' 000 ₽/год';
+            document.getElementById('tcoCustom').textContent = '~' + Math.round(ourYear1 / 1000) + ' 000 ₽/год';
+
+            // Корректное отображение экономии/переплаты
+            const savingsRow = document.getElementById('tcoSavingsRow');
+            const savingsLabel = document.getElementById('tcoSavingsLabel');
+            const savingsElement = document.getElementById('tcoSavings');
+            const tcoNote = document.getElementById('tcoNote');
+
+            if (savings3y > 0) {
+                // Кастом дешевле
+                savingsRow.className = 'tco-row savings';
+                savingsLabel.textContent = 'Экономия за 3 года + актив';
+                savingsElement.textContent = '~' + Math.round(savings3y / 1000) + ' 000 ₽';
+                tcoNote.textContent = 'Как с квартирой: аренда проще на старте, но через 2 года выгоднее иметь свою';
+            } else {
+                // Кастом дороже (для AI/Enterprise на старте)
+                const firstYearDiff = ourYear1 - constructorYear1;
+                
+                if (tier === 'AI' || tier === 'Enterprise') {
+                    savingsRow.className = 'tco-row warning';
+                    savingsLabel.textContent = 'Первые 18 месяцев: инвестиция';
+                    savingsElement.textContent = '~' + Math.round(firstYearDiff / 1000) + ' 000 ₽/год';
+                    tcoNote.textContent = '* Но без лимитов на AI и с полным контролем данных. Окупается при масштабировании без переплаты за лимиты.';
+                } else {
+                    savingsRow.className = 'tco-row warning';
+                    savingsLabel.textContent = 'Первый год дороже SaaS';
+                    savingsElement.textContent = '~' + Math.round(Math.abs(firstYearDiff) / 1000) + ' 000 ₽';
+                    tcoNote.textContent = '* Окупается со 2-го года — нет абонентской платы за конструктор';
+                }
+            }
+
+            document.getElementById('detailDevCost').textContent = totalPrice.toLocaleString('ru-RU') + ' ₽';
+            document.getElementById('detailLimits').textContent = tier === 'Lite' ? 'До 3 сценариев' : 'Нет';
+
+            // Фичи — динамические каналы
+            let features = [];
+            if (tier === 'Lite') {
+                features = [
+                    'Telegram-бот (1 канал)',
+                    '3 готовых сценария (FAQ)',
+                    'Хостинг в РФ',
+                    'Исходный код',
+                    '14 дней на тест'
+                ];
+            } else if (tier === 'Enterprise') {
+                features = [
+                    'Все каналы (Telegram, WhatsApp, VK, сайт)',
+                    'On-premise размещение (опция)',
+                    'Усиленная защита ПДн (152-ФЗ)',
+                    'SLA 99.9% с компенсацией',
+                    'Дежурный инженер 24/7',
+                    'Исходный код + полная документация'
+                ];
+            } else if (tier === 'AI') {
+                features = [
+                    'Все каналы (Telegram, WhatsApp, VK, сайт)',
+                    'AI-ответы на основе нейросетей',
+                    '1000 AI-запросов/мес включено',
+                    'CRM + аналитика',
+                    'Хостинг в РФ',
+                    'Исходный код + документация'
+                ];
+            } else {
+                features = [
+                    '3 канала коммуникации (Telegram, WhatsApp, сайт)',
+                    'До 15 сценариев диалога',
+                    'Интеграция с CRM',
+                    'Хостинг в России',
+                    'Исходный код — ваш'
+                ];
+            }
+
+            // Добавляем экстры
+            if (extras.ai) features.push('AI-модуль (200 запросов/мес)');
+            if (extras.payment) features.push('Приём оплаты в боте');
+            if (extras.admin) features.push('Админ-панель для редактирования');
+
+            document.getElementById('resultFeatures').innerHTML = features
+                .map(f => `<li>${f}</li>`)
+                .join('');
+
+            // Управление видимостью extras
+            const extrasSection = document.getElementById('extrasSection');
+            if (tier === 'Enterprise' || tier === 'AI') {
+                extrasSection.style.display = 'none';
+            } else {
+                extrasSection.style.display = 'block';
+            }
+
+            // Управление кнопкой AI
+            const aiPill = document.getElementById('pillAI');
+            if (tier === 'Lite' || tier === 'Enterprise') {
+                aiPill.classList.add('disabled');
+                aiPill.style.opacity = '0.5';
+                aiPill.style.pointerEvents = 'none';
+            } else {
+                aiPill.classList.remove('disabled');
+                aiPill.style.opacity = '1';
+                aiPill.style.pointerEvents = 'auto';
+            }
+        }
+
+        function isRecommendedTier(tier) {
+            const { step1: botType, step2: scale } = answers;
+            
+            if (botType === 'medical' || scale === 'large') return tier === 'Enterprise';
+            if (botType === 'ai') return tier === 'AI';
+            if (botType === 'faq' && scale === 'small') return tier === 'Lite';
+            if (scale === 'medium' && botType !== 'ai') return tier === 'Base';
+            return tier === 'Standard';
+        }
+
+        function animatePrice(element, targetPrice) {
+            const currentText = element.textContent.replace(/[^\d]/g, '');
+            const current = currentText ? parseInt(currentText) : 0;
+            const diff = targetPrice - current;
+            
+            if (diff === 0) return;
+            
+            const duration = 300;
+            const startTime = performance.now();
+
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easeProgress = 1 - Math.pow(1 - progress, 3);
+                const newPrice = Math.round(current + diff * easeProgress);
+                
+                element.textContent = newPrice.toLocaleString('ru-RU') + ' ₽';
+                
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                }
+            }
+            
+            requestAnimationFrame(update);
+        }
+
+        function forceTier(tier) {
+            if (!prices[tier]) return;
+            
+            // Сбрасываем extras при ручном переключении тарифа
+            extras = { ai: false, payment: false, admin: false };
+            document.querySelectorAll('.checkbox-pill').forEach(pill => pill.classList.remove('selected'));
+            
+            // Обновляем флаг Enterprise
+            if (tier === 'Enterprise') {
+                isEnterprise = true;
+            } else {
+                isEnterprise = false;
+            }
+            
+            currentTier = tier;
+            basePrice = prices[tier];
+            
+            updateResultUI(tier, basePrice, timelines[tier]);
+        }
+
+        function toggleExtra(element, extra) {
+            if (element.classList.contains('disabled')) return;
+            
+            extras[extra] = !extras[extra];
+            element.classList.toggle('selected');
+            
+            // Пересчитываем цену
+            updateResultUI(currentTier, basePrice, document.getElementById('timelineBadge').textContent);
+        }
+
+        function toggleTCODetails() {
+            document.getElementById('tcoDetails').classList.toggle('show');
+        }
+
+        function showEmailForm() {
+            document.getElementById('emailForm').classList.add('show');
+        }
+
+        function sendToEmail() {
+            const email = document.getElementById('emailInput').value;
+            if (!email || !email.includes('@')) {
+                alert('Пожалуйста, введите корректный email');
+                return;
+            }
+            
+            // Отправляем лид в Битрикс24
+            sendLeadToBitrix(email);
+            
+            alert('Расчёт отправлен на ' + email);
+            document.getElementById('emailForm').classList.remove('show');
+        }
+
+        // Функция отправки лида в Битрикс24
+        async function sendLeadToBitrix(email = null) {
+            const { step1: botType, step2: scale } = answers;
+            const totalPrice = basePrice + getExtraPrice();
+            
+            const leadData = {
+                fields: {
+                    TITLE: `Калькулятор: ${currentTier} (${totalPrice.toLocaleString('ru-RU')} ₽)`,
+                    NAME: 'Калькулятор',
+                    LAST_NAME: 'Chatbot24',
+                    COMPANY_TITLE: 'Заявка с калькулятора',
+                    COMMENTS: `
+Тариф: ${currentTier}
+Цена: ${totalPrice.toLocaleString('ru-RU')} ₽
+Тип бота: ${botType || 'Не выбрано'}
+Масштаб: ${scale || 'Не выбрано'}
+Extras: ${Object.entries(extras).filter(([k,v]) => v).map(([k]) => k).join(', ') || 'Нет'}
+Источник: Калькулятор на сайте
+                    `.trim(),
+                    SOURCE_ID: 'WEB',
+                    SOURCE_DESCRIPTION: 'Калькулятор chatbot24.su',
+                    UF_CRM_1234567890: currentTier, // Кастомное поле для тарифа
+                    UF_CRM_1234567891: totalPrice.toString() // Кастомное поле для цены
+                },
+                params: {
+                    REGISTER_SONET_EVENT: 'Y'
+                }
+            };
+            
+            if (email) {
+                leadData.fields.EMAIL = [{ VALUE: email, VALUE_TYPE: 'WORK' }];
+            }
+            
+            try {
+                // Отправка в Битрикс24
+                const response = await fetch(BITRIX_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(leadData)
+                });
+                
+                const result = await response.json();
+                
+                if (result.error) {
+                    console.error('Bitrix24 error:', result.error);
+                } else {
+                    console.log('Lead created:', result.result);
+                }
+            } catch (error) {
+                console.error('Failed to send lead:', error);
+                // Не показываем ошибку пользователю — silently fail
+            }
+        }
+    </script>
+</body>
+</html>
