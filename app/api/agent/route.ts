@@ -141,11 +141,19 @@ export async function POST(req: NextRequest) {
     ];
 
     // Генерируем ответ через DeepSeek (OpenRouter)
-    const response = await generateOpenRouterResponse(openRouterMessages, {
+    let response = await generateOpenRouterResponse(openRouterMessages, {
       temperature: 0.6,
       maxTokens: 2000,
       model: 'deepseek-chat',
     });
+
+    // Фильтруем внутренние системные теги (COLD/WARM/HOT) — клиент не должен видеть
+    response = response
+      .split('\n')
+      .filter(line => !line.match(/\*\*Система:\*\*/i)) // Убираем строки с "**Система:**"
+      .filter(line => !line.match(/\(.*(COLD|WARM|HOT).*\)/i)) // Убираем строки с (COLD...), (WARM...), (HOT...)
+      .join('\n')
+      .trim();
 
     // Оцениваем лид (упрощённая версия)
     const leadScore = evaluateLead(response);
