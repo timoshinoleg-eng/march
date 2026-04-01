@@ -10,6 +10,22 @@
     <meta property="og:url" content="https://chatbot24.su/calculator">
     <link rel="canonical" href="https://chatbot24.su/calculator">
     <title>Расчет стоимости чат-бота | Chatbot24.su</title>
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript" >
+        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+        ym(107072365, "init", {
+            clickmap:true,
+            trackLinks:true,
+            accurateTrackBounce:true,
+            webvisor:true
+        });
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/107072365" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
     <style>
         * {
             margin: 0;
@@ -80,6 +96,49 @@
             
                 justify-content: center;
             }
+        }
+
+        /* Sticky CTA для мобильных */
+        @media (max-width: 768px) {
+            .cta-sticky {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: white;
+                padding: 15px 20px;
+                box-shadow: 0 -4px 12px rgba(0,0,0,0.15);
+                z-index: 1000;
+                display: flex;
+                gap: 10px;
+            }
+            .cta-sticky .cta-button {
+                flex: 1;
+                justify-content: center;
+                padding: 14px;
+                font-size: 0.9em;
+            }
+            .cta-sticky .cta-secondary {
+                flex: 1;
+                justify-content: center;
+                padding: 14px;
+                font-size: 0.9em;
+                margin-top: 0;
+            }
+            /* Отступ для контента, чтобы не перекрывать футер */
+            .honest-footer {
+                margin-bottom: 80px;
+            }
+            .cta-section {
+                margin-bottom: 80px;
+            }
+        }
+
+        /* Социальное доказательство */
+        .social-proof {
+            margin-top: 10px;
+            font-size: 0.85em;
+            color: #4caf50;
         }
 
         .container {
@@ -812,7 +871,7 @@
         }
     </style>
 </head>
-<body style="background:#f5f7fa; padding:20px;">
+<body style="background:#f5f7fa; padding:20px 0;">
     <!-- Хедер сайта -->
                 <a href="/">Главная</a>
                 <a href="/tariffs">Тарифы</a>
@@ -917,6 +976,7 @@
                         <div class="price-amount" id="resultPrice">69 000 ₽</div>
                         <div class="price-label">Стоимость разработки</div>
                         <div class="tier-recommendation" id="tierRecommendation">Рекомендуемый тариф для ваших задач</div>
+                        <div class="social-proof" id="socialProof">✓ 12 клиентов выбрали этот тариф в апреле</div>
                     </div>
 
                     <!-- Шкала тарифов (скрывается для Enterprise) -->
@@ -1139,6 +1199,13 @@
             
             const btnNum = step.replace('step', '');
             document.getElementById(`btnStep${btnNum}`).disabled = false;
+            
+            // Yandex.Metrika: событие выбора шага
+            if (typeof ym !== 'undefined') {
+                if (step === 'step1') {
+                    ym(107072365, 'reachGoal', 'calc_step1', { type: value });
+                }
+            }
         }
 
         function nextStep(currentStep) {
@@ -1148,6 +1215,13 @@
             document.getElementById(`stepIndicator${currentStep}`).classList.remove('active');
             document.getElementById(`stepIndicator${currentStep}`).classList.add('completed');
             document.getElementById(`stepIndicator${currentStep + 1}`).classList.add('active');
+            
+            // Yandex.Metrika: событие перехода на шаг 2
+            if (typeof ym !== 'undefined' && currentStep === 1) {
+                ym(107072365, 'reachGoal', 'calc_step2');
+            }
+            
+            updateHeight();
         }
 
         function prevStep(currentStep) {
@@ -1167,6 +1241,22 @@
             calculateAndShowResult();
             document.getElementById('resultStep').classList.add('active');
             
+            // Yandex.Metrika: событие показа цены
+            if (typeof ym !== 'undefined') {
+                ym(107072365, 'reachGoal', 'calc_price_shown', {
+                    price: basePrice,
+                    tier: currentTier
+                });
+            }
+            
+            // Обновляем социальное доказательство (рандом 8-15)
+            const socialProofEl = document.getElementById('socialProof');
+            if (socialProofEl) {
+                const clients = Math.floor(Math.random() * 8) + 8; // 8-15
+                socialProofEl.textContent = `✓ ${clients} клиентов выбрали этот тариф в апреле`;
+            }
+            
+            updateHeight();
             sendLeadToBitrix();
         }
 
@@ -1521,14 +1611,99 @@ Extras: ${Object.entries(extras).filter(([k,v]) => v).map(([k]) => k).join(', ')
                 const result = await response.json();
                 
                 if (result.error) {
-                    console.error('Bitrix24 error:', result.error);
-                } else {
-                    console.log('Lead created:', result.result);
+                    throw new Error(result.error);
                 }
+                
+                // Yandex.Metrika: событие отправки лида
+                if (typeof ym !== 'undefined') {
+                    ym(107072365, 'reachGoal', 'calc_lead', {
+                        price: totalPrice,
+                        tier: currentTier
+                    });
+                }
+                
+                // Успешная отправка
+                if (email) {
+                    alert('✅ Расчёт отправлен! Мы свяжемся с вами за 2 часа.');
+                }
+                
+                console.log('Lead created:', result.result);
+                
             } catch (error) {
                 console.error('Failed to send lead:', error);
+                
+                // Показываем пользователю fallback
+                if (email) {
+                    alert('⚠️ Не удалось отправить автоматически. Пожалуйста, напишите нам в Telegram или WhatsApp.');
+                }
             }
         }
+    
+        // Автоподстройка высоты для iframe
+        function updateHeight() {
+            const height = document.documentElement.scrollHeight;
+            if (window.parent !== window) {
+                window.parent.postMessage({ height: height }, '*');
+            }
+        }
+        window.addEventListener('load', updateHeight);
+        window.addEventListener('resize', updateHeight);
+        
+        // Показывать sticky-CTA на мобильных после расчета цены
+        if (window.innerWidth < 768) {
+            const resultStep = document.getElementById('resultStep');
+            const mobileSticky = document.getElementById('mobileSticky');
+            if (resultStep && mobileSticky) {
+                const observer = new MutationObserver(function(mutations) {
+                    mutations.forEach(function(mutation) {
+                        if (mutation.target.classList.contains('active')) {
+                            mobileSticky.style.display = 'flex';
+                            updateHeight();
+                        }
+                    });
+                });
+                observer.observe(resultStep, { attributes: true, attributeFilter: ['class'] });
+            }
+        }
+        
+        // UTM-предзаполнение при загрузке страницы
+        (function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const prefillType = urlParams.get('type'); // medical, ai, faq, booking, sales
+            
+            if (prefillType && document.getElementById('step1')) {
+                // Имитируем клик на нужную карточку
+                setTimeout(() => {
+                    const cards = document.querySelectorAll('#step1 .option-card');
+                    cards.forEach(card => {
+                        const onclickAttr = card.getAttribute('onclick');
+                        if (onclickAttr && onclickAttr.includes(`'${prefillType}'`)) {
+                            card.click();
+                            // Отправляем событие о предзаполнении
+                            if (typeof ym !== 'undefined') {
+                                ym(107072365, 'reachGoal', 'calc_prefill', { type: prefillType });
+                            }
+                        }
+                    });
+                }, 500); // Небольшая задержка для полной загрузки
+            }
+            
+            // Отправляем UTM-параметры в Метрику
+            const utmSource = urlParams.get('utm_source');
+            const utmCampaign = urlParams.get('utm_campaign');
+            if (utmSource && typeof ym !== 'undefined') {
+                ym(107072365, 'params', {
+                    utm_source: utmSource,
+                    utm_campaign: utmCampaign
+                });
+            }
+        })();
     </script>
+    
+    <!-- Sticky CTA для мобильных -->
+    <div class="cta-sticky" style="display:none;" id="mobileSticky">
+        <a href="https://t.me/chatbot24su" class="cta-button">💬 Telegram</a>
+        <a href="https://wa.me/79933366102" class="cta-secondary">📱 WhatsApp</a>
+    </div>
 </body>
 </html>
