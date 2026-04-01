@@ -1030,7 +1030,7 @@
             document.getElementById(`stepIndicator${currentStep}`).classList.add('completed');
             document.getElementById(`stepIndicator${currentStep + 1}`).classList.add('active');
             if (typeof ym !== 'undefined' && currentStep === 1) ym(107072365, 'reachGoal', 'calc_step2');
-            updateHeight();
+            setTimeout(updateHeight, 400); // После анимации fadeIn 0.4s
         }
 
         function prevStep(currentStep) {
@@ -1039,6 +1039,7 @@
             document.getElementById(`stepIndicator${currentStep}`).classList.remove('active');
             document.getElementById(`stepIndicator${currentStep - 1}`).classList.remove('completed');
             document.getElementById(`stepIndicator${currentStep - 1}`).classList.add('active');
+            setTimeout(updateHeight, 400); // После анимации
         }
 
         function showResult() {
@@ -1050,7 +1051,7 @@
             if (typeof ym !== 'undefined') ym(107072365, 'reachGoal', 'calc_price_shown', { price: basePrice, tier: currentTier });
             const socialProofEl = document.getElementById('socialProof');
             if (socialProofEl) socialProofEl.textContent = `✓ ${Math.floor(Math.random() * 8) + 8} клиентов выбрали этот тариф в апреле`;
-            updateHeight();
+            setTimeout(updateHeight, 400); // После анимации
             sendLeadToBitrix();
         }
 
@@ -1192,7 +1193,10 @@
             updateResultUI(currentTier, basePrice, document.getElementById('timelineBadge').textContent);
         }
 
-        function toggleTCODetails() { document.getElementById('tcoDetails').classList.toggle('show'); }
+        function toggleTCODetails() { 
+            document.getElementById('tcoDetails').classList.toggle('show'); 
+            setTimeout(updateHeight, 300); // После анимации открытия/закрытия
+        }
         function showEmailForm() { document.getElementById('emailForm').classList.add('show'); }
         function sendToEmail() {
             const email = document.getElementById('emailInput').value;

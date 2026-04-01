@@ -1236,7 +1236,7 @@
                 ym(107072365, 'reachGoal', 'calc_step2');
             }
             
-            updateHeight();
+            setTimeout(updateHeight, 400); // После анимации fadeIn 0.4s
         }
 
         function prevStep(currentStep) {
@@ -1246,6 +1246,8 @@
             document.getElementById(`stepIndicator${currentStep}`).classList.remove('active');
             document.getElementById(`stepIndicator${currentStep - 1}`).classList.remove('completed');
             document.getElementById(`stepIndicator${currentStep - 1}`).classList.add('active');
+            
+            setTimeout(updateHeight, 400); // После анимации
         }
 
         function showResult() {
@@ -1271,7 +1273,7 @@
                 socialProofEl.textContent = `✓ ${clients} клиентов выбрали этот тариф в апреле`;
             }
             
-            updateHeight();
+            setTimeout(updateHeight, 400); // После анимации
             sendLeadToBitrix();
         }
 
@@ -1563,6 +1565,7 @@
 
         function toggleTCODetails() {
             document.getElementById('tcoDetails').classList.toggle('show');
+            setTimeout(updateHeight, 300); // После анимации открытия/закрытия
         }
 
         function showEmailForm() {
