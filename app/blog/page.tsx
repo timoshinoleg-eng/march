@@ -23,43 +23,48 @@ const jsonLd = {
     {
       "@type": "ListItem",
       "position": 1,
+      "url": "https://chatbot24.su/blog/ai-automation-20-years",
+      "name": "Стоит ли входить в AI-автоматизацию в 20 лет?"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
       "url": "https://chatbot24.su/blog/senior-leaders-ai-struggles",
       "name": "Где топ-менеджеры спотыкаются при внедрении ИИ — и как это исправить"
     },
     {
       "@type": "ListItem",
-      "position": 2,
+      "position": 3,
       "url": "https://chatbot24.su/blog/ai-wont-fix-this",
       "name": "ИИ не спасёт бизнес без этих 4 компетенций команды"
     },
     {
       "@type": "ListItem",
-      "position": 3,
+      "position": 4,
       "url": "https://chatbot24.su/blog/pwc-ai-roi-56-percent",
       "name": "PwC: 56% инвестиций в ИИ сгорело. Как не попасть в эту статистику"
     },
-
     {
       "@type": "ListItem",
-      "position": 4,
+      "position": 5,
       "url": "https://chatbot24.su/blog/5-oshibok",
       "name": "5 ошибок при выборе чат-бота, которые стоят вам клиентов"
     },
     {
       "@type": "ListItem",
-      "position": 5,
+      "position": 6,
       "url": "https://chatbot24.su/blog/konversiya-40",
       "name": "Как мы подняли конверсию на 40% с помощью чат-бота"
     },
     {
       "@type": "ListItem",
-      "position": 6,
+      "position": 7,
       "url": "https://chatbot24.su/blog/sekundy-reshayut",
       "name": "Почему секунды решают: скорость ответа и конверсия"
     },
     {
       "@type": "ListItem",
-      "position": 7,
+      "position": 8,
       "url": "https://chatbot24.su/blog/telegram-vs-whatsapp",
       "name": "Telegram vs WhatsApp: где размещать чат-бота в 2024"
     }
@@ -67,6 +72,14 @@ const jsonLd = {
 };
 
 const articles = [
+  {
+    slug: "ai-automation-20-years",
+    title: "Стоит ли входить в AI-автоматизацию в 20 лет?",
+    excerpt: "Почему сейчас — идеальное время начать в AI-автоматизации. От первого проекта до агентства: реальный путь для 20-летних.",
+    date: "2 апреля 2026",
+    readTime: "7 мин",
+    category: "Карьера",
+  },
   {
     slug: "senior-leaders-ai-struggles",
     title: "Где топ-менеджеры спотыкаются при внедрении ИИ — и как это исправить",
