@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, Calendar, Clock, User, TrendingUp, CheckCircle } from "lucide-react";
 import ShareButtons from "@/components/blog/ShareButtons";
-import RelatedArticles from "@/components/blog/RelatedArticles";
 import ArticleCTA from "@/components/blog/ArticleCTA";
+import { InlineCalculatorCTA } from "@/components/blog/InlineCalculatorCTA";
+import { SidebarCalculatorCTA } from "@/components/blog/SidebarCalculatorCTA";
+import { ConversionFooter } from "@/components/blog/ConversionFooter";
 
 export const metadata: Metadata = {
   title: "Как мы подняли конверсию на 40% с помощью чат-бота | ChatBot24",
@@ -157,6 +159,11 @@ export default function ArticlePage() {
                 <span>Окупаемость за 2 месяца</span>
               </li>
             </ul>
+
+            <InlineCalculatorCTA 
+              priceRange="39 000–69 000 ₽" 
+              utmContent="after_40_percent_result" 
+            />
           </div>
 
           <h2 className="text-xl sm:text-2xl font-bold text-white mt-8 mb-4">
@@ -220,21 +227,36 @@ export default function ArticlePage() {
           <h2 className="text-xl sm:text-2xl font-bold text-white mt-8 mb-4">
             Выводы
           </h2>
-          <p className="text-gray-400 leading-relaxed">
+          <p className="text-gray-400 leading-relaxed mb-4">
             Автоматизация первичной обработки позволила команде сосредоточиться 
             на качественных лидах и продажах, а не на рутинной переписке. 
             Клиент доволен результатом и планирует расширение бота на другие 
             направления школы.
           </p>
+
+          <div className="mt-6 p-4 bg-primary-500/10 rounded-lg border border-primary-500/20">
+            <p className="text-gray-300 mb-2">
+              <strong className="text-white">Не знаете, какой мессенджер выбрать для таких результатов?</strong>
+            </p>
+            <Link 
+              href="/blog/telegram-vs-whatsapp?utm_source=blog_konversiya&utm_medium=internal_link" 
+              className="inline-flex items-center gap-2 text-primary-400 hover:text-primary-300 font-medium"
+            >
+              Сравнение Telegram vs WhatsApp →
+            </Link>
+          </div>
         </div>
 
         <footer className="mt-8 pt-8 border-t border-primary-500/10">
           <ShareButtons url={articleUrl} title={articleTitle} />
         </footer>
 
+        <ConversionFooter utmCampaign="konversiya_40" />
+
         <ArticleCTA />
-        <RelatedArticles currentSlug="konversiya-40" articles={allArticles} />
       </article>
+
+      <SidebarCalculatorCTA utmCampaign="konversiya_40" />
 
       <div className="h-20" />
     </main>
