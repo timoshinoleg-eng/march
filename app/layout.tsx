@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     template: "%s | ChatBot24",
   },
   description:
-    "Разработка чат-ботов для бизнеса под ключ. Автоматизация заявок в Telegram, WhatsApp. Запуск за 7–14 дней. MVP от 49 000 ₽.",
+    "Разработка чат-ботов для бизнеса под ключ. Автоматизация заявок в Telegram, WhatsApp. Запуск за 7–14 дней. От 19 900 ₽.",
   keywords: [
     "чат-бот",
     "автоматизация заявок",
@@ -67,7 +67,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Чат-боты для бизнеса в Telegram и WhatsApp | ChatBot24",
-    description: "Разработка чат-ботов для бизнеса под ключ. Автоматизация заявок. Запуск за 7–14 дней. MVP от 49 000 ₽.",
+    description: "Разработка чат-ботов для бизнеса под ключ. Автоматизация заявок. Запуск за 7–14 дней. От 19 900 ₽.",
     type: "website",
     locale: "ru_RU",
     siteName: "ChatBot24",

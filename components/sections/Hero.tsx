@@ -40,7 +40,7 @@ export default function Hero() {
             <span className="text-white">Автоматизация входящих заявок</span>
             <br />
             <span className="bg-gradient-emerald bg-clip-text text-transparent">
-              от 49 000 ₽
+              от 19 900 ₽
             </span>
           </motion.h1>
 
