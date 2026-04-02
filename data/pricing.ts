@@ -9,6 +9,7 @@ export interface PricingPlan {
   showFrom?: boolean;
   buttonText?: string;
   utmContent?: string;
+  highlight?: boolean;
 }
 
 export const pricingPlans: PricingPlan[] = [
@@ -34,6 +35,7 @@ export const pricingPlans: PricingPlan[] = [
     price: 39000,
     setupFee: 0,
     timeline: "Запуск за 5–7 дней",
+    highlight: true,
     features: [
       "Все каналы сразу (Telegram + WhatsApp + сайт)",
       "Автоматическая запись в календарь/CRM",
