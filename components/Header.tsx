@@ -10,7 +10,7 @@ import { usePathname } from "next/navigation";
 const navItems = [
   { label: "Как это работает", href: "/#how-it-works" },
   { label: "Тарифы", href: "/#pricing" },
-  { label: "Калькулятор", href: "/#calculator" },
+  { label: "Калькулятор", href: "/calculator" },
   { label: "Кейсы", href: "/#cases" },
   { label: "Блог", href: "/blog" },
   { label: "FAQ", href: "/#faq" },
