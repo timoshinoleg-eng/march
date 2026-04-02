@@ -5,8 +5,17 @@ import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import Section from "@/components/ui/Section";
 import { Star } from "lucide-react";
-import { pricingPlans } from "@/data/pricing";
+import { pricingPlans, PricingPlan } from "@/data/pricing";
 import Link from "next/link";
+
+interface PricingPlanWithSocial extends PricingPlan {
+  socialProof: number;
+}
+
+const plansWithSocial: PricingPlanWithSocial[] = pricingPlans.map((plan, index) => ({
+  ...plan,
+  socialProof: [9, 11, 14, 3][index] // Lite: 9, Base: 11, AI: 14, Enterprise: 3
+}));
 
 export default function Pricing() {
   return (
@@ -46,7 +55,7 @@ export default function Pricing() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
-        {pricingPlans.map((plan, index) => (
+        {plansWithSocial.map((plan, index) => (
           <motion.div
             key={plan.id}
             initial={{ opacity: 0, y: 30 }}
@@ -89,6 +98,12 @@ export default function Pricing() {
                     {plan.requestsPerDay}
                   </p>
                 )}
+                <p className="text-xs text-emerald-400 mt-2 flex items-center gap-1">
+                  <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                  {plan.socialProof} клиентов выбрали в апреле
+                </p>
               </div>
 
               <ul className="space-y-3 mb-8 flex-grow">

@@ -16,7 +16,7 @@ export const pricingPlans: PricingPlan[] = [
     id: "lite",
     name: "Lite",
     description: "Для старта и небольших проектов",
-    price: 15000,
+    price: 19900,
     setupFee: 0,
     requestsPerDay: "До 50 заявок/мес",
     features: [
@@ -33,7 +33,7 @@ export const pricingPlans: PricingPlan[] = [
     id: "base",
     name: "Base",
     description: "Оптимально для растущего бизнеса",
-    price: 29000,
+    price: 39000,
     setupFee: 0,
     requestsPerDay: "До 200 заявок/мес",
     highlight: true,
@@ -52,7 +52,7 @@ export const pricingPlans: PricingPlan[] = [
     id: "ai",
     name: "AI",
     description: "Современные AI-возможности",
-    price: 39000,
+    price: 69000,
     setupFee: 0,
     requestsPerDay: "До 500 заявок/мес",
     features: [
@@ -70,7 +70,7 @@ export const pricingPlans: PricingPlan[] = [
     id: "enterprise",
     name: "Enterprise",
     description: "Для медицины и крупного бизнеса",
-    price: 69000,
+    price: 129000,
     setupFee: 0,
     requestsPerDay: "1000+ заявок/мес",
     features: [
