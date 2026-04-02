@@ -5,7 +5,7 @@ import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import Section from "@/components/ui/Section";
 import { Star } from "lucide-react";
-import { pricingPlans, PricingPlan } from "@/data/pricing";
+import { pricingPlans, bridgeText, PricingPlan } from "@/data/pricing";
 import Link from "next/link";
 
 interface PricingPlanWithSocial extends PricingPlan {
@@ -54,7 +54,7 @@ export default function Pricing() {
         </motion.p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto items-start">
         {plansWithSocial.map((plan, index) => (
           <motion.div
             key={plan.id}
@@ -79,7 +79,7 @@ export default function Pricing() {
                 </div>
               )}
 
-              <div className="mb-6">
+              <div className="mb-4">
                 <h3 className="text-xl font-semibold text-white mb-2">
                   {plan.name}
                 </h3>
@@ -89,31 +89,25 @@ export default function Pricing() {
               <div className="mb-4">
                 <div className="flex items-baseline gap-1">
                   <span className="text-3xl font-bold text-white">
-                    от {plan.price.toLocaleString()}
+                    {plan.showFrom ? "от " : ""}{plan.price.toLocaleString()}
                   </span>
                   <span className="text-gray-400">₽</span>
                 </div>
-                {plan.requestsPerDay && (
-                  <p className="text-sm text-primary-400 mt-1">
-                    {plan.requestsPerDay}
-                  </p>
-                )}
-                <p className="text-xs text-emerald-400 mt-2 flex items-center gap-1">
+                <p className="text-sm text-primary-400 mt-2 flex items-center gap-1">
                   <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
                   {plan.socialProof} клиентов выбрали в апреле
                 </p>
+                <p className="text-xs text-gray-500 mt-1">{plan.timeline}</p>
               </div>
 
-              <ul className="space-y-3 mb-8 flex-grow">
+              <ul className="space-y-3 mb-6 flex-grow">
                 {plan.features.map((feature, idx) => (
                   <li key={idx} className="flex items-start gap-3">
-                    <div
-                      className={`w-1.5 h-1.5 rounded-full mt-2 ${
-                        plan.highlight ? "bg-primary-400" : "bg-primary-500/50"
-                      }`}
-                    />
+                    <svg className="w-4 h-4 mt-0.5 text-primary-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
                     <span className="text-gray-300 text-sm">{feature}</span>
                   </li>
                 ))}
@@ -127,10 +121,17 @@ export default function Pricing() {
                   variant={plan.highlight ? "primary" : "outline"}
                   className="w-full"
                 >
-                  Рассчитать точнее
+                  {plan.buttonText || "Рассчитать точнее"}
                 </Button>
               </Link>
             </Card>
+            
+            {/* Bridge text after Base card */}
+            {plan.id === "base" && (
+              <p className="text-xs text-gray-500 mt-3 text-center italic">
+                {bridgeText}
+              </p>
+            )}
           </motion.div>
         ))}
       </div>

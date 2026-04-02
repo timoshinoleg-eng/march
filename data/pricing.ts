@@ -5,9 +5,9 @@ export interface PricingPlan {
   price: number;
   setupFee: number;
   features: string[];
-  popular?: boolean;
-  highlight?: boolean;
-  requestsPerDay?: string;
+  timeline: string;
+  showFrom?: boolean;
+  buttonText?: string;
   utmContent?: string;
 }
 
@@ -15,73 +15,66 @@ export const pricingPlans: PricingPlan[] = [
   {
     id: "lite",
     name: "Lite",
-    description: "Только базовый бот, 1 канал",
+    description: "Для теста идеи или малого бизнеса (< 50 заявок/мес)",
     price: 19900,
     setupFee: 0,
-    requestsPerDay: "До 50 заявок/мес",
+    timeline: "Запуск за 3–5 дней",
     features: [
-      "Базовый чат-бот",
-      "1 мессенджер (Telegram/WhatsApp)",
-      "Простая CRM",
-      "Email-уведомления",
-      "Базовая аналитика",
-      "Настройка за 3-5 дней",
+      "Чат-бот в Telegram или WhatsApp",
+      "Сбор заявок и контактов",
+      "Уведомления на email",
     ],
+    buttonText: "Начать с этого →",
     utmContent: "lite",
   },
   {
     id: "base",
     name: "Base",
-    description: "3 канала, CRM, базовая аналитика",
+    description: "Салоны, курсы, доставка — где нужна запись и CRM",
     price: 39000,
     setupFee: 0,
-    requestsPerDay: "До 200 заявок/мес",
-    highlight: true,
+    timeline: "Запуск за 5–7 дней",
     features: [
-      "Умный чат-бот с NLP",
-      "До 3 мессенджеров",
-      "Полноценная CRM",
-      "Автоквалификация лидов",
-      "Интеграция с Bitrix24/AmoCRM",
-      "Расширенная аналитика",
-      "Приоритетная поддержка",
+      "Все каналы сразу (Telegram + WhatsApp + сайт)",
+      "Автоматическая запись в календарь/CRM",
+      "Отсеивает нерелевантных клиентов",
     ],
+    buttonText: "Выбрать Base →",
     utmContent: "base",
   },
   {
     id: "ai-assist",
     name: "AI-Assist",
-    description: "Всё из Base + AI (1000 запросов), оплата, админка",
+    description: "Когда много вопросов, нужно сэкономить время админа",
     price: 129000,
     setupFee: 0,
-    requestsPerDay: "До 1000 заявок/мес",
+    timeline: "Запуск за 7–10 дней",
     features: [
-      "AI-ассистент (YandexGPT) — 1000 запросов/мес",
-      "Приём оплаты в боте",
-      "Админ-панель для управления",
-      "Неограниченные каналы",
-      "Enterprise CRM",
-      "152-ФЗ compliance",
-      "Приоритетная поддержка",
+      "AI отвечает на типовые вопросы (1000 диалогов/мес включено)",
+      "Приём оплаты в боте (ЮKassa)",
+      "Панель управления для менеджера",
+      "Экономия 2 часа/день работы админа",
     ],
+    buttonText: "Добавить AI →",
     utmContent: "ai_assist",
   },
   {
     id: "enterprise",
     name: "Enterprise",
-    description: "On-premise, SLA 99.9%, выделенный менеджер",
+    description: "Клиники, банки, крупный ритейл — где важна безопасность",
     price: 249000,
     setupFee: 0,
-    requestsPerDay: "1000+ заявок/мес, безлимит AI",
+    showFrom: true,
+    timeline: "Срок от 2 недель",
     features: [
-      "Всё из AI-Assist + on-premise размещение",
-      "Полная защита по 152-ФЗ",
-      "Серверы в РФ (Яндекс Облако)",
-      "SLA 99.9% с компенсацией",
-      "Выделенный менеджер",
-      "Индивидуальная разработка",
-      "Поддержка 24/7",
+      "Серверы в вашей инфраструктуре",
+      "Защита данных по закону (152-ФЗ)",
+      "Гарантия SLA 99.9% + выделенный менеджер",
+      "Индивидуальный проект под ТЗ",
     ],
+    buttonText: "Обсудить проект →",
     utmContent: "enterprise",
   },
 ];
+
+export const bridgeText = "Не уверены, нужен ли AI? Большинству бизнесов достаточно Base — AI актуален при 100+ вопросах в день.";
