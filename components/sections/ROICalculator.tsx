@@ -6,8 +6,8 @@ import Card from "@/components/ui/Card";
 import Section from "@/components/ui/Section";
 import { Calculator, TrendingDown, AlertTriangle, Wallet, BarChart3 } from "lucide-react";
 
-// Стоимость тарифа Base для расчета окупаемости
-const BASE_TARIFF_PRICE = 39000;
+// Стоимость тарифа Base для расчета окупаемости (обновлено 2026-04-03)
+const BASE_PRICE = 39000;
 
 export default function ROICalculator() {
   // Параметры для расчета потерь
@@ -20,10 +20,10 @@ export default function ROICalculator() {
     return requestsPerDay * 30 * (lossPercent / 100) * avgCheck;
   }, [requestsPerDay, lossPercent, avgCheck]);
 
-  // Окупаемость тарифа Base (39000 / потери в месяц) - v2
+  // Окупаемость тарифа Base (BASE_PRICE / потери в месяц) - v3
   const paybackMonths = useMemo(() => {
     if (monthlyLoss === 0) return 0;
-    return BASE_TARIFF_PRICE / monthlyLoss;
+    return BASE_PRICE / monthlyLoss;
   }, [monthlyLoss]);
 
   // Потери в год
@@ -194,10 +194,10 @@ export default function ROICalculator() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-bg-primary/50">
-                  {/* Tariff name - Base */}
+                  {/* Tariff name - Base v3 */}
                   <div className="text-sm text-gray-400 mb-1">Тариф Base</div>
                   <div className="text-2xl font-bold text-primary-400">
-                    {BASE_TARIFF_PRICE.toLocaleString()} ₽
+                    {BASE_PRICE.toLocaleString()} ₽
                   </div>
                 </div>
 
@@ -230,7 +230,7 @@ export default function ROICalculator() {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-primary-400 mt-1">•</span>
-                    Экономия за год составит <span className="text-primary-400 font-medium">{Math.round(yearlyLoss - BASE_TARIFF_PRICE).toLocaleString()} ₽</span>
+                    Экономия за год составит <span className="text-primary-400 font-medium">{Math.round(yearlyLoss - BASE_PRICE).toLocaleString()} ₽</span>
                   </li>
                 </ul>
               </div>
