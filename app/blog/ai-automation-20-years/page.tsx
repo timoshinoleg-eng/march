@@ -5,6 +5,10 @@ import ShareButtons from "@/components/blog/ShareButtons";
 import RelatedArticles from "@/components/blog/RelatedArticles";
 import ArticleCTA from "@/components/blog/ArticleCTA";
 import CalculatorCTA from "@/components/blog/CalculatorCTA";
+import { InlineCalculatorCTA } from "@/components/blog/InlineCalculatorCTA";
+import { ConversionFooter } from "@/components/blog/ConversionFooter";
+import { MobileStickyCTA } from "@/components/blog/MobileStickyCTA";
+import { ExitIntentModal } from "@/components/blog/ExitIntentModal";
 
 export const metadata: Metadata = {
   title: "Стоит ли входить в AI-автоматизацию в 20 лет? | ChatBot24",
@@ -272,15 +276,17 @@ export default function ArticlePage() {
             <li>Повтори</li>
           </ul>
           <p className="text-gray-400 leading-relaxed">
-            Через 6 месяцев ты будешь знать больше, чем 90% "экспертов" с сертификатами. 
-            Через год — иметь доход, который многие зарабатывают за 5 лет в офисе. 
+            Через 6 месяцев ты будешь знать больше, чем 90% "экспертов" с сертификатами.
+            Через год — иметь доход, который многие зарабатывают за 5 лет в офисе.
             Через 5 лет — выбирать, чем заниматься, а не искать работу.
           </p>
+
+          <InlineCalculatorCTA utmContent="middle" />
 
           <div className="bg-gradient-to-r from-primary-500/10 to-emerald-500/10 rounded-lg p-6 mt-8 border border-primary-500/20">
             <p className="text-white font-medium mb-2">Главный ресурс в 20 лет</p>
             <p className="text-gray-400">
-              Не деньги, не связи, не знания. Время. И самый умный способ его инвестировать — 
+              Не деньги, не связи, не знания. Время. И самый умный способ его инвестировать —
               войти в растущую индустрию на самом раннем этапе.
             </p>
           </div>
@@ -291,12 +297,21 @@ export default function ArticlePage() {
           <ShareButtons url={articleUrl} title={articleTitle} />
         </footer>
 
+        {/* Conversion Footer */}
+        <ConversionFooter utmCampaign="ai_automation_20_years" />
+
         {/* CTA */}
         <ArticleCTA />
 
         {/* Related Articles */}
         <RelatedArticles currentSlug="ai-automation-20-years" articles={allArticles} />
       </article>
+
+      {/* Mobile Sticky CTA */}
+      <MobileStickyCTA utmCampaign="ai_automation_20_years" />
+
+      {/* Exit Intent Modal */}
+      <ExitIntentModal utmCampaign="ai_automation_20_years" />
 
       {/* Spacer for footer */}
       <div className="h-20" />

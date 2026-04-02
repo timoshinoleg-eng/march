@@ -10,7 +10,7 @@ import { usePathname } from "next/navigation";
 const navItems = [
   { label: "Как это работает", href: "/#how-it-works" },
   { label: "Тарифы", href: "/#pricing" },
-  { label: "Калькулятор", href: "/calculator" },
+  { label: "Калькулятор", href: "/calculator", hrefFromBlog: "/calculator?utm_source=blog&utm_medium=header" },
   { label: "Кейсы", href: "/#cases" },
   { label: "Блог", href: "/blog" },
   { label: "FAQ", href: "/#faq" },
@@ -31,6 +31,14 @@ export default function Header() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const getNavHref = (item: typeof navItems[0]) => {
+    // Если это страница блога и есть специальная ссылка для блога
+    if (isBlogPage && 'hrefFromBlog' in item) {
+      return item.hrefFromBlog;
+    }
+    return item.href;
+  };
 
   const handleNavClick = (href: string) => {
     setIsMobileMenuOpen(false);
@@ -78,7 +86,7 @@ export default function Header() {
               {navItems.map((item) => (
                 <Link
                   key={item.href}
-                  href={item.href}
+                  href={getNavHref(item)}
                   className={`px-3 py-2 text-sm rounded-lg transition-colors ${
                     pathname === item.href
                       ? "text-white bg-primary-500/20"
@@ -137,7 +145,7 @@ export default function Header() {
                   className="w-full text-center"
                 >
                   <Link
-                    href={item.href}
+                    href={getNavHref(item)}
                     onClick={() => setIsMobileMenuOpen(false)}
                     className={`block text-lg py-2 ${
                       pathname === item.href
