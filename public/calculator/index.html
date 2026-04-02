@@ -362,6 +362,53 @@
             font-style: italic;
         }
 
+        /* Upsell banner */
+        .upsell-banner {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin: 15px 0;
+            text-align: center;
+            font-size: 0.95em;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .upsell-btn {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            margin-left: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .upsell-btn:hover {
+            background: #f0f0f0;
+            transform: scale(1.05);
+        }
+
+        /* Для AI-Assist - чекбоксы включены */
+        .checkbox-pill.included {
+            background: #e8f5e9;
+            border-color: #4caf50;
+            color: #2e7d32;
+            cursor: default;
+            opacity: 0.8;
+        }
+
+        .checkbox-pill.included::before {
+            content: "✓ ";
+        }
+
         /* Шкала тарифов */
         .tariff-scale {
             display: flex;
@@ -1007,22 +1054,24 @@
                             Lite
                             <small>19.9k</small>
                         </div>
-                        <div class="scale-item" data-tier="Base" data-price="39000" onclick="forceTier('Base')">
+                        <div class="scale-item active" data-tier="Base" data-price="39000" onclick="forceTier('Base')">
                             Base
                             <small>39k</small>
                         </div>
-                        <div class="scale-item active" data-tier="Standard" data-price="69000" onclick="forceTier('Standard')">
-                            Standard
-                            <small>69k</small>
-                        </div>
-                        <div class="scale-item" data-tier="AI" data-price="129000" onclick="forceTier('AI')">
-                            AI
+                        <div class="scale-item" data-tier="AI-Assist" data-price="129000" onclick="forceTier('AI-Assist')">
+                            AI-Assist
                             <small>129k</small>
                         </div>
                         <div class="scale-item" data-tier="Enterprise" data-price="249000" onclick="forceTier('Enterprise')" style="display:none;">
                             Enterprise
                             <small>от 249k</small>
                         </div>
+                    </div>
+                    
+                    <!-- Upsell подсказка -->
+                    <div class="upsell-banner" id="upsellBanner" style="display:none;">
+                        💡 <strong>Выгоднее:</strong> тариф AI-Assist за 129 000 ₽ включает всё это + AI, оплату и админку безлимитно
+                        <button onclick="forceTier('AI-Assist')" class="upsell-btn">Посмотреть AI-Assist</button>
                     </div>
 
                     <!-- Предупреждение при даунгрейде с Enterprise -->
@@ -1191,25 +1240,31 @@
             admin: false
         };
 
-        let currentTier = 'Standard';
-        let basePrice = 69000;
+        let currentTier = 'Base';
+        let basePrice = 39000;
         let isEnterprise = false;
         let wasOriginallyEnterprise = false;
 
         const prices = {
             'Lite': 19900,
             'Base': 39000,
-            'Standard': 69000,
-            'AI': 129000,
+            'AI-Assist': 129000,
             'Enterprise': 249000
         };
 
         const timelines = {
             'Lite': '3–5 дней',
             'Base': '5–7 дней',
-            'Standard': '7–10 дней',
-            'AI': '10–14 дней',
+            'AI-Assist': '10–14 дней',
             'Enterprise': '14–21 день'
+        };
+
+        // Допы, включенные в каждый тариф
+        const includedExtras = {
+            'Lite': [],
+            'Base': [],
+            'AI-Assist': ['ai', 'payment', 'admin'],
+            'Enterprise': ['ai', 'payment', 'admin', 'onpremise']
         };
 
         function selectOption(value, step) {
@@ -1287,9 +1342,9 @@
         function calculateAndShowResult() {
             const { step1: botType, step2: scale } = answers;
             
-            let price = prices.Standard;
-            let tier = 'Standard';
-            let timeline = timelines.Standard;
+            let price = prices.Base; // По умолчанию Base
+            let tier = 'Base';
+            let timeline = timelines.Base;
             isEnterprise = false;
             wasOriginallyEnterprise = false;
 
@@ -1300,9 +1355,9 @@
                 isEnterprise = true;
                 wasOriginallyEnterprise = true;
             } else if (botType === 'ai') {
-                price = prices.AI;
-                tier = 'AI';
-                timeline = timelines.AI;
+                price = prices['AI-Assist'];
+                tier = 'AI-Assist';
+                timeline = timelines['AI-Assist'];
             } else if (botType === 'faq' && scale === 'small') {
                 price = prices.Lite;
                 tier = 'Lite';
@@ -1318,6 +1373,9 @@
 
             extras = { ai: false, payment: false, admin: false };
             document.querySelectorAll('.checkbox-pill').forEach(pill => pill.classList.remove('selected'));
+            
+            // Сбрасываем отображение upsell
+            document.getElementById('upsellBanner').style.display = 'none';
 
             updateResultUI(tier, price, timeline);
         }
@@ -1332,12 +1390,21 @@
 
         function updateResultUI(tier, price, timeline) {
             const { step1: botType, step2: scale } = answers;
-            const totalPrice = price + getExtraPrice();
+            const extraPrice = getExtraPrice();
+            const totalPrice = price + extraPrice;
 
             animatePrice(document.getElementById('resultPrice'), totalPrice);
             
-            const hasExtras = getExtraPrice() > 0;
+            const hasExtras = extraPrice > 0;
             const isManualSelection = !isRecommendedTier(tier);
+            
+            // Upsell логика: если Base + допы > 90k, показываем подсказку про AI-Assist
+            const upsellBanner = document.getElementById('upsellBanner');
+            if (tier === 'Base' && extraPrice > 51000) {
+                upsellBanner.style.display = 'block';
+            } else {
+                upsellBanner.style.display = 'none';
+            }
             
             if (isEnterprise) {
                 document.getElementById('tierRecommendation').textContent = 'Корпоративное решение с усиленной защитой данных';
@@ -1347,6 +1414,8 @@
                 document.getElementById('tierRecommendation').textContent = 'Выбрано вручную';
             } else if (hasExtras) {
                 document.getElementById('tierRecommendation').textContent = 'Рекомендуемый тариф + дополнительные опции';
+            } else if (tier === 'AI-Assist') {
+                document.getElementById('tierRecommendation').textContent = 'Всё включено: AI, оплата, админка';
             } else {
                 document.getElementById('tierRecommendation').textContent = 'Рекомендуемый тариф для ваших задач';
             }
@@ -1388,8 +1457,9 @@
 
             document.getElementById('timelineBadge').textContent = timeline;
 
+            // TCO расчет
             let constructorMonthly;
-            if (tier === 'AI' || extras.ai) {
+            if (tier === 'AI-Assist' || extras.ai) {
                 constructorMonthly = scale === 'large' ? 20000 : 12000;
             } else {
                 constructorMonthly = scale === 'large' ? 8000 : 4290;
@@ -1416,7 +1486,7 @@
             } else {
                 const firstYearDiff = ourYear1 - constructorYear1;
                 
-                if (tier === 'AI' || tier === 'Enterprise') {
+                if (tier === 'AI-Assist' || tier === 'Enterprise') {
                     savingsRow.className = 'tco-row warning';
                     savingsLabel.textContent = 'Первые 18 месяцев: инвестиция';
                     savingsElement.textContent = '~' + Math.round(firstYearDiff / 1000) + ' 000 ₽/год';
@@ -1432,6 +1502,7 @@
             document.getElementById('detailDevCost').textContent = totalPrice.toLocaleString('ru-RU') + ' ₽';
             document.getElementById('detailLimits').textContent = tier === 'Lite' ? 'До 3 сценариев' : 'Нет';
 
+            // Обновление списка "Что включено"
             let features = [];
             if (tier === 'Lite') {
                 features = [
@@ -1450,11 +1521,13 @@
                     'Дежурный инженер 24/7',
                     'Исходный код + полная документация'
                 ];
-            } else if (tier === 'AI') {
+            } else if (tier === 'AI-Assist') {
                 features = [
                     'Все каналы (Telegram, WhatsApp, VK, сайт)',
-                    'AI-ответы на основе нейросетей',
+                    'AI-ответы на основе YandexGPT',
                     '1000 AI-запросов/мес включено',
+                    'Приём оплаты в боте',
+                    'Админ-панель для управления',
                     'CRM + аналитика',
                     'Хостинг в РФ',
                     'Исходный код + документация'
@@ -1469,27 +1542,52 @@
                 ];
             }
 
-            if (extras.ai) features.push('AI-модуль (200 запросов/мес)');
-            if (extras.payment) features.push('Приём оплаты в боте');
-            if (extras.admin) features.push('Админ-панель для редактирования');
+            // Добавляем допы для Lite и Base
+            if (tier === 'Lite' || tier === 'Base') {
+                if (extras.ai) features.push('AI-модуль (+40 000 ₽)');
+                if (extras.payment) features.push('Приём оплаты в боте (+10 000 ₽)');
+                if (extras.admin) features.push('Админ-панель (+15 000 ₽)');
+            }
 
             document.getElementById('resultFeatures').innerHTML = features
                 .map(f => `<li>${f}</li>`)
                 .join('');
 
+            // Управление отображением чекбоксов допов
             const extrasSection = document.getElementById('extrasSection');
-            if (tier === 'Enterprise' || tier === 'AI') {
+            const aiPill = document.getElementById('pillAI');
+            const paymentPill = document.querySelector('.checkbox-pill[onclick*="payment"]');
+            const adminPill = document.querySelector('.checkbox-pill[onclick*="admin"]');
+            
+            if (tier === 'Enterprise') {
                 extrasSection.style.display = 'none';
-            } else {
+            } else if (tier === 'AI-Assist') {
+                // Для AI-Assist показываем все как "Включено"
                 extrasSection.style.display = 'block';
+                [aiPill, paymentPill, adminPill].forEach(pill => {
+                    if (pill) {
+                        pill.classList.add('included');
+                        pill.classList.add('selected');
+                        pill.style.pointerEvents = 'none';
+                    }
+                });
+            } else {
+                // Для Lite и Base - обычное поведение
+                extrasSection.style.display = 'block';
+                [aiPill, paymentPill, adminPill].forEach(pill => {
+                    if (pill) {
+                        pill.classList.remove('included');
+                        pill.style.pointerEvents = 'auto';
+                    }
+                });
             }
 
-            const aiPill = document.getElementById('pillAI');
-            if (tier === 'Lite' || tier === 'Enterprise') {
+            // AI пill недоступен для Lite
+            if (tier === 'Lite') {
                 aiPill.classList.add('disabled');
                 aiPill.style.opacity = '0.5';
                 aiPill.style.pointerEvents = 'none';
-            } else {
+            } else if (tier !== 'AI-Assist') {
                 aiPill.classList.remove('disabled');
                 aiPill.style.opacity = '1';
                 aiPill.style.pointerEvents = 'auto';
@@ -1500,10 +1598,10 @@
             const { step1: botType, step2: scale } = answers;
             
             if (botType === 'medical' || scale === 'large') return tier === 'Enterprise';
-            if (botType === 'ai') return tier === 'AI';
+            if (botType === 'ai') return tier === 'AI-Assist';
             if (botType === 'faq' && scale === 'small') return tier === 'Lite';
             if (scale === 'medium' && botType !== 'ai') return tier === 'Base';
-            return tier === 'Standard';
+            return tier === 'Base'; // По умолчанию Base
         }
 
         function animatePrice(element, targetPrice) {
