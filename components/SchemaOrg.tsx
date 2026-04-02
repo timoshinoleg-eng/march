@@ -64,20 +64,40 @@ export default function SchemaOrg() {
               "@type": "Offer",
               itemOffered: {
                 "@type": "Service",
-                name: "MVP чат-бот",
-                description: "Прототип чат-бота за 7 дней"
+                name: "Lite чат-бот",
+                description: "Базовый чат-бот для старта"
               },
-              price: "49000",
+              price: "19900",
               priceCurrency: "RUB"
             },
             {
               "@type": "Offer",
               itemOffered: {
                 "@type": "Service",
-                name: "Корпоративный бот",
-                description: "Полноценное решение с интеграциями"
+                name: "Base чат-бот",
+                description: "Оптимально для растущего бизнеса"
               },
-              price: "150000",
+              price: "39000",
+              priceCurrency: "RUB"
+            },
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "AI чат-бот",
+                description: "AI-ассистент с YandexGPT"
+              },
+              price: "69000",
+              priceCurrency: "RUB"
+            },
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Enterprise чат-бот",
+                description: "Для медицины и крупного бизнеса"
+              },
+              price: "129000",
               priceCurrency: "RUB"
             }
           ]
