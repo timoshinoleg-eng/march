@@ -1,14 +1,14 @@
 [
   {
     "route": "/",
-    "firstLoadUncompressedJsBytes": 694584,
+    "firstLoadUncompressedJsBytes": 694675,
     "firstLoadChunkPaths": [
-      ".next/static/chunks/0yrvc1br9rjyk.js",
+      ".next/static/chunks/0uvqdjzmizl2e.js",
       ".next/static/chunks/0d3shmwh5_nmn.js",
-      ".next/static/chunks/0ji~.fd681cfx.js",
-      ".next/static/chunks/119w5osnhwjfg.js",
+      ".next/static/chunks/02pdm4ix80mxk.js",
+      ".next/static/chunks/109sf5sd6m86q.js",
+      ".next/static/chunks/0er.5vwv3mei4.js",
       ".next/static/chunks/02stu2xenbplp.js",
-      ".next/static/chunks/0_8mmfeyx0-zg.js",
       ".next/static/chunks/0t1et0tty8o9s.js",
       ".next/static/chunks/0vjlsskotlgql.js",
       ".next/static/chunks/0nz065shyhquj.js",
@@ -21,10 +21,10 @@
     "route": "/landing/ai-automation",
     "firstLoadUncompressedJsBytes": 672506,
     "firstLoadChunkPaths": [
-      ".next/static/chunks/0yrvc1br9rjyk.js",
+      ".next/static/chunks/0uvqdjzmizl2e.js",
       ".next/static/chunks/0d3shmwh5_nmn.js",
-      ".next/static/chunks/0_v3p-fv6x1hn.js",
-      ".next/static/chunks/0zbsge7365vke.js",
+      ".next/static/chunks/05.8sh1sduf3k.js",
+      ".next/static/chunks/0sn1.-hj.2mq3.js",
       ".next/static/chunks/02stu2xenbplp.js",
       ".next/static/chunks/0t1et0tty8o9s.js",
       ".next/static/chunks/0vjlsskotlgql.js",
@@ -36,11 +36,11 @@
   },
   {
     "route": "/cases",
-    "firstLoadUncompressedJsBytes": 574601,
+    "firstLoadUncompressedJsBytes": 574520,
     "firstLoadChunkPaths": [
-      ".next/static/chunks/0yrvc1br9rjyk.js",
+      ".next/static/chunks/0uvqdjzmizl2e.js",
       ".next/static/chunks/0d3shmwh5_nmn.js",
-      ".next/static/chunks/03e_xxml8ca~a.js",
+      ".next/static/chunks/135803qkauhyh.js",
       ".next/static/chunks/02stu2xenbplp.js",
       ".next/static/chunks/0t1et0tty8o9s.js",
       ".next/static/chunks/0vjlsskotlgql.js",
@@ -52,12 +52,11 @@
   },
   {
     "route": "/blog/sekundy-reshayut",
-    "firstLoadUncompressedJsBytes": 573593,
+    "firstLoadUncompressedJsBytes": 572905,
     "firstLoadChunkPaths": [
-      ".next/static/chunks/0yrvc1br9rjyk.js",
+      ".next/static/chunks/0uvqdjzmizl2e.js",
       ".next/static/chunks/0d3shmwh5_nmn.js",
-      ".next/static/chunks/0a3kp.twhk610.js",
-      ".next/static/chunks/0z3swat5oxqgs.js",
+      ".next/static/chunks/0gdsqqy80nyul.js",
       ".next/static/chunks/02stu2xenbplp.js",
       ".next/static/chunks/0t1et0tty8o9s.js",
       ".next/static/chunks/0vjlsskotlgql.js",
@@ -68,30 +67,12 @@
     ]
   },
   {
-    "route": "/blog/5-oshibok",
-    "firstLoadUncompressedJsBytes": 559232,
+    "route": "/blog/ai-automation-20-years",
+    "firstLoadUncompressedJsBytes": 567867,
     "firstLoadChunkPaths": [
-      ".next/static/chunks/0yrvc1br9rjyk.js",
+      ".next/static/chunks/0uvqdjzmizl2e.js",
       ".next/static/chunks/0d3shmwh5_nmn.js",
-      ".next/static/chunks/0a3kp.twhk610.js",
-      ".next/static/chunks/0tim_zc10tqep.js",
-      ".next/static/chunks/02stu2xenbplp.js",
-      ".next/static/chunks/0t1et0tty8o9s.js",
-      ".next/static/chunks/0vjlsskotlgql.js",
-      ".next/static/chunks/0nz065shyhquj.js",
-      ".next/static/chunks/0bj0razrunn3v.js",
-      ".next/static/chunks/0pqt~8bl3ukh4.js",
-      ".next/static/chunks/turbopack-0l5k3mf2u_6xz.js"
-    ]
-  },
-  {
-    "route": "/blog/konversiya-40",
-    "firstLoadUncompressedJsBytes": 559232,
-    "firstLoadChunkPaths": [
-      ".next/static/chunks/0yrvc1br9rjyk.js",
-      ".next/static/chunks/0d3shmwh5_nmn.js",
-      ".next/static/chunks/0a3kp.twhk610.js",
-      ".next/static/chunks/0tim_zc10tqep.js",
+      ".next/static/chunks/04fkncgpgmp-w.js",
       ".next/static/chunks/02stu2xenbplp.js",
       ".next/static/chunks/0t1et0tty8o9s.js",
       ".next/static/chunks/0vjlsskotlgql.js",
@@ -103,12 +84,11 @@
   },
   {
     "route": "/blog/telegram-vs-whatsapp",
-    "firstLoadUncompressedJsBytes": 559232,
+    "firstLoadUncompressedJsBytes": 558544,
     "firstLoadChunkPaths": [
-      ".next/static/chunks/0yrvc1br9rjyk.js",
+      ".next/static/chunks/0uvqdjzmizl2e.js",
       ".next/static/chunks/0d3shmwh5_nmn.js",
-      ".next/static/chunks/0a3kp.twhk610.js",
-      ".next/static/chunks/0tim_zc10tqep.js",
+      ".next/static/chunks/0dqzc93a3s4i7.js",
       ".next/static/chunks/02stu2xenbplp.js",
       ".next/static/chunks/0t1et0tty8o9s.js",
       ".next/static/chunks/0vjlsskotlgql.js",
@@ -120,12 +100,11 @@
   },
   {
     "route": "/blog",
-    "firstLoadUncompressedJsBytes": 553108,
+    "firstLoadUncompressedJsBytes": 551493,
     "firstLoadChunkPaths": [
-      ".next/static/chunks/0yrvc1br9rjyk.js",
+      ".next/static/chunks/0uvqdjzmizl2e.js",
       ".next/static/chunks/0d3shmwh5_nmn.js",
-      ".next/static/chunks/0a3kp.twhk610.js",
-      ".next/static/chunks/1669s0-lctgqs.js",
+      ".next/static/chunks/0460kgm6eai-v.js",
       ".next/static/chunks/02stu2xenbplp.js",
       ".next/static/chunks/0t1et0tty8o9s.js",
       ".next/static/chunks/0vjlsskotlgql.js",
@@ -136,13 +115,12 @@
     ]
   },
   {
-    "route": "/blog/ai-wont-fix-this",
-    "firstLoadUncompressedJsBytes": 533945,
+    "route": "/blog/5-oshibok",
+    "firstLoadUncompressedJsBytes": 549588,
     "firstLoadChunkPaths": [
-      ".next/static/chunks/0yrvc1br9rjyk.js",
+      ".next/static/chunks/0uvqdjzmizl2e.js",
       ".next/static/chunks/0d3shmwh5_nmn.js",
-      ".next/static/chunks/0a3kp.twhk610.js",
-      ".next/static/chunks/0.pvj4ib0vd66.js",
+      ".next/static/chunks/0niaf5gfjfebx.js",
       ".next/static/chunks/0t1et0tty8o9s.js",
       ".next/static/chunks/0vjlsskotlgql.js",
       ".next/static/chunks/0nz065shyhquj.js",
@@ -152,29 +130,12 @@
     ]
   },
   {
-    "route": "/blog/pwc-ai-roi-56-percent",
-    "firstLoadUncompressedJsBytes": 533945,
+    "route": "/blog/konversiya-40",
+    "firstLoadUncompressedJsBytes": 542758,
     "firstLoadChunkPaths": [
-      ".next/static/chunks/0yrvc1br9rjyk.js",
+      ".next/static/chunks/0uvqdjzmizl2e.js",
       ".next/static/chunks/0d3shmwh5_nmn.js",
-      ".next/static/chunks/0a3kp.twhk610.js",
-      ".next/static/chunks/0.pvj4ib0vd66.js",
-      ".next/static/chunks/0t1et0tty8o9s.js",
-      ".next/static/chunks/0vjlsskotlgql.js",
-      ".next/static/chunks/0nz065shyhquj.js",
-      ".next/static/chunks/0bj0razrunn3v.js",
-      ".next/static/chunks/0pqt~8bl3ukh4.js",
-      ".next/static/chunks/turbopack-0l5k3mf2u_6xz.js"
-    ]
-  },
-  {
-    "route": "/blog/senior-leaders-ai-struggles",
-    "firstLoadUncompressedJsBytes": 533255,
-    "firstLoadChunkPaths": [
-      ".next/static/chunks/0yrvc1br9rjyk.js",
-      ".next/static/chunks/0d3shmwh5_nmn.js",
-      ".next/static/chunks/0a3kp.twhk610.js",
-      ".next/static/chunks/0ceutaczfrk~9.js",
+      ".next/static/chunks/0dri3mzn6-y2_.js",
       ".next/static/chunks/0t1et0tty8o9s.js",
       ".next/static/chunks/0vjlsskotlgql.js",
       ".next/static/chunks/0nz065shyhquj.js",
@@ -187,9 +148,54 @@
     "route": "/admin",
     "firstLoadUncompressedJsBytes": 527411,
     "firstLoadChunkPaths": [
-      ".next/static/chunks/0yrvc1br9rjyk.js",
+      ".next/static/chunks/0uvqdjzmizl2e.js",
       ".next/static/chunks/0d3shmwh5_nmn.js",
       ".next/static/chunks/07z-42jl4etih.js",
+      ".next/static/chunks/0t1et0tty8o9s.js",
+      ".next/static/chunks/0vjlsskotlgql.js",
+      ".next/static/chunks/0nz065shyhquj.js",
+      ".next/static/chunks/0bj0razrunn3v.js",
+      ".next/static/chunks/0pqt~8bl3ukh4.js",
+      ".next/static/chunks/turbopack-0l5k3mf2u_6xz.js"
+    ]
+  },
+  {
+    "route": "/blog/ai-wont-fix-this",
+    "firstLoadUncompressedJsBytes": 526672,
+    "firstLoadChunkPaths": [
+      ".next/static/chunks/0uvqdjzmizl2e.js",
+      ".next/static/chunks/0d3shmwh5_nmn.js",
+      ".next/static/chunks/0~kv5_u40ztk8.js",
+      ".next/static/chunks/0t1et0tty8o9s.js",
+      ".next/static/chunks/0vjlsskotlgql.js",
+      ".next/static/chunks/0nz065shyhquj.js",
+      ".next/static/chunks/0bj0razrunn3v.js",
+      ".next/static/chunks/0pqt~8bl3ukh4.js",
+      ".next/static/chunks/turbopack-0l5k3mf2u_6xz.js"
+    ]
+  },
+  {
+    "route": "/blog/pwc-ai-roi-56-percent",
+    "firstLoadUncompressedJsBytes": 526672,
+    "firstLoadChunkPaths": [
+      ".next/static/chunks/0uvqdjzmizl2e.js",
+      ".next/static/chunks/0d3shmwh5_nmn.js",
+      ".next/static/chunks/0~kv5_u40ztk8.js",
+      ".next/static/chunks/0t1et0tty8o9s.js",
+      ".next/static/chunks/0vjlsskotlgql.js",
+      ".next/static/chunks/0nz065shyhquj.js",
+      ".next/static/chunks/0bj0razrunn3v.js",
+      ".next/static/chunks/0pqt~8bl3ukh4.js",
+      ".next/static/chunks/turbopack-0l5k3mf2u_6xz.js"
+    ]
+  },
+  {
+    "route": "/blog/senior-leaders-ai-struggles",
+    "firstLoadUncompressedJsBytes": 525926,
+    "firstLoadChunkPaths": [
+      ".next/static/chunks/0uvqdjzmizl2e.js",
+      ".next/static/chunks/0d3shmwh5_nmn.js",
+      ".next/static/chunks/0ceutaczfrk~9.js",
       ".next/static/chunks/0t1et0tty8o9s.js",
       ".next/static/chunks/0vjlsskotlgql.js",
       ".next/static/chunks/0nz065shyhquj.js",
@@ -202,7 +208,7 @@
     "route": "/_not-found",
     "firstLoadUncompressedJsBytes": 522993,
     "firstLoadChunkPaths": [
-      ".next/static/chunks/0yrvc1br9rjyk.js",
+      ".next/static/chunks/0uvqdjzmizl2e.js",
       ".next/static/chunks/0d3shmwh5_nmn.js",
       ".next/static/chunks/0t1et0tty8o9s.js",
       ".next/static/chunks/0vjlsskotlgql.js",

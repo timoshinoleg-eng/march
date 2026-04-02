@@ -175,6 +175,12 @@
       "namedRegex": "^/blog/5\\-oshibok(?:/)?$"
     },
     {
+      "page": "/blog/ai-automation-20-years",
+      "regex": "^/blog/ai\\-automation\\-20\\-years(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/blog/ai\\-automation\\-20\\-years(?:/)?$"
+    },
+    {
       "page": "/blog/ai-wont-fix-this",
       "regex": "^/blog/ai\\-wont\\-fix\\-this(?:/)?$",
       "routeKeys": {},

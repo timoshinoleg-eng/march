@@ -7,7 +7,7 @@ import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const navItems = [
+const navItems: Array<{ label: string; href: string; hrefFromBlog?: string }> = [
   { label: "Как это работает", href: "/#how-it-works" },
   { label: "Тарифы", href: "/#pricing" },
   { label: "Калькулятор", href: "/calculator", hrefFromBlog: "/calculator?utm_source=blog&utm_medium=header" },
@@ -32,9 +32,9 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const getNavHref = (item: typeof navItems[0]) => {
+  const getNavHref = (item: typeof navItems[0]): string => {
     // Если это страница блога и есть специальная ссылка для блога
-    if (isBlogPage && 'hrefFromBlog' in item) {
+    if (isBlogPage && item.hrefFromBlog) {
       return item.hrefFromBlog;
     }
     return item.href;

@@ -12,6 +12,7 @@
   "/api/health/route": "app-edge-has-no-entrypoint",
   "/api/lead/route": "app/api/lead/route.js",
   "/blog/5-oshibok/page": "app/blog/5-oshibok/page.js",
+  "/blog/ai-automation-20-years/page": "app/blog/ai-automation-20-years/page.js",
   "/blog/ai-wont-fix-this/page": "app/blog/ai-wont-fix-this/page.js",
   "/blog/konversiya-40/page": "app/blog/konversiya-40/page.js",
   "/blog/page": "app/blog/page.js",
