@@ -14,7 +14,7 @@ interface PricingPlanWithSocial extends PricingPlan {
 
 const plansWithSocial: PricingPlanWithSocial[] = pricingPlans.map((plan, index) => ({
   ...plan,
-  socialProof: [9, 11, 14, 3][index] // Lite: 9, Base: 11, AI: 14, Enterprise: 3
+  socialProof: [9, 11, 14, 3][index] // Lite: 9, Base: 11, AI-Assist: 14, Enterprise: 3
 }));
 
 export default function Pricing() {
