@@ -4,9 +4,9 @@ import { motion } from "framer-motion";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import Section from "@/components/ui/Section";
-import { openChatWidget } from "@/lib/chat";
-import { Check, Star } from "lucide-react";
+import { Star } from "lucide-react";
 import { pricingPlans } from "@/data/pricing";
+import Link from "next/link";
 
 export default function Pricing() {
   return (
@@ -45,7 +45,7 @@ export default function Pricing() {
         </motion.p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
         {pricingPlans.map((plan, index) => (
           <motion.div
             key={plan.id}
@@ -79,8 +79,8 @@ export default function Pricing() {
 
               <div className="mb-4">
                 <div className="flex items-baseline gap-1">
-                  <span className="text-4xl font-bold text-white">
-                    {plan.price.toLocaleString()}
+                  <span className="text-3xl font-bold text-white">
+                    от {plan.price.toLocaleString()}
                   </span>
                   <span className="text-gray-400">₽</span>
                 </div>
@@ -95,24 +95,26 @@ export default function Pricing() {
                 {plan.features.map((feature, idx) => (
                   <li key={idx} className="flex items-start gap-3">
                     <div
-                      className={`p-0.5 rounded-full ${
-                        plan.highlight ? "bg-primary-500/20" : "bg-primary-500/10"
+                      className={`w-1.5 h-1.5 rounded-full mt-2 ${
+                        plan.highlight ? "bg-primary-400" : "bg-primary-500/50"
                       }`}
-                    >
-                      <Check className="w-4 h-4 text-primary-400" />
-                    </div>
+                    />
                     <span className="text-gray-300 text-sm">{feature}</span>
                   </li>
                 ))}
               </ul>
 
-              <Button
-                variant={plan.highlight ? "primary" : "outline"}
-                className="w-full"
-                onClick={() => openChatWidget('brief')}
+              <Link
+                href={`/calculator?utm_source=site&utm_medium=pricing_card&utm_content=${plan.utmContent}`}
+                className="block w-full"
               >
-                Выбрать
-              </Button>
+                <Button
+                  variant={plan.highlight ? "primary" : "outline"}
+                  className="w-full"
+                >
+                  Рассчитать точнее
+                </Button>
+              </Link>
             </Card>
           </motion.div>
         ))}

@@ -2,10 +2,10 @@ import { TrendingUp, Mail, Phone, MapPin } from "lucide-react";
 
 const footerLinks = {
   solutions: [
-    { label: "MVP-бот", href: "#pricing" },
-    { label: "Sales-Система", href: "#pricing" },
-    { label: "AI-Автоматизация", href: "#pricing" },
-    { label: "Кастомная разработка", href: "#contact" },
+    { label: "Lite", href: "/calculator?utm_source=site&utm_medium=footer&utm_content=lite" },
+    { label: "Base", href: "/calculator?utm_source=site&utm_medium=footer&utm_content=base" },
+    { label: "AI", href: "/calculator?utm_source=site&utm_medium=footer&utm_content=ai" },
+    { label: "Enterprise", href: "/calculator?utm_source=site&utm_medium=footer&utm_content=enterprise" },
   ],
   company: [
     { label: "Как это работает", href: "#how-it-works" },
@@ -41,14 +41,20 @@ export default function Footer() {
               которые работают 24/7 и не пропускают ни одного клиента.
             </p>
             <div className="space-y-3">
-              <div className="flex items-center gap-3 text-sm text-gray-400">
+              <a 
+                href="tel:+79933366102" 
+                className="flex items-center gap-3 text-sm text-gray-400 hover:text-primary-400 transition-colors"
+              >
                 <Phone className="w-4 h-4 text-primary-400" />
                 <span>+7 (993) 336-61-02</span>
-              </div>
-              <div className="flex items-center gap-3 text-sm text-gray-400">
+              </a>
+              <a 
+                href="mailto:info@chatbot24.su" 
+                className="flex items-center gap-3 text-sm text-gray-400 hover:text-primary-400 transition-colors"
+              >
                 <Mail className="w-4 h-4 text-primary-400" />
                 <span>info@chatbot24.su</span>
-              </div>
+              </a>
               <div className="flex items-center gap-3 text-sm text-gray-400">
                 <MapPin className="w-4 h-4 text-primary-400" />
                 <span>г. Москва</span>
