@@ -4,6 +4,8 @@ import { ArrowLeft, Calendar, Clock, User } from "lucide-react";
 import ShareButtons from "@/components/blog/ShareButtons";
 import ArticleCTA from "@/components/blog/ArticleCTA";
 import { ConversionFooter } from "@/components/blog/ConversionFooter";
+import { ExitIntent5Oshibok } from "@/components/blog/ExitIntent5Oshibok";
+import { MobileSticky5Oshibok } from "@/components/blog/MobileSticky5Oshibok";
 
 export const metadata: Metadata = {
   title: "5 ошибок при выборе чат-бота, которые стоят вам 200 000 ₽ в месяц | ChatBot24",
@@ -352,7 +354,7 @@ export default function ArticlePage() {
       </article>
 
       {/* Exit Intent - специфичный для 5-oshibok */}
-      <ExitIntentModal5Oshibok />
+      <ExitIntent5Oshibok />
 
       {/* Mobile Sticky - только для 5-oshibok и только после 60% */}
       <MobileSticky5Oshibok />
@@ -360,92 +362,5 @@ export default function ArticlePage() {
       {/* Spacer for footer */}
       <div className="h-20" />
     </main>
-  );
-}
-
-// Специфичный exit-intent для статьи про ошибки
-function ExitIntentModal5Oshibok() {
-  return (
-    <script dangerouslySetInnerHTML={{ __html: `
-      (function() {
-        if (!window.location.pathname.includes('5-oshibok')) return;
-        
-        let showExitIntent = true;
-        document.addEventListener('mouseout', function(e) {
-          if (e.clientY < 10 && showExitIntent) {
-            showExitIntent = false;
-            
-            const modal = document.createElement('div');
-            modal.innerHTML = \`
-              <div id="exit-modal-5oshibok" style="position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.8); z-index:9999; display:flex; align-items:center; justify-content:center; padding:20px;">
-                <div style="background:#1a1a1a; padding:30px; border-radius:16px; max-width:420px; width:100%; text-align:center; border:1px solid #667eea; box-shadow:0 20px 60px rgba(102,126,234,0.3);">
-                  <div style="font-size:3em; margin-bottom:15px;">🛡️</div>
-                  <h3 style="margin:0 0 15px 0; color:#ef4444; font-size:1.5em; font-weight:bold;">Не уходите с ошибками!</h3>
-                  <p style="color:#9ca3af; margin-bottom:20px; line-height:1.6;">
-                    Получите <strong style="color:#fff;">чек-лист проверки</strong> вашего чат-бота + 
-                    индивидуальный расчет, как избежать этих 6 ошибок
-                  </p>
-                  <a href="/calculator?utm_source=blog&utm_medium=exit_modal&utm_campaign=5_oshibok" 
-                     style="display:block; background:#667eea; color:#fff; padding:16px; border-radius:8px; text-decoration:none; font-weight:600; margin-bottom:12px; transition:all 0.2s;"
-                     onmouseover="this.style.background='#5a6fd6'" 
-                     onmouseout="this.style.background='#667eea'">
-                    Получить чек-лист + расчет
-                  </a>
-                  <button onclick="document.getElementById('exit-modal-5oshibok').remove()" 
-                          style="background:none; border:none; color:#6b7280; cursor:pointer; font-size:0.9em; padding:8px;">
-                    Спасибо, уже знаю
-                  </button>
-                </div>
-              </div>
-            \`;
-            document.body.appendChild(modal);
-          }
-        });
-      })();
-    `}} />
-  );
-}
-
-// Mobile sticky только для 5-oshibok и только после 60% прокрутки
-function MobileSticky5Oshibok() {
-  return (
-    <script dangerouslySetInnerHTML={{ __html: `
-      (function() {
-        if (!window.location.pathname.includes('5-oshibok')) return;
-        if (window.innerWidth >= 768) return;
-        
-        // Создаем элемент заранее, но скрытый
-        const sticky = document.createElement('div');
-        sticky.id = 'mobile-sticky-5oshibok';
-        sticky.style.cssText = 'display:none; position:fixed; bottom:0; left:0; right:0; background:#1a1a1a; border-top:2px solid #667eea; padding:12px 20px; z-index:9999; box-shadow:0 -4px 20px rgba(0,0,0,0.3);';
-        sticky.innerHTML = \`
-          <div style="display:flex; justify-content:space-between; align-items:center; max-width:600px; margin:0 auto;">
-            <div>
-              <div style="font-weight:600; font-size:0.95em; color:#fff;">Расчет стоимости бота</div>
-              <div style="font-size:0.8em; color:#9ca3af;">2 вопроса, 20 секунд</div>
-            </div>
-            <a href="/calculator?utm_source=blog&utm_medium=mobile_sticky&utm_campaign=5_oshibok" 
-               style="background:#667eea; color:#fff; padding:12px 20px; border-radius:8px; text-decoration:none; font-weight:600; font-size:0.9em; flex-shrink:0; margin-left:15px;">
-              Рассчитать
-            </a>
-          </div>
-        \`;
-        document.body.appendChild(sticky);
-        
-        // Показываем только после 60% прокрутки
-        let shown = false;
-        window.addEventListener('scroll', function() {
-          if (shown) return;
-          
-          const scrollPercent = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight;
-          if (scrollPercent > 0.6) {
-            shown = true;
-            sticky.style.display = 'block';
-            // Добавляем отступ для контента
-            document.body.style.paddingBottom = '80px';
-          }
-        }, { passive: true });
-      })();
-    `}} />
   );
 }
