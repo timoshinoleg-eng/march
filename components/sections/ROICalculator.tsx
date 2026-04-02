@@ -194,6 +194,7 @@ export default function ROICalculator() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-bg-primary/50">
+                  {/* Tariff name - Base */}
                   <div className="text-sm text-gray-400 mb-1">Тариф Base</div>
                   <div className="text-2xl font-bold text-primary-400">
                     {BASE_TARIFF_PRICE.toLocaleString()} ₽
