@@ -6,8 +6,8 @@ import Card from "@/components/ui/Card";
 import Section from "@/components/ui/Section";
 import { Calculator, TrendingDown, AlertTriangle, Wallet, BarChart3 } from "lucide-react";
 
-// Стоимость тарифа Sales для расчета окупаемости
-const SALES_TARIFF_PRICE = 129000;
+// Стоимость тарифа Base для расчета окупаемости
+const BASE_PRICE = 39000;
 
 export default function ROICalculator() {
   // Параметры для расчета потерь
@@ -20,10 +20,10 @@ export default function ROICalculator() {
     return requestsPerDay * 30 * (lossPercent / 100) * avgCheck;
   }, [requestsPerDay, lossPercent, avgCheck]);
 
-  // Окупаемость тарифа Sales (129000 / потери в месяц)
+  // Окупаемость тарифа Base (39000 / потери в месяц)
   const paybackMonths = useMemo(() => {
     if (monthlyLoss === 0) return 0;
-    return SALES_TARIFF_PRICE / monthlyLoss;
+    return BASE_PRICE / monthlyLoss;
   }, [monthlyLoss]);
 
   // Потери в год
@@ -194,9 +194,9 @@ export default function ROICalculator() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-bg-primary/50">
-                  <div className="text-sm text-gray-400 mb-1">Тариф Sales</div>
+                  <div className="text-sm text-gray-400 mb-1">Тариф Base</div>
                   <div className="text-2xl font-bold text-primary-400">
-                    {SALES_TARIFF_PRICE.toLocaleString()} ₽
+                    {BASE_PRICE.toLocaleString()} ₽
                   </div>
                 </div>
 
@@ -220,7 +220,7 @@ export default function ROICalculator() {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-primary-400 mt-1">•</span>
-                    Внедрение Sales-Системы окупится за <span className="text-primary-400 font-medium">
+                    Внедрение чат-бота окупится за <span className="text-primary-400 font-medium">
                       {paybackMonths < 1 
                         ? `${(paybackMonths * 30).toFixed(0)} дней`
                         : `${paybackMonths.toFixed(1)} месяцев`
@@ -229,7 +229,7 @@ export default function ROICalculator() {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-primary-400 mt-1">•</span>
-                    Экономия за год составит <span className="text-primary-400 font-medium">{Math.round(yearlyLoss - SALES_TARIFF_PRICE).toLocaleString()} ₽</span>
+                    Экономия за год составит <span className="text-primary-400 font-medium">{Math.round(yearlyLoss - BASE_PRICE).toLocaleString()} ₽</span>
                   </li>
                 </ul>
               </div>
