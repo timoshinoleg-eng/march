@@ -1,0 +1,27 @@
+<!-- Секция "Расчет стоимости" для /tariffs/index.html -->
+<!-- ВСТАВЬТЕ ЭТОТ КОД ПЕРЕД </body> -->
+
+<section id="calculator-section" style="background:#f8f9fa; padding:80px 20px; margin-top:60px; border-top:1px solid #e1e4e8;">
+  <div style="max-width:800px; margin:0 auto;">
+    <h2 style="text-align:center; font-size:1.8em; color:#1a1a1a; margin-bottom:10px;">Рассчитайте стоимость под ваши задачи</h2>
+    <p style="text-align:center; color:#666; margin-bottom:40px;">2 вопроса → точная цена за 20 секунд</p>
+    
+    <iframe 
+      id="calcFrame" 
+      src="https://chatbot24.su/calculator/embedded.html"
+      style="width:100%; border:none; min-height:450px; background:transparent;"
+      scrolling="no"
+    ></iframe>
+  </div>
+</section>
+
+<script>
+  // Автоподстройка высоты iframe
+  window.addEventListener('message', function(e) {
+    // Проверка origin для безопасности
+    if (e.origin !== 'https://chatbot24.su') return;
+    if (e.data && e.data.height) {
+      document.getElementById('calcFrame').style.height = e.data.height + 'px';
+    }
+  });
+</script>

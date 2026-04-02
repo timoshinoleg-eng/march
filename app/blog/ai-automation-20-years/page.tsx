@@ -4,6 +4,7 @@ import { ArrowLeft, Calendar, Clock, User } from "lucide-react";
 import ShareButtons from "@/components/blog/ShareButtons";
 import RelatedArticles from "@/components/blog/RelatedArticles";
 import ArticleCTA from "@/components/blog/ArticleCTA";
+import CalculatorCTA from "@/components/blog/CalculatorCTA";
 
 export const metadata: Metadata = {
   title: "Стоит ли входить в AI-автоматизацию в 20 лет? | ChatBot24",
@@ -224,6 +225,8 @@ export default function ArticlePage() {
               сбор обратной связи. Владелец перестал отвечать на телефон в 23:00.
             </p>
           </div>
+
+          <CalculatorCTA />
 
           <h2 className="text-xl sm:text-2xl font-bold text-white mt-8 mb-4">
             Главная ловушка
