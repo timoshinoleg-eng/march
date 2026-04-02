@@ -106,7 +106,7 @@ self.__SERVER_FILES_MANIFEST={
         "transform": "lodash/{{member}}"
       }
     },
-    "outputFileTracingRoot": "/root/.openclaw/workspace/chatbot24-march",
+    "outputFileTracingRoot": "/tmp/march-deploy",
     "cacheComponents": false,
     "cacheLife": {
       "default": {
@@ -306,7 +306,7 @@ self.__SERVER_FILES_MANIFEST={
     "bundlePagesRouterDependencies": false,
     "configFileName": "next.config.js",
     "turbopack": {
-      "root": "/root/.openclaw/workspace/chatbot24-march"
+      "root": "/tmp/march-deploy"
     },
     "distDirRoot": ".next",
     "_originalRedirects": [
@@ -317,7 +317,7 @@ self.__SERVER_FILES_MANIFEST={
       }
     ]
   },
-  "appDir": "/root/.openclaw/workspace/chatbot24-march",
+  "appDir": "/tmp/march-deploy",
   "relativeAppDir": "",
   "files": [
     ".next/routes-manifest.json",

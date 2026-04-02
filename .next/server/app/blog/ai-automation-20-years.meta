@@ -1,0 +1,16 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/blog/layout,_N_T_/blog/ai-automation-20-years/layout,_N_T_/blog/ai-automation-20-years/page,_N_T_/blog/ai-automation-20-years"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/blog/ai-automation-20-years/__PAGE__",
+    "/blog/ai-automation-20-years",
+    "/blog",
+    "/_index",
+    "/_head"
+  ]
+}
