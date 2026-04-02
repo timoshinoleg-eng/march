@@ -20,7 +20,7 @@ export default function ROICalculator() {
     return requestsPerDay * 30 * (lossPercent / 100) * avgCheck;
   }, [requestsPerDay, lossPercent, avgCheck]);
 
-  // Окупаемость тарифа Base (39000 / потери в месяц)
+  // Окупаемость тарифа Base (39000 / потери в месяц) - v2
   const paybackMonths = useMemo(() => {
     if (monthlyLoss === 0) return 0;
     return BASE_TARIFF_PRICE / monthlyLoss;
