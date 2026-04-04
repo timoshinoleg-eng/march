@@ -87,21 +87,22 @@ export default function Cases() {
         {cases.map((caseItem, index) => (
           <Card key={index} variant="gradient" className="h-full overflow-hidden">
             {/* Hero Image */}
-            <div className="relative w-full h-48 mb-6 -mx-6 -mt-6">
+            <div className="relative w-full h-48 mb-6 -mx-6 -mt-6 overflow-hidden">
               <Image
                 src={caseItem.image}
                 alt={caseItem.company}
                 fill
-                className="object-cover"
+                className="object-cover z-0"
                 sizes="(max-width: 768px) 100vw, 50vw"
+                priority
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#161b22] via-transparent to-transparent" />
-              <div className="absolute top-4 left-4">
+              <div className="absolute inset-0 bg-gradient-to-t from-[#161b22] via-transparent to-transparent z-10" />
+              <div className="absolute top-4 left-4 z-20">
                 <span className="text-xs text-white font-medium uppercase tracking-wider bg-primary-500/80 px-3 py-1 rounded-full">
                   {caseItem.industry}
                 </span>
               </div>
-              <div className="absolute top-4 right-4 text-right">
+              <div className="absolute top-4 right-4 text-right z-20">
                 <div className="text-2xl font-bold text-white drop-shadow-lg">
                   {caseItem.result}
                 </div>
