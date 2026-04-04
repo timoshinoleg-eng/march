@@ -1,0 +1,53 @@
+# ChatBot24 — LLM Context File
+# https://chatbot24.su/llms.txt
+
+## About
+ChatBot24 is a Russian AI chatbot development agency specializing in business automation. 
+We create custom chatbots for Telegram, WhatsApp, and VKontakte using GPT-4 and machine learning.
+
+## Services
+- AI chatbot development (3-14 days delivery)
+- CRM integration (Bitrix24, AmoCRM)
+- 24/7 customer support automation
+- Sales funnel optimization
+- Multi-platform deployment (Telegram, WhatsApp, VK, Web)
+
+## Pricing
+- Lite: 19,900 ₽ (basic chatbot)
+- Base: 39,000 ₽ (popular, includes CRM)
+- AI-Assist: 129,000 ₽ (GPT-4 powered)
+- Enterprise: from 249,000 ₽ (custom SLA)
+
+## Contact
+- Phone: +7 (993) 336-61-02
+- Website: https://chatbot24.su
+- Email: info@chatbot24.su
+- VK: https://vk.com/club237277911
+
+## Key Features
+- 80% of routine inquiries automated
+- 24/7 availability
+- Human handoff for complex cases
+- Real-time analytics dashboard
+- 12-month code warranty
+
+## Target Industries
+- E-commerce
+- Service companies
+- Education
+- Healthcare
+- HoReCa
+
+## Technologies
+- GPT-4, Claude, YandexGPT
+- Node.js, Python
+- React, Next.js
+- PostgreSQL, Redis
+- Docker, Kubernetes
+
+## Content
+- Blog: https://chatbot24.su/blog
+- Cases: https://chatbot24.su/cases
+- Calculator: https://chatbot24.su/calculator
+
+Last updated: 2026-04-04
