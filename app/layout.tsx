@@ -109,26 +109,84 @@ export default function RootLayout({
         <ChatWidgetProvider />
         <YandexMetrika />
         <Script
-          id="schema-localbusiness"
+          id="schema-organization"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
               name: "ChatBot24",
+              alternateName: "ЧатБот24",
               url: "https://chatbot24.su",
-              logo: "https://chatbot24.su/favicon/favicon-32x32.png",
-              description: "Разработка чат-ботов для бизнеса. Автоматизация заявок в Telegram и WhatsApp.",
+              logo: "https://chatbot24.su/logo_header.png",
+              description: "Разработка умных чат-ботов для бизнеса. Автоматизация входящих заявок, ответы клиентам 24/7. Интеграция с CRM, WhatsApp, Telegram, VK.",
+              slogan: "Автоматизируем общение с клиентами",
+              foundingDate: "2020",
+              email: "info@chatbot24.su",
               contactPoint: {
                 "@type": "ContactPoint",
-                telephone: "+7-999-999-9999",
+                telephone: "+7-993-336-61-02",
                 contactType: "sales",
                 availableLanguage: ["Russian"],
               },
               sameAs: [
-                "https://t.me/junior_middle_it",
+                "https://vk.com/club237277911",
+                "https://t.me/chatbot24su",
               ],
             }),
+          }}
+        />
+        <Script
+          id="schema-website"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "ChatBot24",
+              url: "https://chatbot24.su",
+              potentialAction: {
+                "@type": "SearchAction",
+                target: "https://chatbot24.su/search?q={search_term_string}",
+                "query-input": "required name=search_term_string",
+              },
+            }),
+          }}
+        />
+        <Script
+          id="schema-faq"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: [
+                {
+                  "@type": "Question",
+                  name: "Сколько стоит разработка чат-бота?",
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: "Стоимость разработки чат-бота варьируется от 0₽ (конструкторы) до 2 000 000₽+ (корпоративные решения). Средний проект для малого бизнеса — 50 000–300 000₽."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  name: "Какие мессенджеры поддерживаются?",
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: "Мы разрабатываем чат-ботов для Telegram, WhatsApp, VK, Viber и веб-чатов. Также возможна мультиканальная интеграция."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  name: "Сколько времени занимает разработка?",
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: "Простой чат-бот запускается за 1–2 недели, проект средней сложности — за 2–4 недели, сложное корпоративное решение — за 4–8 недель."
+                  }
+                }
+              ]
+            })
           }}
         />
       </body>
