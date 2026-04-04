@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowLeft, Calendar, Clock, User, Timer, AlertTriangle } from "lucide-react";
 import Image from "next/image";
 import ShareButtons from "@/components/blog/ShareButtons";
@@ -121,6 +122,18 @@ export default function ArticlePage() {
             </span>
             : скорость ответа и конверсия
           </h1>
+
+          {/* Hero Image */}
+          <div className="relative w-full h-64 sm:h-80 rounded-xl overflow-hidden mb-6">
+            <Image
+              src="/images/articles/19d21b10-fae2-8347-8000-00000c8baccc_daviddd03411_isometric_3D_illustration_of_chatbot_development_4c8e5938-d82c-4950-acb6-f36f43f2ac5a_1.png"
+              alt="Скорость ответа и конверсия"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 800px"
+              priority
+            />
+          </div>
           <div className="relative w-full aspect-video rounded-xl overflow-hidden mb-8">
             <Image
               src="/images/articles/19d21b10-fae2-8347-8000-00000c8baccc_daviddd03411_isometric_3D_illustration_of_chatbot_development_4c8e5938-d82c-4950-acb6-f36f43f2ac5a_1.png"

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import Section from "@/components/ui/Section";
@@ -79,6 +80,7 @@ const articles = [
     date: "2 апреля 2026",
     readTime: "7 мин",
     category: "Карьера",
+    image: "/images/articles/19d21b11-dc82-8332-8000-00001deae4c0_daviddd03411_ultra_realistic_photo_of_a_modern_developer_desk_e00c5fa9-2cdb-40c0-87f3-0a1df3e0157f_2.png",
   },
   {
     slug: "senior-leaders-ai-struggles",
@@ -87,6 +89,7 @@ const articles = [
     date: "30 марта 2026",
     readTime: "8 мин",
     category: "Исследования",
+    image: "/images/articles/19d21b10-fae2-8347-8000-00000c8baccc_daviddd03411_isometric_3D_illustration_of_chatbot_development_4c8e5938-d82c-4950-acb6-f36f43f2ac5a_1.png",
   },
   {
     slug: "ai-wont-fix-this",
@@ -95,6 +98,7 @@ const articles = [
     date: "30 марта 2026",
     readTime: "7 мин",
     category: "Исследования",
+    image: "/images/articles/19d21b11-dbc2-86a4-8000-00008a0f6ec4_daviddd03411_modern_3D_isometric_illustration_of_business_pro_44dd700b-58ba-440b-9d1b-b94979d69ea6_0.png",
   },
   {
     slug: "pwc-ai-roi-56-percent",
@@ -103,8 +107,8 @@ const articles = [
     date: "25 марта 2026",
     readTime: "9 мин",
     category: "Исследования",
+    image: "/images/articles/19d21b12-b8f2-8cf3-8000-000076530046_daviddd03411_ultra_realistic_photo_of_a_modern_clean_workspac_171bffc5-2cd3-4b13-a658-f5eb31811a97_2.png",
   },
-
   {
     slug: "5-oshibok",
     title: "5 ошибок при выборе чат-бота, которые стоят вам клиентов",
@@ -112,6 +116,7 @@ const articles = [
     date: "15 января 2026",
     readTime: "5 мин",
     category: "Выбор решения",
+    image: "/images/articles/19d21b12-2b12-8fcb-8000-000060a82555_daviddd03411_modern_3D_isometric_illustration_of_business_pro_44dd700b-58ba-440b-9d1b-b94979d69ea6_1.png",
   },
   {
     slug: "konversiya-40",
@@ -120,6 +125,7 @@ const articles = [
     date: "30 января 2026",
     readTime: "7 мин",
     category: "Кейсы",
+    image: "/images/articles/19d21b10-fc42-8b4a-8000-0000e7501ee1_daviddd03411_isometric_3D_illustration_of_chatbot_development_4c8e5938-d82c-4950-acb6-f36f43f2ac5a_3.png",
   },
   {
     slug: "sekundy-reshayut",
@@ -128,6 +134,7 @@ const articles = [
     date: "15 февраля 2026",
     readTime: "6 мин",
     category: "Исследования",
+    image: "/images/articles/19d21b10-fae2-8347-8000-00000c8baccc_daviddd03411_isometric_3D_illustration_of_chatbot_development_4c8e5938-d82c-4950-acb6-f36f43f2ac5a_1.png",
   },
   {
     slug: "telegram-vs-whatsapp",
@@ -136,6 +143,7 @@ const articles = [
     date: "25 февраля 2026",
     readTime: "8 мин",
     category: "Сравнение",
+    image: "/images/articles/19d21b11-dbc2-86a4-8000-00008a0f6ec4_daviddd03411_modern_3D_isometric_illustration_of_business_pro_44dd700b-58ba-440b-9d1b-b94979d69ea6_0.png",
   },
 ];
 
@@ -186,12 +194,23 @@ export default function BlogPage() {
             <Card
               key={article.slug}
               variant={index === 0 ? "gradient" : "default"}
-              className="group flex flex-col h-full"
+              className="group flex flex-col h-full overflow-hidden"
             >
-              <div className="flex items-center gap-2 mb-4">
-                <span className="px-3 py-1 rounded-full bg-primary-500/10 text-primary-400 text-xs font-medium">
-                  {article.category}
-                </span>
+              {/* Featured Image */}
+              <div className="relative w-full h-48 mb-4 -mx-6 -mt-6 overflow-hidden">
+                <Image
+                  src={article.image}
+                  alt={article.title}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#161b22] via-transparent to-transparent" />
+                <div className="absolute top-4 left-4">
+                  <span className="px-3 py-1 rounded-full bg-primary-500/80 text-white text-xs font-medium">
+                    {article.category}
+                  </span>
+                </div>
               </div>
 
               <h2 className="text-xl sm:text-2xl font-bold text-white mb-3 group-hover:text-primary-400 transition-colors">

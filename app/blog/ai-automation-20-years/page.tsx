@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowLeft, Calendar, Clock, User } from "lucide-react";
 import ShareButtons from "@/components/blog/ShareButtons";
 import RelatedArticles from "@/components/blog/RelatedArticles";
@@ -29,7 +30,7 @@ const jsonLd = {
   "@type": "BlogPosting",
   "headline": "Стоит ли входить в AI-автоматизацию в 20 лет?",
   "description": "Почему сейчас — идеальное время начать в AI-автоматизации. От первого проекта до агентства: реальный путь для 20-летних.",
-  "image": "https://chatbot24.su/og-image.jpg",
+  "image": "https://chatbot24.su/images/articles/19d21b11-dc82-8332-8000-00001deae4c0_daviddd03411_ultra_realistic_photo_of_a_modern_developer_desk_e00c5fa9-2cdb-40c0-87f3-0a1df3e0157f_2.png",
   "datePublished": "2026-04-02T00:00:00Z",
   "dateModified": "2026-04-02T00:00:00Z",
   "author": {
@@ -122,6 +123,18 @@ export default function ArticlePage() {
             </span>{" "}
             в 20 лет?
           </h1>
+
+          {/* Hero Image */}
+          <div className="relative w-full h-64 sm:h-80 rounded-xl overflow-hidden mb-6">
+            <Image
+              src="/images/articles/19d21b11-dc82-8332-8000-00001deae4c0_daviddd03411_ultra_realistic_photo_of_a_modern_developer_desk_e00c5fa9-2cdb-40c0-87f3-0a1df3e0157f_2.png"
+              alt="AI-автоматизация для молодых предпринимателей"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 800px"
+              priority
+            />
+          </div>
 
           <div className="flex flex-wrap gap-2 mb-6">
             <span className="px-3 py-1 rounded-full bg-primary-500/10 text-primary-400 text-sm">

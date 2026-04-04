@@ -23,13 +23,15 @@ export default function ArticlePage() {
       </header>
 
       {/* Hero Image */}
-      <div className="relative w-full h-[300px] md:h-[400px] mb-10 rounded-2xl overflow-hidden bg-gradient-to-br from-gray-900 to-gray-800">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center text-white">
-            <div className="text-6xl md:text-8xl font-bold mb-4">93%</div>
-            <div className="text-xl md:text-2xl opacity-80">барьеров — это люди, не технология</div>
-          </div>
-        </div>
+      <div className="relative w-full h-[300px] md:h-[400px] mb-10 rounded-2xl overflow-hidden">
+        <Image
+          src="/images/articles/19d21b10-fae2-8347-8000-00000c8baccc_daviddd03411_isometric_3D_illustration_of_chatbot_development_4c8e5938-d82c-4950-acb6-f36f43f2ac5a_1.png"
+          alt="Барьеры внедрения ИИ"
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, 800px"
+          priority
+        />
       </div>
 
       {/* Introduction */}

@@ -8,16 +8,16 @@ export const metadata = {
     publishedTime: "2026-03-29",
     authors: ["ChatBot24"],
     images: [{
-      url: "/blog/ai-wont-fix/hero.png",
+      url: "/images/articles/19d21b11-dbc2-86a4-8000-00008a0f6ec4_daviddd03411_modern_3D_isometric_illustration_of_business_pro_44dd700b-58ba-440b-9d1b-b94979d69ea6_0.png",
       width: 1200,
       height: 630,
-      alt: "Человек и ИИ работают вместе"
+      alt: "4 компетенции команды для работы с ИИ"
     }],
   },
   twitter: {
     card: "summary_large_image",
     title: "ИИ не спасёт бизнес без 4 компетенций",
     description: "Цифровая ловкость: что нужно команде до внедрения ИИ",
-    images: ["/blog/ai-wont-fix/hero.png"],
+    images: ["/images/articles/19d21b11-dbc2-86a4-8000-00008a0f6ec4_daviddd03411_modern_3D_isometric_illustration_of_business_pro_44dd700b-58ba-440b-9d1b-b94979d69ea6_0.png"],
   },
 };
