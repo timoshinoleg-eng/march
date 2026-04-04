@@ -85,24 +85,24 @@ export default function Cases() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {cases.map((caseItem, index) => (
-          <Card key={index} variant="gradient" className="h-full overflow-hidden">
+          <Card key={index} variant="gradient" className="h-full overflow-hidden p-0">
             {/* Hero Image */}
-            <div className="relative w-full h-48 mb-6 -mx-6 -mt-6 overflow-hidden">
+            <div className="relative w-full h-48 overflow-hidden">
               <Image
                 src={caseItem.image}
                 alt={caseItem.company}
                 fill
-                className="object-cover z-0"
+                className="object-cover"
                 sizes="(max-width: 768px) 100vw, 50vw"
-                priority
+                priority={index < 2}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#161b22] via-transparent to-transparent z-10" />
-              <div className="absolute top-4 left-4 z-20">
+              <div className="absolute inset-0 bg-gradient-to-t from-[#161b22] via-transparent to-transparent" />
+              <div className="absolute top-4 left-4">
                 <span className="text-xs text-white font-medium uppercase tracking-wider bg-primary-500/80 px-3 py-1 rounded-full">
                   {caseItem.industry}
                 </span>
               </div>
-              <div className="absolute top-4 right-4 text-right z-20">
+              <div className="absolute top-4 right-4 text-right">
                 <div className="text-2xl font-bold text-white drop-shadow-lg">
                   {caseItem.result}
                 </div>
@@ -110,24 +110,26 @@ export default function Cases() {
               </div>
             </div>
 
-            <div className="flex items-start justify-between mb-4">
-              <h3 className="text-xl font-semibold text-white">
-                {caseItem.company}
-              </h3>
-            </div>
+            <div className="p-6">
+              <div className="flex items-start justify-between mb-4">
+                <h3 className="text-xl font-semibold text-white">
+                  {caseItem.company}
+                </h3>
+              </div>
 
-            <p className="text-gray-400 mb-6">{caseItem.description}</p>
+              <p className="text-gray-400 mb-6">{caseItem.description}</p>
 
-            <div className="space-y-3">
-              {caseItem.metrics.map((metric, idx) => (
-                <div
-                  key={idx}
-                  className="flex items-center justify-between p-3 rounded-lg bg-bg-primary/50"
-                >
-                  <span className="text-gray-400 text-sm">{metric.label}</span>
-                  <span className="text-white font-medium">{metric.value}</span>
-                </div>
-              ))}
+              <div className="space-y-3">
+                {caseItem.metrics.map((metric, idx) => (
+                  <div
+                    key={idx}
+                    className="flex items-center justify-between p-3 rounded-lg bg-bg-primary/50"
+                  >
+                    <span className="text-gray-400 text-sm">{metric.label}</span>
+                    <span className="text-white font-medium">{metric.value}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </Card>
         ))}
