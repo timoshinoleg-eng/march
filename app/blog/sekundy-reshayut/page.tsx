@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, Calendar, Clock, User, Timer, AlertTriangle } from "lucide-react";
-import Image from "next/image";
 import ShareButtons from "@/components/blog/ShareButtons";
 import RelatedArticles from "@/components/blog/RelatedArticles";
 import ArticleCTA from "@/components/blog/ArticleCTA";
