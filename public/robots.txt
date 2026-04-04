@@ -1,0 +1,54 @@
+# ============================================
+# ROBOTS.TXT ДЛЯ CHATBOT24.SU
+# ============================================
+# Последнее обновление: 2024
+# Инструкции для поисковых роботов
+# ============================================
+
+User-agent: *
+Allow: /
+
+# Запрет индексации служебных страниц
+Disallow: /admin/
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /wp-content/plugins/
+Disallow: /cgi-bin/
+Disallow: /tmp/
+Disallow: /cache/
+Disallow: /logs/
+Disallow: /*?*
+Disallow: /*.pdf$
+Disallow: /thank-you/
+Disallow: /404/
+
+# Запрет индексации страниц с параметрами (дубли)
+Disallow: /*?utm_
+Disallow: /*?fbclid=
+Disallow: /*?gclid=
+Disallow: /*?yclid=
+Disallow: /*?from=
+Disallow: /*?ref=
+
+# Разрешение важных файлов
+Allow: /wp-content/uploads/
+Allow: /*.js$
+Allow: /*.css$
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.gif$
+Allow: /*.svg$
+Allow: /*.webp$
+
+# ============================================
+# КАРТА САЙТА
+# ============================================
+Sitemap: https://chatbot24.su/sitemap.xml
+
+# ============================================
+# ИНСТРУКЦИЯ ПО ВНЕДРЕНИЮ:
+# 1. Загрузите файл в корневую директорию сайта
+# 2. Убедитесь, что файл доступен по адресу: https://chatbot24.su/robots.txt
+# 3. Проверьте в Google Search Console и Яндекс.Вебмастере
+# ============================================
