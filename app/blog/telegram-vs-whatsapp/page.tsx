@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowLeft, Calendar, Clock, User, CheckCircle, XCircle } from "lucide-react";
 import ShareButtons from "@/components/blog/ShareButtons";
 import RelatedArticles from "@/components/blog/RelatedArticles";
@@ -119,6 +120,18 @@ export default function ArticlePage() {
               чат-бота в 2024
             </span>
           </h1>
+
+          {/* Hero Image */}
+          <div className="relative w-full h-64 sm:h-80 rounded-xl overflow-hidden mb-6">
+            <Image
+              src="/images/articles/19d21b11-dbc2-86a4-8000-00008a0f6ec4_daviddd03411_modern_3D_isometric_illustration_of_business_pro_44dd700b-58ba-440b-9d1b-b94979d69ea6_0.png"
+              alt="Telegram vs WhatsApp сравнение"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 800px"
+              priority
+            />
+          </div>
 
           <div className="flex flex-wrap gap-2 mb-6">
             <span className="px-3 py-1 rounded-full bg-primary-500/10 text-primary-400 text-sm">

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowLeft, Calendar, Clock, User } from "lucide-react";
 import ShareButtons from "@/components/blog/ShareButtons";
 import ArticleCTA from "@/components/blog/ArticleCTA";
@@ -26,7 +27,7 @@ const jsonLd = {
   "@type": "BlogPosting",
   "headline": "5 ошибок при выборе чат-бота, которые стоят вам 200 000 ₽ в месяц",
   "description": "Как не попасть в ловушку шаблонных решений и выбрать действительно эффективный инструмент для автоматизации заявок.",
-  "image": "https://chatbot24.su/og-image.jpg",
+  "image": "https://chatbot24.su/images/articles/19d21b12-2b12-8fcb-8000-000060a82555_daviddd03411_modern_3D_isometric_illustration_of_business_pro_44dd700b-58ba-440b-9d1b-b94979d69ea6_1.png",
   "datePublished": "2026-01-15T00:00:00Z",
   "dateModified": "2026-01-15T00:00:00Z",
   "author": {
@@ -91,6 +92,18 @@ export default function ArticlePage() {
               стоят вам 200 000 ₽ в месяц
             </span>
           </h1>
+
+          {/* Hero Image */}
+          <div className="relative w-full h-64 sm:h-80 rounded-xl overflow-hidden mb-6">
+            <Image
+              src="/images/articles/19d21b12-2b12-8fcb-8000-000060a82555_daviddd03411_modern_3D_isometric_illustration_of_business_pro_44dd700b-58ba-440b-9d1b-b94979d69ea6_1.png"
+              alt="5 ошибок при выборе чат-бота"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 800px"
+              priority
+            />
+          </div>
 
           <div className="flex flex-wrap gap-2 mb-6">
             <span className="px-3 py-1 rounded-full bg-primary-500/10 text-primary-400 text-sm">

@@ -22,13 +22,15 @@ export default function ArticlePage() {
       </header>
 
       {/* Hero Image */}
-      <div className="relative w-full h-[300px] md:h-[400px] mb-10 rounded-2xl overflow-hidden bg-gradient-to-br from-gray-900 to-gray-800">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center text-white">
-            <div className="text-5xl md:text-6xl font-bold mb-4">Цифровая<br/>ловкость</div>
-            <div className="text-lg md:text-xl opacity-80">4 компетенции для работы с ИИ</div>
-          </div>
-        </div>
+      <div className="relative w-full h-[300px] md:h-[400px] mb-10 rounded-2xl overflow-hidden">
+        <Image
+          src="/images/articles/19d21b11-dbc2-86a4-8000-00008a0f6ec4_daviddd03411_modern_3D_isometric_illustration_of_business_pro_44dd700b-58ba-440b-9d1b-b94979d69ea6_0.png"
+          alt="4 компетенции команды для работы с ИИ"
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, 800px"
+          priority
+        />
       </div>
 
       {/* Introduction */}

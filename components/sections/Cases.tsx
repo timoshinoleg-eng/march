@@ -1,16 +1,15 @@
+import Image from "next/image";
 import Card from "@/components/ui/Card";
 import Section from "@/components/ui/Section";
 import Button from "@/components/ui/Button";
 import Link from "next/link";
-import { TrendingUp, TrendingDown, ArrowRight, Building2, GraduationCap, ShoppingCart, Factory, Code } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 const cases = [
   {
     company: "Сеть клиник в Москве",
     industry: "Медицина",
-    icon: Building2,
-    iconColor: "text-primary-400",
-    iconBg: "bg-primary-500/10",
+    image: "/cases/hero/case_medical_clinic.jpg",
     result: "−85%",
     resultLabel: "пропущенных звонков",
     description:
@@ -24,9 +23,7 @@ const cases = [
   {
     company: "Онлайн-школа иностранных языков",
     industry: "Образование",
-    icon: GraduationCap,
-    iconColor: "text-primary-400",
-    iconBg: "bg-primary-500/10",
+    image: "/cases/hero/case_language_school.jpg",
     result: "+120%",
     resultLabel: "рост лидов",
     description:
@@ -40,9 +37,7 @@ const cases = [
   {
     company: "Интернет-магазин электроники",
     industry: "E-commerce",
-    icon: ShoppingCart,
-    iconColor: "text-primary-400",
-    iconBg: "bg-primary-500/10",
+    image: "/cases/hero/case_ecommerce_electronics.jpg",
     result: "80%",
     resultLabel: "автоматизация",
     description:
@@ -56,9 +51,7 @@ const cases = [
   {
     company: "Поставщик промышленного оборудования",
     industry: "B2B",
-    icon: Factory,
-    iconColor: "text-primary-400",
-    iconBg: "bg-primary-500/10",
+    image: "/cases/hero/case_b2b_equipment.jpg",
     result: "−60%",
     resultLabel: "время обработки",
     description:
@@ -92,22 +85,34 @@ export default function Cases() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {cases.map((caseItem, index) => (
-          <Card key={index} variant="gradient" className="h-full">
-            <div className="flex items-start justify-between mb-6">
-              <div>
-                <span className="text-xs text-primary-400 font-medium uppercase tracking-wider">
+          <Card key={index} variant="gradient" className="h-full overflow-hidden">
+            {/* Hero Image */}
+            <div className="relative w-full h-48 mb-6 -mx-6 -mt-6">
+              <Image
+                src={caseItem.image}
+                alt={caseItem.company}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#161b22] via-transparent to-transparent" />
+              <div className="absolute top-4 left-4">
+                <span className="text-xs text-white font-medium uppercase tracking-wider bg-primary-500/80 px-3 py-1 rounded-full">
                   {caseItem.industry}
                 </span>
-                <h3 className="text-xl font-semibold text-white mt-1">
-                  {caseItem.company}
-                </h3>
               </div>
-              <div className="text-right">
-                <div className={`text-3xl font-bold ${caseItem.iconColor}`}>
+              <div className="absolute top-4 right-4 text-right">
+                <div className="text-2xl font-bold text-white drop-shadow-lg">
                   {caseItem.result}
                 </div>
-                <div className="text-sm text-gray-400">{caseItem.resultLabel}</div>
+                <div className="text-xs text-white/80 drop-shadow">{caseItem.resultLabel}</div>
               </div>
+            </div>
+
+            <div className="flex items-start justify-between mb-4">
+              <h3 className="text-xl font-semibold text-white">
+                {caseItem.company}
+              </h3>
             </div>
 
             <p className="text-gray-400 mb-6">{caseItem.description}</p>

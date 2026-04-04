@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowLeft, Calendar, Clock, User, TrendingUp, CheckCircle } from "lucide-react";
 import ShareButtons from "@/components/blog/ShareButtons";
 import ArticleCTA from "@/components/blog/ArticleCTA";
@@ -25,7 +26,7 @@ const jsonLd = {
   "@type": "BlogPosting",
   "headline": "Как мы подняли конверсию на 40% с помощью чат-бота",
   "description": "Реальный кейс: автоматизация первичной обработки заявок в онлайн-школе и рост продаж без увеличения рекламного бюджета.",
-  "image": "https://chatbot24.su/og-image.jpg",
+  "image": "https://chatbot24.su/images/articles/19d21b10-fc42-8b4a-8000-0000e7501ee1_daviddd03411_isometric_3D_illustration_of_chatbot_development_4c8e5938-d82c-4950-acb6-f36f43f2ac5a_3.png",
   "datePublished": "2026-01-30T00:00:00Z",
   "author": {
     "@type": "Organization",
@@ -122,6 +123,18 @@ export default function ArticlePage() {
             </span>{" "}
             с помощью чат-бота
           </h1>
+
+          {/* Hero Image */}
+          <div className="relative w-full h-64 sm:h-80 rounded-xl overflow-hidden mb-6">
+            <Image
+              src="/images/articles/19d21b10-fc42-8b4a-8000-0000e7501ee1_daviddd03411_isometric_3D_illustration_of_chatbot_development_4c8e5938-d82c-4950-acb6-f36f43f2ac5a_3.png"
+              alt="Кейс: повышение конверсии на 40%"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 800px"
+              priority
+            />
+          </div>
 
           <div className="flex flex-wrap gap-2 mb-6">
             <span className="px-3 py-1 rounded-full bg-primary-500/10 text-primary-400 text-sm">

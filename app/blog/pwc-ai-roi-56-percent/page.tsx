@@ -25,13 +25,15 @@ export default function ArticlePage() {
       </header>
 
       {/* Hero Image */}
-      <div className="relative w-full h-[300px] md:h-[400px] mb-10 rounded-2xl overflow-hidden bg-gradient-to-br from-gray-900 to-gray-800">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center text-white">
-            <div className="text-6xl md:text-8xl font-bold mb-4">56%</div>
-            <div className="text-xl md:text-2xl opacity-80">CEO не видят окупаемости от ИИ</div>
-          </div>
-        </div>
+      <div className="relative w-full h-[300px] md:h-[400px] mb-10 rounded-2xl overflow-hidden">
+        <Image
+          src="/images/articles/19d21b12-b8f2-8cf3-8000-000076530046_daviddd03411_ultra_realistic_photo_of_a_modern_clean_workspac_171bffc5-2cd3-4b13-a658-f5eb31811a97_2.png"
+          alt="56% инвестиций в ИИ не окупаются"
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, 800px"
+          priority
+        />
       </div>
 
       {/* Introduction */}
