@@ -47,6 +47,16 @@ const crmTypeOptions = [
   { value: "none", label: "Нет CRM" },
 ];
 
+// Поле сегментации: количество заявок в месяц
+const leadVolumeOptions = [
+  { value: "", label: "Сколько заявок получаете в месяц?" },
+  { value: "<100", label: "До 100" },
+  { value: "100-300", label: "100 – 300" },
+  { value: "300-500", label: "300 – 500" },
+  { value: "500-1000", label: "500 – 1000" },
+  { value: ">1000", label: "Более 1000" },
+];
+
 function FinalCTAContent() {
   const searchParams = useSearchParams();
   
@@ -57,6 +67,7 @@ function FinalCTAContent() {
     email: "",
     dailyLeads: "",
     crmType: "",
+    leadVolume: "",
   });
   
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -93,6 +104,7 @@ function FinalCTAContent() {
       ...(formData.email && { email: formData.email }),
       ...(formData.dailyLeads && { dailyLeads: formData.dailyLeads }),
       ...(formData.crmType && { crmType: formData.crmType }),
+      ...(formData.leadVolume && { leadVolume: formData.leadVolume }),
       ...(utmData.utmSource && { utmSource: utmData.utmSource }),
       ...(utmData.utmMedium && { utmMedium: utmData.utmMedium }),
       ...(utmData.utmCampaign && { utmCampaign: utmData.utmCampaign }),
@@ -120,6 +132,7 @@ function FinalCTAContent() {
           email: "",
           dailyLeads: "",
           crmType: "",
+          leadVolume: "",
         });
       }
     } catch (error) {
@@ -269,6 +282,30 @@ function FinalCTAContent() {
                         aria-label="Используемая CRM система"
                       >
                         {crmTypeOptions.map((option) => (
+                          <option key={option.value} value={option.value} className="bg-bg-secondary">
+                            {option.label}
+                          </option>
+                        ))}
+                      </select>
+                      <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                        <svg className="w-4 h-4 sm:w-5 sm:h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </div>
+                    </div>
+
+                    {/* Select для leadVolume — сегментация по объёму заявок в месяц */}
+                    <div className="relative sm:col-span-2">
+                      <label htmlFor="leadVolume" className="sr-only">Сколько заявок получаете в месяц</label>
+                      <select
+                        id="leadVolume"
+                        name="leadVolume"
+                        value={formData.leadVolume}
+                        onChange={handleChange}
+                        className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-bg-secondary border border-primary-500/20 rounded-lg text-white text-sm sm:text-base appearance-none focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                        aria-label="Сколько заявок получаете в месяц"
+                      >
+                        {leadVolumeOptions.map((option) => (
                           <option key={option.value} value={option.value} className="bg-bg-secondary">
                             {option.label}
                           </option>

@@ -35,6 +35,11 @@ export const leadSchema = z.object({
     .max(20)
     .optional()
     .or(z.literal("")),
+  leadVolume: z
+    .string()
+    .max(20)
+    .optional()
+    .or(z.literal("")),
   // UTM-метки
   utmSource: z.string().max(100).optional().or(z.literal("")),
   utmMedium: z.string().max(100).optional().or(z.literal("")),

@@ -14,6 +14,10 @@ export async function POST(req: NextRequest) {
       sessionId,
       source = 'AI Chat Widget',
       messages = [],
+      // Form segmentation fields
+      dailyLeads,
+      crmType,
+      leadVolume,
       // Brief data
       businessType,
       channels,
@@ -29,10 +33,11 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    console.log("Lead API received FULL:", JSON.stringify({ name, phone, email, budget, businessType, channels, dailyRequests, botTasks, hasExamples, score, category }, null, 2));
+    console.log("Lead API received FULL:", JSON.stringify({ name, phone, email, budget, businessType, channels, dailyRequests, botTasks, hasExamples, score, category, dailyLeads, crmType, leadVolume }, null, 2));
     console.log("Lead API received:", { 
       name, phone, email, budget, 
       businessType, channels, dailyRequests, botTasks, hasExamples,
+      dailyLeads, crmType, leadVolume,
       hasBriefData: !!businessType 
     });
     console.log("businessType value:", businessType, "hasBriefData:", !!businessType);
@@ -65,6 +70,10 @@ export async function POST(req: NextRequest) {
     if (dailyRequests) comments += "Заявок/день: " + dailyRequests + "\n";
     if (botTasks && botTasks.length) comments += "Задачи: " + botTasks.join(", ") + "\n";
     if (hasExamples) comments += "Примеры: " + hasExamples + "\n";
+    // Segmentation fields from form
+    if (dailyLeads) comments += "Заявок в день (форма): " + dailyLeads + "\n";
+    if (crmType) comments += "CRM: " + crmType + "\n";
+    if (leadVolume) comments += "Заявок в месяц: " + leadVolume + "\n";
     comments += "Бюджет: " + (budget || "не указан");
 
     // Send to Bitrix24 if configured
@@ -96,6 +105,10 @@ export async function POST(req: NextRequest) {
               UF_CRM_BUDGET: budget || undefined,
               UF_CRM_LEAD_SCORE: score || undefined,
               UF_CRM_LEAD_CATEGORY: category || undefined,
+              // Segmentation fields
+              UF_CRM_DAILY_LEADS: dailyLeads || undefined,
+              UF_CRM_CRM_TYPE: crmType || undefined,
+              UF_CRM_LEAD_VOLUME: leadVolume || undefined,
             },
             params: { REGISTER_SONET_EVENT: 'Y' }
           }),
@@ -152,7 +165,7 @@ export async function POST(req: NextRequest) {
     }
 
     // If no Bitrix24 configured, just log and return success
-    console.log('Lead created (no Bitrix24):', { name, phone, category, score });
+    console.log('Lead created (no Bitrix24):', { name, phone, category, score, dailyLeads, crmType, leadVolume });
     
     return NextResponse.json({ 
       success: true, 
