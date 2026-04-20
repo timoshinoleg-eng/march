@@ -5,7 +5,7 @@ import Button from "@/components/ui/Button";
 import Logo from "@/components/Logo";
 import { openChatWidget } from "@/lib/chat";
 import { trackGoal } from "@/lib/metrika";
-import { ArrowRight, Clock, CheckCircle, Building2 } from "lucide-react";
+import { ArrowRight, Clock, CheckCircle, Building2, Star } from "lucide-react";
 
 export default function Hero() {
   return (
@@ -48,11 +48,31 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-base sm:text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-8 sm:mb-10 px-4"
+            className="text-base sm:text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-6 sm:mb-8 px-4"
           >
             Запускаем систему обработки обращений за 7–14 дней. 
             Подходит компаниям с 10+ заявками в день.
           </motion.p>
+
+          {/* Hero Case Study Block */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.25 }}
+            className="inline-flex flex-col sm:flex-row items-start sm:items-center gap-3 px-4 sm:px-5 py-3 sm:py-4 rounded-xl bg-primary-500/5 border border-primary-500/20 mb-8 sm:mb-10 max-w-lg mx-auto text-left"
+          >
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary-500/15 flex-shrink-0">
+              <Star className="w-3.5 h-3.5 text-primary-400 fill-primary-400" />
+              <span className="text-xs font-medium text-primary-300">Кейс недели</span>
+            </div>
+            <div className="text-sm text-gray-300">
+              <span className="text-gray-400">Стоматология «Дентал-Плюс», Тула — </span>
+              <strong className="text-white">+44% записей</strong>
+              <span className="text-gray-400"> за месяц, </span>
+              <strong className="text-primary-400">+286 тыс. ₽</strong>
+              <span className="text-gray-400"> выручки</span>
+            </div>
+          </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 30 }}
