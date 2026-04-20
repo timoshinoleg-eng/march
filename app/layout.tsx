@@ -189,6 +189,31 @@ export default function RootLayout({
             })
           }}
         />
+        <Script
+          id="schema-software"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "SoftwareApplication",
+              name: "ChatBot24 AI-Assist",
+              applicationCategory: "BusinessApplication",
+              operatingSystem: "All",
+              offers: {
+                "@type": "Offer",
+                price: "129000",
+                priceCurrency: "RUB",
+                availability: "https://schema.org/InStock",
+                description: "Тариф с полной заменой менеджера и гарантией возврата при отсутствии окупаемости за 90 дней.",
+              },
+              aggregateRating: {
+                "@type": "AggregateRating",
+                ratingValue: "4.8",
+                ratingCount: "47",
+              },
+            }),
+          }}
+        />
       </body>
     </html>
   );
