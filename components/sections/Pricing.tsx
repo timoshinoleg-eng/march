@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import Section from "@/components/ui/Section";
-import { Star } from "lucide-react";
+import { Star, Shield, Zap, Flame, Trophy, Diamond } from "lucide-react";
 import { pricingPlans, bridgeText, PricingPlan } from "@/data/pricing";
 import Link from "next/link";
 
@@ -16,6 +16,14 @@ const plansWithSocial: PricingPlanWithSocial[] = pricingPlans.map((plan, index) 
   ...plan,
   socialProof: [9, 11, 14, 3][index] // Lite: 9, Base: 11, AI-Assist: 14, Enterprise: 3
 }));
+
+// Варианты оплаты только для AI-Assist
+const aiAssistPaymentOptions = [
+  { icon: Zap, label: "14 333 ₽/мес", sublabel: "(помесячно)", highlight: false },
+  { icon: Flame, label: "12 900 ₽/мес", sublabel: "(квартал, -10%)", highlight: false },
+  { icon: Trophy, label: "10 750 ₽/мес", sublabel: "(год, -25%)", highlight: true },
+  { icon: Diamond, label: "9 675 ₽/мес", sublabel: "(2 года, -32.5%)", highlight: false },
+];
 
 export default function Pricing() {
   return (
@@ -101,6 +109,44 @@ export default function Pricing() {
                 </p>
                 <p className="text-xs text-gray-500 mt-1">{plan.timeline}</p>
               </div>
+
+              {/* Варианты оплаты — только для AI-Assist */}
+              {plan.id === "ai-assist" && (
+                <div className="mb-4 p-3 rounded-lg bg-bg-primary/50 border border-primary-500/10">
+                  <p className="text-xs text-gray-500 mb-2 font-medium">Варианты оплаты:</p>
+                  <div className="space-y-2">
+                    {aiAssistPaymentOptions.map((opt, idx) => (
+                      <div
+                        key={idx}
+                        className={`flex items-center gap-2 text-sm ${
+                          opt.highlight
+                            ? "text-primary-300 font-semibold"
+                            : "text-gray-400"
+                        }`}
+                      >
+                        <opt.icon className={`w-3.5 h-3.5 flex-shrink-0 ${opt.highlight ? "text-primary-400" : "text-gray-500"}`} />
+                        <span>{opt.label}</span>
+                        <span className="text-gray-500 text-xs">{opt.sublabel}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Гарантия окупаемости — только для AI-Assist */}
+              {plan.id === "ai-assist" && (
+                <div className="mb-4 p-3 rounded-lg bg-primary-500/5 border border-primary-500/20">
+                  <div className="flex items-start gap-2">
+                    <Shield className="w-4 h-4 text-primary-400 flex-shrink-0 mt-0.5" />
+                    <div className="text-sm">
+                      <p className="text-white font-medium">Гарантия окупаемости 90 дней</p>
+                      <p className="text-gray-400 text-xs mt-0.5">
+                        Если бот не окупится за 3 месяца — вернём деньги по договору
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               <ul className="space-y-3 mb-6 flex-grow">
                 {plan.features.map((feature, idx) => (
