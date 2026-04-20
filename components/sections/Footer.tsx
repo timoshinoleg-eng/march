@@ -1,4 +1,4 @@
-import { TrendingUp, Mail, Phone, MapPin } from "lucide-react";
+import { TrendingUp, Mail, Phone, MapPin, Shield } from "lucide-react";
 
 const footerLinks = {
   solutions: [
@@ -58,6 +58,11 @@ export default function Footer() {
               <div className="flex items-center gap-3 text-sm text-gray-400">
                 <MapPin className="w-4 h-4 text-primary-400" />
                 <span>г. Москва</span>
+              </div>
+              {/* 152-FZ Compliance Badge */}
+              <div className="flex items-center gap-3 text-sm text-gray-400 pt-1">
+                <Shield className="w-4 h-4 text-primary-400 flex-shrink-0" />
+                <span>Данные хранятся в РФ. Соответствие 152-ФЗ</span>
               </div>
             </div>
           </div>
