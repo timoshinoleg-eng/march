@@ -37,6 +37,13 @@ const nextConfig = {
 
   redirects: async () => [
     { source: '/home', destination: '/', permanent: true },
+    // 301 redirect www → non-www (SEO: устранение дублирования контента)
+    {
+      source: '/:path*',
+      has: [{ type: 'header', key: 'host', value: 'www.chatbot24.su' }],
+      destination: 'https://chatbot24.su/:path*',
+      permanent: true,
+    },
   ],
 };
 
