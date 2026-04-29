@@ -8,6 +8,7 @@ const footerLinks = {
     { label: "Enterprise", href: "/calculator?utm_source=site&utm_medium=footer&utm_content=enterprise" },
   ],
   company: [
+    { label: "RestoBot", href: "/restobot" },
     { label: "Как это работает", href: "#how-it-works" },
     { label: "Кейсы", href: "#cases" },
     { label: "Технологии", href: "#tech-stack" },
