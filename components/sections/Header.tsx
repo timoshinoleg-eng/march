@@ -34,24 +34,6 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleNavClick = (href: string) => {
-    setIsMobileMenuOpen(false);
-    
-    // Если это страница блога и ссылка на главную с якорем
-    if (isBlogPage && href.startsWith("/#")) {
-      window.location.href = href;
-      return;
-    }
-    
-    // Если ссылка на той же странице
-    if (href.startsWith("#")) {
-      const element = document.querySelector(href);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
-    }
-  };
-
   return (
     <>
       <header
