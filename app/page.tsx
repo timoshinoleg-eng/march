@@ -9,6 +9,7 @@ import Integrations from "@/components/sections/Integrations"
 import Cases from "@/components/sections/Cases"
 import Process from "@/components/sections/Process"
 import FAQ from "@/components/sections/FAQ"
+import FinalCTA from "@/components/sections/FinalCTA"
 import Footer from "@/components/sections/Footer"
 
 export default function Home() {
@@ -26,6 +27,7 @@ export default function Home() {
         <Cases />
         <Process />
         <FAQ />
+        <FinalCTA />
       </main>
       <Footer />
     </>

@@ -20,3 +20,4 @@ export const trackMessengerClick = (messenger: string) => trackGoal('messenger_c
 export const trackCTAClick = (ctaName: string) => trackGoal('cta_click', { cta: ctaName });
 export const trackPhoneClick = () => trackGoal('phone_click');
 export const trackEmailClick = () => trackGoal('email_click');
+export const trackTelegramClick = (source?: string) => trackGoal('telegram_click', source ? { source } : undefined);

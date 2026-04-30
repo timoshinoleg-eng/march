@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Logo from "../Logo";
 import { openChatWidget } from "@/lib/chat";
+import { trackGoal } from "@/lib/metrika";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -94,7 +95,10 @@ export default function Header() {
             {/* CTA Button Desktop */}
             <div className="hidden md:block">
               <button
-                onClick={() => openChatWidget('brief')}
+                onClick={() => {
+                  trackGoal("brief_cta_click", { source: "header_cta" });
+                  openChatWidget('brief');
+                }}
                 className="px-4 py-2 bg-gradient-emerald text-white text-sm font-medium rounded-lg hover:shadow-lg hover:shadow-primary-500/25 transition-shadow"
               >
                 Оставить заявку
@@ -159,6 +163,7 @@ export default function Header() {
                 <button
                   onClick={() => {
                     setIsMobileMenuOpen(false);
+                    trackGoal("brief_cta_click", { source: "mobile_menu" });
                     openChatWidget('brief');
                   }}
                   className="block w-full px-6 py-3 bg-gradient-emerald text-white font-medium rounded-lg text-center"
