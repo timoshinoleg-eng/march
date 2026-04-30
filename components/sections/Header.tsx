@@ -9,6 +9,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const navItems = [
+  { label: "RestoBot", href: "/restobot" },
   { label: "Как это работает", href: "/#how-it-works" },
   { label: "Тарифы", href: "/#pricing" },
   { label: "Калькулятор", href: "/#calculator" },
@@ -32,24 +33,6 @@ export default function Header() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const handleNavClick = (href: string) => {
-    setIsMobileMenuOpen(false);
-    
-    // Если это страница блога и ссылка на главную с якорем
-    if (isBlogPage && href.startsWith("/#")) {
-      window.location.href = href;
-      return;
-    }
-    
-    // Если ссылка на той же странице
-    if (href.startsWith("#")) {
-      const element = document.querySelector(href);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
-    }
-  };
 
   return (
     <>

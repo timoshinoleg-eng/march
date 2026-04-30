@@ -1,20 +1,34 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 
 export const runtime = 'edge';
 
-// Разрешённые origin для CORS
-const ALLOWED_ORIGINS = [
+const DEFAULT_ALLOWED_ORIGINS = [
   'https://www.chatbot24.su',
   'https://chatbot24.su',
-  'https://march-rho.vercel.app',
   'http://localhost:3000',
 ];
 
 const FOLDER_ID = 'b1ggect9adumeeb8ahik';
 
+function getAllowedOrigins() {
+  const raw = process.env.CORS_ALLOWED_ORIGINS;
+  if (!raw) {
+    return DEFAULT_ALLOWED_ORIGINS;
+  }
+
+  const envOrigins = raw
+    .split(',')
+    .map((origin) => origin.trim())
+    .filter(Boolean);
+
+  return envOrigins.length > 0 ? envOrigins : DEFAULT_ALLOWED_ORIGINS;
+}
+
 // CORS headers helper
 function setCorsHeaders(response: Response, origin: string | null) {
-  const allowedOrigin = origin && ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+  const allowedOrigins = getAllowedOrigins();
+  const allowedOrigin =
+    origin && allowedOrigins.includes(origin) ? origin : allowedOrigins[0];
   
   response.headers.set('Access-Control-Allow-Origin', allowedOrigin);
   response.headers.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, HEAD');
@@ -36,9 +50,9 @@ interface HealthStatus {
   version: string;
   environment: string;
   config: {
-    yandexConfigured: boolean;
-    folderId: string;
-    allowedOrigins: string[];
+      yandexConfigured: boolean;
+      folderId: string;
+      allowedOrigins: string[];
   };
   services: {
     yandex: {
@@ -51,6 +65,7 @@ interface HealthStatus {
 
 export async function GET(req: NextRequest) {
   const origin = req.headers.get('origin');
+  const allowedOrigins = getAllowedOrigins();
   
   const health: HealthStatus = {
     status: 'healthy',
@@ -61,7 +76,7 @@ export async function GET(req: NextRequest) {
     config: {
       yandexConfigured: !!process.env.YANDEX_API_KEY,
       folderId: FOLDER_ID,
-      allowedOrigins: ALLOWED_ORIGINS,
+      allowedOrigins,
     },
     
     services: {

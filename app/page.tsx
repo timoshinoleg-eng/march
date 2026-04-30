@@ -1,5 +1,6 @@
 import Header from "@/components/sections/Header"
 import Hero from "@/components/sections/Hero"
+import RestoBotTeaser from "@/components/sections/RestoBotTeaser"
 import Problems from "@/components/sections/Problems"
 import HowItWorks from "@/components/sections/HowItWorks"
 import Pricing from "@/components/sections/Pricing"
@@ -17,6 +18,7 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
+        <RestoBotTeaser />
         <Problems />
         <HowItWorks />
         <Pricing />
