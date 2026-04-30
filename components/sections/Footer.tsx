@@ -1,4 +1,7 @@
+"use client";
+
 import { TrendingUp, Mail, Phone, MapPin } from "lucide-react";
+import { trackEmailClick, trackGoal, trackPhoneClick } from "@/lib/metrika";
 
 const footerLinks = {
   solutions: [
@@ -15,9 +18,9 @@ const footerLinks = {
   ],
   support: [
     { label: "FAQ", href: "#faq" },
-    { label: "Контакты", href: "#contact" },
-    { label: "Политика конфиденциальности", href: "#" },
-    { label: "Пользовательское соглашение", href: "#" },
+    { label: "Контакты", href: "/#final-cta" },
+    { label: "Политика конфиденциальности", href: "/thanks" },
+    { label: "Пользовательское соглашение", href: "/calculator" },
   ],
 };
 
@@ -43,6 +46,7 @@ export default function Footer() {
             <div className="space-y-3">
               <a 
                 href="tel:+79933366102" 
+                onClick={() => trackPhoneClick()}
                 className="flex items-center gap-3 text-sm text-gray-400 hover:text-primary-400 transition-colors"
               >
                 <Phone className="w-4 h-4 text-primary-400" />
@@ -50,6 +54,7 @@ export default function Footer() {
               </a>
               <a 
                 href="mailto:info@chatbot24.su" 
+                onClick={() => trackEmailClick()}
                 className="flex items-center gap-3 text-sm text-gray-400 hover:text-primary-400 transition-colors"
               >
                 <Mail className="w-4 h-4 text-primary-400" />
@@ -70,6 +75,7 @@ export default function Footer() {
                 <li key={link.label}>
                   <a
                     href={link.href}
+                    onClick={() => trackGoal("brief_cta_click", { source: `footer_${link.label.toLowerCase()}` })}
                     className="text-gray-400 text-sm hover:text-primary-400 transition-colors"
                   >
                     {link.label}
@@ -87,6 +93,11 @@ export default function Footer() {
                 <li key={link.label}>
                   <a
                     href={link.href}
+                    onClick={
+                      link.label === "Контакты"
+                        ? () => trackGoal("brief_cta_click", { source: "footer_contacts" })
+                        : undefined
+                    }
                     className="text-gray-400 text-sm hover:text-primary-400 transition-colors"
                   >
                     {link.label}

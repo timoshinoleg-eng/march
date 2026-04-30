@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import Card from "@/components/ui/Card";
@@ -49,6 +50,7 @@ const crmTypeOptions = [
 
 function FinalCTAContent() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   
   const [formData, setFormData] = useState({
     name: "",
@@ -110,17 +112,9 @@ function FinalCTAContent() {
       const data = await response.json();
 
       if (data.success) {
-        setIsSuccess(true);
-        // Отслеживание цели Яндекс Метрики - отправка формы
         trackFormSubmit("brief_form");
-        setFormData({
-          name: "",
-          company: "",
-          phone: "",
-          email: "",
-          dailyLeads: "",
-          crmType: "",
-        });
+        setIsSuccess(true);
+        router.push(`/thanks?source=${encodeURIComponent(utmData.utmSource || "final_cta")}`);
       }
     } catch (error) {
       console.error("Form submission error:", error);
