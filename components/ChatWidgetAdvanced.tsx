@@ -451,7 +451,7 @@ export default function ChatWidgetAdvanced() {
       const category = getLeadCategory(score);
 
       // Send to API with brief data
-      await fetch("/api/lead", {
+      const leadResponse = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -472,6 +472,11 @@ export default function ChatWidgetAdvanced() {
         }),
       });
 
+      const leadResult = await leadResponse.json();
+      if (!leadResponse.ok || !leadResult?.success) {
+        throw new Error(leadResult?.error || "Не удалось отправить заявку");
+      }
+
       // Track conversion
       fetch("/api/analytics", {
         method: "POST",
@@ -486,13 +491,6 @@ export default function ChatWidgetAdvanced() {
           },
         }),
       }).catch(console.error);
-
-      // Log brief to database and Telegram
-      logBrief({
-        name: briefData.name!,
-        phone: briefData.phone!,
-        email: briefData.email,
-      });
 
       // Update contacts in database
       fetch("/api/chat/contacts", {
@@ -521,7 +519,7 @@ export default function ChatWidgetAdvanced() {
 
     } catch (err) {
       console.error("Lead submission error:", err);
-      setError("Ошибка отправки. Попробуйте позже.");
+      setError(err instanceof Error ? err.message : "Ошибка отправки. Попробуйте позже.");
     } finally {
       setIsLoading(false);
     }

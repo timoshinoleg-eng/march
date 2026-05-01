@@ -53,6 +53,7 @@ interface HealthStatus {
       yandexConfigured: boolean;
       openRouterConfigured: boolean;
       telegramConfigured: boolean;
+      bitrixConfigured: boolean;
       folderId: string;
       allowedOrigins: string[];
   };
@@ -71,6 +72,9 @@ interface HealthStatus {
       status: string;
       chatId?: string;
     };
+    bitrix: {
+      status: string;
+    };
   };
 }
 
@@ -88,6 +92,7 @@ export async function GET(req: NextRequest) {
       yandexConfigured: !!process.env.YANDEX_API_KEY,
       openRouterConfigured: !!process.env.OPENROUTER_API_KEY,
       telegramConfigured: !!process.env.TELEGRAM_BOT_TOKEN && !!process.env.TELEGRAM_CHAT_ID,
+      bitrixConfigured: !!process.env.BITRIX24_WEBHOOK,
       folderId: FOLDER_ID,
       allowedOrigins,
     },
@@ -105,6 +110,9 @@ export async function GET(req: NextRequest) {
         chatId: process.env.TELEGRAM_CHAT_ID
           ? process.env.TELEGRAM_CHAT_ID.replace(/\s+/g, '')
           : undefined,
+      },
+      bitrix: {
+        status: process.env.BITRIX24_WEBHOOK ? 'configured' : 'not_configured',
       },
     },
   };

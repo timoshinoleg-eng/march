@@ -1,5 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { sendLeadToTelegram } from '@/lib/telegram-chat';
+import {
+  sendBriefToTelegram,
+  sendChatSummaryToTelegram,
+  sendLeadToTelegram,
+} from '@/lib/telegram-chat';
+import { initDatabase, saveBrief } from '@/lib/db';
 
 export async function POST(req: NextRequest) {
   try {
@@ -29,6 +34,8 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    await initDatabase();
+
     console.log("Lead API received FULL:", JSON.stringify({ name, phone, email, budget, businessType, channels, dailyRequests, botTasks, hasExamples, score, category }, null, 2));
     console.log("Lead API received:", { 
       name, phone, email, budget, 
@@ -37,26 +44,68 @@ export async function POST(req: NextRequest) {
     });
     console.log("businessType value:", businessType, "hasBriefData:", !!businessType);
 
-    // Отправляем в Telegram
-    await sendLeadToTelegram({
+    // Отправляем в Telegram независимо от Bitrix.
+    const telegramLeadSent = await sendLeadToTelegram({
       type: businessType ? 'consultation' : 'callback',
       name,
       email,
       phone,
     });
-    const briefInfo = businessType ? `
-📋 ДАННЫЕ БРИФА:
-Сфера: ${businessType || 'не указана'}
-Каналы: ${channels?.join(', ') || 'не указаны'}
-Заявок в день: ${dailyRequests || 'не указано'}
-Задачи бота: ${botTasks?.join(', ') || 'не указаны'}
-Примеры: ${hasExamples || 'не указано'}
-` : '';
 
-    // Build conversation history for Bitrix24
-    const conversationHistory = messages
-      .map((m: any) => `${m.role === 'user' ? 'Клиент' : 'AI'}: ${m.content}`)
-      .join('\n\n');
+    let telegramBriefSent = false;
+    let summarySent = false;
+    let briefSaved = false;
+
+    if (businessType && sessionId) {
+      try {
+        await saveBrief(sessionId, {
+          businessType,
+          channels: channels || [],
+          dailyRequests: dailyRequests || '',
+          botTasks: botTasks || [],
+          hasExamples: hasExamples || '',
+          budget: budget || '',
+          score: score || 0,
+          category: category || 'WARM',
+        });
+        briefSaved = true;
+      } catch (briefSaveError) {
+        console.error('Brief DB save error in lead route:', briefSaveError);
+      }
+
+      try {
+        telegramBriefSent = await sendBriefToTelegram({
+          sessionId,
+          businessType,
+          channels,
+          dailyRequests,
+          botTasks,
+          hasExamples,
+          budget,
+          score,
+          category,
+          contactName: name,
+          contactPhone: phone,
+          contactEmail: email,
+        });
+      } catch (telegramBriefError) {
+        console.error('Telegram brief relay error in lead route:', telegramBriefError);
+      }
+    }
+
+    if (sessionId && Array.isArray(messages) && messages.length > 0) {
+      try {
+        summarySent = await sendChatSummaryToTelegram({
+          sessionId,
+          messages,
+          hasContacts: true,
+          contactName: name,
+          contactPhone: phone,
+        });
+      } catch (summaryError) {
+        console.error('Telegram summary relay error in lead route:', summaryError);
+      }
+    }
 
     // Формируем comments
     let comments = "Оценка: " + category + " (" + score + " баллов)\n";
@@ -68,9 +117,10 @@ export async function POST(req: NextRequest) {
     comments += "Бюджет: " + (budget || "не указан");
 
     // Send to Bitrix24 if configured
-    console.log('BITRIX24_WEBHOOK configured:', !!process.env.BITRIX24_WEBHOOK);
+    const bitrixConfigured = !!process.env.BITRIX24_WEBHOOK;
+    console.log('BITRIX24_WEBHOOK configured:', bitrixConfigured);
     
-    if (process.env.BITRIX24_WEBHOOK) {
+    if (bitrixConfigured) {
       try {
         const bitrixUrl = `${process.env.BITRIX24_WEBHOOK}/crm.lead.add.json`;
         console.log('Sending to Bitrix24:', { name, phone, category });
@@ -139,6 +189,12 @@ export async function POST(req: NextRequest) {
           leadId: bitrixData.result,
           category,
           score,
+          telegramLeadSent,
+          telegramBriefSent,
+          summarySent,
+          briefSaved,
+          bitrixConfigured,
+          bitrixSent: true,
           message: 'Заявка успешно создана'
         });
       } catch (bitrixError) {
@@ -146,7 +202,13 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ 
           success: false, 
           error: 'Ошибка связи с Bitrix24',
-          details: String(bitrixError)
+          details: String(bitrixError),
+          telegramLeadSent,
+          telegramBriefSent,
+          summarySent,
+          briefSaved,
+          bitrixConfigured,
+          bitrixSent: false,
         }, { status: 500 });
       }
     }
@@ -158,6 +220,12 @@ export async function POST(req: NextRequest) {
       success: true, 
       category,
       score,
+      telegramLeadSent,
+      telegramBriefSent,
+      summarySent,
+      briefSaved,
+      bitrixConfigured,
+      bitrixSent: false,
       message: 'Заявка принята'
     });
 
