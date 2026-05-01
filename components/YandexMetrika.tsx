@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, Suspense } from 'react';
+import { Suspense, useEffect, useRef } from 'react';
+import Script from 'next/script';
 import { usePathname, useSearchParams } from 'next/navigation';
 
 const METRIKA_ID = 107072365;
@@ -12,72 +13,40 @@ declare global {
   }
 }
 
-// Компонент для отслеживания навигации
 function NavigationTracker() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const hasTrackedInitialRoute = useRef(false);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    
-    const url = pathname + (searchParams?.toString() ? '?' + searchParams.toString() : '');
-    
+
+    const url = pathname + (searchParams?.toString() ? `?${searchParams.toString()}` : '');
+
+    // Первый pageview отправляет штатный init Метрики. Для SPA-маршрутов шлем hit вручную.
+    if (!hasTrackedInitialRoute.current) {
+      hasTrackedInitialRoute.current = true;
+      return;
+    }
+
+    let attempts = 0;
     const sendHit = () => {
-      if ((window as any).ym) {
-        (window as any).ym(METRIKA_ID, 'hit', url, {
+      if (typeof window.ym === 'function') {
+        (window.ym as any)(METRIKA_ID, 'hit', url, {
           referer: document.referrer,
         });
-        console.log('[YM] Page view:', url);
+        console.log('[YM] SPA page view:', url);
+        return;
+      }
+
+      attempts += 1;
+      if (attempts < 20) {
+        window.setTimeout(sendHit, 250);
       }
     };
 
     sendHit();
-    setTimeout(sendHit, 500);
   }, [pathname, searchParams]);
-
-  return null;
-}
-
-// Компонент инициализации счётчика
-function MetrikaInit() {
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-
-    // Инициализируем dataLayer для E-commerce
-    window.dataLayer = window.dataLayer || [];
-
-    // Загружаем скрипт Яндекс.Метрики
-    (function(m: Window, e: Document, t: string, r: string, i: string, k?: HTMLScriptElement, a?: HTMLScriptElement) {
-      (m as any)[i] = (m as any)[i] || function() {
-        ((m as any)[i].a = (m as any)[i].a || []).push(arguments);
-      };
-      (m as any)[i].l = 1 * new Date().getTime();
-      
-      for (var j = 0; j < e.scripts.length; j++) {
-        if (e.scripts[j].src === r) return;
-      }
-      
-      k = e.createElement(t) as HTMLScriptElement;
-      a = e.getElementsByTagName(t)[0] as HTMLScriptElement;
-      k.async = true;
-      k.src = r;
-      a?.parentNode?.insertBefore(k, a);
-    })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js?id=' + METRIKA_ID, 'ym');
-
-    // Инициализация счётчика
-    (window as any).ym?.(METRIKA_ID, 'init', {
-      ssr: true,
-      webvisor: true,
-      clickmap: true,
-      ecommerce: 'dataLayer',
-      accurateTrackBounce: true,
-      trackLinks: true,
-      triggerEvent: true,
-      defer: true,
-    });
-
-    console.log('[YM] Counter initialized');
-  }, []);
 
   return null;
 }
@@ -85,10 +54,37 @@ function MetrikaInit() {
 export default function YandexMetrika() {
   return (
     <>
-      <MetrikaInit />
+      <Script
+        id="yandex-metrika-init"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            (function(m,e,t,r,i,k,a){
+              m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+              m[i].l=1*new Date();
+              for (var j = 0; j < document.scripts.length; j++) {
+                if (document.scripts[j].src === r) { return; }
+              }
+              k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a);
+            })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym');
+
+            ym(${METRIKA_ID}, 'init', {
+              ssr: true,
+              webvisor: true,
+              clickmap: true,
+              ecommerce: 'dataLayer',
+              accurateTrackBounce: true,
+              trackLinks: true
+            });
+          `,
+        }}
+      />
+
       <Suspense fallback={null}>
         <NavigationTracker />
       </Suspense>
+
       <noscript>
         <div>
           <img
