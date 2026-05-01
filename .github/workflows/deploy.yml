@@ -7,18 +7,38 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Deploy to Yandex Cloud
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            cd /opt/chatbot24
-            git pull origin main
+      - name: Prepare SSH key
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+        run: |
+          test -n "$SSH_KEY"
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/chatbot24
+          chmod 600 ~/.ssh/chatbot24
+          ssh-keyscan -H 111.88.255.208 >> ~/.ssh/known_hosts
+
+      - name: Sync project to server
+        run: |
+          rsync -az \
+            --exclude ".git" \
+            --exclude ".github" \
+            --exclude ".next" \
+            --exclude "node_modules" \
+            -e "ssh -i ~/.ssh/chatbot24" \
+            ./ ubuntu@111.88.255.208:/home/ubuntu/apps/chatbot24/
+
+      - name: Build and restart app
+        run: |
+          ssh -i ~/.ssh/chatbot24 ubuntu@111.88.255.208 '
+            set -e
+            cd /home/ubuntu/apps/chatbot24
+            npm ci
+            npm run build
             pm2 restart chatbot24
             pm2 save
+          '
