@@ -69,6 +69,7 @@ export async function initDatabase() {
     await query(`CREATE INDEX IF NOT EXISTS idx_sessions_created ON chat_sessions(created_at)`);
     await query(`CREATE INDEX IF NOT EXISTS idx_messages_session ON chat_messages(session_id)`);
     await query(`CREATE INDEX IF NOT EXISTS idx_briefs_session ON briefs(session_id)`);
+    await query(`CREATE UNIQUE INDEX IF NOT EXISTS idx_briefs_session_unique ON briefs(session_id)`);
 
     console.log("Database initialized successfully");
   } catch (error) {

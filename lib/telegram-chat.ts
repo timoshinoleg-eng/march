@@ -5,9 +5,17 @@ interface TelegramConfig {
   chatId: string;
 }
 
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
 function getTelegramConfig(): TelegramConfig | null {
-  const botToken = process.env.TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.TELEGRAM_CHAT_ID;
+  const botToken = process.env.TELEGRAM_BOT_TOKEN?.trim();
+  const chatId = process.env.TELEGRAM_CHAT_ID?.replace(/\s+/g, '');
 
   if (!botToken || !chatId) {
     console.warn("Telegram config not found");
@@ -15,6 +23,34 @@ function getTelegramConfig(): TelegramConfig | null {
   }
 
   return { botToken, chatId };
+}
+
+async function postTelegramMessage(config: TelegramConfig, text: string): Promise<boolean> {
+  const url = `https://api.telegram.org/bot${config.botToken}/sendMessage`;
+
+  const response = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      chat_id: config.chatId,
+      text,
+      parse_mode: "HTML",
+    }),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    console.error("Telegram API HTTP error:", response.status, errorText);
+    return false;
+  }
+
+  const data = await response.json();
+  if (!data.ok) {
+    console.error("Telegram API application error:", data);
+    return false;
+  }
+
+  return true;
 }
 
 // Отправка сообщения чата в Telegram
@@ -27,8 +63,6 @@ export async function sendChatToTelegram(data: {
   if (!config) return false;
 
   try {
-    const url = `https://api.telegram.org/bot${config.botToken}/sendMessage`;
-    
     // Обрезаем длинные сообщения
     const truncatedContent = data.content.length > 500 
       ? data.content.substring(0, 500) + "..." 
@@ -40,19 +74,9 @@ export async function sendChatToTelegram(data: {
 👤 Роль: ${data.role === 'user' ? 'Клиент' : 'Бот'}
 
 📝 Сообщение:
-<blockquote>${truncatedContent.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</blockquote>`;
+<blockquote>${escapeHtml(truncatedContent)}</blockquote>`;
 
-    await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        chat_id: config.chatId,
-        text: message,
-        parse_mode: "HTML",
-      }),
-    });
-
-    return true;
+    return await postTelegramMessage(config, message);
   } catch (error) {
     console.error("Telegram chat send error:", error);
     return false;
@@ -78,8 +102,6 @@ export async function sendBriefToTelegram(data: {
   if (!config) return false;
 
   try {
-    const url = `https://api.telegram.org/bot${config.botToken}/sendMessage`;
-
     const emoji = data.category === 'HOT' ? '🔥' : data.category === 'WARM' ? '⚡' : '❄️';
     
     let message = `${emoji} <b>Новый бриф заполнен!</b>
@@ -89,20 +111,20 @@ export async function sendBriefToTelegram(data: {
     // Контакты
     if (data.contactName || data.contactPhone) {
       message += `👤 <b>Контакты:</b>\n`;
-      if (data.contactName) message += `   Имя: ${data.contactName}\n`;
-      if (data.contactPhone) message += `   Телефон: ${data.contactPhone}\n`;
-      if (data.contactEmail) message += `   Email: ${data.contactEmail}\n`;
+      if (data.contactName) message += `   Имя: ${escapeHtml(data.contactName)}\n`;
+      if (data.contactPhone) message += `   Телефон: ${escapeHtml(data.contactPhone)}\n`;
+      if (data.contactEmail) message += `   Email: ${escapeHtml(data.contactEmail)}\n`;
       message += `\n`;
     }
 
     // Данные брифа
     message += `📋 <b>Данные брифа:</b>\n`;
-    if (data.businessType) message += `   Сфера: ${data.businessType}\n`;
-    if (data.channels?.length) message += `   Каналы: ${data.channels.join(", ")}\n`;
-    if (data.dailyRequests) message += `   Заявок/день: ${data.dailyRequests}\n`;
-    if (data.botTasks?.length) message += `   Задачи: ${data.botTasks.join(", ")}\n`;
-    if (data.hasExamples) message += `   Примеры: ${data.hasExamples}\n`;
-    if (data.budget) message += `   Бюджет: ${data.budget}\n`;
+    if (data.businessType) message += `   Сфера: ${escapeHtml(data.businessType)}\n`;
+    if (data.channels?.length) message += `   Каналы: ${escapeHtml(data.channels.join(", "))}\n`;
+    if (data.dailyRequests) message += `   Заявок/день: ${escapeHtml(data.dailyRequests)}\n`;
+    if (data.botTasks?.length) message += `   Задачи: ${escapeHtml(data.botTasks.join(", "))}\n`;
+    if (data.hasExamples) message += `   Примеры: ${escapeHtml(data.hasExamples)}\n`;
+    if (data.budget) message += `   Бюджет: ${escapeHtml(data.budget)}\n`;
     
     message += `\n`;
     
@@ -110,17 +132,7 @@ export async function sendBriefToTelegram(data: {
     message += `📊 <b>Оценка:</b> ${data.category} (${data.score || 0} баллов)\n`;
     message += `🆔 Сессия: <code>${data.sessionId.slice(-8)}</code>`;
 
-    await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        chat_id: config.chatId,
-        text: message,
-        parse_mode: "HTML",
-      }),
-    });
-
-    return true;
+    return await postTelegramMessage(config, message);
   } catch (error) {
     console.error("Telegram brief send error:", error);
     return false;
@@ -140,8 +152,6 @@ export async function sendLeadToTelegram(data: {
   if (!config) return false;
 
   try {
-    const url = `https://api.telegram.org/bot${config.botToken}/sendMessage`;
-
     const typeLabels: Record<string, string> = {
       guide: '📚 Заявка на гайд',
       consultation: '💬 Консультация',
@@ -150,25 +160,15 @@ export async function sendLeadToTelegram(data: {
 
     let message = `<b>${typeLabels[data.type] || 'Новая заявка'}</b>\n\n`;
 
-    if (data.name) message += `<b>Имя:</b> ${data.name}\n`;
-    if (data.email) message += `<b>Email:</b> ${data.email}\n`;
-    if (data.telegram) message += `<b>Telegram:</b> @${data.telegram.replace('@', '')}\n`;
-    if (data.phone) message += `<b>Телефон:</b> ${data.phone}\n`;
-    if (data.message) message += `<b>Сообщение:</b> ${data.message}\n`;
+    if (data.name) message += `<b>Имя:</b> ${escapeHtml(data.name)}\n`;
+    if (data.email) message += `<b>Email:</b> ${escapeHtml(data.email)}\n`;
+    if (data.telegram) message += `<b>Telegram:</b> @${escapeHtml(data.telegram.replace('@', ''))}\n`;
+    if (data.phone) message += `<b>Телефон:</b> ${escapeHtml(data.phone)}\n`;
+    if (data.message) message += `<b>Сообщение:</b> ${escapeHtml(data.message)}\n`;
 
     message += `\n<i>${new Date().toLocaleString('ru-RU')}</i>`;
 
-    await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        chat_id: config.chatId,
-        text: message,
-        parse_mode: "HTML",
-      }),
-    });
-
-    return true;
+    return await postTelegramMessage(config, message);
   } catch (error) {
     console.error("Telegram lead send error:", error);
     return false;
@@ -187,8 +187,6 @@ export async function sendChatSummaryToTelegram(data: {
   if (!config) return false;
 
   try {
-    const url = `https://api.telegram.org/bot${config.botToken}/sendMessage`;
-
     const status = data.hasContacts ? '✅ С контактами' : '⚠️ Анонимный';
     
     let message = `📋 <b>Итог чата</b> ${status}
@@ -207,20 +205,10 @@ export async function sendChatSummaryToTelegram(data: {
       const truncated = msg.content.length > 100 
         ? msg.content.substring(0, 100) + "..." 
         : msg.content;
-      message += `${prefix} ${truncated}\n`;
+      message += `${prefix} ${escapeHtml(truncated)}\n`;
     });
 
-    await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        chat_id: config.chatId,
-        text: message,
-        parse_mode: "HTML",
-      }),
-    });
-
-    return true;
+    return await postTelegramMessage(config, message);
   } catch (error) {
     console.error("Telegram summary send error:", error);
     return false;

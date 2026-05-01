@@ -51,6 +51,8 @@ interface HealthStatus {
   environment: string;
   config: {
       yandexConfigured: boolean;
+      openRouterConfigured: boolean;
+      telegramConfigured: boolean;
       folderId: string;
       allowedOrigins: string[];
   };
@@ -59,6 +61,15 @@ interface HealthStatus {
       status: string;
       latencyMs?: number;
       error?: string;
+    };
+    openRouter: {
+      status: string;
+      model?: string;
+      error?: string;
+    };
+    telegram: {
+      status: string;
+      chatId?: string;
     };
   };
 }
@@ -75,6 +86,8 @@ export async function GET(req: NextRequest) {
     
     config: {
       yandexConfigured: !!process.env.YANDEX_API_KEY,
+      openRouterConfigured: !!process.env.OPENROUTER_API_KEY,
+      telegramConfigured: !!process.env.TELEGRAM_BOT_TOKEN && !!process.env.TELEGRAM_CHAT_ID,
       folderId: FOLDER_ID,
       allowedOrigins,
     },
@@ -82,6 +95,16 @@ export async function GET(req: NextRequest) {
     services: {
       yandex: {
         status: process.env.YANDEX_API_KEY ? 'configured' : 'not_configured',
+      },
+      openRouter: {
+        status: process.env.OPENROUTER_API_KEY ? 'configured' : 'not_configured',
+        model: 'deepseek/deepseek-chat',
+      },
+      telegram: {
+        status: process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID ? 'configured' : 'not_configured',
+        chatId: process.env.TELEGRAM_CHAT_ID
+          ? process.env.TELEGRAM_CHAT_ID.replace(/\s+/g, '')
+          : undefined,
       },
     },
   };

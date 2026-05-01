@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { saveMessage } from "@/lib/db";
+import { initDatabase, saveMessage } from "@/lib/db";
 import { sendChatToTelegram } from "@/lib/telegram-chat";
 
 // POST /api/chat/message - сохранение сообщения
@@ -14,16 +14,25 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Сохраняем в базу
-    await saveMessage(sessionId, role, content, sentiment);
-
-    // Отправляем в Telegram (только user сообщения для избежания спама)
+    // Сначала дублируем в Telegram, чтобы БД не блокировала уведомления.
     if (role === "user") {
-      await sendChatToTelegram({
-        sessionId,
-        role,
-        content,
-      });
+      try {
+        await sendChatToTelegram({
+          sessionId,
+          role,
+          content,
+        });
+      } catch (telegramError) {
+        console.error("Telegram message relay error:", telegramError);
+      }
+    }
+
+    // Потом пробуем сохранить в БД.
+    try {
+      await initDatabase();
+      await saveMessage(sessionId, role, content, sentiment);
+    } catch (dbError) {
+      console.error("Database message save error:", dbError);
     }
 
     return NextResponse.json({ success: true });
