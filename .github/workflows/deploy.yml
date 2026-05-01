@@ -18,8 +18,9 @@ jobs:
         run: |
           test -n "$SSH_KEY"
           mkdir -p ~/.ssh
-          printf '%s\n' "$SSH_KEY" > ~/.ssh/chatbot24
+          printf '%s\n' "$SSH_KEY" | tr -d '\r' > ~/.ssh/chatbot24
           chmod 600 ~/.ssh/chatbot24
+          ssh-keygen -y -f ~/.ssh/chatbot24 > /dev/null
           ssh-keyscan -H 111.88.255.208 >> ~/.ssh/known_hosts
 
       - name: Sync project to server
