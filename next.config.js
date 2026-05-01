@@ -37,6 +37,8 @@ const nextConfig = {
 
   redirects: async () => [
     { source: '/home', destination: '/', permanent: true },
+    { source: '/cases/hero/case_law_firm.jpg', destination: '/cases/hero/case_b2b_equipment.jpg', permanent: false },
+    { source: '/cases/hero/case_beauty_salon.jpg', destination: '/cases/hero/case_medical_clinic.jpg', permanent: false },
     { source: '/thanks.html', destination: '/thanks', permanent: false },
     { source: '/spasibo', destination: '/thanks', permanent: false },
   ],
