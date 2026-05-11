@@ -7,6 +7,7 @@ const footerLinks = {
   solutions: [
     { label: "Lite", href: "/calculator?utm_source=site&utm_medium=footer&utm_content=lite" },
     { label: "Base", href: "/calculator?utm_source=site&utm_medium=footer&utm_content=base" },
+    { label: "RestoBot", href: "/restobot?utm_source=site&utm_medium=footer&utm_content=restobot" },
     { label: "AI", href: "/calculator?utm_source=site&utm_medium=footer&utm_content=ai" },
     { label: "Enterprise", href: "/calculator?utm_source=site&utm_medium=footer&utm_content=enterprise" },
   ],

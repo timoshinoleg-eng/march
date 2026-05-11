@@ -1,8 +1,39 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sendLeadToTelegram } from '@/lib/telegram-chat';
 
+interface ChatMessage {
+  role: string;
+  content: string;
+}
+
+interface LeadPayload {
+  name?: string;
+  phone?: string;
+  email?: string;
+  telegram?: string;
+  budget?: string;
+  timeline?: string;
+  score?: number;
+  category?: string;
+  sessionId?: string;
+  source?: string;
+  messages?: ChatMessage[];
+  businessType?: string;
+  channels?: string[];
+  dailyRequests?: string;
+  botTasks?: string[];
+  hasExamples?: string;
+  product?: string;
+  restaurantName?: string;
+  restaurantFormat?: string;
+  orderMode?: string;
+  menuStatus?: string;
+  city?: string;
+}
+
 export async function POST(req: NextRequest) {
   try {
+    const payload = (await req.json()) as LeadPayload;
     const { 
       name, 
       phone, 
@@ -20,7 +51,16 @@ export async function POST(req: NextRequest) {
       dailyRequests,
       botTasks,
       hasExamples,
-    } = await req.json();
+      product,
+      restaurantName,
+      restaurantFormat,
+      orderMode,
+      menuStatus,
+      city,
+      telegram,
+    } = payload;
+
+    const isRestoBotLead = product === 'restobot' || source === 'RestoBot Landing';
 
     if (!name || !phone) {
       return NextResponse.json(
@@ -29,7 +69,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    console.log("Lead API received FULL:", JSON.stringify({ name, phone, email, budget, businessType, channels, dailyRequests, botTasks, hasExamples, score, category }, null, 2));
+    console.log("Lead API received FULL:", JSON.stringify({ name, phone, email, budget, businessType, channels, dailyRequests, botTasks, hasExamples, score, category, product, restaurantName, restaurantFormat, orderMode, menuStatus, city, telegram }, null, 2));
     console.log("Lead API received:", { 
       name, phone, email, budget, 
       businessType, channels, dailyRequests, botTasks, hasExamples,
@@ -38,11 +78,22 @@ export async function POST(req: NextRequest) {
     console.log("businessType value:", businessType, "hasBriefData:", !!businessType);
 
     // Отправляем в Telegram
+    const restobotMessage = isRestoBotLead ? [
+      restaurantName ? `Заведение: ${restaurantName}` : null,
+      restaurantFormat ? `Формат: ${restaurantFormat}` : null,
+      orderMode ? `Сценарий заказов: ${orderMode}` : null,
+      menuStatus ? `Меню: ${menuStatus}` : null,
+      city ? `Город: ${city}` : null,
+      telegram ? `Telegram: @${telegram.replace('@', '')}` : null,
+    ].filter(Boolean).join('\n') : undefined;
+
     await sendLeadToTelegram({
-      type: businessType ? 'consultation' : 'callback',
+      type: isRestoBotLead ? 'restobot' : businessType ? 'consultation' : 'callback',
       name,
       email,
       phone,
+      telegram,
+      message: restobotMessage,
     });
     const briefInfo = businessType ? `
 📋 ДАННЫЕ БРИФА:
@@ -55,11 +106,18 @@ export async function POST(req: NextRequest) {
 
     // Build conversation history for Bitrix24
     const conversationHistory = messages
-      .map((m: any) => `${m.role === 'user' ? 'Клиент' : 'AI'}: ${m.content}`)
+      .map((m) => `${m.role === 'user' ? 'Клиент' : 'AI'}: ${m.content}`)
       .join('\n\n');
 
     // Формируем comments
-    let comments = "Оценка: " + category + " (" + score + " баллов)\n";
+    let comments = isRestoBotLead ? "Продукт: RestoBot\n" : "";
+    comments += "Оценка: " + category + " (" + score + " баллов)\n";
+    if (restaurantName) comments += "Заведение: " + restaurantName + "\n";
+    if (restaurantFormat) comments += "Формат заведения: " + restaurantFormat + "\n";
+    if (orderMode) comments += "Сценарий заказов: " + orderMode + "\n";
+    if (menuStatus) comments += "Меню: " + menuStatus + "\n";
+    if (city) comments += "Город: " + city + "\n";
+    if (telegram) comments += "Telegram: @" + telegram.replace('@', '') + "\n";
     if (businessType) comments += "Сфера: " + businessType + "\n";
     if (channels && channels.length) comments += "Каналы: " + channels.join(", ") + "\n";
     if (dailyRequests) comments += "Заявок/день: " + dailyRequests + "\n";
@@ -80,13 +138,17 @@ export async function POST(req: NextRequest) {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             fields: {
-              TITLE: `[${category}] ${businessType ? 'Бриф' : 'Чат'} - ${name}`,
+              TITLE: isRestoBotLead
+                ? `[RESTOBOT] Пилот - ${restaurantName || name}`
+                : `[${category}] ${businessType ? 'Бриф' : 'Чат'} - ${name}`,
               NAME: name,
               PHONE: [{ VALUE: phone, VALUE_TYPE: 'WORK' }],
               EMAIL: email ? [{ VALUE: email, VALUE_TYPE: 'WORK' }] : undefined,
               COMMENTS: comments,
               SOURCE_ID: 'WEB',
-              SOURCE_DESCRIPTION: businessType ? `Brief: ${businessType} | Budget: ${budget || "no"} | Score: ${score}` : `${source} (${category})`,
+              SOURCE_DESCRIPTION: isRestoBotLead
+                ? `RestoBot pilot | ${restaurantFormat || "format: no"} | ${orderMode || "orders: no"}`
+                : businessType ? `Brief: ${businessType} | Budget: ${budget || "no"} | Score: ${score}` : `${source} (${category})`,
               // Пользовательские поля брифа
               UF_CRM_BUSINESS_TYPE: businessType || undefined,
               UF_CRM_CHANNELS: channels || undefined,
