@@ -258,6 +258,22 @@ export default function ArticlePage() {
               Сравнение Telegram vs WhatsApp →
             </Link>
           </div>
+
+          <div className="mt-4 p-4 bg-primary-500/10 rounded-lg border border-primary-500/20">
+            <p className="text-gray-300 mb-2">
+              <strong className="text-white">Отдельный сценарий для кафе, ресторанов и доставки.</strong>
+            </p>
+            <p className="text-sm leading-6 text-gray-400 mb-3">
+              Для ресторанного бизнеса мы вынесли меню, заказы и статусы в отдельный
+              подписочный продукт RestoBot.
+            </p>
+            <Link
+              href="/restobot?utm_source=blog&utm_medium=internal_link&utm_campaign=konversiya_40"
+              className="inline-flex items-center gap-2 text-primary-400 hover:text-primary-300 font-medium"
+            >
+              Открыть RestoBot →
+            </Link>
+          </div>
         </div>
 
         <footer className="mt-8 pt-8 border-t border-primary-500/10">

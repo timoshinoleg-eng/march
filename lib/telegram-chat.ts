@@ -17,6 +17,14 @@ function getTelegramConfig(): TelegramConfig | null {
   return { botToken, chatId };
 }
 
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
 // Отправка сообщения чата в Telegram
 export async function sendChatToTelegram(data: {
   sessionId: string;
@@ -129,7 +137,7 @@ export async function sendBriefToTelegram(data: {
 
 // Отправка заявки (гайд, консультация, обратный звонок)
 export async function sendLeadToTelegram(data: {
-  type: 'guide' | 'consultation' | 'callback';
+  type: 'guide' | 'consultation' | 'callback' | 'restobot';
   name?: string;
   email?: string;
   telegram?: string;
@@ -146,15 +154,16 @@ export async function sendLeadToTelegram(data: {
       guide: '📚 Заявка на гайд',
       consultation: '💬 Консультация',
       callback: '📞 Обратный звонок',
+      restobot: '🍽️ Заявка на пилот RestoBot',
     };
 
     let message = `<b>${typeLabels[data.type] || 'Новая заявка'}</b>\n\n`;
 
-    if (data.name) message += `<b>Имя:</b> ${data.name}\n`;
-    if (data.email) message += `<b>Email:</b> ${data.email}\n`;
-    if (data.telegram) message += `<b>Telegram:</b> @${data.telegram.replace('@', '')}\n`;
-    if (data.phone) message += `<b>Телефон:</b> ${data.phone}\n`;
-    if (data.message) message += `<b>Сообщение:</b> ${data.message}\n`;
+    if (data.name) message += `<b>Имя:</b> ${escapeHtml(data.name)}\n`;
+    if (data.email) message += `<b>Email:</b> ${escapeHtml(data.email)}\n`;
+    if (data.telegram) message += `<b>Telegram:</b> @${escapeHtml(data.telegram.replace('@', ''))}\n`;
+    if (data.phone) message += `<b>Телефон:</b> ${escapeHtml(data.phone)}\n`;
+    if (data.message) message += `<b>Сообщение:</b> ${escapeHtml(data.message)}\n`;
 
     message += `\n<i>${new Date().toLocaleString('ru-RU')}</i>`;
 

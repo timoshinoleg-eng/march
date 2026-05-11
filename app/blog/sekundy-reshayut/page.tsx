@@ -282,6 +282,22 @@ export default function ArticlePage() {
             <li>Передавать сложные вопросы менеджеру</li>
           </ul>
 
+          <div className="mb-8 rounded-xl border border-primary-500/20 bg-primary-500/10 p-5">
+            <p className="mb-2 text-gray-300">
+              <strong className="text-white">В ресторане скорость ответа особенно критична в часы пик.</strong>
+            </p>
+            <p className="mb-4 text-sm leading-6 text-gray-400">
+              RestoBot помогает кафе и доставке принимать заказы в Telegram:
+              клиент открывает меню, оформляет заказ и получает статус без звонка.
+            </p>
+            <Link
+              href="/restobot?utm_source=blog&utm_medium=internal_link&utm_campaign=sekundy_reshayut"
+              className="inline-flex items-center gap-2 font-medium text-primary-400 hover:text-primary-300"
+            >
+              Посмотреть RestoBot для ресторанов →
+            </Link>
+          </div>
+
           <h2 className="text-xl sm:text-2xl font-bold text-white mt-8 mb-4">
             Вывод
           </h2>

@@ -289,6 +289,22 @@ export default function ArticlePage() {
             Так вы охватите максимальную аудиторию и дадите клиенту выбор 
             удобного канала коммуникации.
           </p>
+
+          <div className="mt-8 rounded-xl border border-primary-500/20 bg-primary-500/10 p-5">
+            <p className="mb-2 text-gray-300">
+              <strong className="text-white">Для кафе и ресторанов Telegram часто становится самым быстрым каналом запуска.</strong>
+            </p>
+            <p className="mb-4 text-sm leading-6 text-gray-400">
+              Если вам нужен Telegram бот для ресторана с меню, заказами и статусами,
+              посмотрите RestoBot — подписочный пилот без долгого внедрения.
+            </p>
+            <Link
+              href="/restobot?utm_source=blog&utm_medium=internal_link&utm_campaign=telegram_vs_whatsapp"
+              className="inline-flex items-center gap-2 font-medium text-primary-400 hover:text-primary-300"
+            >
+              Перейти на страницу RestoBot →
+            </Link>
+          </div>
         </div>
 
         <footer className="mt-8 pt-8 border-t border-primary-500/10">
