@@ -100,10 +100,10 @@ export default function RestoBotLeadForm() {
         <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-primary-500/10">
           <CheckCircle2 className="h-8 w-8 text-primary-300" aria-hidden="true" />
         </div>
-        <h3 className="mt-5 text-2xl font-bold text-white">Заявка на пилот принята</h3>
+        <h3 className="mt-5 text-2xl font-bold text-white">Заявка на тест получена</h3>
         <p className="mt-3 text-sm leading-6 text-gray-400">
-          Мы получили контекст по заведению и свяжемся с вами, чтобы обсудить меню,
-          тестовый заказ и запуск RestoBot.
+          Мы посмотрим формат заведения, меню и сценарий заказов, затем свяжемся
+          с вами, чтобы обсудить бесплатный тест RestoBot.
         </p>
       </div>
     );
@@ -116,12 +116,12 @@ export default function RestoBotLeadForm() {
     >
       <div className="mb-6">
         <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary-300">
-          Бриф на тест RestoBot
+          Старт бесплатного теста
         </p>
-        <h3 className="mt-2 text-2xl font-bold text-white">Получите 14 дней бесплатного теста</h3>
+        <h3 className="mt-2 text-2xl font-bold text-white">Расскажите о заведении за 1 минуту</h3>
         <p className="mt-2 text-sm leading-6 text-gray-400">
-          Заполните короткий бриф, чтобы менеджер сразу увидел формат заведения,
-          меню и сценарий заказов.
+          Этого достаточно, чтобы мы предложили первый сценарий RestoBot:
+          самовывоз, доставку, заказы в зале или бронирования.
         </p>
       </div>
 
@@ -240,7 +240,7 @@ export default function RestoBotLeadForm() {
         {status === "submitting" ? (
           <Loader2 className="h-5 w-5 animate-spin" aria-hidden="true" />
         ) : null}
-        Отправить бриф и получить тест
+        Получить 14 дней теста
       </button>
     </form>
   );
