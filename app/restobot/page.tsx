@@ -2,9 +2,12 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import {
   ArrowRight,
+  BarChart3,
+  CalendarCheck,
   CheckCircle2,
   ClipboardList,
   Coffee,
+  CreditCard,
   Database,
   EyeOff,
   LayoutDashboard,
@@ -12,11 +15,16 @@ import {
   MessageSquare,
   Package,
   PhoneMissed,
+  QrCode,
   RefreshCcw,
+  Settings,
   ShieldCheck,
+  ShoppingCart,
+  Smartphone,
   Store,
   Truck,
   Utensils,
+  Users,
   XCircle,
   type LucideIcon,
 } from "lucide-react";
@@ -117,6 +125,99 @@ const capabilities: CardItem[] = [
   },
 ];
 
+const productFlow: CardItem[] = [
+  {
+    title: "Гость сканирует QR или открывает ссылку",
+    description:
+      "Меню запускается внутри Telegram. Ничего не нужно скачивать, регистрироваться в отдельном приложении или искать сайт ресторана.",
+    Icon: QrCode,
+  },
+  {
+    title: "Собирает корзину в мини-приложении",
+    description:
+      "Блюда разложены по категориям, карточки показывают описание, цену и доступность. Гость выбирает самовывоз, доставку или заказ в зале.",
+    Icon: ShoppingCart,
+  },
+  {
+    title: "Оставляет контакты и подтверждает заказ",
+    description:
+      "RestoBot сохраняет имя, телефон, комментарий и согласие на обработку данных. Для онлайн-оплаты может открываться защищённая YooKassa.",
+    Icon: CreditCard,
+  },
+  {
+    title: "Команда видит заказ в админ-панели",
+    description:
+      "Администратор открывает заказ, проверяет состав, сумму, тип получения, адрес и комментарий, затем меняет статус: новый, готовится, готов, выполнен.",
+    Icon: LayoutDashboard,
+  },
+];
+
+const adminSteps: CardItem[] = [
+  {
+    title: "Дашборд",
+    description:
+      "Показывает заказы за день, выручку, средний чек, активные брони, недельную динамику и топ-блюда. Это быстрый экран владельца или управляющего.",
+    Icon: BarChart3,
+  },
+  {
+    title: "Меню",
+    description:
+      "Добавляете блюдо, описание, цену, категорию, фото и доступность. Если позиция закончилась, снимаете галочку активности, и гость больше не закажет её.",
+    Icon: ClipboardList,
+  },
+  {
+    title: "Заказы",
+    description:
+      "Фильтруете по статусу и дате, открываете детали заказа, проверяете оплату и меняете статус. Это заменяет хаотичные сообщения в личных чатах.",
+    Icon: ListChecks,
+  },
+  {
+    title: "Бронирования",
+    description:
+      "Видите стол, имя гостя, телефон, время, количество гостей и статус. Бронь можно подтвердить, отредактировать или отменить.",
+    Icon: CalendarCheck,
+  },
+  {
+    title: "Настройки ресторана",
+    description:
+      "Указываете название, минимальную сумму заказа, радиус доставки, валюту, НДС для чека и часы работы по дням недели.",
+    Icon: Settings,
+  },
+  {
+    title: "Склад, лояльность и персонал",
+    description:
+      "Можно вести ингредиенты и низкий запас, настроить бонусы и максимальную скидку, добавить сотрудников с ролями официанта, повара, менеджера или админа.",
+    Icon: Users,
+  },
+];
+
+const ownerBenefits: CardItem[] = [
+  {
+    title: "Свой канал без комиссии агрегатора",
+    description:
+      "RestoBot не заменяет агрегаторы как источник новых гостей. Он помогает переводить постоянных клиентов в собственный Telegram-канал ресторана.",
+    Icon: Store,
+  },
+  {
+    title: "База гостей остаётся у заведения",
+    description:
+      "Каждый заказ связывается с гостем и историей обращений. Это основа для повторных продаж, бонусов и аккуратных персональных предложений.",
+    Icon: Users,
+  },
+  {
+    title: "Меню меняется быстрее, чем печатается QR",
+    description:
+      "Цена, описание, фото и доступность обновляются в панели. QR-код и ссылка остаются теми же, а гость видит актуальную версию меню.",
+    Icon: RefreshCcw,
+  },
+  {
+    title: "Запуск без разработки приложения",
+    description:
+      "На старте нужны меню, способы получения заказов и тестовый сценарий. Первую проверку можно провести за 14 дней бесплатного периода.",
+    Icon: Smartphone,
+  },
+];
+
 const launchSteps: StepItem[] = [
   {
     title: "Пишете в Telegram",
@@ -183,11 +284,19 @@ const faqItems: StepItem[] = [
   },
   {
     title: "Как обновляется меню?",
-    description: "Меню поддерживается через управляемый контур: можно обновлять позиции, цены и стоп-лист без переделки сайта.",
+    description: "В админ-панели можно обновлять название, описание, цену, фото и доступность блюда. Если позиция закончилась, её можно скрыть из меню.",
   },
   {
     title: "Как клиент делает заказ?",
-    description: "Клиент открывает меню в Telegram, выбирает позиции, оставляет контакты и получает статус в том же канале.",
+    description: "Клиент открывает меню в Telegram, выбирает позиции, оставляет контакты, комментарий и способ получения: доставка, самовывоз или заказ в зале.",
+  },
+  {
+    title: "Как пользоваться админ-панелью?",
+    description: "Перед сменой проверьте меню, часы работы и доступность позиций. Во время смены работайте с разделом заказов и меняйте статусы. После смены смотрите дашборд, выручку, средний чек и топ-блюда.",
+  },
+  {
+    title: "Есть ли бронирования, склад и лояльность?",
+    description: "В проекте предусмотрены разделы бронирований, склада, лояльности и персонала. Их можно включать в пилот по готовности сценария конкретного заведения.",
   },
   {
     title: "Что происходит после бесплатных 14 дней?",
@@ -285,7 +394,7 @@ function JsonLd() {
           serviceType: "Telegram bot for restaurant menu and orders",
             url: "https://chatbot24.su/restobot",
           description:
-            "Telegram бот для ресторана, кафе и доставки еды: меню в Telegram, оформление заказа, статусы и базовый административный контур.",
+            "Telegram бот для ресторана, кафе и доставки еды: QR-меню в Telegram, корзина, доставка, самовывоз, статусы заказов и административная панель для управления меню, заказами и аналитикой.",
           }),
         }}
       />
@@ -326,9 +435,10 @@ export default function RestoBotPage() {
                 Telegram бот для ресторана: меню и заказы без сложного внедрения
               </h1>
               <p className="mt-5 max-w-3xl text-lg leading-8 text-gray-300">
-                RestoBot помогает кафе, ресторанам и доставке запустить
-                собственный канал заказов: клиент видит меню, оформляет заказ,
-                а администратор получает заявку и меняет статус в одном контуре.
+                RestoBot превращает Telegram в собственный канал продаж
+                ресторана: гость открывает меню по QR или ссылке, собирает
+                корзину, выбирает доставку, самовывоз или заказ в зале, а
+                команда обрабатывает всё в админ-панели.
               </p>
               <div className="mt-6 flex flex-wrap gap-2 text-sm text-gray-300">
                 {["14 дней бесплатно", "От 2 990 ₽/мес.", "Данные в России"].map((item) => (
@@ -372,7 +482,60 @@ export default function RestoBotPage() {
                 </div>
                 <div className="mt-5 rounded-xl bg-primary-500/10 p-4">
                   <p className="text-sm font-medium text-white">Заказ #1042</p>
-                  <p className="mt-1 text-sm text-gray-400">Статус: готовится</p>
+                  <p className="mt-1 text-sm text-gray-400">
+                    Самовывоз на 13:30, оплата картой при получении
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="how-it-works" className="bg-bg-secondary/30 px-4 py-16 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl">
+            <SectionHeader
+              eyebrow="Как работает"
+              title="Путь заказа от QR-кода до кухни"
+              subtitle="RestoBot закрывает понятный ежедневный сценарий: гость сам выбирает блюда, а ресторан получает структурированный заказ вместо звонка, голосового сообщения или переписки в личке."
+            />
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+              {productFlow.map((item) => (
+                <FeatureCard key={item.title} item={item} />
+              ))}
+            </div>
+
+            <div className="mt-8 rounded-3xl border border-primary-500/10 bg-bg-primary/70 p-6 sm:p-8">
+              <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+                <div>
+                  <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary-300">
+                    Пример
+                  </p>
+                  <h3 className="mt-3 text-2xl font-bold text-white">
+                    Кофейня запускает предзаказы на обед
+                  </h3>
+                  <p className="mt-4 text-sm leading-6 text-gray-400">
+                    Гость утром открывает меню в Telegram, выбирает комбо,
+                    указывает телефон и время самовывоза. В админке появляется
+                    заказ со статусом «новый». Сотрудник подтверждает заказ,
+                    кухня готовит к указанному времени, а администратор меняет
+                    статус на «готов».
+                  </p>
+                </div>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  {[
+                    "Не надо принимать заказ на слух в час пик",
+                    "Состав заказа, сумма и комментарий уже структурированы",
+                    "Позиции из стоп-листа не продаются случайно",
+                    "Постоянный гость остаётся в базе ресторана",
+                  ].map((item) => (
+                    <div
+                      key={item}
+                      className="flex gap-3 rounded-2xl border border-primary-500/10 bg-bg-secondary/70 p-4 text-sm leading-6 text-gray-300"
+                    >
+                      <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary-300" aria-hidden="true" />
+                      <span>{item}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -412,12 +575,67 @@ export default function RestoBotPage() {
         <section className="px-4 py-16 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-7xl">
             <SectionHeader
-              eyebrow="MVP"
-              title="Что умеет бот для кафе и доставки"
-              subtitle="На старте закрываем основной путь: клиент открывает меню в Telegram, оформляет заказ, заведение принимает его и ведёт статус."
+              eyebrow="Возможности"
+              title="Что видит гость в Telegram"
+              subtitle="Гость получает привычный путь онлайн-заказа без установки приложения: меню, корзина, контакты, способ получения, оплата и подтверждение."
             />
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {capabilities.map((item) => (
+                <FeatureCard key={item.title} item={item} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="admin-panel" className="bg-bg-secondary/30 px-4 py-16 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl">
+            <SectionHeader
+              eyebrow="Админ-панель"
+              title="Как ресторан управляет RestoBot"
+              subtitle="Админка нужна не для разработчика, а для управляющего, администратора и смены: принять заказ, обновить меню, скрыть блюдо, посмотреть цифры и настроить рабочий день."
+            />
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {adminSteps.map((item) => (
+                <FeatureCard key={item.title} item={item} />
+              ))}
+            </div>
+
+            <div className="mt-8 grid gap-6 lg:grid-cols-3">
+              {[
+                {
+                  title: "Перед сменой",
+                  text: "Проверьте часы работы, наличие блюд, низкий запас ингредиентов и отключите позиции, которые сегодня нельзя продать.",
+                },
+                {
+                  title: "Во время смены",
+                  text: "Держите открытым раздел «Заказы»: новые заявки фильтруются по статусу, детали заказа открываются в один клик, статус меняется после подтверждения кухни.",
+                },
+                {
+                  title: "После смены",
+                  text: "Откройте дашборд: заказы, выручка, средний чек, активные брони и топ-блюда показывают, что продавалось лучше всего.",
+                },
+              ].map((item) => (
+                <div
+                  key={item.title}
+                  className="rounded-2xl border border-amber-400/15 bg-amber-400/5 p-6"
+                >
+                  <h3 className="text-lg font-semibold text-white">{item.title}</h3>
+                  <p className="mt-3 text-sm leading-6 text-gray-400">{item.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="px-4 py-16 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl">
+            <SectionHeader
+              eyebrow="Почему это продаёт"
+              title="RestoBot делает заказ удобным и сохраняет гостя у вас"
+              subtitle="У конкурентов хорошо работают быстрый запуск, QR-сценарий, личный кабинет, стоп-листы, статусы, аналитика и повторные продажи. В RestoBot эти принципы собраны вокруг Telegram и собственного канала ресторана."
+            />
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+              {ownerBenefits.map((item) => (
                 <FeatureCard key={item.title} item={item} />
               ))}
             </div>
