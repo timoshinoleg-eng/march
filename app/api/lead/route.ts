@@ -168,11 +168,15 @@ export async function POST(req: NextRequest) {
         
         if (bitrixData.error) {
           console.error('Bitrix24 error:', bitrixData.error);
-          return NextResponse.json({ 
-            success: false, 
-            error: 'Ошибка Bitrix24: ' + bitrixData.error_description,
-            details: bitrixData.error
-          }, { status: 500 });
+          return NextResponse.json({
+            success: true,
+            bitrixSent: false,
+            bitrixError: bitrixData.error,
+            telegramSent: true,
+            category,
+            score,
+            message: 'Заявка принята и отправлена в Telegram'
+          });
         }
 
         // Create task for HOT leads
@@ -198,6 +202,8 @@ export async function POST(req: NextRequest) {
 
         return NextResponse.json({ 
           success: true, 
+          bitrixSent: true,
+          telegramSent: true,
           leadId: bitrixData.result,
           category,
           score,
@@ -205,11 +211,15 @@ export async function POST(req: NextRequest) {
         });
       } catch (bitrixError) {
         console.error('Bitrix24 fetch error:', bitrixError);
-        return NextResponse.json({ 
-          success: false, 
-          error: 'Ошибка связи с Bitrix24',
-          details: String(bitrixError)
-        }, { status: 500 });
+        return NextResponse.json({
+          success: true,
+          bitrixSent: false,
+          bitrixError: String(bitrixError),
+          telegramSent: true,
+          category,
+          score,
+          message: 'Заявка принята и отправлена в Telegram'
+        });
       }
     }
 
@@ -218,6 +228,8 @@ export async function POST(req: NextRequest) {
     
     return NextResponse.json({ 
       success: true, 
+      bitrixSent: false,
+      telegramSent: true,
       category,
       score,
       message: 'Заявка принята'

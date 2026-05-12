@@ -11,13 +11,20 @@ import Process from "@/components/sections/Process"
 import FAQ from "@/components/sections/FAQ"
 import FinalCTA from "@/components/sections/FinalCTA"
 import Footer from "@/components/sections/Footer"
+import {
+  RestoBotExitPopup,
+  RestoBotPromoBar,
+  RestoBotSolutionTeaser,
+} from "@/components/sections/RestoBotPromo"
 
 export default function Home() {
   return (
     <>
       <Header />
+      <RestoBotPromoBar />
       <main>
         <Hero />
+        <RestoBotSolutionTeaser />
         <Problems />
         <HowItWorks />
         <Pricing />
@@ -30,6 +37,7 @@ export default function Home() {
         <FinalCTA />
       </main>
       <Footer />
+      <RestoBotExitPopup />
     </>
   )
 }
