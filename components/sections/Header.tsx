@@ -12,7 +12,11 @@ import { usePathname } from "next/navigation";
 const navItems = [
   { label: "Как это работает", href: "/#how-it-works" },
   { label: "Тарифы", href: "/#pricing" },
-  { label: "RestoBot", href: "/restobot" },
+  {
+    label: "RestoBot",
+    href: "/restobot?utm_source=main_site&utm_medium=header&utm_campaign=restobot",
+    promo: true,
+  },
   { label: "Калькулятор", href: "/#calculator" },
   { label: "Кейсы", href: "/#cases" },
   { label: "Блог", href: "/blog" },
@@ -53,6 +57,8 @@ export default function Header() {
     }
   };
 
+  const getPathFromHref = (href: string) => href.split("?")[0].split("#")[0];
+
   return (
     <>
       <header
@@ -82,10 +88,17 @@ export default function Header() {
                 <Link
                   key={item.href}
                   href={item.href}
+                  onClick={() => {
+                    if (item.promo) {
+                      trackGoal("restobot_click_header");
+                    }
+                  }}
                   className={`px-3 py-2 text-sm rounded-lg transition-colors ${
-                    pathname === item.href
+                    pathname === getPathFromHref(item.href)
                       ? "text-white bg-primary-500/20"
-                      : "text-gray-300 hover:text-white hover:bg-primary-500/10"
+                      : item.promo
+                        ? "border border-amber-400/25 bg-amber-400/10 text-amber-200 hover:bg-amber-400/20 hover:text-white"
+                        : "text-gray-300 hover:text-white hover:bg-primary-500/10"
                   }`}
                 >
                   {item.label}
@@ -144,11 +157,18 @@ export default function Header() {
                 >
                   <Link
                     href={item.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      if (item.promo) {
+                        trackGoal("restobot_click_mobile_menu");
+                      }
+                    }}
                     className={`block text-lg py-2 ${
-                      pathname === item.href
+                      pathname === getPathFromHref(item.href)
                         ? "text-primary-400"
-                        : "text-gray-300 hover:text-white"
+                        : item.promo
+                          ? "text-amber-300 hover:text-white"
+                          : "text-gray-300 hover:text-white"
                     }`}
                   >
                     {item.label}

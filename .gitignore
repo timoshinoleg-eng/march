@@ -9,6 +9,11 @@ update_token.sh
 # Dependencies
 node_modules
 
+# Next.js build output
+.next
+out
+*.tsbuildinfo
+
 # Backups
 *.sql
 *.backup

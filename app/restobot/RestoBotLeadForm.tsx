@@ -73,7 +73,7 @@ export default function RestoBotLeadForm() {
           source: "RestoBot Landing",
           category: "RESTOBOT",
           score: 90,
-          budget: "Подписка после пилота",
+          budget: "14 дней бесплатно, далее от 2 990 ₽/мес.",
         }),
       });
 
@@ -116,11 +116,12 @@ export default function RestoBotLeadForm() {
     >
       <div className="mb-6">
         <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary-300">
-          Заявка на пилот
+          Бриф на тест RestoBot
         </p>
-        <h3 className="mt-2 text-2xl font-bold text-white">Передайте контекст сразу</h3>
+        <h3 className="mt-2 text-2xl font-bold text-white">Получите 14 дней бесплатного теста</h3>
         <p className="mt-2 text-sm leading-6 text-gray-400">
-          Так менеджер увидит, что заявка пришла именно по RestoBot, и начнёт разговор с меню и сценария заказов.
+          Заполните короткий бриф, чтобы менеджер сразу увидел формат заведения,
+          меню и сценарий заказов.
         </p>
       </div>
 
@@ -239,7 +240,7 @@ export default function RestoBotLeadForm() {
         {status === "submitting" ? (
           <Loader2 className="h-5 w-5 animate-spin" aria-hidden="true" />
         ) : null}
-        Отправить заявку на пилот
+        Отправить бриф и получить тест
       </button>
     </form>
   );
