@@ -92,7 +92,7 @@ export async function POST(req: NextRequest) {
       telegram ? `Telegram: @${telegram.replace('@', '')}` : null,
     ].filter(Boolean).join('\n') : undefined;
 
-    await sendLeadToTelegram({
+    const telegramSent = await sendLeadToTelegram({
       type: isRestoBotLead ? 'restobot' : businessType ? 'consultation' : 'callback',
       name,
       email,
@@ -100,6 +100,13 @@ export async function POST(req: NextRequest) {
       telegram,
       message: restobotMessage,
     });
+
+    if (!telegramSent) {
+      return NextResponse.json(
+        { success: false, telegramSent: false, error: 'Не удалось отправить заявку в Telegram' },
+        { status: 502 }
+      );
+    }
     const briefInfo = businessType ? `
 📋 ДАННЫЕ БРИФА:
 Сфера: ${businessType || 'не указана'}
@@ -181,7 +188,7 @@ export async function POST(req: NextRequest) {
             success: true,
             bitrixSent: false,
             bitrixError: bitrixData.error,
-            telegramSent: true,
+            telegramSent,
             category,
             score,
             message: 'Заявка принята и отправлена в Telegram'
@@ -210,9 +217,9 @@ export async function POST(req: NextRequest) {
         }
 
         return NextResponse.json({ 
-          success: true, 
+          success: true,
           bitrixSent: true,
-          telegramSent: true,
+          telegramSent,
           leadId: bitrixData.result,
           category,
           score,
@@ -224,7 +231,7 @@ export async function POST(req: NextRequest) {
           success: true,
           bitrixSent: false,
           bitrixError: String(bitrixError),
-          telegramSent: true,
+          telegramSent,
           category,
           score,
           message: 'Заявка принята и отправлена в Telegram'
@@ -238,7 +245,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ 
       success: true, 
       bitrixSent: false,
-      telegramSent: true,
+      telegramSent,
       category,
       score,
       message: 'Заявка принята'

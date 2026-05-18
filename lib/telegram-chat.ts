@@ -5,6 +5,31 @@ interface TelegramConfig {
   chatId: string;
 }
 
+async function sendTelegramMessage(text: string): Promise<boolean> {
+  const config = getTelegramConfig();
+  if (!config) return false;
+
+  const response = await fetch(`https://api.telegram.org/bot${config.botToken}/sendMessage`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      chat_id: config.chatId,
+      text,
+      parse_mode: "HTML",
+    }),
+  });
+
+  const result = await response.json().catch(() => null) as
+    | { ok?: boolean; description?: string }
+    | null;
+
+  if (!response.ok || !result?.ok) {
+    throw new Error(result?.description || `Telegram API error: ${response.status}`);
+  }
+
+  return true;
+}
+
 function getTelegramConfig(): TelegramConfig | null {
   const botToken = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
@@ -31,12 +56,7 @@ export async function sendChatToTelegram(data: {
   role: string;
   content: string;
 }): Promise<boolean> {
-  const config = getTelegramConfig();
-  if (!config) return false;
-
   try {
-    const url = `https://api.telegram.org/bot${config.botToken}/sendMessage`;
-    
     // Обрезаем длинные сообщения
     const truncatedContent = data.content.length > 500 
       ? data.content.substring(0, 500) + "..." 
@@ -50,17 +70,7 @@ export async function sendChatToTelegram(data: {
 📝 Сообщение:
 <blockquote>${truncatedContent.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</blockquote>`;
 
-    await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        chat_id: config.chatId,
-        text: message,
-        parse_mode: "HTML",
-      }),
-    });
-
-    return true;
+    return await sendTelegramMessage(message);
   } catch (error) {
     console.error("Telegram chat send error:", error);
     return false;
@@ -82,12 +92,7 @@ export async function sendBriefToTelegram(data: {
   contactPhone?: string;
   contactEmail?: string;
 }): Promise<boolean> {
-  const config = getTelegramConfig();
-  if (!config) return false;
-
   try {
-    const url = `https://api.telegram.org/bot${config.botToken}/sendMessage`;
-
     const emoji = data.category === 'HOT' ? '🔥' : data.category === 'WARM' ? '⚡' : '❄️';
     
     let message = `${emoji} <b>Новый бриф заполнен!</b>
@@ -118,17 +123,7 @@ export async function sendBriefToTelegram(data: {
     message += `📊 <b>Оценка:</b> ${data.category} (${data.score || 0} баллов)\n`;
     message += `🆔 Сессия: <code>${data.sessionId.slice(-8)}</code>`;
 
-    await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        chat_id: config.chatId,
-        text: message,
-        parse_mode: "HTML",
-      }),
-    });
-
-    return true;
+    return await sendTelegramMessage(message);
   } catch (error) {
     console.error("Telegram brief send error:", error);
     return false;
@@ -144,12 +139,7 @@ export async function sendLeadToTelegram(data: {
   phone?: string;
   message?: string;
 }): Promise<boolean> {
-  const config = getTelegramConfig();
-  if (!config) return false;
-
   try {
-    const url = `https://api.telegram.org/bot${config.botToken}/sendMessage`;
-
     const typeLabels: Record<string, string> = {
       guide: '📚 Заявка на гайд',
       consultation: '💬 Консультация',
@@ -167,17 +157,7 @@ export async function sendLeadToTelegram(data: {
 
     message += `\n<i>${new Date().toLocaleString('ru-RU')}</i>`;
 
-    await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        chat_id: config.chatId,
-        text: message,
-        parse_mode: "HTML",
-      }),
-    });
-
-    return true;
+    return await sendTelegramMessage(message);
   } catch (error) {
     console.error("Telegram lead send error:", error);
     return false;
@@ -192,12 +172,7 @@ export async function sendChatSummaryToTelegram(data: {
   contactName?: string;
   contactPhone?: string;
 }): Promise<boolean> {
-  const config = getTelegramConfig();
-  if (!config) return false;
-
   try {
-    const url = `https://api.telegram.org/bot${config.botToken}/sendMessage`;
-
     const status = data.hasContacts ? '✅ С контактами' : '⚠️ Анонимный';
     
     let message = `📋 <b>Итог чата</b> ${status}
@@ -219,17 +194,7 @@ export async function sendChatSummaryToTelegram(data: {
       message += `${prefix} ${truncated}\n`;
     });
 
-    await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        chat_id: config.chatId,
-        text: message,
-        parse_mode: "HTML",
-      }),
-    });
-
-    return true;
+    return await sendTelegramMessage(message);
   } catch (error) {
     console.error("Telegram summary send error:", error);
     return false;

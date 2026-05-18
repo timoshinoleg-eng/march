@@ -28,8 +28,10 @@ export async function POST(req: NextRequest) {
     }
 
     // 1. СНАЧАЛА отправляем в Telegram (критично)
+    let telegramSent = false;
+
     try {
-      await sendBriefToTelegram({
+      telegramSent = await sendBriefToTelegram({
         sessionId,
         businessType,
         channels,
@@ -43,9 +45,16 @@ export async function POST(req: NextRequest) {
         contactPhone,
         contactEmail,
       });
-      console.log("✅ Brief sent to Telegram");
+      console.log(telegramSent ? "✅ Brief sent to Telegram" : "❌ Brief was not sent to Telegram");
     } catch (telegramError) {
       console.error("❌ Telegram error:", telegramError);
+    }
+
+    if (!telegramSent) {
+      return NextResponse.json(
+        { success: false, telegramSent: false, error: "Не удалось отправить бриф в Telegram" },
+        { status: 502 }
+      );
     }
 
     // 2. Потом пробуем сохранить в БД (не критично)
@@ -65,7 +74,7 @@ export async function POST(req: NextRequest) {
       console.log("⚠️ DB save failed (non-critical):", dbError);
     }
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, telegramSent });
   } catch (error) {
     console.error("Save brief error:", error);
     return NextResponse.json({ success: true });
