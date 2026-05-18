@@ -18,6 +18,7 @@ import { cn } from "@/lib/utils";
 import { calculateLeadScore, getLeadCategory } from "@/lib/scoring-simple";
 import { analyzeSentiment } from "@/lib/sentiment-simple";
 import { checkGuardrails } from "@/lib/guardrails-simple";
+import { trackFormSubmit } from "@/lib/metrika";
 
 interface Message {
   id: string;
@@ -473,6 +474,7 @@ export default function ChatWidgetAdvanced() {
       });
 
       // Track conversion
+      trackFormSubmit("advanced_chat_widget");
       fetch("/api/analytics", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

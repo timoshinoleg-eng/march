@@ -9,6 +9,7 @@ import {
   Sparkles,
   Minimize2
 } from 'lucide-react';
+import { trackFormSubmit } from '@/lib/metrika';
 
 interface Message {
   id: string;
@@ -166,6 +167,7 @@ export default function ChatWidget() {
       });
 
       if (res.ok) {
+        trackFormSubmit('chat_widget');
         setLeadSubmitted(true);
         setMessages(prev => [...prev, {
           id: 'confirmation',

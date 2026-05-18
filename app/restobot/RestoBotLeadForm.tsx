@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { CheckCircle2, Loader2 } from "lucide-react";
 
 import { trackFormSubmit, trackGoal } from "@/lib/metrika";
@@ -49,6 +50,7 @@ const menuStatuses = [
 ];
 
 export default function RestoBotLeadForm() {
+  const router = useRouter();
   const [formData, setFormData] = useState<FormState>(initialFormState);
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [error, setError] = useState("");
@@ -87,6 +89,7 @@ export default function RestoBotLeadForm() {
       trackGoal("restobot_lead_submit_success");
       setStatus("success");
       setFormData(initialFormState);
+      router.push("/thanks?source=restobot");
     } catch (submitError) {
       setStatus("error");
       trackGoal("restobot_lead_submit_error");

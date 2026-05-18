@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
@@ -14,6 +15,7 @@ interface LeadFormProps {
 }
 
 export default function LeadForm({ onSuccess, className = "" }: LeadFormProps) {
+  const router = useRouter();
   const [formData, setFormData] = useState<LeadFormData>({
     name: "",
     phone: "",
@@ -43,6 +45,7 @@ export default function LeadForm({ onSuccess, className = "" }: LeadFormProps) {
         trackFormSubmit("lead_form");
         setFormData({ name: "", phone: "", email: "", company: "" });
         onSuccess?.();
+        router.push("/thanks?source=lead_form");
       } else {
         if (data.details) {
           const fieldErrors: Record<string, string> = {};
