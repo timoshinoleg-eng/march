@@ -140,7 +140,9 @@ export async function POST(req: NextRequest) {
     // Send to Bitrix24 if configured
     console.log('BITRIX24_WEBHOOK configured:', !!process.env.BITRIX24_WEBHOOK);
     
-    if (process.env.BITRIX24_WEBHOOK) {
+    const bitrixEnabled = process.env.ENABLE_BITRIX24 === 'true' && !!process.env.BITRIX24_WEBHOOK;
+
+    if (bitrixEnabled) {
       try {
         const bitrixUrl = `${process.env.BITRIX24_WEBHOOK}/crm.lead.add.json`;
         console.log('Sending lead to Bitrix24:', { category, source, product, isRestoBotLead });
