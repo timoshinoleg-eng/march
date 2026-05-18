@@ -87,9 +87,6 @@ export const metadata: Metadata = {
     description: "Разработка чат-ботов для бизнеса под ключ. Запуск за 7–14 дней.",
     images: ["/og-image.jpg"],
   },
-  verification: {
-    yandex: "106988133",
-  },
   other: {
     "format-detection": "telephone=no",
   },
