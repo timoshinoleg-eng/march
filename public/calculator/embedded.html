@@ -1012,7 +1012,7 @@
     </div>
 
     <script>
-        const BITRIX_WEBHOOK_URL = 'https://b24-8gm6zn.bitrix24.ru/rest/1/js4m2dnhkzq89f0f/crm.lead.add.json';
+        const LEAD_API_URL = '/api/lead';
         let answers = { step1: null, step2: null };
         let extras = { ai: false, payment: false, admin: false };
         let currentTier = 'Standard', basePrice = 69000, isEnterprise = false, wasOriginallyEnterprise = false;
@@ -1214,16 +1214,19 @@
             const { step1: botType, step2: scale } = answers;
             const totalPrice = basePrice + getExtraPrice();
             const leadData = {
-                fields: {
-                    TITLE: `Калькулятор: ${currentTier} (${totalPrice.toLocaleString('ru-RU')} ₽)`,
-                    NAME: 'Калькулятор', LAST_NAME: 'Chatbot24', COMPANY_TITLE: 'Заявка с калькулятора',
-                    COMMENTS: `Тариф: ${currentTier}\nЦена: ${totalPrice.toLocaleString('ru-RU')} ₽\nТип бота: ${botType || 'Не выбрано'}\nМасштаб: ${scale || 'Не выбрано'}\nExtras: ${Object.entries(extras).filter(([k,v]) => v).map(([k]) => k).join(', ') || 'Нет'}\nИсточник: Калькулятор на сайте`,
-                    SOURCE_ID: 'WEB', SOURCE_DESCRIPTION: 'Калькулятор chatbot24.su'
-                }, params: { REGISTER_SONET_EVENT: 'Y' }
+                name: 'Калькулятор',
+                email: email || undefined,
+                source: 'Calculator',
+                product: 'calculator',
+                budget: `${totalPrice.toLocaleString('ru-RU')} ₽`,
+                category: currentTier,
+                score: totalPrice,
+                businessType: botType || undefined,
+                dailyRequests: scale || undefined,
+                botTasks: Object.entries(extras).filter(([,v]) => v).map(([k]) => k),
             };
-            if (email) leadData.fields.EMAIL = [{ VALUE: email, VALUE_TYPE: 'WORK' }];
             try {
-                const response = await fetch(BITRIX_WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(leadData) });
+                const response = await fetch(LEAD_API_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(leadData) });
                 const result = await response.json();
                 if (result.error) throw new Error(result.error);
                 if (typeof ym !== 'undefined') ym(107072365, 'reachGoal', 'calc_lead', { price: totalPrice, tier: currentTier });

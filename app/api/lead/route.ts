@@ -62,20 +62,25 @@ export async function POST(req: NextRequest) {
 
     const isRestoBotLead = product === 'restobot' || source === 'RestoBot Landing';
 
-    if (!name || !phone) {
+    if (!name || (!phone && !email && !telegram)) {
       return NextResponse.json(
-        { success: false, error: 'Имя и телефон обязательны' },
+        { success: false, error: 'Имя и контакт обязательны' },
         { status: 400 }
       );
     }
 
-    console.log("Lead API received FULL:", JSON.stringify({ name, phone, email, budget, businessType, channels, dailyRequests, botTasks, hasExamples, score, category, product, restaurantName, restaurantFormat, orderMode, menuStatus, city, telegram }, null, 2));
-    console.log("Lead API received:", { 
-      name, phone, email, budget, 
-      businessType, channels, dailyRequests, botTasks, hasExamples,
-      hasBriefData: !!businessType 
+    console.log("Lead API received:", {
+      source,
+      product,
+      category,
+      score,
+      hasName: !!name,
+      hasPhone: !!phone,
+      hasEmail: !!email,
+      hasTelegram: !!telegram,
+      hasBriefData: !!businessType,
+      isRestoBotLead,
     });
-    console.log("businessType value:", businessType, "hasBriefData:", !!businessType);
 
     // Отправляем в Telegram
     const restobotMessage = isRestoBotLead ? [
@@ -131,7 +136,7 @@ export async function POST(req: NextRequest) {
     if (process.env.BITRIX24_WEBHOOK) {
       try {
         const bitrixUrl = `${process.env.BITRIX24_WEBHOOK}/crm.lead.add.json`;
-        console.log('Sending to Bitrix24:', { name, phone, category });
+        console.log('Sending lead to Bitrix24:', { category, source, product, isRestoBotLead });
         
         const bitrixResponse = await fetch(bitrixUrl, {
           method: 'POST',
@@ -142,7 +147,7 @@ export async function POST(req: NextRequest) {
                 ? `[RESTOBOT] Пилот - ${restaurantName || name}`
                 : `[${category}] ${businessType ? 'Бриф' : 'Чат'} - ${name}`,
               NAME: name,
-              PHONE: [{ VALUE: phone, VALUE_TYPE: 'WORK' }],
+              PHONE: phone ? [{ VALUE: phone, VALUE_TYPE: 'WORK' }] : undefined,
               EMAIL: email ? [{ VALUE: email, VALUE_TYPE: 'WORK' }] : undefined,
               COMMENTS: comments,
               SOURCE_ID: 'WEB',
@@ -164,7 +169,11 @@ export async function POST(req: NextRequest) {
         });
 
         const bitrixData = await bitrixResponse.json();
-        console.log('Bitrix24 response:', bitrixData);
+        console.log('Bitrix24 response:', {
+          ok: !bitrixData.error,
+          result: bitrixData.result,
+          error: bitrixData.error,
+        });
         
         if (bitrixData.error) {
           console.error('Bitrix24 error:', bitrixData.error);
@@ -224,7 +233,7 @@ export async function POST(req: NextRequest) {
     }
 
     // If no Bitrix24 configured, just log and return success
-    console.log('Lead created (no Bitrix24):', { name, phone, category, score });
+    console.log('Lead accepted without Bitrix24:', { category, score, source, product });
     
     return NextResponse.json({ 
       success: true, 

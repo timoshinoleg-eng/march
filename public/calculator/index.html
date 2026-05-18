@@ -1231,7 +1231,7 @@
     </div>
 
     <script>
-        const BITRIX_WEBHOOK_URL = 'https://b24-8gm6zn.bitrix24.ru/rest/1/js4m2dnhkzq89f0f/crm.lead.add.json';
+        const LEAD_API_URL = '/api/lead';
 
         let answers = {
             step1: null,
@@ -1699,35 +1699,20 @@
             const totalPrice = basePrice + getExtraPrice();
             
             const leadData = {
-                fields: {
-                    TITLE: `Калькулятор: ${currentTier} (${totalPrice.toLocaleString('ru-RU')} ₽)`,
-                    NAME: 'Калькулятор',
-                    LAST_NAME: 'Chatbot24',
-                    COMPANY_TITLE: 'Заявка с калькулятора',
-                    COMMENTS: `
-Тариф: ${currentTier}
-Цена: ${totalPrice.toLocaleString('ru-RU')} ₽
-Тип бота: ${botType || 'Не выбрано'}
-Масштаб: ${scale || 'Не выбрано'}
-Extras: ${Object.entries(extras).filter(([k,v]) => v).map(([k]) => k).join(', ') || 'Нет'}
-Источник: Калькулятор на сайте
-                    `.trim(),
-                    SOURCE_ID: 'WEB',
-                    SOURCE_DESCRIPTION: 'Калькулятор chatbot24.su',
-                    UF_CRM_1234567890: currentTier,
-                    UF_CRM_1234567891: totalPrice.toString()
-                },
-                params: {
-                    REGISTER_SONET_EVENT: 'Y'
-                }
+                name: 'Калькулятор',
+                email: email || undefined,
+                source: 'Calculator',
+                product: 'calculator',
+                budget: `${totalPrice.toLocaleString('ru-RU')} ₽`,
+                category: currentTier,
+                score: totalPrice,
+                businessType: botType || undefined,
+                dailyRequests: scale || undefined,
+                botTasks: Object.entries(extras).filter(([,v]) => v).map(([k]) => k),
             };
             
-            if (email) {
-                leadData.fields.EMAIL = [{ VALUE: email, VALUE_TYPE: 'WORK' }];
-            }
-            
             try {
-                const response = await fetch(BITRIX_WEBHOOK_URL, {
+                const response = await fetch(LEAD_API_URL, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
