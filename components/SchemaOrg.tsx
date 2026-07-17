@@ -1,109 +1,103 @@
 'use client';
 
 import Script from 'next/script';
+import { PRICING_PLANS, CUSTOM_INTEGRATIONS } from '@/data/catalog';
+import { COMPANY } from '@/data/company';
 
+/**
+ * JSON-LD structured data.
+ *
+ * Генерируется из единого источника правды (data/catalog.ts, data/company.ts).
+ * Убраны неподтверждённые факты и несуществующие функции:
+ *   - SearchAction на /blog?q= (поиска по блогу нет)
+ *   - placeholder-телефон +7-XXX-XXX-XX-XX
+ *   - OG-image, который возвращает 404
+ *   - фиктивные цены, отличные от catalog.ts
+ */
 export default function SchemaOrg() {
+  const offers = PRICING_PLANS.map((plan) => ({
+    '@type': 'Offer',
+    itemOffered: {
+      '@type': 'Service',
+      name: plan.name,
+      description: plan.description,
+    },
+    price: String(plan.price),
+    priceCurrency: 'RUB',
+  }));
+
+  const customIntegrationServices = CUSTOM_INTEGRATIONS.map((integration) => ({
+    '@type': 'Offer',
+    itemOffered: {
+      '@type': 'Service',
+      name: integration.name,
+      description: integration.description,
+    },
+    // Для custom-интеграций цена не публикуется — only after brief.
+    priceCurrency: 'RUB',
+    eligibilityType: 'Custom quote required',
+  }));
+
   const schemaOrgJSON = {
-    "@context": "https://schema.org",
-    "@graph": [
+    '@context': 'https://schema.org',
+    '@graph': [
       {
-        "@type": "Organization",
-        "@id": "https://chatbot24.su/#organization",
-        name: "ChatBot24",
-        url: "https://chatbot24.su",
+        '@type': 'Organization',
+        '@id': `${COMPANY.website}/#organization`,
+        name: COMPANY.name,
+        url: COMPANY.website,
+        foundingDate: String(COMPANY.foundingYear),
         logo: {
-          "@type": "ImageObject",
-          url: "https://chatbot24.su/favicon.png",
+          '@type': 'ImageObject',
+          url: `${COMPANY.website}/favicon.png`,
           width: 512,
-          height: 512
+          height: 512,
         },
-        sameAs: [
-          "https://t.me/ChatBot24su_bot"
-        ],
+        sameAs: ['https://t.me/ChatBot24su_bot'],
         contactPoint: {
-          "@type": "ContactPoint",
-          telephone: "+7-XXX-XXX-XX-XX",
-          contactType: "sales",
-          areaServed: "RU",
-          availableLanguage: ["Russian"]
-        }
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://chatbot24.su/#website",
-        url: "https://chatbot24.su",
-        name: "ChatBot24 — чат-боты и автоматизация заявок",
-        description: "Инженерное бюро автоматизации. Запускаем систему обработки обращений за 7–14 дней.",
-        publisher: {
-          "@id": "https://chatbot24.su/#organization"
+          '@type': 'ContactPoint',
+          telephone: COMPANY.phone,
+          email: COMPANY.email,
+          contactType: 'sales',
+          areaServed: 'RU',
+          availableLanguage: ['Russian'],
         },
-        potentialAction: {
-          "@type": "SearchAction",
-          target: {
-            "@type": "EntryPoint",
-            urlTemplate: "https://chatbot24.su/blog?q={search_term_string}"
-          },
-          "query-input": "required name=search_term_string"
-        }
       },
       {
-        "@type": "LocalBusiness",
-        "@id": "https://chatbot24.su/#localbusiness",
-        name: "ChatBot24",
-        image: "https://chatbot24.su/og-image.jpg",
-        url: "https://chatbot24.su",
-        telephone: "+7-XXX-XXX-XX-XX",
-        priceRange: "₽₽",
-        areaServed: "Россия",
-        serviceType: ["Разработка чат-ботов", "Автоматизация заявок", "Внедрение AI-ассистентов"],
+        '@type': 'WebSite',
+        '@id': `${COMPANY.website}/#website`,
+        url: COMPANY.website,
+        name: `${COMPANY.name} — ${COMPANY.specialization}`,
+        description: COMPANY.description,
+        publisher: { '@id': `${COMPANY.website}/#organization` },
+        // SearchAction убран: поиска по сайту нет.
+      },
+      {
+        '@type': 'ProfessionalService',
+        '@id': `${COMPANY.website}/#localbusiness`,
+        name: COMPANY.name,
+        url: COMPANY.website,
+        telephone: COMPANY.phone,
+        email: COMPANY.email,
+        priceRange: '₽₽',
+        areaServed: 'RU',
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality: COMPANY.city,
+          addressCountry: 'RU',
+        },
+        serviceType: [
+          'Разработка Telegram-ботов',
+          'Автоматизация приёма заявок',
+          'Интеграции с CRM и внешними сервисами',
+        ],
         hasOfferCatalog: {
-          "@type": "OfferCatalog",
-          name: "Услуги автоматизации",
-          itemListElement: [
-            {
-              "@type": "Offer",
-              itemOffered: {
-                "@type": "Service",
-                name: "Lite чат-бот",
-                description: "Базовый чат-бот для старта"
-              },
-              price: "19900",
-              priceCurrency: "RUB"
-            },
-            {
-              "@type": "Offer",
-              itemOffered: {
-                "@type": "Service",
-                name: "Base чат-бот",
-                description: "Оптимально для растущего бизнеса"
-              },
-              price: "39000",
-              priceCurrency: "RUB"
-            },
-            {
-              "@type": "Offer",
-              itemOffered: {
-                "@type": "Service",
-                name: "AI чат-бот",
-                description: "AI-ассистент с YandexGPT"
-              },
-              price: "69000",
-              priceCurrency: "RUB"
-            },
-            {
-              "@type": "Offer",
-              itemOffered: {
-                "@type": "Service",
-                name: "Enterprise чат-бот",
-                description: "Для медицины и крупного бизнеса"
-              },
-              price: "129000",
-              priceCurrency: "RUB"
-            }
-          ]
-        }
-      }
-    ]
+          '@type': 'OfferCatalog',
+          name: 'Услуги автоматизации',
+          itemListElement: [...offers, ...customIntegrationServices],
+        },
+      },
+    ],
   };
 
   return (

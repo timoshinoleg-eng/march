@@ -1,53 +1,72 @@
 # ChatBot24 — LLM Context File
 # https://chatbot24.su/llms.txt
+# Источник правды: data/catalog.ts, data/company.ts, data/portfolio.ts
 
 ## About
-ChatBot24 is a Russian AI chatbot development agency specializing in business automation. 
-We create custom chatbots for Telegram, WhatsApp, and VKontakte using GPT-4 and machine learning.
+ChatBot24 — российское инженерное бюро автоматизации. Разрабатываем
+Telegram-ботов для приёма заявок, записи, учёта и интеграций с внешними
+сервисами. Работаем с 2025 года. Модель работы: компактная
+специализированная команда плюс проверенные подрядчики под NDA для
+отдельных задач. Каждый проект ведёт ответственный инженер.
 
 ## Services
-- AI chatbot development (3-14 days delivery)
-- CRM integration (Bitrix24, AmoCRM)
-- 24/7 customer support automation
-- Sales funnel optimization
-- Multi-platform deployment (Telegram, WhatsApp, VK, Web)
+- Разработка Telegram-ботов под ключ (запуск за 3–14 дней)
+- Интеграции с CRM и внешними сервисами (amoCRM, Битрикс24, МойСклад,
+  RetailCRM, 1С, Google Таблицы, Google Календарь)
+- Приём оплаты в боте (ЮKassa, Robokassa, эквайринг)
+- Лендинг + бот + мини-CRM как единый комплект
+- AI-ассистент на доступной модели для типовых вопросов
 
 ## Pricing
-- Lite: 19,900 ₽ (basic chatbot)
-- Base: 39,000 ₽ (popular, includes CRM)
-- AI-Assist: 129,000 ₽ (GPT-4 powered)
-- Enterprise: from 249,000 ₽ (custom SLA)
+Все тарифы приведены в рублях. Источник: data/catalog.ts.
+
+- Базовый бот — 19 900 ₽ (Telegram-бот для приёма заявок и контактов)
+- Пилот — 16 900 ₽ (акция, только при наличии свободного места)
+- Бот + Google Таблицы или сценарий — от 24 900 ₽
+- Бот + мини-CRM или автоматическая запись — от 34 900 ₽
+- Лендинг + бот + мини-CRM — от 49 900 ₽
+- Сложные интеграции (AI, amoCRM, Битрикс24, WhatsApp Business API,
+  оплата, нестандарт) — оценка по ТЗ
 
 ## Contact
 - Phone: +7 (993) 336-61-02
 - Website: https://chatbot24.su
 - Email: info@chatbot24.su
-- VK: https://vk.com/club237277911
+- Telegram: https://t.me/ChatBot24su_bot
 
-## Key Features
-- 80% of routine inquiries automated
-- 24/7 availability
-- Human handoff for complex cases
-- Real-time analytics dashboard
-- 12-month code warranty
+## Support
+Поддержка по согласованному регламенту: рабочие часы плюс аварийный
+канал в Telegram. Доработки в рамках первого месяца включены в стоимость
+тарифа. Мы НЕ работаем 24/7 и НЕ гарантируем SLA 99.9%.
 
-## Target Industries
+## Channels
+Основной канал — Telegram. WhatsApp Business API и ВКонтакте
+подключаются отдельно по запросу. Instagram как канал приёма заявок
+отдельно не подключаем.
+
+## Own products and R&D
+- RestoBot — собственный прототип Telegram-бота для ресторанов
+  (меню, заказы, повторные продажи). Проект в закрытой бете.
+- 1C AI Workbench — open-source пилот: локальный read-only workbench
+  для анализа конфигураций 1С:Enterprise 8.3 через MCP.
+  https://github.com/timoshinoleg-eng/1c-ai-workbench
+
+## Target industries
+- Услуги (салоны, клиники, автосервис, клининг)
+- Образование (онлайн-школы, курсы)
 - E-commerce
-- Service companies
-- Education
-- Healthcare
-- HoReCa
+- B2B и производство
+- IT и SaaS
 
 ## Technologies
-- GPT-4, Claude, YandexGPT
-- Node.js, Python
-- React, Next.js
-- PostgreSQL, Redis
-- Docker, Kubernetes
+- TypeScript, Next.js (App Router)
+- Node.js, edge runtime
+- OpenRouter (DeepSeek, Qwen и другие доступные модели)
+- Vercel для деплоя
 
 ## Content
-- Blog: https://chatbot24.su/blog
 - Cases: https://chatbot24.su/cases
-- Calculator: https://chatbot24.su/calculator
+- Privacy: https://chatbot24.su/privacy
+- Personal data consent: https://chatbot24.su/personal-data-consent
 
-Last updated: 2026-04-04
+Last updated: 2026-07-17

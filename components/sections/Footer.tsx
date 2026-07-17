@@ -5,23 +5,22 @@ import { trackEmailClick, trackGoal, trackPhoneClick } from "@/lib/metrika";
 
 const footerLinks = {
   solutions: [
-    { label: "Lite", href: "/calculator?utm_source=site&utm_medium=footer&utm_content=lite" },
-    { label: "Base", href: "/calculator?utm_source=site&utm_medium=footer&utm_content=base" },
-    { label: "RestoBot для ресторанов", href: "/restobot?utm_source=site&utm_medium=footer&utm_content=restobot" },
-    { label: "AI", href: "/calculator?utm_source=site&utm_medium=footer&utm_content=ai" },
-    { label: "Enterprise", href: "/calculator?utm_source=site&utm_medium=footer&utm_content=enterprise" },
+    { label: "Базовый бот", href: "/#pricing?utm_source=site&utm_medium=footer&utm_content=basic" },
+    { label: "Бот + мини-CRM", href: "/#pricing?utm_source=site&utm_medium=footer&utm_content=crm" },
+    { label: "Лендинг + бот + CRM", href: "/#pricing?utm_source=site&utm_medium=footer&utm_content=landing" },
+    { label: "Интеграции", href: "/#pricing?utm_source=site&utm_medium=footer&utm_content=custom" },
   ],
   company: [
     { label: "Как это работает", href: "#how-it-works" },
-    { label: "Кейсы", href: "#cases" },
+    { label: "Кейсы", href: "/cases" },
     { label: "Технологии", href: "#tech-stack" },
     { label: "Процесс работы", href: "#process" },
   ],
   support: [
     { label: "FAQ", href: "#faq" },
     { label: "Контакты", href: "/#final-cta" },
-    { label: "Политика конфиденциальности", href: "/thanks" },
-    { label: "Пользовательское соглашение", href: "/calculator" },
+    { label: "Политика конфиденциальности", href: "/privacy" },
+    { label: "Согласие на обработку ПДн", href: "/personal-data-consent" },
   ],
 };
 
@@ -41,8 +40,8 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-gray-400 text-sm mb-6 max-w-xs">
-              Инженерное бюро автоматизации. Создаем системы обработки заявок,
-              которые работают 24/7 и не пропускают ни одного клиента.
+              Инженерное бюро автоматизации. Разрабатываем Telegram-ботов
+              для приёма заявок, записи и учёта.
             </p>
             <div className="space-y-3">
               <a 

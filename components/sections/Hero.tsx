@@ -37,8 +37,9 @@ export default function Hero() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight mb-4 sm:mb-6"
           >
-            <span className="text-white">Автоматизация входящих заявок</span>
+            <span className="text-white">Telegram-боты для заявок,</span>
             <br />
+            <span className="text-white">записи и учёта — </span>
             <span className="bg-gradient-emerald bg-clip-text text-transparent">
               от 19 900 ₽
             </span>
@@ -50,8 +51,8 @@ export default function Hero() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-base sm:text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-8 sm:mb-10 px-4"
           >
-            Запускаем систему обработки обращений за 7–14 дней. 
-            Подходит компаниям с 10+ заявками в день.
+            Google Таблицы, календарь, мини-CRM и интеграции.
+            Запуск за 7–14 дней.
           </motion.p>
 
           <motion.div
@@ -84,18 +85,18 @@ export default function Hero() {
             {[
               {
                 icon: Clock,
-                title: "Быстрый запуск",
-                desc: "7–14 дней до старта",
+                title: "Запуск за 7–14 дней",
+                desc: "Чёткие сроки по этапам",
               },
               {
                 icon: CheckCircle,
-                title: "Гарантия качества",
-                desc: "Доработки включены",
+                title: "Доработки включены",
+                desc: "В рамках первого месяца",
               },
               {
                 icon: Building2,
-                title: "Инженерный подход",
-                desc: "Не фриланс и не студия",
+                title: "Личное ведение",
+                desc: "Ответственный инженер на проекте",
               },
             ].map((item, index) => (
               <div
