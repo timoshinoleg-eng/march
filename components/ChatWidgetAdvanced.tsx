@@ -91,6 +91,27 @@ const BRIEF_STEPS = [
   },
 ];
 
+// P0.10: генерация UUIDv4 через Web Crypto.
+// Используется как sessionId — непредсказуемый, в отличие от Date.now().
+function generateUUIDv4(): string {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+    return crypto.randomUUID();
+  }
+  // Fallback для очень старых браузеров (manual RFC 4122 v4).
+  const bytes = new Uint8Array(16);
+  if (typeof crypto !== "undefined" && crypto.getRandomValues) {
+    crypto.getRandomValues(bytes);
+  } else {
+    // Last resort — не используем Math.random для production, но лучше,
+    // чем Date.now(). Сервер всё равно проверит ownership-cookie.
+    for (let i = 0; i < 16; i++) bytes[i] = Math.floor(Math.random() * 256);
+  }
+  bytes[6] = (bytes[6] & 0x0f) | 0x40; // version 4
+  bytes[8] = (bytes[8] & 0x3f) | 0x80; // variant 10
+  const hex = Array.from(bytes).map((b) => b.toString(16).padStart(2, "0"));
+  return `${hex.slice(0, 4).join("")}-${hex.slice(4, 6).join("")}-${hex.slice(6, 8).join("")}-${hex.slice(8, 10).join("")}-${hex.slice(10, 16).join("")}`;
+}
+
 // Get response message based on current time
 function getTimeBasedResponse(): string {
   const now = new Date();
@@ -128,15 +149,17 @@ export default function ChatWidgetAdvanced() {
   // CRITICAL: Only render on client + init messages
   useEffect(() => {
     setIsClient(true);
-    // Initialize sessionId on client only
+    // P0.10: sessionId генерируется как UUIDv4 через Web Crypto.
+    // Ранее было `session_${Date.now()}` — предсказуемо, позволяло читать
+    // чужую историю. Сервер дополнительно проверяет формат и ownership-cookie.
     if (!sessionId.current) {
-      sessionId.current = `session_${Date.now()}`;
+      sessionId.current = generateUUIDv4();
     }
     // Initialize welcome message on client only to prevent hydration mismatch
     setMessages([{
       id: "welcome",
       role: "assistant",
-      content: "Привет! 👋 Я Алексей из ChatBot24.\n\nПомогаю автоматизировать обработку заявок. Задайте вопрос или нажмите \"Заполнить бриф\" — это займёт 2 минуты.",
+      content: "Привет! 👋 Я Помощник ChatBot24 — автоматический ассистент сайта.\n\nПомогаю понять, подойдёт ли вам Telegram-бот. Задайте вопрос или нажмите \"Заполнить бриф\" — это займёт 2 минуты.",
       timestamp: new Date(),
     }]);
   }, []);
@@ -215,32 +238,11 @@ export default function ChatWidgetAdvanced() {
     }).catch(console.error);
   }, [sessionInitialized]);
 
-  // Log brief completion
-  const logBrief = useCallback((contactData?: { name: string; phone: string; email?: string }) => {
-    if (!sessionInitialized) return;
-
-    const score = calculateLeadScore({ budget: briefData.budget });
-    const category = getLeadCategory(score);
-
-    fetch("/api/chat/brief", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        sessionId: sessionId.current,
-        businessType: briefData.businessType,
-        channels: briefData.channels,
-        dailyRequests: briefData.dailyRequests,
-        botTasks: briefData.botTasks,
-        hasExamples: briefData.hasExamples,
-        budget: briefData.budget,
-        score,
-        category,
-        contactName: contactData?.name,
-        contactPhone: contactData?.phone,
-        contactEmail: contactData?.email,
-      }),
-    }).catch(console.error);
-  }, [sessionInitialized, briefData]);
+  // NOTE: logBrief удалён.
+  // Раньше здесь был отдельный POST /api/chat/brief, который дублировал отправку
+  // заявки в Telegram (помимо /api/lead). Это приводило к дублям уведомлений.
+  // Теперь единственный путь доставки — POST /api/lead с проверкой
+  // response.ok && data.success && data.telegramSent.
 
   // Start brief mode
   const startBrief = () => {
@@ -451,8 +453,10 @@ export default function ChatWidgetAdvanced() {
       });
       const category = getLeadCategory(score);
 
-      // Send to API with brief data
-      await fetch("/api/lead", {
+      // Send to API with brief data.
+      // P0.7: проверяем response.ok И data.success И data.telegramSent.
+      // Подтверждение заявки показываем ТОЛЬКО при реальной доставке.
+      const response = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -473,6 +477,32 @@ export default function ChatWidgetAdvanced() {
         }),
       });
 
+      // P0.7: Парсим ответ в любом случае (сервер возвращает JSON с success:false при ошибке).
+      let data: { success?: boolean; telegramSent?: boolean; error?: string; details?: unknown } = {};
+      try {
+        data = await response.json();
+      } catch {
+        // Не JSON — считаем ошибкой.
+      }
+
+      const delivered = response.ok && data.success === true && data.telegramSent === true;
+
+      if (!delivered) {
+        // P0.7: НЕ показываем подтверждение. Форму оставляем открытой.
+        const reason = data.error || (data.telegramSent === false
+          ? "не удалось отправить уведомление в Telegram"
+          : "сервер вернул ошибку");
+        setError(`Не удалось отправить заявку (${reason}). Попробуйте ещё раз или напишите нам в Telegram.`);
+        setMessages(prev => [...prev, {
+          id: `lead_error_${Date.now()}`,
+          role: "assistant",
+          content: `Не получилось отправить заявку: ${reason}.\n\nПопробуйте ещё раз через минуту. Если не выйдет — напишите напрямую в Telegram, ответим в рабочее время.`,
+          timestamp: new Date(),
+        }]);
+        return; // форма остаётся открытой, success-экран НЕ показываем
+      }
+
+      // Успешная доставка. Дальнейшие вызовы — только после подтверждения.
       // Track conversion
       trackFormSubmit("advanced_chat_widget");
       fetch("/api/analytics", {
@@ -480,8 +510,8 @@ export default function ChatWidgetAdvanced() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           event: "lead_created",
-          data: { 
-            sessionId: sessionId.current, 
+          data: {
+            sessionId: sessionId.current,
             score,
             category,
             hasBrief: true,
@@ -489,14 +519,7 @@ export default function ChatWidgetAdvanced() {
         }),
       }).catch(console.error);
 
-      // Log brief to database and Telegram
-      logBrief({
-        name: briefData.name!,
-        phone: briefData.phone!,
-        email: briefData.email,
-      });
-
-      // Update contacts in database
+      // Update contacts in database (best-effort, не блокирует подтверждение)
       fetch("/api/chat/contacts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -510,10 +533,10 @@ export default function ChatWidgetAdvanced() {
 
       setLeadSubmitted(true);
       setShowForm(false);
-      
+
       // Time-based response
       const timeMessage = getTimeBasedResponse();
-      
+
       setMessages(prev => [...prev, {
         id: `confirmation_${Date.now()}`,
         role: "assistant",
@@ -523,7 +546,14 @@ export default function ChatWidgetAdvanced() {
 
     } catch (err) {
       console.error("Lead submission error:", err);
-      setError("Ошибка отправки. Попробуйте позже.");
+      // P0.7: при network-ошибке тоже НЕ показываем success. Даём пользователю retry.
+      setError("Сеть недоступна. Попробуйте ещё раз или напишите в Telegram.");
+      setMessages(prev => [...prev, {
+        id: `lead_network_error_${Date.now()}`,
+        role: "assistant",
+        content: "Не получилось связаться с сервером. Проверьте соединение и попробуйте ещё раз. Если не выйдет — напишите нам в Telegram.",
+        timestamp: new Date(),
+      }]);
     } finally {
       setIsLoading(false);
     }
@@ -571,10 +601,10 @@ export default function ChatWidgetAdvanced() {
                 <Bot className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h3 className="font-semibold text-white">Алексей</h3>
+                <h3 className="font-semibold text-white">Помощник ChatBot24</h3>
                 <p className="text-xs text-gray-400 flex items-center gap-1">
                   <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                  Консультант ChatBot24
+                  Автоматический ассистент
                 </p>
               </div>
             </div>

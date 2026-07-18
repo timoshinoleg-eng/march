@@ -16,7 +16,11 @@ export async function POST(req: NextRequest) {
     await updateContacts(sessionId, { name, phone, email });
     return NextResponse.json({ success: true });
   } catch (error) {
+    // P0.8: ранее здесь возвращалось { success: true } без status — ложный success.
     console.error("Update contacts error:", error);
-    return NextResponse.json({ success: true });
+    return NextResponse.json(
+      { success: false, error: "Внутренняя ошибка при обновлении контактов" },
+      { status: 500 }
+    );
   }
 }

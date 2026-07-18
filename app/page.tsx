@@ -3,7 +3,6 @@ import Hero from "@/components/sections/Hero"
 import Problems from "@/components/sections/Problems"
 import HowItWorks from "@/components/sections/HowItWorks"
 import Pricing from "@/components/sections/Pricing"
-import Calculator from "@/components/sections/Calculator"
 import Advantages from "@/components/sections/Advantages"
 import Integrations from "@/components/sections/Integrations"
 import Cases from "@/components/sections/Cases"
@@ -17,6 +16,13 @@ import {
   RestoBotSolutionTeaser,
 } from "@/components/sections/RestoBotPromo"
 
+// P0.12: Calculator убран с главной.
+// Ранее здесь был <Calculator />, который использовал манипулятивную формулу
+// («потери 9 000 000 ₽/мес», «окупаемость 0 дней»). Если возвращать —
+// то только после корректной переработки (см. data/portfolio.ts метрики
+// и описание проблемы в P1.4 плана). /calculator как отдельный маршрут
+// остаётся для рекламного трафика.
+
 export default function Home() {
   return (
     <>
@@ -28,7 +34,6 @@ export default function Home() {
         <Problems />
         <HowItWorks />
         <Pricing />
-        <Calculator />
         <Advantages />
         <Integrations />
         <Cases />

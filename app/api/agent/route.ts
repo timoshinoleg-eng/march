@@ -2,6 +2,12 @@ import { NextRequest, NextResponse } from 'next/server';
 import { generateOpenRouterResponse } from '@/lib/openrouter';
 import { PRICING_PLANS, CUSTOM_INTEGRATIONS, formatPrice } from '@/data/catalog';
 import { COMPANY } from '@/data/company';
+import {
+  checkRateLimit,
+  getClientIp,
+  RATE_LIMITS,
+  tooManyRequestsResponse,
+} from '@/lib/rate-limit';
 
 export const runtime = 'edge';
 
@@ -143,6 +149,21 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  // P0.11: rate limit по IP — защита от спама и расходов на OpenRouter.
+  // 10 запросов в минуту на IP.
+  const ip = getClientIp(req);
+  const rl = checkRateLimit(ip, RATE_LIMITS.agent);
+  if (!rl.allowed) {
+    return new NextResponse(tooManyRequestsResponse(rl.retryAfterMs).body, {
+      status: 429,
+      headers: {
+        'Content-Type': 'application/json',
+        'Retry-After': String(Math.ceil(rl.retryAfterMs / 1000)),
+        ...getCorsHeaders(origin),
+      },
+    });
+  }
+
   try {
     const body = await req.json();
     const { messages, sessionId } = body;
@@ -166,11 +187,14 @@ export async function POST(req: NextRequest) {
       })),
     ];
 
-    // Генерируем ответ через DeepSeek (OpenRouter)
+    // Генерируем ответ через OpenRouter.
+    // Модель выбирается в lib/openrouter.ts (primary deepseek-v4-flash,
+    // fallback qwen3-coder:free). AI timeout 8 сек (P0.11) → throw → fallback-UI.
     let response = await generateOpenRouterResponse(openRouterMessages, {
       temperature: 0.6,
       maxTokens: 2000,
-      model: 'deepseek-chat',
+      timeoutMs: 8000,
+      allowFreeFallback: true,
     });
 
     // Фильтруем внутренние системные теги (COLD/WARM/HOT) — клиент не должен видеть
@@ -187,7 +211,8 @@ export async function POST(req: NextRequest) {
     const result = {
       response,
       provider: 'openrouter',
-      model: 'deepseek-chat',
+      // Имя модели берём из env (по умолчанию deepseek-v4-flash), не захардкожено.
+      model: process.env.OPENROUTER_MODEL || 'deepseek-v4-flash',
       leadScore,
       latency: Date.now() - startTime,
     };
@@ -199,12 +224,15 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.error('OpenRouter API Error:', error);
 
-    // Возвращаем fallback ответ
+    // Возвращаем fallback ответ.
+    // P0.6: НЕ скрываем недоступность AI за «живым» ответом —
+    // пользователю честно предлагаем бриф.
     return NextResponse.json(
       {
-        response: 'Извините, возникла техническая проблема. Пожалуйста, попробуйте позже или оставьте контакты — менеджер свяжется с вами.',
+        response:
+          'Извините, ассистент сейчас недоступен. Заполните короткий бриф — ответственный инженер свяжется с вами и подготовит предложение. Либо задайте вопрос позже.',
         provider: 'fallback',
-        model: 'error',
+        model: 'unavailable',
         leadScore: { score: 0, rating: 'ERROR' },
         latency: Date.now() - startTime,
       },

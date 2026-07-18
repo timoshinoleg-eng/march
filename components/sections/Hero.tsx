@@ -69,9 +69,9 @@ export default function Hero() {
               Получить консультацию
               <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Button>
-            <a href="#calculator" className="w-full sm:w-auto">
+            <a href="#how-it-works" className="w-full sm:w-auto">
               <Button variant="outline" size="lg" className="w-full sm:w-auto">
-                Рассчитать потери
+                Как это работает
               </Button>
             </a>
           </motion.div>

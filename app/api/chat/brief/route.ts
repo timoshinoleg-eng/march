@@ -76,7 +76,11 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ success: true, telegramSent });
   } catch (error) {
+    // P0.8: ранее здесь возвращалось { success: true } без status — ложный success.
     console.error("Save brief error:", error);
-    return NextResponse.json({ success: true });
+    return NextResponse.json(
+      { success: false, error: "Внутренняя ошибка при сохранении брифа" },
+      { status: 500 }
+    );
   }
 }

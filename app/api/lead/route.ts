@@ -1,5 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sendLeadToTelegram } from '@/lib/telegram-chat';
+import {
+  checkRateLimit,
+  getClientIp,
+  hasHoneypot,
+  fakeOkResponse,
+  RATE_LIMITS,
+} from '@/lib/rate-limit';
 
 interface ChatMessage {
   role: string;
@@ -29,17 +36,50 @@ interface LeadPayload {
   orderMode?: string;
   menuStatus?: string;
   city?: string;
+  // P0.9: согласие на обработку ПДн.
+  consent?: boolean;
+  consentVersion?: string;
+  consentSource?: string;
 }
+
+// P0.9: актуальная версия документа согласия.
+// При изменении текста /privacy или /personal-data-consent —
+// увеличьте версию, чтобы старые отправки (с прежней версией)
+// не считались согласованными с новым текстом.
+const CURRENT_CONSENT_VERSION = '2026-07';
 
 export async function POST(req: NextRequest) {
   try {
     const payload = (await req.json()) as LeadPayload;
-    const { 
-      name, 
-      phone, 
-      email, 
-      budget, 
-      timeline, 
+
+    // P0.11: honeypot. Если бот заполнил скрытое поле — отдаём фейковый успех.
+    if (hasHoneypot(payload as unknown as Record<string, unknown>)) {
+      return fakeOkResponse();
+    }
+
+    // P0.11: rate limit по IP — защита от спама заявок и дублей в Telegram.
+    const ip = getClientIp(req);
+    const rl = checkRateLimit(ip, RATE_LIMITS.lead);
+    if (!rl.allowed) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Слишком много заявок. Попробуйте через минуту.',
+          retryAfter: Math.ceil(rl.retryAfterMs / 1000),
+        },
+        {
+          status: 429,
+          headers: { 'Retry-After': String(Math.ceil(rl.retryAfterMs / 1000)) },
+        }
+      );
+    }
+
+    const {
+      name,
+      phone,
+      email,
+      budget,
+      timeline,
       score,
       category,
       sessionId,
@@ -58,9 +98,23 @@ export async function POST(req: NextRequest) {
       menuStatus,
       city,
       telegram,
+      consent,
+      consentVersion,
+      consentSource,
     } = payload;
 
     const isRestoBotLead = product === 'restobot' || source === 'RestoBot Landing';
+
+    // P0.9: без явного согласия — отказ (152-ФЗ).
+    if (!consent || consent !== true) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Требуется согласие на обработку персональных данных',
+        },
+        { status: 400 }
+      );
+    }
 
     if (!name || (!phone && !email && !telegram)) {
       return NextResponse.json(
@@ -69,6 +123,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // P0.7: логируем только метаданные, без PII (name/phone/email).
     console.log("Lead API received:", {
       source,
       product,
@@ -218,13 +273,14 @@ export async function POST(req: NextRequest) {
           }
         }
 
-        return NextResponse.json({ 
+        return NextResponse.json({
           success: true,
           bitrixSent: true,
           telegramSent,
           leadId: bitrixData.result,
           category,
           score,
+          consentVersion: consentVersion || CURRENT_CONSENT_VERSION,
           message: 'Заявка успешно создана'
         });
       } catch (bitrixError) {
@@ -241,15 +297,25 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // If no Bitrix24 configured, just log and return success
-    console.log('Lead accepted without Bitrix24:', { category, score, source, product });
-    
-    return NextResponse.json({ 
-      success: true, 
+    // If no Bitrix24 configured, just log and return success.
+    // P0.9: логируем consent-аудит (без PII).
+    console.log('Lead accepted without Bitrix24:', {
+      category,
+      score,
+      source,
+      product,
+      consentVersion: consentVersion || CURRENT_CONSENT_VERSION,
+      consentSource: consentSource || source,
+      consentTimestamp: new Date().toISOString(),
+    });
+
+    return NextResponse.json({
+      success: true,
       bitrixSent: false,
       telegramSent,
       category,
       score,
+      consentVersion: consentVersion || CURRENT_CONSENT_VERSION,
       message: 'Заявка принята'
     });
 

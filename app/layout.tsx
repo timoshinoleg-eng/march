@@ -26,18 +26,18 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://chatbot24.su"),
   title: {
-    default: "Чат-боты для бизнеса в Telegram и WhatsApp | ChatBot24",
+    default: "Telegram-боты для заявок, записи и учёта — от 19 900 ₽ | ChatBot24",
     template: "%s | ChatBot24",
   },
   description:
-    "Разработка чат-ботов для бизнеса под ключ. Автоматизация заявок в Telegram, WhatsApp. Запуск за 7–14 дней. От 19 900 ₽.",
+    "Разрабатываем Telegram-ботов для приёма заявок, записи, Google Таблиц, мини-CRM и интеграций. Запуск за 7–14 дней. От 19 900 ₽.",
   keywords: [
-    "чат-бот",
+    "telegram-бот",
+    "чат-бот для заявок",
+    "бот для записи",
+    "мини-crm в telegram",
+    "интеграция google таблиц",
     "автоматизация заявок",
-    "чатбот для бизнеса",
-    "бот для заявок",
-    "автоматизация продаж",
-    "чат-бот telegram",
     "разработка чат-ботов"
   ],
   authors: [{ name: "ChatBot24" }],
@@ -66,8 +66,8 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Чат-боты для бизнеса в Telegram и WhatsApp | ChatBot24",
-    description: "Разработка чат-ботов для бизнеса под ключ. Автоматизация заявок. Запуск за 7–14 дней. От 19 900 ₽.",
+    title: "Telegram-боты для заявок, записи и учёта — от 19 900 ₽ | ChatBot24",
+    description: "Разрабатываем Telegram-ботов для приёма заявок, записи, Google Таблиц, мини-CRM и интеграций. Запуск за 7–14 дней.",
     type: "website",
     locale: "ru_RU",
     siteName: "ChatBot24",
@@ -116,9 +116,9 @@ export default function RootLayout({
               alternateName: "ЧатБот24",
               url: "https://chatbot24.su",
               logo: "https://chatbot24.su/logo_header.png",
-              description: "Разработка умных чат-ботов для бизнеса. Автоматизация входящих заявок, ответы клиентам 24/7. Интеграция с CRM, WhatsApp, Telegram, VK.",
-              slogan: "Автоматизируем общение с клиентами",
-              foundingDate: "2020",
+              description: "Инженерное бюро автоматизации. Разрабатываем Telegram-ботов для приёма заявок, записи, Google Таблиц, мини-CRM и интеграций.",
+              slogan: "Telegram-боты для заявок, записи и учёта",
+              foundingDate: "2025",
               email: "info@chatbot24.su",
               contactPoint: {
                 "@type": "ContactPoint",
