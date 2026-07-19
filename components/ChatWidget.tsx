@@ -9,6 +9,8 @@ import {
   Sparkles,
   Minimize2
 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { springSnug, springSheet } from '@/components/animations/springs';
 import { trackFormSubmit } from '@/lib/metrika';
 
 interface Message {
@@ -204,27 +206,44 @@ export default function ChatWidget() {
     return null;
   }
 
-  // Closed state - floating button
-  if (!isOpen) {
-    return (
-      <button
-        onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-50 group"
-        aria-label="Открыть чат"
-      >
-        <div className="relative">
-          <div className="absolute inset-0 bg-primary-500 rounded-full animate-ping opacity-20" />
-          <div className="relative p-4 bg-primary-500 rounded-full shadow-lg shadow-primary-500/30 hover:shadow-primary-500/50 transition-all duration-300 hover:scale-110 group-hover:bg-primary-400">
-            <MessageCircle className="w-7 h-7 text-white" />
-          </div>
-          <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-bg-primary" />
-        </div>
-      </button>
-    );
-  }
-
+  // Closed state - floating button, живёт в AnimatePresence чтобы плавно
+  // исчезать при открытии панели (симметричный путь, раздел 7 скилла).
+  // Открытое окно приезжает springSheet (допустим лёгкий bounce, т.к.
+  // это движение «выезжает снизу», инерция оправдана).
   return (
-    <div className="fixed bottom-6 right-6 z-50 w-[380px] max-w-[calc(100vw-48px)] animate-in slide-in-from-bottom-4 fade-in duration-300">
+    <AnimatePresence mode="wait" initial={false}>
+      {!isOpen ? (
+        <motion.button
+          key="fab"
+          onClick={() => setIsOpen(true)}
+          className="fixed bottom-6 right-6 z-50 group"
+          aria-label="Открыть чат"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.8 }}
+          transition={springSnug}
+          whileTap={{ scale: 0.9 }}
+          // transform-origin на центр кнопки — tap «вдавливается» симметрично.
+          style={{ transformOrigin: "center center" }}
+        >
+          <div className="relative">
+            <div className="absolute inset-0 bg-primary-500 rounded-full animate-ping opacity-20" />
+            <div className="relative p-4 bg-primary-500 rounded-full shadow-lg shadow-primary-500/30 hover:shadow-primary-500/50 transition-[box-shadow,background-color] duration-300 hover:scale-110 group-hover:bg-primary-400">
+              <MessageCircle className="w-7 h-7 text-white" />
+            </div>
+            <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-bg-primary" />
+          </div>
+        </motion.button>
+      ) : (
+        <motion.div
+          key="panel"
+          className="fixed bottom-6 right-6 z-50 w-[380px] max-w-[calc(100vw-48px)]"
+          initial={{ opacity: 0, y: 24, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 24, scale: 0.98 }}
+          transition={springSheet}
+          style={{ transformOrigin: "bottom right" }}
+        >
       <div className="bg-bg-primary rounded-2xl shadow-2xl shadow-black/40 border border-primary-500/20 flex flex-col max-h-[600px] overflow-hidden">
         {/* Header */}
         <div className="p-4 bg-gradient-to-r from-primary-500 to-primary-400 flex justify-between items-center">
@@ -248,9 +267,9 @@ export default function ChatWidget() {
             >
               <span className="text-white/90 text-xs">Новый чат</span>
             </button>
-            <button 
+            <button
               onClick={() => setIsOpen(false)}
-              className="p-2 hover:bg-white/20 rounded-lg transition-colors"
+              className="p-2 hover:bg-white/20 rounded-lg transition-colors duration-150 active:scale-90"
               aria-label="Закрыть чат"
             >
               <Minimize2 className="w-5 h-5 text-white" />
@@ -346,7 +365,8 @@ export default function ChatWidget() {
               </select>
               <button
                 type="submit"
-                className="w-full py-3 bg-primary-500 hover:bg-primary-400 text-white font-medium rounded-xl transition-all flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-primary-500/25"
+                className="w-full py-3 bg-primary-500 hover:bg-primary-400 text-white font-medium rounded-xl transition-[background-color,box-shadow,transform] duration-200 flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-primary-500/25 active:scale-[0.97]"
+                style={{ transitionTimingFunction: "cubic-bezier(0.2, 0, 0, 1)" }}
               >
                 <Send className="w-4 h-4" />
                 Отправить заявку
@@ -382,14 +402,15 @@ export default function ChatWidget() {
                 disabled={isLoading}
                 className="flex-1 px-4 py-3 bg-bg-secondary border border-white/10 rounded-xl text-sm text-white placeholder-gray-500 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 transition-all disabled:opacity-50"
               />
-              <button
+              <motion.button
                 type="submit"
                 disabled={isLoading || !input.trim()}
-                className="px-4 py-3 bg-primary-500 hover:bg-primary-400 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-xl transition-all flex items-center justify-center hover:shadow-lg hover:shadow-primary-500/25"
+                className="px-4 py-3 bg-primary-500 hover:bg-primary-400 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-xl transition-[background-color,box-shadow] duration-200 flex items-center justify-center hover:shadow-lg hover:shadow-primary-500/25"
+                whileTap={{ scale: 0.92 }}
                 aria-label="Отправить"
               >
                 <Send className="w-4 h-4" />
-              </button>
+              </motion.button>
             </div>
             <p className="text-[10px] text-gray-600 text-center mt-2">
               AI-ассистент может допускать ошибки. Важные данные проверяйте самостоятельно.
@@ -397,6 +418,8 @@ export default function ChatWidget() {
           </form>
         )}
       </div>
-    </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }

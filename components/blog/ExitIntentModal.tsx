@@ -3,6 +3,8 @@
 import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import { X, Gift } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { springSnug, materializeVariants, scrimVariants } from "@/components/animations/springs";
 
 interface ExitIntentModalProps {
   utmCampaign?: string;
@@ -31,51 +33,75 @@ export function ExitIntentModal({
     return () => document.removeEventListener('mouseout', handleMouseLeave);
   }, [handleMouseLeave]);
   
-  if (!isVisible) return null;
-  
+  // AnimatePresence держит компонент в DOM до завершения exit-анимации,
+  // раньше был «teleport» — IsVisible=false мгновенно убирал модалку.
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-      <div className="bg-dark-200 border border-primary-500/30 rounded-2xl p-6 max-w-md w-full shadow-2xl">
-        <div className="flex justify-between items-start mb-4">
-          <div className="w-12 h-12 bg-primary-500/20 rounded-full flex items-center justify-center">
-            <Gift className="w-6 h-6 text-primary-400" />
-          </div>
-          <button
-            onClick={() => setIsVisible(false)}
-            className="p-1 text-gray-500 hover:text-gray-300"
-            aria-label="Закрыть"
+    <AnimatePresence>
+      {isVisible && (
+        <motion.div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+          variants={scrimVariants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          transition={{ duration: 0.2, ease: [0.2, 0, 0, 1] }}
+        >
+          <motion.div
+            className="bg-dark-200 border border-primary-500/30 rounded-2xl p-6 max-w-md w-full shadow-2xl"
+            variants={materializeVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            transition={springSnug}
+            // Symmetric path (раздел 7): enter и exit по одной кривой.
+            // transform-origin по центру — модалка центрирована, триггера-источника нет.
+            style={{ transformOrigin: "center center" }}
+            onClick={(e) => e.stopPropagation()}
           >
-            <X className="w-6 h-6" />
-          </button>
-        </div>
-        
-        <h3 className="text-xl font-bold text-white mb-2">
-          Уходите уже?
-        </h3>
-        
-        <p className="text-gray-400 mb-6">
-          Получите расчет стоимости бота + бесплатный аудит процессов. 
-          Без спама, только цифры.
-        </p>
-        
-        <div className="flex flex-col gap-3">
-          <Link
-            href={href}
-            className="w-full py-3 px-4 bg-gradient-emerald text-white font-semibold rounded-lg text-center hover:shadow-lg hover:shadow-primary-500/25 transition-all"
-            onClick={() => setIsVisible(false)}
-          >
-            Получить расчет + аудит
-          </Link>
-          
-          <button
-            onClick={() => setIsVisible(false)}
-            className="text-gray-500 text-sm hover:text-gray-300"
-          >
-            Нет, спасибо
-          </button>
-        </div>
-      </div>
-    </div>
+            <div className="flex justify-between items-start mb-4">
+              <div className="w-12 h-12 bg-primary-500/20 rounded-full flex items-center justify-center">
+                <Gift className="w-6 h-6 text-primary-400" />
+              </div>
+              <button
+                onClick={() => setIsVisible(false)}
+                className="p-1 text-gray-500 hover:text-gray-300 transition-colors duration-150 active:scale-90"
+                style={{ transitionTimingFunction: "cubic-bezier(0.2, 0, 0, 1)" }}
+                aria-label="Закрыть"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            
+            <h3 className="text-xl font-bold text-white mb-2">
+              Уходите уже?
+            </h3>
+            
+            <p className="text-gray-400 mb-6">
+              Получите расчет стоимости бота + бесплатный аудит процессов. 
+              Без спама, только цифры.
+            </p>
+            
+            <div className="flex flex-col gap-3">
+              <Link
+                href={href}
+                className="w-full py-3 px-4 bg-gradient-emerald text-white font-semibold rounded-lg text-center transition-[box-shadow,transform] duration-200 hover:shadow-lg hover:shadow-primary-500/25 active:scale-[0.97]"
+                style={{ transitionTimingFunction: "cubic-bezier(0.2, 0, 0, 1)" }}
+                onClick={() => setIsVisible(false)}
+              >
+                Получить расчет + аудит
+              </Link>
+              
+              <button
+                onClick={() => setIsVisible(false)}
+                className="text-gray-500 text-sm hover:text-gray-300 transition-colors duration-150"
+              >
+                Нет, спасибо
+              </button>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
 
