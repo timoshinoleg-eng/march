@@ -4,11 +4,14 @@ import Image from "next/image";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import Section from "@/components/ui/Section";
-import { ArrowRight, ArrowLeft, Calendar, Clock } from "lucide-react";
+import { ArrowRight, Calendar, Clock } from "lucide-react";
+import { BLOG_ARTICLES } from "@/data/blog-articles";
 
 export const metadata: Metadata = {
-  title: "Блог | ChatBot24",
-  description: "Полезные статьи об автоматизации заявок, чат-ботах и повышении конверсии",
+  title: "Блог",
+  description:
+    "Полезные статьи об автоматизации заявок, чат-ботах и повышении конверсии",
+  alternates: { canonical: "https://chatbot24.su/blog" },
   openGraph: {
     title: "Блог ChatBot24",
     description: "Полезные статьи об автоматизации заявок и чат-ботах",
@@ -16,136 +19,17 @@ export const metadata: Metadata = {
   },
 };
 
-// JSON-LD для списка статей
+// JSON-LD для списка статей — генерируется из единого реестра.
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "url": "https://chatbot24.su/blog/ai-automation-20-years",
-      "name": "Стоит ли входить в AI-автоматизацию в 20 лет?"
-    },
-    {
-      "@type": "ListItem",
-      "position": 2,
-      "url": "https://chatbot24.su/blog/senior-leaders-ai-struggles",
-      "name": "Где топ-менеджеры спотыкаются при внедрении ИИ — и как это исправить"
-    },
-    {
-      "@type": "ListItem",
-      "position": 3,
-      "url": "https://chatbot24.su/blog/ai-wont-fix-this",
-      "name": "ИИ не спасёт бизнес без этих 4 компетенций команды"
-    },
-    {
-      "@type": "ListItem",
-      "position": 4,
-      "url": "https://chatbot24.su/blog/pwc-ai-roi-56-percent",
-      "name": "PwC: 56% инвестиций в ИИ сгорело. Как не попасть в эту статистику"
-    },
-    {
-      "@type": "ListItem",
-      "position": 5,
-      "url": "https://chatbot24.su/blog/5-oshibok",
-      "name": "5 ошибок при выборе чат-бота, которые стоят вам клиентов"
-    },
-    {
-      "@type": "ListItem",
-      "position": 6,
-      "url": "https://chatbot24.su/blog/konversiya-40",
-      "name": "Как мы подняли конверсию на 40% с помощью чат-бота"
-    },
-    {
-      "@type": "ListItem",
-      "position": 7,
-      "url": "https://chatbot24.su/blog/sekundy-reshayut",
-      "name": "Почему секунды решают: скорость ответа и конверсия"
-    },
-    {
-      "@type": "ListItem",
-      "position": 8,
-      "url": "https://chatbot24.su/blog/telegram-vs-whatsapp",
-      "name": "Telegram vs WhatsApp: где размещать чат-бота в 2024"
-    }
-  ]
+  itemListElement: BLOG_ARTICLES.map((a, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    url: `https://chatbot24.su/blog/${a.slug}`,
+    name: a.title,
+  })),
 };
-
-const articles = [
-  {
-    slug: "ai-automation-20-years",
-    title: "Стоит ли входить в AI-автоматизацию в 20 лет?",
-    excerpt: "Почему сейчас — идеальное время начать в AI-автоматизации. От первого проекта до агентства: реальный путь для 20-летних.",
-    date: "2 апреля 2026",
-    readTime: "7 мин",
-    category: "Карьера",
-    image: "/images/articles/19d21b11-dc82-8332-8000-00001deae4c0_daviddd03411_ultra_realistic_photo_of_a_modern_developer_desk_e00c5fa9-2cdb-40c0-87f3-0a1df3e0157f_2.png",
-  },
-  {
-    slug: "senior-leaders-ai-struggles",
-    title: "Где топ-менеджеры спотыкаются при внедрении ИИ — и как это исправить",
-    excerpt: "Исследование Harvard Business Review: 93% барьеров внедрения ИИ — это люди, не технология. Три типичных вызова и четыре практики успешных лидеров.",
-    date: "30 марта 2026",
-    readTime: "8 мин",
-    category: "Исследования",
-    image: "/images/articles/19d21b10-fae2-8347-8000-00000c8baccc_daviddd03411_isometric_3D_illustration_of_chatbot_development_4c8e5938-d82c-4950-acb6-f36f43f2ac5a_1.png",
-  },
-  {
-    slug: "ai-wont-fix-this",
-    title: "ИИ не спасёт бизнес без этих 4 компетенций команды",
-    excerpt: "MIT Sloan Management Review: чем «умнее» технология, тем более развитые человеческие компетенции ей нужны. Цифровая ловкость — ключ к успеху.",
-    date: "30 марта 2026",
-    readTime: "7 мин",
-    category: "Исследования",
-    image: "/images/articles/19d21b11-dbc2-86a4-8000-00008a0f6ec4_daviddd03411_modern_3D_isometric_illustration_of_business_pro_44dd700b-58ba-440b-9d1b-b94979d69ea6_0.png",
-  },
-  {
-    slug: "pwc-ai-roi-56-percent",
-    title: "PwC: 56% инвестиций в ИИ сгорело. Как не попасть в эту статистику",
-    excerpt: "Исследование PwC: почему большинство компаний теряет деньги на ИИ и как попасть в 12% успешных. Реальные кейсы, калькулятор ROI.",
-    date: "25 марта 2026",
-    readTime: "9 мин",
-    category: "Исследования",
-    image: "/images/articles/19d21b12-b8f2-8cf3-8000-000076530046_daviddd03411_ultra_realistic_photo_of_a_modern_clean_workspac_171bffc5-2cd3-4b13-a658-f5eb31811a97_2.png",
-  },
-  {
-    slug: "5-oshibok",
-    title: "5 ошибок при выборе чат-бота, которые стоят вам клиентов",
-    excerpt: "Как не попасть в ловушку шаблонных решений и выбрать действительно эффективный инструмент для автоматизации заявок.",
-    date: "15 января 2026",
-    readTime: "5 мин",
-    category: "Выбор решения",
-    image: "/images/articles/19d21b12-2b12-8fcb-8000-000060a82555_daviddd03411_modern_3D_isometric_illustration_of_business_pro_44dd700b-58ba-440b-9d1b-b94979d69ea6_1.png",
-  },
-  {
-    slug: "konversiya-40",
-    title: "Как мы подняли конверсию на 40% с помощью чат-бота",
-    excerpt: "Реальный кейс: автоматизация первичной обработки заявок в онлайн-школе и рост продаж без увеличения рекламного бюджета.",
-    date: "30 января 2026",
-    readTime: "7 мин",
-    category: "Кейсы",
-    image: "/images/articles/19d21b10-fc42-8b4a-8000-0000e7501ee1_daviddd03411_isometric_3D_illustration_of_chatbot_development_4c8e5938-d82c-4950-acb6-f36f43f2ac5a_3.png",
-  },
-  {
-    slug: "sekundy-reshayut",
-    title: "Почему секунды решают: скорость ответа и конверсия",
-    excerpt: "Научные исследования и практика: как время ответа влияет на решение клиента о покупке. Каждая секунда дорога.",
-    date: "15 февраля 2026",
-    readTime: "6 мин",
-    category: "Исследования",
-    image: "/images/articles/19d21b10-fae2-8347-8000-00000c8baccc_daviddd03411_isometric_3D_illustration_of_chatbot_development_4c8e5938-d82c-4950-acb6-f36f43f2ac5a_1.png",
-  },
-  {
-    slug: "telegram-vs-whatsapp",
-    title: "Telegram vs WhatsApp: где размещать чат-бота в 2024",
-    excerpt: "Сравнение платформ по охвату аудитории, стоимости, функционалу. Выбираем оптимальный канал для вашего бизнеса.",
-    date: "25 февраля 2026",
-    readTime: "8 мин",
-    category: "Сравнение",
-    image: "/images/articles/19d21b11-dbc2-86a4-8000-00008a0f6ec4_daviddd03411_modern_3D_isometric_illustration_of_business_pro_44dd700b-58ba-440b-9d1b-b94979d69ea6_0.png",
-  },
-];
 
 export default function BlogPage() {
   return (
@@ -162,26 +46,16 @@ export default function BlogPage() {
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Back to Home */}
-          <div className="mb-6">
-            <Link
-              href="/"
-              className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors group"
-            >
-              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-              <span className="text-sm font-medium">На главную</span>
-            </Link>
-          </div>
-
           <div className="text-center max-w-3xl mx-auto">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6">
-              Блог об{" "}
+              Блог об автоматизации{" "}
               <span className="bg-gradient-emerald bg-clip-text text-transparent">
-                автоматизации
+                заявок
               </span>
             </h1>
             <p className="text-base sm:text-lg text-gray-400">
-              Полезные материалы о чат-ботах, автоматизации заявок и повышении конверсии
+              Исследования, разборы кейсов и практика применения чат-ботов
+              в малом и среднем бизнесе
             </p>
           </div>
         </div>
@@ -190,7 +64,7 @@ export default function BlogPage() {
       {/* Articles Grid */}
       <Section className="!py-0 !pt-0">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-          {articles.map((article, index) => (
+          {BLOG_ARTICLES.map((article, index) => (
             <Card
               key={article.slug}
               variant={index === 0 ? "gradient" : "default"}

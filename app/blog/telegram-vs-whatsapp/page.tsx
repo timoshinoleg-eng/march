@@ -5,13 +5,18 @@ import { ArrowLeft, Calendar, Clock, User, CheckCircle, XCircle } from "lucide-r
 import ShareButtons from "@/components/blog/ShareButtons";
 import RelatedArticles from "@/components/blog/RelatedArticles";
 import ArticleCTA from "@/components/blog/ArticleCTA";
+import { getArticle, getRelatedArticles } from "@/data/blog-articles";
 
+// G4: title без "| ChatBot24" — layout-шаблон добавит его автоматически.
 export const metadata: Metadata = {
-  title: "Telegram vs WhatsApp: где размещать чат-бота в 2024 | ChatBot24",
-  description: "Сравнение платформ по охвату аудитории, стоимости, функционалу. Выбираем оптимальный канал для вашего бизнеса.",
+  title: "Telegram vs WhatsApp: где размещать чат-бота в 2026",
+  description:
+    "Сравнение платформ по охвату аудитории, стоимости подключения, ограничениям API и сценариям использования.",
+  alternates: { canonical: "https://chatbot24.su/blog/telegram-vs-whatsapp" },
   openGraph: {
-    title: "Telegram vs WhatsApp: где размещать чат-бота в 2024",
-    description: "Сравнение платформ по охвату аудитории, стоимости, функционалу.",
+    title: "Telegram vs WhatsApp: где размещать чат-бота в 2026",
+    description:
+      "Сравнение платформ по охвату аудитории, стоимости подключения, ограничениям API и сценариям использования.",
     type: "article",
     publishedTime: "2026-02-25T00:00:00Z",
     authors: ["ChatBot24"],
@@ -19,68 +24,39 @@ export const metadata: Metadata = {
   },
 };
 
+const article = getArticle("telegram-vs-whatsapp")!;
+const relatedArticles = getRelatedArticles("telegram-vs-whatsapp", 4);
+
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "Telegram vs WhatsApp: где размещать чат-бота в 2024",
-  "description": "Сравнение платформ по охвату аудитории, стоимости, функционалу. Выбираем оптимальный канал для вашего бизнеса.",
-  "image": "https://chatbot24.su/og-image.jpg",
-  "datePublished": "2026-02-25T00:00:00Z",
-  "author": {
+  headline: article.title,
+  description: article.excerpt,
+  // G5: используем реальный image статьи вместо 404 og-image.jpg.
+  image: `https://chatbot24.su${article.image}`,
+  datePublished: article.dateIso,
+  author: {
     "@type": "Organization",
-    "name": "ChatBot24",
-    "url": "https://chatbot24.su"
+    name: "ChatBot24",
+    url: "https://chatbot24.su",
   },
-  "publisher": {
+  publisher: {
     "@type": "Organization",
-    "name": "ChatBot24",
-    "logo": {
+    name: "ChatBot24",
+    logo: {
       "@type": "ImageObject",
-      "url": "https://chatbot24.su/favicon.png"
-    }
+      url: "https://chatbot24.su/favicon.png",
+    },
   },
-  "mainEntityOfPage": {
+  mainEntityOfPage: {
     "@type": "WebPage",
-    "@id": "https://chatbot24.su/blog/telegram-vs-whatsapp"
-  }
+    "@id": "https://chatbot24.su/blog/telegram-vs-whatsapp",
+  },
 };
-
-const allArticles = [
-  {
-    slug: "ai-automation-20-years",
-    title: "Стоит ли входить в AI-автоматизацию в 20 лет?",
-    excerpt: "Почему сейчас — идеальное время начать в AI-автоматизации. От первого проекта до агентства.",
-    date: "2 апреля 2026",
-  },
-  {
-    slug: "5-oshibok",
-    title: "5 ошибок при выборе чат-бота, которые стоят вам клиентов",
-    excerpt: "Как не попасть в ловушку шаблонных решений и выбрать действительно эффективный инструмент.",
-    date: "15 января 2026",
-  },
-  {
-    slug: "konversiya-40",
-    title: "Как мы подняли конверсию на 40% с помощью чат-бота",
-    excerpt: "Реальный кейс: автоматизация первичной обработки заявок в онлайн-школе.",
-    date: "30 января 2026",
-  },
-  {
-    slug: "sekundy-reshayut",
-    title: "Почему секунды решают: скорость ответа и конверсия",
-    excerpt: "Научные исследования и практика: как время ответа влияет на решение клиента.",
-    date: "15 февраля 2026",
-  },
-  {
-    slug: "telegram-vs-whatsapp",
-    title: "Telegram vs WhatsApp: где размещать чат-бота в 2024",
-    excerpt: "Сравнение платформ по охвату аудитории, стоимости, функционалу.",
-    date: "25 февраля 2026",
-  },
-];
 
 export default function ArticlePage() {
   const articleUrl = "https://chatbot24.su/blog/telegram-vs-whatsapp";
-  const articleTitle = "Telegram vs WhatsApp: где размещать чат-бота в 2024";
+  const articleTitle = article.title;
 
   return (
     <main className="min-h-screen bg-bg-primary pt-24 sm:pt-32">
@@ -117,7 +93,7 @@ export default function ArticlePage() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
             Telegram vs WhatsApp: где размещать{" "}
             <span className="bg-gradient-emerald bg-clip-text text-transparent">
-              чат-бота в 2024
+              чат-бота в 2026
             </span>
           </h1>
 
@@ -312,7 +288,7 @@ export default function ArticlePage() {
         </footer>
 
         <ArticleCTA />
-        <RelatedArticles currentSlug="telegram-vs-whatsapp" articles={allArticles} />
+        <RelatedArticles currentSlug="telegram-vs-whatsapp" articles={relatedArticles} />
       </article>
 
       <div className="h-20" />
