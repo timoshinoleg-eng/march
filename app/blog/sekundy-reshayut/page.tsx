@@ -72,7 +72,7 @@ const allArticles = [
   },
   {
     slug: "telegram-vs-whatsapp",
-    title: "Telegram vs WhatsApp: где размещать чат-бота в 2024",
+    title: "Telegram vs WhatsApp: где размещать чат-бота в 2026",
     excerpt: "Сравнение платформ по охвату аудитории, стоимости, функционалу.",
     date: "25 февраля 2026",
   },
